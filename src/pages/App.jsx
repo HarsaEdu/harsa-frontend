@@ -1,35 +1,22 @@
-import { useState } from 'react'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '../assets/vite.svg'
-import '../styles/App.css'
+import { Card } from "../components";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <main className="container mx-auto space-y-5 p-5">
+      <div className="flex items-center justify-center gap-5">
+        {Array.from({ length: 4 }, (_, index) => (
+          <Card
+            key={index}
+            title={"Chatbot AI"}
+            desc={
+              "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. Lorem ipsum, or lipsum as it is sometimes known, is dummy."
+            }
+            onClick={() => {}}
+          />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </main>
+  );
 }
 
-export default App
+export default App;
