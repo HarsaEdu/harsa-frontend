@@ -8,12 +8,12 @@ export default function Navbar() {
           <p className="text-2xl">LOGO</p>
         </div>
         <div className="flex text-2xl gap-10 items-center">
-          <p>Home</p>
-          <p>About Us</p>
-          <p>Our Features</p>
-          <p>Testimoni</p>
-          <p>Get App</p>
-          <p>FAQ</p>
+          <a href="">Home</a>
+          <a href="">About Us</a>
+          <a href="">Our Features</a>
+          <a href="">Testimoni</a>
+          <a href="">Get App</a>
+          <a href="">FAQ</a>
           <Button
             variant="secondary"
             size="lg"
