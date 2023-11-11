@@ -1,3 +1,5 @@
+import { Button } from "./button";
+
 export default function Navbar() {
   return (
     <div>
@@ -12,7 +14,12 @@ export default function Navbar() {
           <p>Testimoni</p>
           <p>Get App</p>
           <p>FAQ</p>
-          <button className="bg-white w-32 h-12">Login</button>
+          <Button
+            variant="secondary"
+            size="lg"
+          >
+            Login
+          </Button>
         </div>
       </div>
     </div>
