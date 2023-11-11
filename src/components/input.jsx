@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 function Input(props) {
   const { label, id, error, register, name, type } = props;
 
