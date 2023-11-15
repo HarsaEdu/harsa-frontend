@@ -7,6 +7,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Link } from 'lucide-react'
 
 function App() {
+  const [count, setCount] = useState(0);
   return (
     <>
       <div>
@@ -27,7 +28,10 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
-    </main>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
   );
 }
 
