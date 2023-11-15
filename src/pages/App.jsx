@@ -1,19 +1,31 @@
-import { Card } from "../components";
+import { useState } from 'react'
+import reactLogo from '../assets/react.svg'
+import viteLogo from '../assets/vite.svg'
+import '../styles/App.css'
+import { Button } from '@/components/ui/button'
+import { buttonVariants } from "@/components/ui/button"
+import { Link } from 'lucide-react'
 
 function App() {
   return (
-    <main className="container mx-auto space-y-5 p-5">
-      <div className="flex items-center justify-center gap-5">
-        {Array.from({ length: 4 }, (_, index) => (
-          <Card
-            key={index}
-            title={"Chatbot AI"}
-            desc={
-              "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. Lorem ipsum, or lipsum as it is sometimes known, is dummy."
-            }
-            onClick={() => {}}
-          />
-        ))}
+    <>
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <Button className="bg-slate-600 mx-3" onClick={() => setCount((count) => count + 1)} disabled>count is {count}</Button>
+        <Button className="bg-slate-600 mx-3" onClick={() => setCount((count) => count + 1)} >count is {count}</Button>
+        <Button variant="outline">Button outline</Button>
+        <Button variant="link"><a href="/aaa">Link Btn</a></Button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
       </div>
     </main>
   );
