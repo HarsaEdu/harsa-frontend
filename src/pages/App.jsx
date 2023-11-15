@@ -5,6 +5,7 @@ import '../styles/App.css'
 import { Button } from '@/components/ui/button'
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from 'lucide-react'
+import Navbar from '@/components/ui/navbar'
 
 function App() {
   const [count, setCount] = useState(0)

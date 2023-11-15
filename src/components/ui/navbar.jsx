@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "./button";
+import { Button } from "./button";
 import HarsaLogo from "../../assets/HarsaLogo.png";
 
 export default function Navbar() {
