@@ -5,7 +5,7 @@ import { cn } from "@/utils/utils";
 const Card = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("rounded-xl border bg-card text-card-foreground shadow-sm w-64 flex flex-col items-start", className)}
+    className={cn("rounded-2xl border-2 bg-card w-64 h-24 shadow-sm flex align-middle items-center", className)}
     {...props}
   />
 ));
@@ -14,7 +14,7 @@ Card.displayName = "Card";
 const CardHeader = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn("flex space-y-1.5 p-6", className)}
     {...props}
   />
 ));
@@ -57,15 +57,13 @@ const CardFooter = React.forwardRef(({ className, ...props }, ref) => (
 CardFooter.displayName = "CardFooter";
 
 const CardDashboard = (props) => {
-  const { title, content } = props;
+  const { title, src, alt, className} = props;
   return (
-    <Card>
-      <CardHeader>
+    <Card className={className}>
+      <CardHeader className="gap-3">
+        <img src={src} alt={alt} />
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p>{content}</p>
-      </CardContent>
     </Card>
   );
 };
