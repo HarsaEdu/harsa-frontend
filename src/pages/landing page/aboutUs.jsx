@@ -5,7 +5,7 @@ const AboutUs = () => {
         <div className="aboutUs container mx-auto">
             <div className="flex flex-col md:flex-row justify-center items-center">
                 <div className="w-[300px] md:w-[500px]">
-                    <img src={aboutImage} alt="image" className="" />
+                    <img src={aboutImage} alt="image" />
                 </div>
                 <div className="w-[400px] md:w-[600px]">
                     <h2 className="text-left font-inter font-semibold text-[20px] md:text-[30px] mb-2">About Us</h2>
