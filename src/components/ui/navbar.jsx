@@ -1,5 +1,5 @@
 import { Button } from "./button";
-import HarsaLogo from "../../assets/HarsaLogo.png";
+import HarsaLogo from "../../assets/HarsaLogo.svg";
 
 export default function Navbar() {
   return (
