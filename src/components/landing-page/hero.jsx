@@ -30,11 +30,9 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <a href="#emailAction">
-          <Button className="w-72 bg-[#092C4C] py-6 text-lg font-semibold text-white">
-            Unduh Sekarang
-          </Button>
-        </a>
+        <Button className="w-72 bg-[#092C4C] py-6 text-lg font-semibold text-white">
+          Unduh Sekarang
+        </Button>
       </div>
       <div className="hidden w-1/2 md:flex md:justify-center">
         <img src={heroImage} alt="" className="object-contain" />
