@@ -2,7 +2,7 @@ import React from "react"
 import aboutImage from '../../assets/image/about.png'
 const AboutUs = () => {
     return(
-        <div className="aboutUs container mx-auto">
+        <div className="aboutUs container mx-auto mt-5">
             <div className="flex flex-col md:flex-row justify-center items-center">
                 <div className="w-[300px] md:w-[500px]">
                     <img src={aboutImage} alt="image" />
