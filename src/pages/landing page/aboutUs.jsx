@@ -1,5 +1,5 @@
 import React from "react"
-import aboutImage from '../../assets/image/about.png'
+import aboutImage from '../../assets/about.svg'
 const AboutUs = () => {
     return(
         <div className="aboutUs container mx-auto mt-5">

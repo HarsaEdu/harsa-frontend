@@ -7,13 +7,10 @@ import { buttonVariants } from "@/components/ui/button"
 import { Link } from 'lucide-react'
 import Navbar from '@/components/ui/navbar'
 
-import Hero from '@/components/landing-page/hero'
-
 function App() {
   const [count, setCount] = useState(0);
   return (
     <>
-    <Hero/>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
