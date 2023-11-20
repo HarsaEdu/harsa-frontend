@@ -3,16 +3,19 @@ import LandingPages from "./landingPage/Faq";
 import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
-import '../styles/App.css'
+// import '../styles/App.css'
 import { Button } from '@/components/ui/button'
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from 'lucide-react'
 import Navbar from '@/components/ui/navbar'
 
+import Hero from '@/components/landing-page/hero'
+
 function App() {
   const [count, setCount] = useState(0);
   return (
     <div>
+      <Hero/>
       <div>
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
