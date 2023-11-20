@@ -7,12 +7,12 @@ const Layout = (props) => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className={`bg-gray-400 ${className} h-screen w-1/5 p-4`}>
+      <div className={`bg-gray-400 ${className} h-screen w-1/4 p-4`}>
         <Sidebar />
       </div>
 
       {/* Content */}
-      <div className={`bg-gray-200 ${className} h-screen w-4/5 p-4`}>
+      <div className={`bg-gray-200 ${className} h-screen w-3/4 p-4`}>
         {children}
       </div>
     </div>
