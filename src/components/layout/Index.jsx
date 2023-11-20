@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from '../Sidebar';
 
 const Layout = (props) => {
     const {children, className} = props
@@ -7,14 +8,12 @@ const Layout = (props) => {
     <div className="flex">
       {/* Sidebar */}
       <div className={`bg-gray-400 ${className} h-screen w-1/5 p-4`}>
-        {children}
-        <p>Sidebar Content</p>
+        <Sidebar />
       </div>
 
       {/* Content */}
       <div className={`bg-gray-200 ${className} h-screen w-4/5 p-4`}>
         {children}
-        <p>Main Content</p>
       </div>
     </div>
   );
