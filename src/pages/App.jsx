@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button'
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from 'lucide-react'
 import Navbar from '@/components/ui/navbar'
-
 import Hero from '@/components/landing-page/hero'
 import GetApps from '@/components/landing-page/get-apps'
 
