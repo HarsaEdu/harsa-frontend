@@ -18,7 +18,7 @@ export default function Navbar() {
           <a href="">Testimoni</a>
           <a href="">FAQ</a>
           <a href="">Get App</a>
-          <Button className="bg-[#092C4C] w-36 h-10 font-bold">Login</Button>
+          <Button className="bg-[#092C4C] w-36 h-10 font-bold text-white">Login</Button>
         </div>
       </div>
     </div>
