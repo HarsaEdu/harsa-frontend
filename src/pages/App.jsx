@@ -8,11 +8,13 @@ import { Link } from 'lucide-react'
 import Navbar from '@/components/ui/navbar'
 import Hero from '@/components/landing-page/hero'
 import GetApps from '@/components/landing-page/get-apps'
+import Breadcrumb from '@/components/breadcrumb'
 
 function App() {
   const [count, setCount] = useState(0);
   return (
     <>
+      <Breadcrumb />
       <Hero />
       <GetApps />
       <div>
