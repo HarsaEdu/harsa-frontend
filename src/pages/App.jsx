@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
-import '../styles/App.css'
+// import '../styles/App.css'
 import { Button } from '@/components/ui/button'
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from 'lucide-react'
+import Footer from './landing-pages/footer'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -31,6 +32,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <Footer></Footer>
     </>
   );
 }

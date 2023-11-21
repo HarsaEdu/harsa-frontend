@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#213571] text-white p-8 h-80 flex items-center">
       <div className="container flex justify-between items-center">
-        <div className="flex space-x-6">
+        <div className="flex gap-x-14">
           <FooterLink title="Home" />
           <FooterLink title="About Us" />
           <FooterLink title="Our Features" />
@@ -23,7 +23,7 @@ const Footer = () => {
 
 const FooterLink = ({ title }) => {
   return (
-    <a href="#" className="hover:text-gray-400 text-white text-sm">
+    <a href="#" className="hover:text-gray-400 font-semibold text-white text-md">
       {title}
     </a>
   );
