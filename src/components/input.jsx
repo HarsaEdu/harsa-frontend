@@ -4,14 +4,14 @@ function Input(props) {
   const { label, id, error, register, name, type } = props;
 
   return (
-    <div className="flex flex-col mb-4 px-5">
-      <label className="text-black font-bold mb-1" htmlFor={id}>
+    <div className="mb-4 flex flex-col px-5">
+      <label className="mb-1 font-bold text-black" htmlFor={id}>
         {label}
       </label>
       <input
         className={clsx(
-          "border rounded-md bg-slate-50 py-4 border-red-500 text-black  p-2 focus:outline-none w-full",
-          !error && "border-gray-200"
+          "w-full rounded-md border border-red-500 bg-slate-50 p-2  py-4 text-black focus:outline-none",
+          !error && "border-gray-200",
         )}
         placeholder={label}
         type={type}
@@ -39,14 +39,14 @@ function TextArea(props) {
   const { label, id, error, register, name } = props;
 
   return (
-    <div className="flex flex-col mb-4 p-2">
-      <label className="text-black font-bold mb-1" htmlFor={id}>
+    <div className="mb-4 flex flex-col p-2">
+      <label className="mb-1 font-bold text-black" htmlFor={id}>
         {label}
       </label>
       <textarea
         className={clsx(
-          "border rounded-md bg-slate-50 py-4 border-red-500 text-black  p-2 focus:outline-none w-full",
-          !error && "border-gray-200"
+          "w-full rounded-md border border-red-500 bg-slate-50 p-2  py-4 text-black focus:outline-none",
+          !error && "border-gray-200",
         )}
         {...(register ? register(name) : {})}
         {...props}
@@ -68,14 +68,14 @@ function Select(props) {
   const { label, placeholder, id, error, options, register, name } = props;
 
   return (
-    <div className="flex flex-col mb-4">
-      <label className="text-black font-bold mb-1" htmlFor={id}>
+    <div className="mb-4 flex flex-col">
+      <label className="mb-1 font-bold text-black" htmlFor={id}>
         {label}
       </label>
       <select
         className={clsx(
-          "border rounded-md bg-slate-50 py-4 border-red-500 text-black  p-2 focus:outline-none w-full",
-          !error && "border-gray-200"
+          "w-full rounded-md border border-red-500 bg-slate-50 p-2  py-4 text-black focus:outline-none",
+          !error && "border-gray-200",
         )}
         defaultValue=""
         {...(register ? register(name) : {})}
