@@ -9,6 +9,11 @@ module.exports = {
     "./src/**/*.{js,jsx}",
   ],
   theme: {
+    extend: {
+      fontFamily: {
+        "inter" : ['inter'],
+        "poppins" : ['poppins'],
+      },
     container: {
       center: true,
       padding: "2rem",
@@ -74,4 +79,5 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-};
+  }
+}
