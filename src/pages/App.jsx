@@ -4,19 +4,23 @@ import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
 // import '../styles/App.css'
-import { Button } from '@/components/ui/button'
+// import { Button } from '@/components/ui/button'
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from 'lucide-react'
 import Navbar from '@/components/ui/navbar'
-import Hero from '@/components/landing-page/hero'
+// import Hero from '@/components/landing-page/hero'
 import GetApps from '@/components/landing-page/get-apps'
+
+import ListClass from "./list-class";
 
 function App() {
   const [count, setCount] = useState(0);
   return (
     <div>
-      <Hero />
-      <GetApps />
+
+      <ListClass />
+
+      {/* <GetApps />
       <div>
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -51,7 +55,7 @@ function App() {
       <LandingPages />
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </div>
   );
 }
