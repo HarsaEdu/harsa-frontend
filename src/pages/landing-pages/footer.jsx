@@ -9,7 +9,7 @@ const Footer = () => {
           <FooterLink title="Home" />
           <FooterLink title="About Us" />
           <FooterLink title="Our Features" />
-          <FooterLink title="Testimonials" />
+          <FooterLink title="Testimoni" />
           <FooterLink title="FAQ" />
           <FooterLink title="Get App" />
         </div>
