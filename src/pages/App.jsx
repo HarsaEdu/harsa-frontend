@@ -8,7 +8,6 @@ import { Link } from "lucide-react";
 import Navbar from "@/components/ui/navbar";
 import Hero from "@/components/landing-page/hero";
 import GetApps from "@/components/landing-page/get-apps";
-import { InputType, InputSelect, TextAreaLabel } from "@/components/inputs";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,36 +15,6 @@ function App() {
     <>
       <Hero />
       <GetApps />
-      <div className="container">
-        <div className="mb-4">
-          <InputType label="Email" type="email" placeholder="Email Disini" />
-        </div>
-        <div className="mb-4">
-          <InputType label="File" type="file" />
-        </div>
-        <div className="mb-4">
-          <InputType
-            label="Label"
-            type="password"
-            placeholder="Password Disini"
-          />
-        </div>
-        <div className="mb-4">
-          <InputSelect
-            label="Role"
-            placeholder="Role Pilih Disini"
-            id="role"
-            options={["Admin", "Instructor"]}
-          />
-        </div>
-        <div className="mb-4">
-          <TextAreaLabel
-            label="Deskripsi"
-            id="description"
-            placeholder="Deskripsi Masukkan Disini"
-          />
-        </div>
-      </div>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
