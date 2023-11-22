@@ -4,6 +4,7 @@ import Hero from "./hero";
 import AboutUs from "./aboutUs";
 import Footer from "./footer";
 import GetApps from "./get-apps";
+import Faq from "./Faq";
 
 export default function LandingPage() {
   const dataFeature = [
@@ -26,30 +27,33 @@ export default function LandingPage() {
   ];
   return (
     <>
-    <Navbar />
-    <Hero />
-    <AboutUs />
-    <section className="container mx-auto space-y-5 px-5 mt-16 mb-16">
-      <h2 className="text-center text-2xl font-bold">Our Feature</h2>
-      <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
-        {dataFeature.map((value, index) => (
-          <Card
-            image={
-              <img
-                src={`/assets/illustrations/feature${index + 1}.svg`}
-                alt={`Feature${index + 1}`}
-              />
-            }
-            title={value.title}
-            desc={value.desc}
-          />
-        ))}
+      <Navbar />
+      <Hero />
+      <AboutUs />
+      <section className="container mx-auto mb-16 mt-16 space-y-5 px-5">
+        <h2 className="text-center text-2xl font-bold">Our Feature</h2>
+        <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+          {dataFeature.map((value, index) => (
+            <Card
+              image={
+                <img
+                  src={`/assets/illustrations/feature${index + 1}.svg`}
+                  alt={`Feature${index + 1}`}
+                />
+              }
+              title={value.title}
+              desc={value.desc}
+            />
+          ))}
+        </div>
+      </section>
+      <div>
+        <Faq />
       </div>
-    </section>
-    <div className="mt-16 mb-16">
-    <GetApps />
-    </div>
-    <Footer />
+      <div className="mb-16 mt-16">
+        <GetApps />
+      </div>
+      <Footer />
     </>
   );
 }
