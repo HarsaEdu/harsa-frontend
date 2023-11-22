@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Index"
 import CardListClass from "@/components/card/CardListClass"
+import { Button } from "@/components/ui/button"
 
 import Bell from "../../assets/bell.svg"
 import Filter from "../../assets/filter.svg"
@@ -16,25 +17,33 @@ const ListClass = () => {
                 <div className="flex justify-end mt-1">
                     <img src={Bell} alt="" className="w-[58px] cursor-pointer" />
                 </div>
-                <p className="font-poppins text-[16px]">Dashboard &gt; Kelas </p>
+                    <a href="#" className="font-poppins text-[16px]">Dashboard &gt; Kelas </a>
                 <div className="flex justify-between mt-2 cursor-pointer">
                     <div className="flex">
-                        <div className="flex justify-center items-center border border-[#092C4C] p-[10px] text-[#092C4C]">
-                            <p className="font-poppins text-[16px]">Kategori</p>
-                        </div>
-                        <div className="flex justify-center items-center gap-4 border border-[#092C4C] p-[10px] text-[#092C4C]">
-                            <p className="font-poppins text-[16px]">Filter</p>
-                            <img src={Filter} alt="" />
-                        </div>
+                        <Button
+                        className="border border-[#092C4C] p-[10px] text-[#092C4C] rounded-none"
+                        >
+                            <p className="font-poppins font-normal text-[16px]">Kategory</p>
+                        </Button>
+                        <Button
+                        className="border border-[#092C4C] p-[10px] text-[#092C4C] rounded-none"
+                        >
+                            <p className="font-poppins font-normal text-[16px]">Filter</p>
+                            <img src={Filter} alt="" className="ml-2" />
+                        </Button>
                     </div>
-                    <div className="flex bg-[#092C4C] w-[168px] justify-center items-center px-[10px] py-[15px] rounded-lg">
+                    <Button
+                    className="bg-[#092C4C] w-[168px] justify-center items-center px-[10px] py-[15px] rounded-lg"
+                    >
                         <p className="text-white font-poppins font-semibold text-[16px]">Manage Kelas</p>
-                    </div>
+                    </Button>
                 </div>
                 <div className="flex justify-end gap-2 mt-5 items-center">
                     <p className="font-poppins text-[16px]">Search</p>
-                    <div className="w-[240px] h-[44px] p-[10px] border border-black rounded">
-                    </div>
+                    <input type="text" 
+                    className="w-[240px] h-[44px] p-[10px] border border-black rounded"
+                    id="search"
+                    />
                 </div>
             </div>
 

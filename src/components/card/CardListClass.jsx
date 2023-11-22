@@ -1,4 +1,6 @@
 import React from "react"
+import { Button } from "../ui/button"
+
 import Star from "../../assets/Star.svg"
 import Delete from "../../assets/Delete.svg"
 import Edit from "../../assets/Edit.svg"
@@ -15,11 +17,16 @@ const CardListClass = (props) => {
                     <div className="flex justify-between cursor-pointer">
                         <h2 className="font-poppins font-semibold text-[32px]">{judul}</h2>
                         <div className="flex gap-1 justify-center items-center">
-                            <img src={Delete} alt="" className="w-[32px]"/>
-                            <div className="flex bg-[#092C4C] w-[170px] h-[32px] justify-center items-center px-[7px] py-[10px] rounded-lg">
+                            <a href="#">
+                                <img src={Delete} alt="" className="w-[32px]"/>
+                            </a>
+                            
+                            <Button
+                            className="bg-[#092C4C] w-[170px] h-[32px] justify-center items-center px-[7px] py-[10px] rounded-lg"
+                            >
                                 <p className="text-white font-poppins font-semibold text-[16px]">Manage Kelas</p>
                                 <img src={Edit} alt="" className="ml-2" />
-                            </div>
+                            </Button>
                         </div>
                     </div>
                     <div>
