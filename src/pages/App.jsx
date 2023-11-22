@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import LandingPages from "./landingPage/Faq";
+import LandingPages from "./landing-page/Faq";
 import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
@@ -15,7 +14,7 @@ function App() {
   const [count, setCount] = useState(0);
   return (
     <div>
-      <Hero />
+            <Hero />
       <GetApps />
       <div>
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
