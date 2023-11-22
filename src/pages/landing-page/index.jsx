@@ -5,6 +5,7 @@ import AboutUs from "./aboutUs";
 import Footer from "./footer";
 import GetApps from "./get-apps";
 import Faq from "./Faq";
+import TestimoniCard from "./cardtestimoni";
 
 export default function LandingPage() {
   const dataFeature = [
@@ -49,6 +50,9 @@ export default function LandingPage() {
       </section>
       <div>
         <Faq />
+      </div>
+      <div>
+        <TestimoniCard />
       </div>
       <div className="mb-16 mt-16">
         <GetApps />

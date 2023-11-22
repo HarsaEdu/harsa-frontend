@@ -1,6 +1,6 @@
 import { CardTestimoni } from "../../components/landingpage/card/cardtestimoni";
 
-export default function LandingPage() {
+export default function TestimoniCard() {
   const dataTestimoni = [
     {
       title: "Joko",
