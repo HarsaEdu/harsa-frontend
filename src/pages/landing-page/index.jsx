@@ -1,4 +1,5 @@
 import { Card } from "@/components/landing-page/card";
+import Breadcrumb from "@/components/breadcrumb";
 
 export default function LandingPage() {
   const dataFeature = [
