@@ -1,7 +1,6 @@
 import { useState } from "react";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "../assets/vite.svg";
-// import '../styles/App.css'
 import { Button } from "@/components/ui/button";
 import LandingPages from "./landingPage/Faq";
 import { buttonVariants } from "@/components/ui/button";
@@ -23,7 +22,7 @@ function App() {
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
+        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
@@ -34,17 +33,17 @@ function App() {
           onClick={() => setCount((count) => count + 1)}
           disabled
         >
-          count is {count}
+          Count is {count}
         </Button>
         <Button
           className="mx-3 bg-slate-600"
           onClick={() => setCount((count) => count + 1)}
         >
-          count is {count}
+          Count is {count}
         </Button>
         <Button variant="outline">Button outline</Button>
         <Button variant="link">
-          <a href="/aaa">Link Btn</a>
+          <Link href="/aaa">Link Btn</Link>
         </Button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
