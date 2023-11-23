@@ -1,26 +1,17 @@
-import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [emailEmpty, setEmailEmpty] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordEmpty, setPasswordEmpty] = useState(false);
-  const [invalid, setInvalid] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setEmailEmpty(false);
-    setPasswordEmpty(false);
-    setInvalid(false);
-    if (email !== "" && password !== "") {
-      if (email === "admin" && password === "admin") {
-        alert("Berhasil Login!");
-      } else {
-        setInvalid(true);
-      }
+  const onSubmit = (data) => {
+    if (data.email === "admin" && data.password === "admin") {
+      alert("Berhasil Login!");
     } else {
-      setEmailEmpty(true);
-      setPasswordEmpty(true);
+      alert("Email atau password salah");
     }
   };
 
@@ -39,58 +30,69 @@ export default function Login() {
           </h1>
 
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="flex h-full w-full flex-col items-center justify-center gap-5"
           >
             <div>
-              <label
-                htmlFor="email"
-                className="flex flex-col justify-center gap-1"
-              >
-                <span className="ml-1 text-lg font-semibold">Email</span>
-                <input
-                  type="text"
-                  name="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
-                  className="w-[500px] rounded-lg border border-gray-400 bg-transparent px-3 py-4 outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
-                />
-              </label>
-              {emailEmpty && (
-                <p className="text-[#ED7878]">*Email wajib disi</p>
-              )}
-              {invalid && (
-                <p className="text-[#ED7878]">
-                  *Email yang anda masukan tidak terdaftar
-                </p>
+              <Controller
+                name="email"
+                control={control}
+                rules={{
+                  required: "*Email wajib diisi",
+                  validate: (value) =>
+                    value === "admin" ||
+                    "*Email yang anda masukkan tidak terdaftar",
+                }}
+                render={({ field }) => (
+                  <label
+                    htmlFor="email"
+                    className="flex flex-col justify-center gap-1"
+                  >
+                    <span className="ml-1 text-lg font-semibold">Email</span>
+                    <input
+                      {...field}
+                      type="text"
+                      placeholder="Email"
+                      className={`w-[500px] rounded-lg border border-gray-400 bg-transparent px-3 py-4 outline-none focus-within:border-[#092C4C] hover:border-[#092C4C] ${
+                        errors.email ? "border-red-500" : ""
+                      }`}
+                    />
+                  </label>
+                )}
+              />
+              {errors.email && (
+                <p className="text-[#ED7878]">{errors.email.message}</p>
               )}
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="flex flex-col justify-center gap-1"
-              >
-                <span className="ml-1 text-lg font-semibold">Password</span>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password"
-                  className="w-[500px] rounded-lg border border-gray-400 bg-transparent px-3 py-4 outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
-                />
-              </label>
-              {passwordEmpty && (
-                <p className="text-[#ED7878]">*Password wajib di isi</p>
-              )}
-              {invalid && (
-                <p className="text-[#ED7878]">
-                  *Password yang anda masukan salah
-                </p>
+              <Controller
+                name="password"
+                control={control}
+                rules={{
+                  required: "*Password wajib diisi",
+                  validate: (value) =>
+                    value === "admin" || "*Password yang anda masukkan salah",
+                }}
+                render={({ field }) => (
+                  <label
+                    htmlFor="password"
+                    className="flex flex-col justify-center gap-1"
+                  >
+                    <span className="ml-1 text-lg font-semibold">Password</span>
+                    <input
+                      {...field}
+                      type="password"
+                      placeholder="Password"
+                      className={`w-[500px] rounded-lg border border-gray-400 bg-transparent px-3 py-4 outline-none focus-within:border-[#092C4C] hover:border-[#092C4C] ${
+                        errors.password ? "border-red-500" : ""
+                      }`}
+                    />
+                  </label>
+                )}
+              />
+              {errors.password && (
+                <p className="text-[#ED7878]">{errors.password.message}</p>
               )}
             </div>
 
