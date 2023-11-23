@@ -1,18 +1,23 @@
+import { useState } from "react";
+import reactLogo from "../assets/react.svg";
+import viteLogo from "../assets/vite.svg";
+// import '../styles/App.css'
 import { Button } from "@/components/ui/button";
 import LandingPages from "./landingPage/Faq";
-import { useState } from 'react'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '../assets/vite.svg'
-// import '../styles/App.css'
-// import { Button } from '@/components/ui/button'
-import { buttonVariants } from "@/components/ui/button"
-import { Link } from 'lucide-react'
-import Navbar from '@/components/ui/navbar'
+import { buttonVariants } from "@/components/ui/button";
+import { Link } from "lucide-react";
+import Navbar from "@/components/ui/navbar";
+import Hero from "@/components/landing-page/hero";
+import GetApps from "@/components/landing-page/get-apps";
+import { Input } from "@/components/ui/input";
 
 function App() {
   const [count, setCount] = useState(0);
   return (
     <div>
+      <Hero />
+      <GetApps />
+      <Input type="Password" />
       <div>
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
