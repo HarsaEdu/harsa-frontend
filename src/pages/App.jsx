@@ -33,17 +33,17 @@ function App() {
           onClick={() => setCount((count) => count + 1)}
           disabled
         >
-          Count is {count}
+          count is {count}
         </Button>
         <Button
           className="mx-3 bg-slate-600"
           onClick={() => setCount((count) => count + 1)}
         >
-          Count is {count}
+          count is {count}
         </Button>
         <Button variant="outline">Button outline</Button>
         <Button variant="link">
-          <Link href="/aaa">Link Btn</Link>
+          <a href="/aaa">Link Btn</a>
         </Button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
@@ -58,3 +58,4 @@ function App() {
 }
 
 export default App;
+
