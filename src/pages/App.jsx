@@ -1,6 +1,7 @@
 import { useState } from "react";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "../assets/vite.svg";
+// import '../styles/App.css'
 import { Button } from "@/components/ui/button";
 import LandingPages from "./landingPage/Faq";
 import { buttonVariants } from "@/components/ui/button";
@@ -43,7 +44,7 @@ function App() {
         </Button>
         <Button variant="outline">Button outline</Button>
         <Button variant="link">
-          <a href="/aaa">Link Btn</a>
+          <Link href="/aaa">Link Btn</Link>
         </Button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
@@ -58,4 +59,3 @@ function App() {
 }
 
 export default App;
-
