@@ -7,7 +7,7 @@ import Index from './routes/index.jsx'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Index />
+    <App />
   </React.StrictMode>,
 );
 
