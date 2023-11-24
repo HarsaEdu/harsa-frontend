@@ -57,6 +57,25 @@ const Sidebar = () => {
               </li>
             </ul>
           </div>
+          <div className="absolute bottom-0 left-0">
+            <div className="mx-auto block w-72 space-y-3 bg-[#A2D2FF] p-6 shadow-lg ring-1 ring-slate-900/5">
+              <div className="flex items-center space-x-3">
+                <img
+                  className="inline-block rounded-full h-11 w-11 bg-slate-800 ring-2"
+                  src={"#"}
+                  alt="ImageBottom"
+                  width={30}
+                  height={30}
+                />
+                <div className="flex flex-col px-2 overflow-hidden">
+                  <h3 className="text-sm font-bold text-slate-900">Admin</h3>
+                  <h3 className="text-sm font-semibold text-slate-700">
+                    Online
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
