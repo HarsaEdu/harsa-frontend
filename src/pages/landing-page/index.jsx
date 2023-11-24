@@ -31,9 +31,9 @@ export default function LandingPage() {
       <Navbar />
       <Hero />
       <AboutUs />
-      <section className="container mx-auto mb-16 mt-16 space-y-5 px-5">
+      <section className="mb-16 mt-16 space-y-5 px-32">
         <h2 className="text-center text-2xl font-bold">Our Feature</h2>
-        <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 h-[550px]">
           {dataFeature.map((value, index) => (
             <Card
               image={
@@ -48,11 +48,11 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
-      <div>
-        <Faq />
+      <div className="mb-24">
+        <TestimoniCard />
       </div>
       <div>
-        <TestimoniCard />
+        <Faq />
       </div>
       <div className="mb-16 mt-16">
         <GetApps />
