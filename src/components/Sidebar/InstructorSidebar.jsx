@@ -10,10 +10,10 @@ const Sidebar = () => {
             <img src={HarsaIcon} alt="Harsa-Icon" width={40} height={40} />
             <h2 className="text-2xl font-bold">Harsa</h2>
           </a>
-          <h2 className="pt-3 mx-3 text-lg font-semibold">Menu</h2>
+          <h2 className="mx-3 pt-3 text-lg font-semibold">Menu</h2>
           <div className="flex-1">
-            <ul className="pt-2 pb-4 space-y-1 text-sm">
-              <li className="rounded-sm group">
+            <ul className="space-y-1 pb-4 pt-2 text-sm">
+              <li className="group rounded-sm">
                 <a
                   href={"/dashboard"}
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
@@ -34,7 +34,7 @@ const Sidebar = () => {
                   <span>Dashboard</span>
                 </a>
               </li>
-              <li className="rounded-sm group">
+              <li className="group rounded-sm">
                 <a
                   href={"/class"}
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
@@ -61,14 +61,16 @@ const Sidebar = () => {
             <div className="mx-auto block w-72 space-y-3 bg-[#A2D2FF] p-6 shadow-lg ring-1 ring-slate-900/5">
               <div className="flex items-center space-x-3">
                 <img
-                  className="inline-block rounded-full h-11 w-11 bg-slate-800 ring-2"
+                  className="inline-block h-11 w-11 rounded-full bg-slate-800 ring-2"
                   src={"#"}
                   alt="ImageBottom"
                   width={30}
                   height={30}
                 />
-                <div className="flex flex-col px-2 overflow-hidden">
-                  <h3 className="text-sm font-bold text-slate-900">Admin</h3>
+                <div className="flex flex-col overflow-hidden px-2">
+                  <h3 className="text-sm font-bold text-slate-900">
+                    Instructor
+                  </h3>
                   <h3 className="text-sm font-semibold text-slate-700">
                     Online
                   </h3>
