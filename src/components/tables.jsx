@@ -15,7 +15,7 @@ export default function TableQuiz(props) {
 
   return (
     <div className="p-2">
-      <table className="border-2 border-black">
+      <table className="w-full border-2 border-black">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -23,7 +23,7 @@ export default function TableQuiz(props) {
                 <th
                   key={header.id}
                   colSpan={header.colSpan}
-                  className="border-2 p-2"
+                  className="border-2 border-black bg-[#F2994A] p-2"
                 >
                   {header.isPlaceholder
                     ? null
@@ -40,7 +40,7 @@ export default function TableQuiz(props) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="border-2 p-2">
+                <td key={cell.id} className="border-2 border-black p-2">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
