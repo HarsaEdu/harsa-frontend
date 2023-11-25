@@ -1,7 +1,7 @@
 import { useState } from "react";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "../assets/vite.svg";
-// import '../styles/App.css'
+import AdminSidebar from "@/components/Sidebar/AdminSidebar";
 import { Button } from "@/components/ui/button";
 import LandingPages from "./landingPage/Faq";
 import { buttonVariants } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 function App() {
   const [count, setCount] = useState(0);
   return (
+    <AdminSidebar>
     <div>
       <Hero />
       <GetApps />
@@ -53,7 +54,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </div>
+    </AdminSidebar>
   );
 }
 
