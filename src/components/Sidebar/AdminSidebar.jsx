@@ -5,7 +5,7 @@ import DropdownMenu from "./DropdownConfig";
 const AdminSidebar = () => {
   return (
     <div className="flex">
-      <div className="flex h-screen w-72 flex-col bg-[#092C4C] p-3 text-white shadow">
+      <div className="w-72">
         <div className="gap-5 mx-2 my-5 space-y-5">
           <a href={"/"} className="flex items-center">
             <img src={HarsaIcon} alt="Harsa-Icon" width={40} height={40} />
@@ -60,8 +60,8 @@ const AdminSidebar = () => {
                 <DropdownMenu />
               </li>
             </ul>
-            <div className="absolute bottom-0 left-0">
-              <div className="mx-auto block w-72 space-y-3 bg-[#A2D2FF] p-6 shadow-lg ring-1 ring-slate-900/5">
+            <div className="absolute bottom-0 left-0 w-1/4">
+              <div className="mx-auto block space-y-3 bg-[#A2D2FF] p-6 shadow-lg ring-1 ring-slate-900/5">
                 <div className="flex items-center space-x-3">
                   <img
                     className="inline-block rounded-full h-11 w-11 bg-slate-800 ring-2"
