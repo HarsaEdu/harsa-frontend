@@ -22,7 +22,7 @@ export default function LandingPage() {
   ];
   return (
     <section className="container mx-auto space-y-5 px-5">
-      <Breadcrumb></Breadcrumb>
+      <Breadcrumb />
       <h2 className="text-center text-2xl font-bold">Our Feature</h2>
       <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
         {dataFeature.map((value, index) => (
