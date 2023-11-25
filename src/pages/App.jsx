@@ -11,14 +11,24 @@ import Navbar from "@/components/ui/navbar";
 // import GetApps from "@/components/landing-page/get-apps";
 import { Input } from "@/components/ui/input";
 import Layout from "@/components/layout/Index";
+import { CardUlasanUser } from "@/components/landing-page/card/cardulasanuser";
 
 function App() {
-  const userRole = 'admin'
+  const userRole = ''
 
   return (
     <Layout userRole={userRole}>
       <Input type="Password" />
-      
+      <CardUlasanUser/>
+      <CardUlasanUser/>
+      <CardUlasanUser/>
+      <CardUlasanUser/>
+      <CardUlasanUser/>
+      <CardUlasanUser/>
+      <CardUlasanUser/>
+      <CardUlasanUser/>
+      <CardUlasanUser/>
+      <CardUlasanUser/>
     </Layout>
   );
 }
