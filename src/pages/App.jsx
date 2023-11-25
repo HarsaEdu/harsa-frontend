@@ -1,13 +1,24 @@
 import { useState } from "react";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "../assets/vite.svg";
-import { Button } from "@/components/ui/button";
 import AdminSidebar from "@/components/Sidebar/AdminSidebar";
+import { Button } from "@/components/ui/button";
+import LandingPages from "./landingPage/Faq";
+import { buttonVariants } from "@/components/ui/button";
+import { Link } from "lucide-react";
+import Navbar from "@/components/ui/navbar";
+import Hero from "@/components/landing-page/hero";
+import GetApps from "@/components/landing-page/get-apps";
+import { Input } from "@/components/ui/input";
 
 function App() {
   const [count, setCount] = useState(0);
   return (
     <AdminSidebar>
+    <div>
+      <Hero />
+      <GetApps />
+      <Input type="Password" />
       <div>
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -39,6 +50,7 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
+      <LandingPages />
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
