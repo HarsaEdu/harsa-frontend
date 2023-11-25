@@ -10,6 +10,7 @@ import Navbar from "@/components/ui/navbar";
 import Hero from "@/components/landing-page/hero";
 import GetApps from "@/components/landing-page/get-apps";
 import { Input } from "@/components/ui/input";
+import Login from "./login";
 
 function App() {
   const [count, setCount] = useState(0);

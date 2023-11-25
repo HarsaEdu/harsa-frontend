@@ -8,19 +8,19 @@ const inputVariants = cva(
     variants: {
       variant: {
         default: " ",
-        bottom: "border-0 border-b-2 rounded-none"
+        bottom: "border-0 border-b-2 rounded-none",
       },
     },
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 const Input = React.forwardRef(({ className, variant, ...props }, ref) => {
   return (
     <input
-      className={cn(inputVariants({ variant, className }))}
+      className={cn(inputVariants({ variant }), className)}
       ref={ref}
       {...props}
     />
@@ -29,4 +29,3 @@ const Input = React.forwardRef(({ className, variant, ...props }, ref) => {
 Input.displayName = "Input";
 
 export { Input, inputVariants };
-
