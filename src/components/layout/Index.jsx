@@ -7,12 +7,12 @@ const Layout = (props) => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className={`bg-gray-400 ${className} h-screen w-1/4 p-4`}>
+      <div className={`bg-[#092C4C] text-white ${className} h-screen w-1/4 p-4`}>
         <Sidebar />
       </div>
 
       {/* Content */}
-      <div className={`bg-gray-200 ${className} h-screen w-3/4 p-4`}>
+      <div className={`overflow-y-auto ${className} h-screen w-3/4 p-4`}>
         {children}
       </div>
     </div>
