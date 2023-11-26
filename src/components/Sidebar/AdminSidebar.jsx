@@ -69,7 +69,7 @@ function AdminSidebar() {
               </li>
             </ul>
           </div>
-          <div className="w-64 py-4 bg-[#232529] flex items-center justify-between fixed left-0 bottom-0">
+          <div className="w-64 py-4 bg-[#A2D2FF] flex items-center justify-between fixed left-0 bottom-0">
             <div className="flex items-center mx-4">
               <div className="relative w-8 h-8 rounded-full before:absolute before:w-2 before:h-2 before:bg-green-500 before:rounded-full before:right-0 before:bottom-0 before:ring-1 before:ring-white">
                 <img
@@ -79,8 +79,8 @@ function AdminSidebar() {
                 />
               </div>
               <div className="flex flex-col pl-3">
-                <div className="text-sm text-gray-50">Admin</div>
-                <span className="text-xs text-[#acacb0] font-light tracking-tight">
+                <div className="text-sm text-black font-semibold">Admin</div>
+                <span className="text-xs text-gray-600 font-semibold  tracking-tight">
                   Online
                 </span>
               </div>

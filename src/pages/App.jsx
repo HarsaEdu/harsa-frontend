@@ -14,21 +14,11 @@ import Layout from "@/components/layout/Index";
 import { CardUlasanUser } from "@/components/landing-page/card/cardulasanuser";
 
 function App() {
-  const userRole = ''
+  const userRole = 'admin'
 
   return (
     <Layout userRole={userRole}>
-      <Input type="Password" />
-      <CardUlasanUser/>
-      <CardUlasanUser/>
-      <CardUlasanUser/>
-      <CardUlasanUser/>
-      <CardUlasanUser/>
-      <CardUlasanUser/>
-      <CardUlasanUser/>
-      <CardUlasanUser/>
-      <CardUlasanUser/>
-      <CardUlasanUser/>
+      
     </Layout>
   );
 }
