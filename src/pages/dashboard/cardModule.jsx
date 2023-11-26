@@ -1,13 +1,18 @@
+// CardModule.js
 import React from 'react';
 
-const CardModule = ({ logo, title, onClick }) => {
+const CardModule = ({ id, logo, title, onClick, isActive }) => {
   return (
     <div
-      className="w-64 bg-white p-4 rounded-lg shadow-md cursor-pointer"
-      onClick={onClick}
+      className={`w-[284px] h-[102px] p-4 rounded-lg text-left shadow-md cursor-pointer transition duration-300 transform hover:scale-105 ${
+        isActive ? 'bg-[#092C4C]' : 'bg-white opacity-50'}`}
+      onClick={() => onClick(id)}
     >
-      <img src={logo} alt={`${title} Logo`} className="w-16 h-16 mx-auto mb-4" />
-      <h3 className="text-lg font-semibold text-center">{title}</h3>
+      <div className="flex">
+        {logo}
+        <h3 className={`text-[24px] font-bold ml-4 ${
+          isActive ? 'text-white' : 'text-[#092C4C]'}`}>{title}</h3>
+      </div>
     </div>
   );
 };
