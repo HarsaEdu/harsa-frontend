@@ -1,4 +1,5 @@
 import HarsaIcon from "../../assets/icons/harsaicon.svg"
+import { Link } from "react-router-dom";
 
 function InstructorSidebar() {
   return (
@@ -22,11 +23,8 @@ function InstructorSidebar() {
           <div className="px-6 pt-4">
             <ul className="flex flex-col space-y-4">
               <li className="text-xs rounded-sm group">
-                  <a
-                    href={"/dashboard"}
-                    className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
-                  >
-                    <svg
+                <Link to="/dashboard" className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black">
+                <svg
                       width="20"
                       height="20"
                       viewBox="0 0 27 28"
@@ -39,30 +37,27 @@ function InstructorSidebar() {
                         id="icon-project"
                       />
                     </svg>
-                    <span>Dashboard</span>
-                  </a>
-                </li>
-                <li className="text-xs rounded-sm group">
-                  <a
-                    href={"/User Management"}
-                    className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
+                  <span>Dashboard</span>
+                </Link>
+              </li>
+              <li className="text-xs rounded-sm group">
+                <Link to="/kelas" className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 25 29"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="fill-[#A2D2FF] group-hover:fill-[#092C4C]"
                   >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 25 29"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="fill-[#A2D2FF] group-hover:fill-[#092C4C]"
-                    >
-                      <path
-                        d="M5.25398 1.98879H21.7591C21.6678 1.03873 20.9899 0.520508 19.7383 0.520508H7.26171C6.02318 0.520508 5.33221 1.03873 5.25398 1.98879ZM2.5944 5.1089H24.4186C24.2361 4.08326 23.6103 3.50026 22.2284 3.50026H4.78465C3.4027 3.50026 2.77692 4.08326 2.5944 5.1089ZM4.13279 24.5205H22.8672C25.5789 24.5205 27 23.3545 27 21.1305V10.2587C27 8.03468 25.5789 6.86869 22.8672 6.86869H4.13279C1.40802 6.86869 0 8.02388 0 10.2587V21.1305C0 23.3545 1.40802 24.5205 4.13279 24.5205ZM13.5196 17.287C11.3423 17.2654 9.63448 15.7648 9.62144 13.7567C9.62144 11.8565 11.3423 10.2911 13.5196 10.2911C15.7098 10.2911 17.4307 11.8565 17.4307 13.7567C17.4307 15.7648 15.7228 17.3086 13.5196 17.287ZM6.11444 22.48C7.14437 20.31 10.0517 18.7877 13.5196 18.7877C17.0005 18.7877 19.9078 20.31 20.9377 22.48H6.11444Z"
-                        id="icon-project"
-                      />
-                    </svg>
-                    <span>Kelas</span>
-                  </a>
-                </li>
+                    <path
+                      d="M5.25398 1.98879H21.7591C21.6678 1.03873 20.9899 0.520508 19.7383 0.520508H7.26171C6.02318 0.520508 5.33221 1.03873 5.25398 1.98879ZM2.5944 5.1089H24.4186C24.2361 4.08326 23.6103 3.50026 22.2284 3.50026H4.78465C3.4027 3.50026 2.77692 4.08326 2.5944 5.1089ZM4.13279 24.5205H22.8672C25.5789 24.5205 27 23.3545 27 21.1305V10.2587C27 8.03468 25.5789 6.86869 22.8672 6.86869H4.13279C1.40802 6.86869 0 8.02388 0 10.2587V21.1305C0 23.3545 1.40802 24.5205 4.13279 24.5205ZM13.5196 17.287C11.3423 17.2654 9.63448 15.7648 9.62144 13.7567C9.62144 11.8565 11.3423 10.2911 13.5196 10.2911C15.7098 10.2911 17.4307 11.8565 17.4307 13.7567C17.4307 15.7648 15.7228 17.3086 13.5196 17.287ZM6.11444 22.48C7.14437 20.31 10.0517 18.7877 13.5196 18.7877C17.0005 18.7877 19.9078 20.31 20.9377 22.48H6.11444Z"
+                      id="icon-project"
+                    />
+                  </svg>
+                  <span>Kelas</span>
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="w-64 py-4 bg-[#A2D2FF] flex items-center justify-between fixed bottom-0">
