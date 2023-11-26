@@ -1,6 +1,6 @@
 import { CardTestimoni } from "../../components/landingpage/card/cardtestimoni";
 
-export default function LandingPage() {
+export default function TestimoniCard() {
   const dataTestimoni = [
     {
       title: "Joko",
@@ -21,9 +21,9 @@ export default function LandingPage() {
   ];
 
   return (
-    <section className="container mx-auto w-full space-y-5 px-2">
+    <section className="mx-auto w-full space-y-5 px-20">
       <h2 className="text-center text-2xl font-bold">Testimoni</h2>
-      <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-5 sm:grid-cols-4 h-80">
         {dataTestimoni.map((value, index) => (
           <CardTestimoni
             key={index}
