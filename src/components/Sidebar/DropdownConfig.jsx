@@ -10,7 +10,7 @@ const InstructorIndex = () => {
     <>
       <Accordion type="single" collapsible className="w-full space-y-3">
         <AccordionItem value="item-1">
-          <AccordionTrigger className="rounded-sm group">
+          <AccordionTrigger className="text-xs rounded-sm group">
             <span className="flex items-center space-x-3 rounded-md px-2 hover:bg-[#A2D2FF] hover:text-black">
               <svg
                 width="20"
@@ -28,10 +28,10 @@ const InstructorIndex = () => {
               <span>Content Management</span>
             </span>
           </AccordionTrigger>
-          <AccordionContent className="group">
+          <AccordionContent className="text-xs group">
             <a
               href={"/"}
-              className="text-md flex flex-row items-center gap-4 rounded-md px-4 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
                 width="20"
@@ -49,10 +49,10 @@ const InstructorIndex = () => {
               <span>Kelas</span>
             </a>
           </AccordionContent>
-          <AccordionContent className="group">
+          <AccordionContent className="text-xs group">
             <a
               href={"/"}
-              className="text-md flex flex-row items-center gap-4 rounded-md px-4 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
                 width="20"
@@ -71,10 +71,10 @@ const InstructorIndex = () => {
               <span>kategori</span>
             </a>
           </AccordionContent>
-          <AccordionContent className="group">
+          <AccordionContent className="text-xs group">
             <a
               href={"/"}
-              className="text-md flex flex-row items-center gap-4 rounded-md px-4 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
                 width="20"
@@ -95,7 +95,7 @@ const InstructorIndex = () => {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
-          <AccordionTrigger className="rounded-sm group">
+          <AccordionTrigger className="text-xs rounded-sm group">
             <span className="flex items-center space-x-3 rounded-md px-2 hover:bg-[#A2D2FF] hover:text-black">
               <svg
                 width="20"
@@ -113,10 +113,10 @@ const InstructorIndex = () => {
               <span>Pembayaran</span>
             </span>
           </AccordionTrigger>
-          <AccordionContent className="group">
+          <AccordionContent className="text-xs group">
             <a
               href={"/"}
-              className="text-md flex flex-row items-center gap-4 rounded-md px-4 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
                 width="20"
@@ -134,10 +134,10 @@ const InstructorIndex = () => {
               <span>Langganan</span>
             </a>
           </AccordionContent>
-          <AccordionContent className="group">
+          <AccordionContent className="text-xs group">
             <a
               href={"/"}
-              className="text-md flex flex-row items-center gap-4 rounded-md px-4 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
                 width="20"
