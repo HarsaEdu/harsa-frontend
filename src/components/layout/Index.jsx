@@ -8,7 +8,7 @@ const Layout = (props) => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className="w-1/4 h-screen overflow-auto text-white">
+      <div className="w-64 h-screen overflow-auto text-white">
       {userRole === 'admin' ? (
           <AdminSidebar />
         ) : (
@@ -17,7 +17,7 @@ const Layout = (props) => {
       </div>
 
       {/* Content */}
-      <div className={`${className} w-full px-8 py-4 mx-auto bg-white grow`}>
+      <div className={`${className} w-3/4 mx-auto bg-white grow`}>
         {children}
       </div>
     </div>
