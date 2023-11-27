@@ -7,7 +7,13 @@ import {
 import TablePagination from "./tablePagination";
 
 export default function Table(props) {
-  const { columns = [], datas = [] } = props;
+  const {
+    columns = [],
+    datas = [],
+    classNameHeader,
+    classNameCell,
+    isVisible,
+  } = props;
 
   const table = useReactTable({
     data: datas,
@@ -22,21 +28,37 @@ export default function Table(props) {
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  colSpan={header.colSpan}
-                  rowSpan={header.rowSpan ? 2 : 1}
-                  className="border-2 border-black bg-[#F2994A] p-2"
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                </th>
-              ))}
+              {headerGroup.headers.map((header) => {
+                const columnRelativeDepth = header.depth - header.column.depth;
+
+                if (
+                  !header.isPlaceholder &&
+                  columnRelativeDepth > 1 &&
+                  header.id === header.column.id
+                ) {
+                  return null;
+                }
+
+                let rowSpan = 1;
+                if (header.isPlaceholder) {
+                  const leafs = header.getLeafHeaders();
+                  rowSpan = leafs[leafs.length - 1].depth - header.depth;
+                }
+
+                return (
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    rowSpan={rowSpan}
+                    className={`border-2 border-black p-2 ${classNameHeader}`}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </th>
+                );
+              })}
             </tr>
           ))}
         </thead>
@@ -44,7 +66,10 @@ export default function Table(props) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="border-2 border-black p-2">
+                <td
+                  key={cell.id}
+                  className={`border-2 border-black p-2 ${classNameCell}`}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -52,9 +77,11 @@ export default function Table(props) {
           ))}
         </tbody>
       </table>
-      <div className="mt-2 flex justify-end">
-        <TablePagination table={table} />
-      </div>
+      {isVisible && (
+        <div className="mt-2 flex justify-end">
+          <TablePagination table={table} />
+        </div>
+      )}
     </div>
   );
 }

@@ -15,8 +15,6 @@ import Layout from "@/components/layout/Index";
 import { Check, X } from "lucide-react";
 import { realData2, realData } from "@/utils/dummyData";
 
-import { createColumnHelper } from "@tanstack/react-table";
-
 function App() {
   const [count, setCount] = useState(0);
 
@@ -99,7 +97,7 @@ function App() {
   }));
 
   const columns2 = useMemo(() => [
-    { header: "No", cell: (info) => info.row.index + 1, rowSpan: true },
+    { header: "No", cell: (info) => info.row.index + 1 },
     ,
     {
       header: "Nama",
@@ -122,20 +120,29 @@ function App() {
     <div>
       <Hero />
       <GetApps />
-      <Layout>
+      <div className="container">
         <h2 className="mb-2 text-center text-xl font-semibold">
           Manage Tugas Table
         </h2>
         <div className="mb-4 flex w-full overflow-x-auto">
-          <Table columns={columns} datas={realData} />
+          <Table
+            columns={columns}
+            datas={realData}
+            classNameHeader="text-white font-semibold bg-[#092C4C]"
+            isVisible={true}
+          />
         </div>
         <h2 className="mb-2 text-center text-xl font-semibold">
           Jawaban Quiz Table
         </h2>
         <div className="flex w-full overflow-x-auto">
-          <Table columns={columns2} datas={realData2} />
+          <Table
+            columns={columns2}
+            datas={realData2}
+            classNameHeader="bg-[#F2994A]"
+          />
         </div>
-      </Layout>
+      </div>
       <div className="flex justify-center"></div>
       <div>
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
