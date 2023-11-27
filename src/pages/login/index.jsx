@@ -1,7 +1,3 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,6 +7,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Cookies } from "react-cookie";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 const formSchema = z.object({
   email: z.string().nonempty("*Email wajib di isi"),
@@ -22,30 +22,47 @@ export default function Login() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
-  const onSubmit = (data) => {
-    if (data.email === "admin" && data.password === "admin") {
-      alert("Berhasil Login!");
-    } else {
-      if (data.email !== "admin") {
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch(
+        "https://api.harsaedu.my.id/web/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+          }),
+        },
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        const { access_token } = result.data;
+
+        const cookies = new Cookies();
+        cookies.set("authToken", access_token, { path: "/" });
+
+        window.location.href = "/dashboard";
+      } else {
         form.setError("email", {
           type: "manual",
           message: "*Email yang Anda masukkan tidak terdaftar",
         });
-      } else {
-        form.clearErrors("email");
-      }
-
-      if (data.password !== "admin") {
         form.setError("password", {
           type: "manual",
           message: "*Password yang Anda masukkan salah",
         });
-      } else {
-        form.clearErrors("password");
       }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
     }
   };
 
