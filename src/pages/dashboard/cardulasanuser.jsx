@@ -1,6 +1,6 @@
 import { CardUlasanUser } from "../../components/landing-page/card/cardulasanuser";
 
-export default function Dashboard() {
+export default function ListUlasan() {
   const dataUlasanUser = [
     {
       title: "Bagus Onsu",
