@@ -95,7 +95,7 @@ const CreateMaterial = () => {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="rounded border border-2 border-black px-3 py-5"
+                        className="space-y-8 rounded border border-2 border-black px-3 py-5"
                     >
                         <FormField
                             control={form.control}
