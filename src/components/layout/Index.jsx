@@ -17,7 +17,7 @@ const Layout = (props) => {
       </div>
 
       {/* Content */}
-      <div className={`${className} w-3/4 mx-auto bg-white grow`}>
+      <div className={`${className} w-3/4 mx-auto pt-5 bg-white grow`}>
         {children}
       </div>
     </div>
