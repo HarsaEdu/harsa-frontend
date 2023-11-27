@@ -3,7 +3,7 @@ import reactLogo from "../assets/react.svg";
 import viteLogo from "../assets/vite.svg";
 import AdminSidebar from "@/components/Sidebar/AdminSidebar";
 import { Button } from "@/components/ui/button";
-import LandingPages from "./landingPage/Faq";
+// import LandingPages from "./landingPage/Faq";
 import { buttonVariants } from "@/components/ui/button";
 // import { Link } from "lucide-react";
 import Navbar from "@/components/ui/navbar";
