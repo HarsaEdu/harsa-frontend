@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { cn } from "@/utils/utils";
+import Swal from "sweetalert2";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,13 +15,19 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Layout from "@/components/layout/Index"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import { Plus } from 'lucide-react';
-
+import Layout from "@/components/layout/Index";
+import { Plus } from "lucide-react";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import Breadcrumb from "@/components/breadcrumb";
 
 const formSchema = z.object({
     section: z.string({
@@ -29,34 +36,41 @@ const formSchema = z.object({
     titleMateri: z.string({
         required_error: "judul materi wajib di isi.",
     }),
-    video: z.string({
-        required_error: "link video wajib di isi.",
-    }).url({
-        message: "Masukkan tautan video yang valid",
-    }),
-    materi: z.string({
-        required_error: "link materi wajib di isi.",
-    }).url({
-        message: "Masukkan tautan materi yang valid",
-    }),
-    deadlineTugas: z.date({
-        required_error: "set deadline wajib di isi.",
-    }),
+    materi: z
+        .string({
+            required_error: "link materi wajib di isi.",
+        })
+        .url({
+            message: "Masukkan tautan materi yang valid",
+        }),
 });
 
 const CreateMaterial = () => {
+    const [materialType, setMaterialType] = useState("");
+
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
 
     const onSubmit = (data) => {
         console.log("data", data);
+        Swal.fire({
+            icon: "success",
+            title: "Sukses Tambah Module",
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 3000,
+        });
     };
 
     return (
         <Layout>
-            <Form {...form} >
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 border rounded px-3 py-5">
+            <Breadcrumb />
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8 rounded border border-2 px-3 py-5 mt-5"
+                >
                     <FormField
                         control={form.control}
                         name="section"
@@ -74,101 +88,131 @@ const CreateMaterial = () => {
                         name="titleMateri"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-[#092C4C]">Judul Materi</FormLabel>
+                                <FormLabel className="font-poppins font-semibold text-[#092C4C]">Judul Materi</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Judul Materi" {...field} variant="bottom" />
+                                    <Input
+                                        placeholder="Judul Materi"
+                                        {...field}
+                                        variant="bottom"
+                                    />
                                 </FormControl>
                                 <FormMessage className="text-red-500" />
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name="video"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="text-[#092C4C]">Link Video</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Link Video" {...field} variant="bottom" />
-                                </FormControl>
-                                <FormMessage className="text-red-500" />
-                            </FormItem>
-                        )}
-                    />
-                    <div style={{ marginTop: "0.5rem" }}>
-                        <a className="text-sm font-medium text-[#092C4C] hover:text-[#092C4C]/70 flex items-center" href="">Tambah Link video <Plus className="inline-block h-4" /></a>
-                    </div>
-                    <FormField
-                        control={form.control}
-                        name="materi"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="text-[#092C4C]">Materi</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Format PPT, Google Slide, PDF" {...field} variant="bottom" />
-                                </FormControl>
-                                <FormMessage className="text-red-500" />
-                            </FormItem>
-                        )}
-                    />
-                    <div style={{ marginTop: "0.5rem" }}>
-                        <a className="text-sm font-medium text-[#092C4C] hover:text-[#092C4C]/70 flex items-center" href="">Tambah Link Materi <Plus className="inline-block h-4" /></a>
-                    </div>
                     <div>
-                        <FormLabel className="text-[#092C4C]">Kuis</FormLabel>
-                        <div style={{ marginTop: "0.5rem" }}>
-                            <a className="text-sm font-medium text-[#092C4C] hover:text-[#092C4C]/70 flex items-center" href="">Tambah Kuis <Plus className="inline-block h-4" /></a>
-                        </div>
-                    </div>
-                    <div>
-                        <FormLabel className="text-[#092C4C]">Tugas</FormLabel>
-                        <div style={{ marginTop: "0.5rem" }}>
-                            <a className="text-sm font-medium text-[#092C4C] hover:text-[#092C4C]/70 flex items-center" href="">Tambah Tugas <Plus className="inline-block h-4" /></a>
-                        </div>
-                    </div>
-                    <FormField
-                        control={form.control}
-                        name="deadlineTugas"
-                        render={({ field }) => (
-                            <FormItem className="flex flex-col">
-                                <FormLabel className="text-[#092C4C]">Set Deadline Tugas</FormLabel>
-                                <Popover avoidCollisions={false} side="bottom" align="center">
-                                    <PopoverTrigger asChild>
+                        <FormLabel className="font-poppins font-semibold text-[#092C4C]">Materi</FormLabel>
+                        {materialType === "video" || (form.formState.errors.materi && materialType === "") ? (
+                            <FormField
+                                control={form.control}
+                                name="materi"
+                                render={({ field }) => (
+                                    <FormItem>
                                         <FormControl>
-                                            <Button
-                                                variant={"outline"}
-                                                style={{ width: "275px" }}
-                                            >
-                                                {field.value ? (
-                                                    format(field.value, "PPP")
-                                                ) : (
-                                                    <span>Choose date</span>
-                                                )}
-                                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                            </Button>
+                                            <Input
+                                                placeholder="Link Video"
+                                                {...field}
+                                                variant="bottom"
+                                            />
                                         </FormControl>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="w-auto p-0 bg-white" align="start">
-                                        <Calendar
-                                            mode="single"
-                                            selected={field.value}
-                                            onSelect={field.onChange}
-                                            initialFocus
-                                        />
-                                    </PopoverContent>
-                                </Popover>
-                                <FormMessage className="text-red-500" />
-                            </FormItem>
+                                        <FormMessage className="text-red-500" />
+                                    </FormItem>
+                                )}
+                            />
+                        ) : null}
+
+                        {materialType === "slide" && (
+                            <FormField
+                                control={form.control}
+                                name="materi"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Format PPT, Google Slide, PDF"
+                                                {...field}
+                                                variant="bottom"
+                                            />
+                                        </FormControl>
+                                        <FormMessage className="text-red-500" />
+                                    </FormItem>
+                                )}
+                            />
                         )}
-                    />
+
+                        <div style={{ marginTop: "0.5rem" }}>
+                            <Dialog className="">
+                                <DialogTrigger asChild>
+                                    <Button
+                                        variant="link"
+                                        className="flex h-fit items-center p-0 text-sm font-medium text-[#092C4C] hover:text-[#092C4C]/70 font-poppins font-semibold "
+                                        href=""
+                                    >
+                                        Tambah Link Materi <Plus className="inline-block h-4" />
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[361px]">
+                                    <DialogHeader className={"items-center	"}>
+                                        <DialogTitle className="font-poppins font-semibold text-[#092C4C] font-bold">Pilih Tipe Materi</DialogTitle>
+                                    </DialogHeader>
+                                    <RadioGroup
+                                        className="flex flex-row justify-around"
+                                        defaultValue={materialType}
+                                        onValueChange={(value) => {
+                                            setMaterialType(value);
+                                        }}
+                                    >
+                                        <div className="flex items-center space-x-2">
+                                            <DialogClose>
+                                                <RadioGroupItem value="slide" id="slide" />
+                                                <Label className="text-lg ms-2" htmlFor="slide">Slide</Label>
+                                            </DialogClose>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <DialogClose>
+                                                <RadioGroupItem value="video" id="video" />
+                                                <Label className="text-lg ms-2" htmlFor="video">Video</Label>
+                                            </DialogClose>
+                                        </div>
+                                    </RadioGroup>
+                                </DialogContent>
+                            </Dialog>
+                        </div>
+                    </div>
+
+                    <div>
+                        <FormLabel className="font-poppins font-semibold text-[#092C4C]">Kuis</FormLabel>
+                        <div style={{ marginTop: "0.5rem" }}>
+                            <a
+                                className="flex items-center text-sm font-medium text-[#092C4C] hover:text-[#092C4C]/70 font-poppins font-semibold "
+                                href=""
+                            >
+                                Tambah Kuis <Plus className="inline-block h-4" />
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <FormLabel className="font-poppins font-semibold text-[#092C4C]">Tugas</FormLabel>
+                        <div style={{ marginTop: "0.5rem" }}>
+                            <a
+                                className="flex items-center text-sm font-medium text-[#092C4C] hover:text-[#092C4C]/70 font-poppins font-semibold "
+                                href=""
+                            >
+                                Tambah Tugas <Plus className="inline-block h-4" />
+                            </a>
+                        </div>
+                    </div>
                     <div className="flex justify-between">
-                        <Button variant={"outline"} type="reset">Batal</Button>
-                        <Button variant={"default"} type="submit">Simpan</Button>
+                        <Button variant={"outline"} type="reset">
+                            Batal
+                        </Button>
+                        <Button variant={"default"} type="submit">
+                            Simpan
+                        </Button>
                     </div>
                 </form>
             </Form>
         </Layout>
     );
-}
-export default CreateMaterial
-
+};
+export default CreateMaterial;

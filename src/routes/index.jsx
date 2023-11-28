@@ -4,6 +4,7 @@ import App from "../pages/App";
 import LandingPage from "../pages/landing-page/index";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
+import CreateMaterial from "@/pages/module/createMaterial";
 
 
 export default function Router() {
@@ -13,12 +14,23 @@ export default function Router() {
             element: <LandingPage />,
         },
         {
-            path: '/dashboard',
-            element: <Dashboard />,
+            path: '/landing-page',
+            element: <LandingPage />,
+            // children: [
+            //     {
+            //         path: 'kelas', // Menggunakan path yang terpisah untuk Kelas
+            //         element: <AboutUs />
+            //     },
+            // ],
         },
         {
-            path: '/kelas',
-            element: <ListClass />
+            path: '/module',
+            children: [
+                {
+                    path: 'create',
+                    element: <CreateMaterial />,
+                },
+            ],
         },
     ])
 
