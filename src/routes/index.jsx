@@ -2,7 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "../pages/App";
 import LandingPage from "../pages/landing-page/index";
-import AboutUs from "@/pages/landing page/aboutUs";
+import CreateMaterial from "@/pages/module/createMaterial";
+// import AboutUs from "@/pages/landing page/aboutUs";
 
 
 export default function Router() {
@@ -14,10 +15,19 @@ export default function Router() {
         {
             path: '/landing-page',
             element: <LandingPage />,
+            // children: [
+            //     {
+            //         path: 'kelas', // Menggunakan path yang terpisah untuk Kelas
+            //         element: <AboutUs />
+            //     },
+            // ],
+        },
+        {
+            path: '/module',
             children: [
                 {
-                    path: 'kelas', // Menggunakan path yang terpisah untuk Kelas
-                    element: <AboutUs />
+                    path: 'create',
+                    element: <CreateMaterial />,
                 },
             ],
         },
