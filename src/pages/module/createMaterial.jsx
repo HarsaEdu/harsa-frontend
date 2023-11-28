@@ -56,7 +56,7 @@ const CreateMaterial = () => {
     return (
         <Layout>
             <Form {...form} >
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 border border-2 rounded px-3 py-5">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 border rounded px-3 py-5">
                     <FormField
                         control={form.control}
                         name="section"
