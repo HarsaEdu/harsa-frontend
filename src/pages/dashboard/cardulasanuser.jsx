@@ -20,8 +20,8 @@ export default function ListUlasan() {
   ];
 
   return (
-    <section className="container mx-auto w-full space-y-5 px-2">
-      <h2 className="text-start text-2xl font-bold">Ulasan User</h2>
+    <section className="container mx-auto w-full space-y-5 px-2 py-2">
+      <h2 className="text-start text-xl font-bold">Ulasan User</h2>
       <div className="grid grid-cols-2 gap-8 sm:grid-cols-1">
         {dataUlasanUser.map((value, index) => (
           <CardUlasanUser

@@ -13,8 +13,8 @@ export default function ListCardTotalMentee() {
   ];
 
   return (
-    <section className="container w-full gap-8 pb-4">
-      <div className="flex justify-between">
+    <section className="w-full pb-4">
+      <div className="flex gap-8 justify-between">
         {dataTotalMentee.map((value, index) => (
           <CardTotalMentee
             key={index}
