@@ -56,7 +56,7 @@ export default function JawabanKuis() {
   ]);
 
   function exportQuiz() {
-    console.log("Test Export");
+    console.log("Test Export 1");
   }
 
   return (
