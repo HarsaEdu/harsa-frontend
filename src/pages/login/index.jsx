@@ -8,8 +8,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useForm } from "react-hook-form";
+import { navigate } from "react-router-dom";
 import * as z from "zod";
 
 const formSchema = z.object({
@@ -28,41 +30,29 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "https://api.harsaedu.my.id/web/auth/login",
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-          }),
+          email: data.email,
+          password: data.password,
         },
       );
-
-      const result = await response.json();
-
-      if (response.ok) {
-        const { access_token } = result.data;
-
+      if (response.status === 200) {
+        const { access_token } = response.data.data;
         const cookies = new Cookies();
         cookies.set("authToken", access_token, { path: "/" });
-
-        window.location.href = "/dashboard";
-      } else {
-        form.setError("email", {
-          type: "manual",
-          message: "*Email yang Anda masukkan tidak terdaftar",
-        });
-        form.setError("password", {
-          type: "manual",
-          message: "*Password yang Anda masukkan salah",
-        });
+        navigate("/dashboard");
       }
     } catch (error) {
-      console.error("An error occurred during login:", error);
+      form.setError("email", {
+        type: "manual",
+        message: "*Email yang Anda masukkan tidak terdaftar",
+      });
+      form.setError("password", {
+        type: "manual",
+        message: "*Password yang Anda masukkan salah",
+      });
+      // console.error("An error occurred during login:", error);
     }
   };
 
