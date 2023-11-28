@@ -12,15 +12,14 @@ import Navbar from "@/components/ui/navbar";
 import { Input } from "@/components/ui/input";
 import Login from "./login";
 import Layout from "@/components/layout/Index";
-import { CardUlasanUser } from "@/components/landing-page/card/cardulasanuser";
+import TambahKuis from "./tambah-kuis";
 
 function App() {
-  const userRole = 'admin'
 
   return (
-    <Layout userRole={userRole}>
-      
-    </Layout>
+   <div>
+      <TambahKuis />
+   </div>
   );
 }
 
