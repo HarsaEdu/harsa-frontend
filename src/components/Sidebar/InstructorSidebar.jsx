@@ -8,13 +8,10 @@ function InstructorSidebar() {
         <div className="w-64 bg-[#092C4C]">
           <div className="px-6 pt-8">
             <div className="flex items-center justify-between">
-              <a
-                href="#"
-                className="p-1.5 rounded flex items-center justify-center"
-              >
-                <img src={HarsaIcon} alt="HarsaIcon" width={40} height={40}/>
-                <span className="text-lg font-bold">Harsa</span>
-              </a>
+            <Link to="/" className="p-1.5 rounded flex items-center justify-center">
+              <img src={HarsaIcon} alt="HarsaIcon" width={40} height={40} />
+              <span className="text-lg font-bold">Harsa</span>
+            </Link>
             </div>
           </div>
           <div className="px-6 pt-4">
