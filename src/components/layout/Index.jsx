@@ -8,7 +8,7 @@ const Layout = (props) => {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className="w-64 h-screen overflow-auto text-white">
+      <div className="w-80 h-screen overflow-auto text-white">
       {userRole === 'admin' ? (
           <AdminSidebar />
         ) : (
