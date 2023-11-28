@@ -2,8 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "../pages/App";
 import LandingPage from "../pages/landing-page/index";
-import AboutUs from "@/pages/landing page/aboutUs";
-
+import AboutUs from "@/pages/landing-page/aboutUs";
+import EditProfile from "@/pages/edit-profile";
 
 export default function Router() {
     const router = createBrowserRouter([
@@ -21,6 +21,10 @@ export default function Router() {
                 },
             ],
         },
+        {
+            path: "/edit-profile",
+            element: <EditProfile />
+        }
     ])
 
     return(
