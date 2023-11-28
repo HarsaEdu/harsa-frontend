@@ -9,6 +9,7 @@ import PemrogramanFrontend from "../../assets/pemrograman-frontend.svg"
 import PemrogramanBackend from "../../assets/pemrograman-backend.svg"
 import PemrogramanMobile from "../../assets/pemrograman-mobile.svg"
 import PemrogramanJava from "../../assets/pemrograman-java.svg"
+import Breadcrumb from "@/components/breadcrumb"
 
 const ListClass = () => {
     return(
@@ -17,16 +18,16 @@ const ListClass = () => {
                 <div className="flex justify-end mt-1">
                     <img src={Bell} alt="" className="w-[58px] cursor-pointer" />
                 </div>
-                    <a href="#" className="font-poppins text-[16px]">Dashboard &gt; Kelas </a>
+                <Breadcrumb />
                 <div className="flex justify-between mt-2 cursor-pointer">
                     <div className="flex">
                         <Button
-                        className="border border-[#092C4C] p-[10px] text-[#092C4C] rounded-none"
+                        className="border bg-white border-[#092C4C] p-[10px] text-[#092C4C] rounded-none"
                         >
                             <p className="font-poppins font-normal text-[16px]">Kategory</p>
                         </Button>
                         <Button
-                        className="border border-[#092C4C] p-[10px] text-[#092C4C] rounded-none"
+                        className="border bg-white border-[#092C4C] p-[10px] text-[#092C4C] rounded-none"
                         >
                             <p className="font-poppins font-normal text-[16px]">Filter</p>
                             <img src={Filter} alt="" className="ml-2" />

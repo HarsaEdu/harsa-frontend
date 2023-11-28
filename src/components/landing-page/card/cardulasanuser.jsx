@@ -2,7 +2,7 @@ export const CardUlasanUser = ({ image, title, desc, time }) => {
   
   return (
       <section
-        className="mx-start h-[140px] w-[770px] cursor-pointer space-y-3 rounded-xl border bg-[#FFFFFF] p-2 text-black border-[#A2D2FF]"
+        className="mx-start h-[140px] w-full cursor-pointer space-y-3 rounded-xl border bg-[#FFFFFF] p-2 text-black border-[#A2D2FF]"
       >
         <div className="flex items-start justify-start">
           {image}
