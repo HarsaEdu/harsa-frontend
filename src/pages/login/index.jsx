@@ -61,7 +61,7 @@ export default function Login() {
     <main className="h-screen w-screen overflow-hidden">
       <div className="grid h-full w-full grid-cols-2">
         <section className="flex items-center justify-center bg-[#092C4C]">
-          <img src="/public/assets/logos/logo-3.svg" alt="Harsa" />
+          <img src="/assets/logos/logo-3.svg" alt="Harsa" />
         </section>
 
         <section className="relative w-full space-y-5 bg-white">
