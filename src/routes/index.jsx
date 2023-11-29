@@ -2,15 +2,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "../pages/App";
 import LandingPage from "../pages/landing-page/index";
+import Dashboard from "@/pages/dashboard/index";
+import ListClass from "@/pages/list-class";
 import CreateMaterial from "@/pages/module/createMaterial";
-// import AboutUs from "@/pages/landing page/aboutUs";
 
 
 export default function Router() {
     const router = createBrowserRouter([
         {
             path: '/',
-            element: <App />,
+            element: <LandingPage />,
         },
         {
             path: '/landing-page',
