@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useForm } from "react-hook-form";
-import { navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 
 const formSchema = z.object({
@@ -20,6 +20,7 @@ const formSchema = z.object({
 });
 
 export default function Login() {
+  const navigate = useNavigate()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {

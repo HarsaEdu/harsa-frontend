@@ -5,6 +5,10 @@ import LandingPage from "../pages/landing-page/index";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
 import CreateMaterial from "@/pages/module/createMaterial";
+import Login from "@/pages/login";
+import AddQuiz from "@/pages/tambah-kuis";
+import HeaderQuiz from "@/pages/tambah-kuis/header";
+import ManageTugas from "@/pages/manage-tugas";
 
 
 export default function Router() {
@@ -14,8 +18,12 @@ export default function Router() {
             element: <LandingPage />,
         },
         {
-            path: '/landing-page',
-            element: <LandingPage />,
+            path: '/login',
+            element: <Login />,
+        },
+        {
+            path: '/dashboard',
+            element: <Dashboard />,
             // children: [
             //     {
             //         path: 'kelas', // Menggunakan path yang terpisah untuk Kelas
@@ -24,13 +32,24 @@ export default function Router() {
             // ],
         },
         {
-            path: '/module',
-            children: [
-                {
-                    path: 'create',
-                    element: <CreateMaterial />,
-                },
-            ],
+            path: '/kelas',
+            element: <ListClass />
+        },
+        {
+            path: '/kelas/tambah-modul',
+            element: <CreateMaterial />,
+        },
+        {
+            path: '/kelas/tambah-kuis',
+            element: <AddQuiz />,
+        },
+        {
+            path: '/kelas/tambah-pertanyaan',
+            element: <HeaderQuiz />,
+        },
+        {
+            path: '/kelas/manage-tugas',
+            element: <ManageTugas />,
         },
     ])
 

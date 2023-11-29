@@ -1,7 +1,7 @@
 import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Table from "@/components/tables";
+import Table from "@/components/table/tables";
 import { realData2 } from "@/utils/dummyData";
 import { React, useMemo } from "react";
 import { Check, X } from "lucide-react";

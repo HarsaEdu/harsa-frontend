@@ -1,5 +1,5 @@
-import { Card } from "@/components/landing-page/card";
-import Navbar from "@/components/ui/navbar";
+import { Card } from "@/pages/landing-page/card/cardFeature";
+import Navbar from "@/pages/landing-page/navbar";
 import Hero from "./hero";
 import AboutUs from "./aboutUs";
 import Footer from "./footer";
@@ -36,6 +36,7 @@ export default function LandingPage() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 h-[550px]">
           {dataFeature.map((value, index) => (
             <Card
+              key={value.title}
               image={
                 <img
                   src={`/assets/illustrations/feature${index + 1}.svg`}
