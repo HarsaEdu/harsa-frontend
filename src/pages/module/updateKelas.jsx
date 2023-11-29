@@ -1,4 +1,5 @@
 import ManageClass from "@/components/module/materiComponenet";
+import { Modules, Header } from "../../utils/moduleStatic";
 import { Button } from "../../components/ui/button";
 import EditIcon from "@/assets/icons/edit.svg";
 import Breadcrumb from "@/components/breadcrumb";
@@ -14,21 +15,14 @@ const materiOverview = () => {
           <span>Dropzone Area</span>
         </div>
         <div className="my-2 flex items-center gap-2 text-3xl font-bold">
-          <h1>Pemrograman frontend</h1>
+          <h1>{Header.title}</h1>
           <a href={"/"}>
             <img src={EditIcon} alt="edit-module" width={22} height={22} />
           </a>
         </div>
         <span className="text-xl font-bold">Deskripsi</span>
         <div className="my-2 flex items-start justify-between">
-          <p className="w-11/12 text-justify">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industrys standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popular
-          </p>
+          <p className="w-11/12 text-justify">{Header.deskripsi}</p>
           <a href={"/"} className="">
             <img src={EditIcon} alt="edit-module" width={22} height={22} />
           </a>
@@ -46,12 +40,24 @@ const materiOverview = () => {
             </li>
           </ul>
           <div className="flex flex-col border border-slate-300 px-2">
-            <div className="flex justify-end">
+            <div className="mb-5 flex justify-end">
               <Button className="m-2 rounded-[4px] bg-[#092C4C] text-white">
                 <Link href="/">Tambah Modul</Link>
               </Button>
             </div>
-            <ManageClass />
+            {Modules.map((Module) => (
+              <div key={Module.id}>
+                <ManageClass
+                  tipeMateri={Module.tipeMateri}
+                  judulMateri={Module.judulMateri}
+                  teksMateri={Module.teksMateri}
+                  videoMateri={Module.videoMateri}
+                  tugasMateri={Module.tugasMateri}
+                  kuisMateri={Module.kuis}
+                  subtitleMateri={Module.judulMateri}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
