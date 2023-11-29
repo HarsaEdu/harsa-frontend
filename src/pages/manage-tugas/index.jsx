@@ -1,17 +1,12 @@
 import { React, useMemo } from "react";
 import { Pencil } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Table from "@/components/tables";
 import { realData } from "@/utils/dummyData";
-import RowShow from "@/components/rowShow";
+import Layout from "@/components/layout/Index";
+import BellIcon from "../../assets/bell.svg";
+import Breadcrumb from "@/components/breadcrumb";
+import { Link } from "react-router-dom";
 
 export default function ManageTugas() {
   const columns = useMemo(() => [
@@ -67,56 +62,68 @@ export default function ManageTugas() {
     },
   ]);
 
-  function exportTugas() {
-    console.log("Test Export");
+  function handleTitle() {
+    console.log("Test Edit Title");
   }
+  function handleDescription() {
+    console.log("Test Edit Description");
+  }
+
   const selectItem = [10, 25, 50];
   return (
-    <div className="m-5 rounded-lg border border-[#F2994A] p-5">
-      {/* Nama dan Deskripsi */}
-      <div className="flex justify-between">
-        <h2 className="text-lg font-bold">Tugas Pengenalan UI/UX</h2>
-        <div className="bg-[#092C4C] p-2">
-          <Pencil size={15} color="white" />
-        </div>
+    <Layout>
+      <div className="me-5 flex justify-end">
+        <img src={BellIcon} alt="Icon" className="w-[50px]" />
       </div>
-
-      <div className="mt-8">
+      <div className="ms-5 mt-5">
+        <Breadcrumb />
+      </div>
+      <div className="m-5 rounded-lg border border-[#F2994A] p-5">
+        {/* Nama dan Deskripsi */}
         <div className="flex justify-between">
-          <h2 className="text-lg font-bold">Deskripsi</h2>
-          <div className="bg-[#092C4C] p-2">
+          <h2 className="text-lg font-bold">Tugas Pengenalan UI/UX</h2>
+          <div className="bg-[#092C4C] p-2" onClick={handleTitle}>
             <Pencil size={15} color="white" />
           </div>
         </div>
 
-        <div className="text-md me-12">
-          Analisis insight/informasi yang diperlukan untuk memenuhi tujuan ini.
-          Analisis data apa saja yang dibutuhkan. Analisis prosesbisnis/prosedur
-          cara memilih mapres Rancanglah visualisasi dashboard untuk menyajikan
-          informasi sesuai kebutuhan untuk menyajikan poin 1. Buatlah simulasi
-          bagaimana mengolah data sampai bisa menghasilkan visualisasi yang
-          dimaksud. Siapa saja pengguna BI Aturan/prosedur/hukum apa saja yang
-          terkait dan perlu dipenuhi.
+        <div className="mt-8">
+          <div className="flex justify-between">
+            <h2 className="text-lg font-bold">Deskripsi</h2>
+            <div className="bg-[#092C4C] p-2" onClick={handleDescription}>
+              <Pencil size={15} color="white" />
+            </div>
+          </div>
+
+          <div className="text-md me-12">
+            Analisis insight/informasi yang diperlukan untuk memenuhi tujuan
+            ini. Analisis data apa saja yang dibutuhkan. Analisis
+            prosesbisnis/prosedur cara memilih mapres Rancanglah visualisasi
+            dashboard untuk menyajikan informasi sesuai kebutuhan untuk
+            menyajikan poin 1. Buatlah simulasi bagaimana mengolah data sampai
+            bisa menghasilkan visualisasi yang dimaksud. Siapa saja pengguna BI
+            Aturan/prosedur/hukum apa saja yang terkait dan perlu dipenuhi.
+          </div>
+        </div>
+
+        {/* Row and Search */}
+        <div className="mt-8">
+          <div className="flex">
+            <h2 className="text-lg font-bold">Pengumpulan Tugas</h2>
+          </div>
+        </div>
+
+        {/* Table */}
+        <div className="mt-8">
+          <Table
+            datas={realData}
+            columns={columns}
+            classNameHeader="bg-[#092C4C] text-white"
+            isVisible={true}
+            rowVisible={true}
+          />
         </div>
       </div>
-
-      {/* Row and Search */}
-      <div className="mt-8">
-        <div className="flex">
-          <h2 className="text-lg font-bold">Pengumpulan Tugas</h2>
-        </div>
-      </div>
-
-      {/* Table */}
-      <div className="mt-8">
-        <Table
-          datas={realData}
-          columns={columns}
-          classNameHeader="bg-[#092C4C] text-white"
-          isVisible={true}
-          rowVisible={true}
-        />
-      </div>
-    </div>
+    </Layout>
   );
 }
