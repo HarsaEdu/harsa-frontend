@@ -13,7 +13,7 @@ const Breadcrumb = () => {
 
   return (
     <div className='font-poppins'>
-      <Link to="/">Dashboard</Link>
+      <Link to="/dashboard">Dashboard</Link>
       {pathnames.map((name, index) => {
         const formattedName = formatBreadcrumbName(name);
         const routeTo = `${pathnames.slice(0, index + 1).join('/')}`;
