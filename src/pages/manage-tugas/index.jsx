@@ -7,6 +7,7 @@ import Layout from "@/components/layout/Index";
 import BellIcon from "../../assets/bell.svg";
 import Breadcrumb from "@/components/breadcrumb";
 import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 
 export default function ManageTugas() {
   const columns = useMemo(() => [
@@ -121,6 +122,22 @@ export default function ManageTugas() {
             classNameHeader="bg-[#092C4C] text-white"
             isVisible={true}
             rowVisible={true}
+            searchComponent={
+              <div className="flex w-1/2 justify-end space-x-3">
+                <p className="text-xl">Search</p>{" "}
+                <Input
+                  id="search"
+                  className=" w-4/12 rounded-xl border-[#092C4C]"
+                />
+                <Button
+                  id="export"
+                  className="rounded-xl px-20 py-5 text-xl"
+                  onClick={() => console.log("first")}
+                >
+                  Export
+                </Button>
+              </div>
+            }
           />
         </div>
       </div>
