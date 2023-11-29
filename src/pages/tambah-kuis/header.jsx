@@ -1,6 +1,7 @@
 import Breadcrumb from "@/components/breadcrumb";
 import { React, useState } from "react";
 import JawabanKuis from "./jawabanKuis";
+import Layout from "@/components/layout/Index";
 
 export default function HeaderQuiz() {
   const [isActivePertanyaan, setActivePertanyaan] = useState(true);
@@ -14,7 +15,7 @@ export default function HeaderQuiz() {
   };
 
   return (
-    <div>
+    <Layout>
       <Breadcrumb />
 
       <div className="mt-12 flex justify-center">
@@ -48,6 +49,6 @@ export default function HeaderQuiz() {
       </div>
 
       <div>{isActivePertanyaan ? null : <JawabanKuis />}</div>
-    </div>
+    </Layout>
   );
 }

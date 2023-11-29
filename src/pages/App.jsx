@@ -15,12 +15,7 @@ import Layout from "@/components/layout/Index";
 import TambahKuis from "./tambah-kuis";
 
 function App() {
-
-  return (
-   <div>
-      <TambahKuis />
-   </div>
-  );
+  return <div></div>;
 }
 
 export default App;
