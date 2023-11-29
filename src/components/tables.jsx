@@ -32,20 +32,6 @@ export default function Table(props) {
       <div className="mt-4 flex justify-between">
         <div className="mt-4 flex w-full items-center justify-between">
           {rowVisible && <RowShow table={table} />}
-          <div className="mb-4 flex w-1/2 justify-end space-x-3">
-            <p className="text-xl">Search</p>{" "}
-            <Input
-              id="search"
-              className=" w-4/12 rounded-xl border-[#092C4C]"
-            />
-            <Button
-              id="export"
-              className="rounded-xl px-20 py-5 text-xl"
-              onClick={onClick}
-            >
-              Export
-            </Button>
-          </div>
         </div>
       </div>
       <table className="w-full border-2 border-black">
