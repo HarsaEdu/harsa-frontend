@@ -4,7 +4,6 @@ import Breadcrumb from "@/components/breadcrumb";
 
 
 function App() {
-
   return (
     <Layout userRole={userRole}>
       <Breadcrumb />
