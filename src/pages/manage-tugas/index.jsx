@@ -1,10 +1,10 @@
 import { React, useMemo } from "react";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Table from "@/components/tables";
+import Table from "@/components/table/tables";
 import { realData } from "@/utils/dummyData";
 import Layout from "@/components/layout/Index";
-import BellIcon from "../../assets/bell.svg";
+import Bell from "../../assets/bell.svg";
 import Breadcrumb from "@/components/breadcrumb";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -73,69 +73,69 @@ export default function ManageTugas() {
   const selectItem = [10, 25, 50];
   return (
     <Layout>
-      <div className="me-5 flex justify-end">
-        <img src={BellIcon} alt="Icon" className="w-[50px]" />
-      </div>
-      <div className="ms-5 mt-5">
+      <div className="container mb-10 font-poppins">
+        <div className="mt-1 flex justify-end">
+          <img src={Bell} alt="" className="w-[58px] cursor-pointer" />
+        </div>
         <Breadcrumb />
-      </div>
-      <div className="m-5 rounded-lg border border-[#F2994A] p-5">
-        {/* Nama dan Deskripsi */}
-        <div className="flex justify-between">
-          <h2 className="text-lg font-bold">Tugas Pengenalan UI/UX</h2>
-          <div className="bg-[#092C4C] p-2" onClick={handleTitle}>
-            <Pencil size={15} color="white" />
-          </div>
-        </div>
-
-        <div className="mt-8">
+        <div className="my-5 rounded-lg border border-[#F2994A] p-5">
+          {/* Nama dan Deskripsi */}
           <div className="flex justify-between">
-            <h2 className="text-lg font-bold">Deskripsi</h2>
+            <h2 className="text-lg font-bold">Tugas Pengenalan UI/UX</h2>
+            <div className="bg-[#092C4C] p-2" onClick={handleTitle}>
+              <Pencil size={15} color="white" />
+            </div>
           </div>
 
-          <div className="text-md me-12">
-            Analisis insight/informasi yang diperlukan untuk memenuhi tujuan
-            ini. Analisis data apa saja yang dibutuhkan. Analisis
-            prosesbisnis/prosedur cara memilih mapres Rancanglah visualisasi
-            dashboard untuk menyajikan informasi sesuai kebutuhan untuk
-            menyajikan poin 1. Buatlah simulasi bagaimana mengolah data sampai
-            bisa menghasilkan visualisasi yang dimaksud. Siapa saja pengguna BI
-            Aturan/prosedur/hukum apa saja yang terkait dan perlu dipenuhi.
-          </div>
-        </div>
+          <div className="mt-8">
+            <div className="flex justify-between">
+              <h2 className="text-lg font-bold">Deskripsi</h2>
+            </div>
 
-        {/* Row and Search */}
-        <div className="mt-8">
-          <div className="flex">
-            <h2 className="text-lg font-bold">Pengumpulan Tugas</h2>
+            <div className="text-md me-12">
+              Analisis insight/informasi yang diperlukan untuk memenuhi tujuan
+              ini. Analisis data apa saja yang dibutuhkan. Analisis
+              prosesbisnis/prosedur cara memilih mapres Rancanglah visualisasi
+              dashboard untuk menyajikan informasi sesuai kebutuhan untuk
+              menyajikan poin 1. Buatlah simulasi bagaimana mengolah data sampai
+              bisa menghasilkan visualisasi yang dimaksud. Siapa saja pengguna
+              BI Aturan/prosedur/hukum apa saja yang terkait dan perlu dipenuhi.
+            </div>
           </div>
-        </div>
 
-        {/* Table */}
-        <div className="mt-8">
-          <Table
-            datas={realData}
-            columns={columns}
-            classNameHeader="bg-[#092C4C] text-white"
-            isVisible={true}
-            rowVisible={true}
-            searchComponent={
-              <div className="flex w-1/2 justify-end space-x-3">
-                <p className="text-xl">Search</p>{" "}
-                <Input
-                  id="search"
-                  className=" w-4/12 rounded-xl border-[#092C4C]"
-                />
-                <Button
-                  id="export"
-                  className="rounded-xl px-20 py-5 text-xl"
-                  onClick={() => console.log("first")}
-                >
-                  Export
-                </Button>
-              </div>
-            }
-          />
+          {/* Row and Search */}
+          <div className="mt-8">
+            <div className="flex">
+              <h2 className="text-lg font-bold">Pengumpulan Tugas</h2>
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="mt-8">
+            <Table
+              datas={realData}
+              columns={columns}
+              classNameHeader="bg-[#092C4C] text-white"
+              isVisible={true}
+              rowVisible={true}
+              searchComponent={
+                <div className="flex w-1/2 justify-end space-x-3">
+                  <p className="text-xl">Search</p>{" "}
+                  <Input
+                    id="search"
+                    className=" w-4/12 rounded-xl border-[#092C4C]"
+                  />
+                  <Button
+                    id="export"
+                    className="rounded-xl px-20 py-5 text-xl"
+                    onClick={() => console.log("first")}
+                  >
+                    Export
+                  </Button>
+                </div>
+              }
+            />
+          </div>
         </div>
       </div>
     </Layout>

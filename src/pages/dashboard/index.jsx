@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import CardModule from './cardModule';
+import CardModule from './card/cardModule';
 import Layout from '@/components/layout/Index';
-import Bell from "../../assets/bell.svg";
 import { Button } from "@/components/ui/button"
 import ListUlasan from './cardUlasanUser';
 import ListCardTotalMentee from './listCardTotalMentee';
@@ -27,9 +26,6 @@ const Dashboard = () => {
   return (
     <Layout>
       <div className='container mb-10 font-poppins'>
-        <div className="flex justify-end mt-1">
-          <img src={Bell} alt="" className="w-[58px] cursor-pointer" />
-        </div>
         <div>
           <h1 className='text-[40px] font-bold'>Hello Joko,</h1>
           <h3 className='text-[24px]'>udah siap ngajar lagi?</h3>  

@@ -27,69 +27,7 @@ const formSchema = z.object({
 });
 
 function App() {
-  const [preview, setPreview] = useState("");
-  const [image, setImage] = useState("");
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      image: "",
-    },
-  });
-
-  const onSubmit = (data) => {
-    if (preview == "") {
-      form.setError("image", { message: "Image is Required" });
-    } else {
-      setImage(URL.createObjectURL(data.image));
-      console.log(data);
-      setPreview("");
-      form.resetField("image");
-    }
-  };
-
-  const handleImageChange = (file) => {
-    if (file) {
-      setPreview(URL.createObjectURL(file));
-    } else {
-      setPreview("");
-      setImage("");
-    }
-  };
-
-  return (
-    <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="image"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                  <InputFile
-                    textUpload="Upload Cover"
-                    preview={preview}
-                    onChange={(e) => {
-                      field.onChange(e.target.files[0]);
-                      handleImageChange(e.target.files[0]);
-                    }}
-                    setPreview={setPreview}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage className="text-red-500" />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-      <img src={image} alt="" />
-    </div>
-  );
+  return <div></div>;
 }
 
 export default App;
