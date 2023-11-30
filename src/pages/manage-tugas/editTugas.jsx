@@ -66,6 +66,7 @@ export default function EditTugas() {
           title: "Sukses Update Data",
           icon: "success",
           showConfirmButton: false,
+          showCloseButton: true,
           timer: 2000,
         }).then((result) => {
           if (result.isDismissed) {
