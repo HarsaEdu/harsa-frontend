@@ -1,9 +1,12 @@
 import Layout from "@/components/layout/Index";
 
 function App() {
-  const userRole = "";
-
-  return <Layout userRole={userRole}></Layout>;
+  
+  return (
+    <Layout userRole={userRole}>
+      <Breadcrumb />
+    </Layout>
+  );
 }
 
 export default App;
