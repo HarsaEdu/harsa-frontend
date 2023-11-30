@@ -8,6 +8,7 @@ import Bell from "../../assets/bell.svg";
 import Breadcrumb from "@/components/breadcrumb";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
 
 export default function ManageTugas() {
   const columns = useMemo(() => [
@@ -63,6 +64,8 @@ export default function ManageTugas() {
     },
   ]);
 
+  const navigate = useNavigate();
+
   function handleTitle() {
     console.log("Test Edit Title");
   }
@@ -74,16 +77,17 @@ export default function ManageTugas() {
   return (
     <Layout>
       <div className="container mb-10 font-poppins">
-        <div className="flex justify-end mt-1">
-          <img src={Bell} alt="" className="w-[58px] cursor-pointer" />
-        </div>
         <Breadcrumb />
         <div className="my-5 rounded-lg border border-[#F2994A] p-5">
           {/* Nama dan Deskripsi */}
           <div className="flex justify-between">
             <h2 className="text-lg font-bold">Tugas Pengenalan UI/UX</h2>
             <div className="bg-[#092C4C] p-2" onClick={handleTitle}>
-              <Pencil size={15} color="white" />
+              <Pencil
+                size={15}
+                color="white"
+                onClick={() => navigate("./edit")}
+              />
             </div>
           </div>
 
@@ -101,8 +105,8 @@ export default function ManageTugas() {
               prosesbisnis/prosedur cara memilih mapres Rancanglah visualisasi
               dashboard untuk menyajikan informasi sesuai kebutuhan untuk
               menyajikan poin 1. Buatlah simulasi bagaimana mengolah data sampai
-              bisa menghasilkan visualisasi yang dimaksud. Siapa saja pengguna BI
-              Aturan/prosedur/hukum apa saja yang terkait dan perlu dipenuhi.
+              bisa menghasilkan visualisasi yang dimaksud. Siapa saja pengguna
+              BI Aturan/prosedur/hukum apa saja yang terkait dan perlu dipenuhi.
             </div>
           </div>
 
