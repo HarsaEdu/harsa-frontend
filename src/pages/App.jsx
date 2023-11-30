@@ -37,10 +37,14 @@ function App() {
   });
 
   const onSubmit = (data) => {
-    setImage(URL.createObjectURL(data.image));
-    console.log(data);
-    setPreview("");
-    form.resetField("image");
+    if (preview == "") {
+      form.setError("image", { message: "Image is Required" });
+    } else {
+      setImage(URL.createObjectURL(data.image));
+      console.log(data);
+      setPreview("");
+      form.resetField("image");
+    }
   };
 
   const handleImageChange = (file) => {
