@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useForm } from "react-hook-form";
-import { navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 
 const formSchema = z.object({
@@ -20,6 +20,7 @@ const formSchema = z.object({
 });
 
 export default function Login() {
+  const navigate = useNavigate()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,7 +61,7 @@ export default function Login() {
     <main className="h-screen w-screen overflow-hidden">
       <div className="grid h-full w-full grid-cols-2">
         <section className="flex items-center justify-center bg-[#092C4C]">
-          <img src="/public/assets/logos/logo-3.svg" alt="Harsa" />
+          <img src="/assets/logos/logo-3.svg" alt="Harsa" />
         </section>
 
         <section className="relative w-full space-y-5 bg-white">

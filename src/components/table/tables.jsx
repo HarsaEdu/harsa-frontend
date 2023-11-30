@@ -6,8 +6,8 @@ import {
 } from "@tanstack/react-table";
 import TablePagination from "./tablePagination";
 import RowShow from "./rowShow";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 export default function Table(props) {
   const {

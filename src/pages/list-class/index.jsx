@@ -1,5 +1,5 @@
 import Layout from "@/components/layout/Index"
-import CardListClass from "@/components/card/CardListClass"
+import CardListClass from "@/pages/list-class/CardListClass"
 import { Button } from "@/components/ui/button"
 
 import Bell from "../../assets/bell.svg"

@@ -1,5 +1,6 @@
-import { Button } from "./button";
-import HarsaLogo from "../../assets/HarsaLogo.svg";
+import { Button } from "../../components/ui/button";
+import HarsaLogo from "/assets/logos/HarsaLogo.svg";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -18,7 +19,9 @@ export default function Navbar() {
           <a href="">Testimoni</a>
           <a href="">FAQ</a>
           <a href="">Get App</a>
-          <Button className="bg-[#092C4C] w-36 h-10 font-bold text-white">Login</Button>
+          <Link to='/login'>
+            <Button className="bg-[#092C4C] w-36 h-10 font-bold text-white">Login</Button>
+          </Link>
         </div>
       </div>
     </div>

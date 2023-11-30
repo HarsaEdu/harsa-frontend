@@ -1,5 +1,5 @@
 import React from "react"
-import { Button } from "../ui/button"
+import { Button } from "../../components/ui/button"
 
 import Star from "../../assets/Star.svg"
 import Delete from "../../assets/Delete.svg"
