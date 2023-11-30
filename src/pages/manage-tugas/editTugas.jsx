@@ -58,7 +58,9 @@ export default function EditTugas() {
       icon: "question",
       showCancelButton: true,
       showConfirmButton: true,
+      confirmButtonColor: "#092C4C",
       confirmButtonText: "Ya, Hapus",
+      cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
         onSave(data);
