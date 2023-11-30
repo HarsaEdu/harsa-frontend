@@ -1,4 +1,4 @@
-import { CardTestimoni } from "../../components/landingpage/card/cardtestimoni";
+import { CardTestimoni } from "./card/cardtestimoni";
 
 export default function TestimoniCard() {
   const dataTestimoni = [

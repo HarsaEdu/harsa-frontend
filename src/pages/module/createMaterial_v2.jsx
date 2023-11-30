@@ -71,21 +71,21 @@ const CreateMaterial = () => {
                     <p className="font-poppins font-semibold text-xl">Persiapan Kelas</p>
                     <img className="h-6 bg-[#092C4C] rounded" src={editIcon} alt="" />
                 </div>
-                <div className="p-2 rounded border border-2 border-black flex flex-row items-center	justify-between">
+                <div className="p-2 rounded border-2 border-black flex flex-row items-center	justify-between">
                     <p className="font-poppins">Pengenalan Tentang Front-End Developer</p>
                     <div className="flex items-center gap-2">
                         <img className="h-6" src={deleteIcon} alt="" />
                         <img className="h-4" src={arrowBottom} alt="" />
                     </div>
                 </div>
-                <div className="p-2 rounded border border-2 border-black flex flex-row items-center	justify-between">
+                <div className="p-2 rounded border-2 border-black flex flex-row items-center	justify-between">
                     <p className="font-poppins">Pengenalan Tentang Front-End Developer</p>
                     <div className="flex items-center gap-2">
                         <img className="h-6" src={deleteIcon} alt="" />
                         <img className="h-4" src={arrowBottom} alt="" />
                     </div>
                 </div>
-                <div className="p-2 rounded border border-2 border-black flex flex-row items-center	justify-between">
+                <div className="p-2 rounded border-2 border-black flex flex-row items-center	justify-between">
                     <p className="font-poppins">Pengenalan Tentang Front-End Developer</p>
                     <div className="flex items-center gap-2">
                         <img className="h-6" src={deleteIcon} alt="" />
@@ -95,7 +95,7 @@ const CreateMaterial = () => {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8 rounded border border-2 border-black px-3 py-5"
+                        className="space-y-8 rounded border-2 border-black px-3 py-5"
                     >
                         <FormField
                             control={form.control}
@@ -167,7 +167,7 @@ const CreateMaterial = () => {
                                     <DialogTrigger asChild>
                                         <Button
                                             variant="link"
-                                            className="flex h-fit items-center p-0 font-poppins text-sm font-medium font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
+                                            className="flex h-fit items-center p-0 font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
                                             href=""
                                         >
                                             Tambah Link Materi <Plus className="inline-block h-4" />
@@ -175,7 +175,7 @@ const CreateMaterial = () => {
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[361px]">
                                         <DialogHeader className={"items-center	"}>
-                                            <DialogTitle className="font-poppins font-bold font-semibold text-[#092C4C]">
+                                            <DialogTitle className="font-poppins font-bold text-[#092C4C]">
                                                 Pilih Tipe Materi
                                             </DialogTitle>
                                         </DialogHeader>
@@ -214,7 +214,7 @@ const CreateMaterial = () => {
                             </FormLabel>
                             <div style={{ marginTop: "0.5rem" }}>
                                 <a
-                                    className="flex items-center font-poppins text-sm font-medium font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
+                                    className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
                                     href=""
                                 >
                                     Tambah Kuis <Plus className="inline-block h-4" />
@@ -227,7 +227,7 @@ const CreateMaterial = () => {
                             </FormLabel>
                             <div style={{ marginTop: "0.5rem" }}>
                                 <a
-                                    className="flex items-center font-poppins text-sm font-medium font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
+                                    className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
                                     href=""
                                 >
                                     Tambah Tugas <Plus className="inline-block h-4" />

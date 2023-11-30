@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CardModule from './cardModule';
+import CardModule from './card/cardModule';
 import Layout from '@/components/layout/Index';
 import Bell from "../../assets/bell.svg";
 import { Button } from "@/components/ui/button"
