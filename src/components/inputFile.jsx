@@ -74,7 +74,11 @@ import {
 } from "@/components/ui/form";
 
 const formSchema = z.object({
-  image: z.any(),
+  image: z
+    .any()
+    .refine((data) => data !== undefined && data !== null && data !== "", {
+      message: "Image is required",
+    }),
 });
 
 function App() {
@@ -87,7 +91,14 @@ function App() {
   });
 
   const onSubmit = (data) => {
-    console.log(data); untuk test datanya masuk atau tidak
+    if (preview == "") {
+      form.setError("image", { message: "Image is Required" });
+    } else {
+      setImage(URL.createObjectURL(data.image));
+      console.log(data); // untuk test datanya masuk atau tidak
+      setPreview("");
+      form.resetField("image");
+    } 
   };
 
   const handleImageChange = (file) => {

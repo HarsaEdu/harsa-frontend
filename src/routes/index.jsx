@@ -13,10 +13,6 @@ export default function Router() {
       element: <LandingPage />,
     },
     {
-      path: "/test",
-      element: <App />,
-    },
-    {
       path: "/landing-page",
       element: <LandingPage />,
       // children: [

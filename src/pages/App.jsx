@@ -80,7 +80,7 @@ function App() {
                 <FormDescription>
                   This is your public display name.
                 </FormDescription>
-                <FormMessage />
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
