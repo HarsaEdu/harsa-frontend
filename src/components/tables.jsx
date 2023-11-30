@@ -31,7 +31,11 @@ export default function Table(props) {
   return (
     <div className="w-full">
       <div className="mt-4 flex justify-between">
-        <div className="my-4 flex w-full items-center justify-between">
+        <div
+          className={`${
+            rowVisible && "my-4 "
+          }flex w-full items-center justify-between`}
+        >
           {rowVisible && <RowShow table={table} />}
           {searchComponent}
         </div>
