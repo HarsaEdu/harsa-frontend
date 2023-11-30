@@ -18,9 +18,6 @@ export default function HeaderQuiz() {
   return (
     <Layout>
       <div className="container mb-10 font-poppins">
-        <div className="flex justify-end mt-1">
-          <img src={Bell} alt="" className="w-[58px] cursor-pointer" />
-        </div>
         <Breadcrumb />
         <div className="mt-10 flex justify-center">
           <div className="flex flex-col items-center">
