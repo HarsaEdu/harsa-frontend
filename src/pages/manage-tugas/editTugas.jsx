@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Index";
 import { React, useMemo, useEffect } from "react";
 import { Pencil } from "lucide-react";
-import Table from "@/components/tables";
+import Table from "@/components/table/tables";
 import { realData } from "@/utils/dummyData";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -210,7 +210,7 @@ export default function EditTugas() {
         </div>
 
         {/* Table */}
-        <div className="mt-8">
+        <div className="mt-2">
           <Table
             datas={realData}
             columns={columns}
@@ -218,7 +218,7 @@ export default function EditTugas() {
             isVisible={true}
             rowVisible={true}
             searchComponent={
-              <div className="flex w-1/2 justify-end space-x-3">
+              <div className="flex w-1/2 items-center justify-end space-x-3">
                 <p className="text-xl">Search</p>{" "}
                 <Input
                   id="search"
