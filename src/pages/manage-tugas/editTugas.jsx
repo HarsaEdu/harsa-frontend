@@ -151,6 +151,7 @@ export default function EditTugas() {
                   <FormItem className="w-full">
                     <FormControl>
                       <Input
+                        id="titleTugas"
                         {...field}
                         className="rounded-none border-0 border-b border-b-black text-lg font-bold active:border-0"
                       />
@@ -173,6 +174,7 @@ export default function EditTugas() {
                       </FormLabel>
                       <FormControl>
                         <Textarea
+                          id="descriptionTugas"
                           {...field}
                           className="rounded-none border-0 border-b border-b-black active:border-0"
                         />
