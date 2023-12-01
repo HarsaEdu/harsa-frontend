@@ -9,6 +9,7 @@ import Login from "@/pages/login";
 import AddQuiz from "@/pages/tambah-kuis";
 import HeaderQuiz from "@/pages/tambah-kuis/header";
 import ManageTugas from "@/pages/manage-tugas";
+import EditTugas from "@/pages/manage-tugas/editTugas";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -49,6 +50,10 @@ export default function Router() {
     {
       path: "/kelas/manage-tugas",
       element: <ManageTugas />,
+    },
+    {
+      path: "/kelas/manage-tugas/edit", //Nanti ganti jadi ID
+      element: <EditTugas />,
     },
   ]);
 
