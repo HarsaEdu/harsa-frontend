@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import Swal from "sweetalert2"
-const Question = () => {
+const CreateQuiz = () => {
     const [questions, setQuestions] = useState([
         {
             id: 1,
@@ -136,4 +136,4 @@ function handleClick(){
     )
 }
 
-export default Question
+export default CreateQuiz

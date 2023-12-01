@@ -2,7 +2,7 @@ import Breadcrumb from "@/components/breadcrumb";
 import { React, useState } from "react";
 import JawabanKuis from "./jawabanKuis";
 import Layout from "@/components/layout/Index";
-import Question from "./question";
+import CreateQuiz from "./createQuiz";
 
 export default function HeaderQuiz() {
   const [isActivePertanyaan, setActivePertanyaan] = useState(true);
@@ -48,7 +48,7 @@ export default function HeaderQuiz() {
             </div>
           </div>
         </div>
-        <div>{isActivePertanyaan ? <Question /> : null}</div>
+        <div>{isActivePertanyaan ? <CreateQuiz /> : null}</div>
         <div>{isActivePertanyaan ? null : <JawabanKuis />}</div>
       </div>
     </Layout>
