@@ -1,7 +1,3 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,6 +7,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { Cookies } from "react-cookie";
+import { useForm } from "react-hook-form";
+import { navigate } from "react-router-dom";
+import * as z from "zod";
 
 const formSchema = z.object({
   email: z.string().nonempty("*Email wajib di isi"),
@@ -22,30 +24,35 @@ export default function Login() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
-  const onSubmit = (data) => {
-    if (data.email === "admin" && data.password === "admin") {
-      alert("Berhasil Login!");
-    } else {
-      if (data.email !== "admin") {
-        form.setError("email", {
-          type: "manual",
-          message: "*Email yang Anda masukkan tidak terdaftar",
-        });
-      } else {
-        form.clearErrors("email");
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://api.harsaedu.my.id/web/auth/login",
+        {
+          email: data.email,
+          password: data.password,
+        },
+      );
+      if (response.status === 200) {
+        const { access_token } = response.data.data;
+        const cookies = new Cookies();
+        cookies.set("authToken", access_token, { path: "/" });
+        navigate("/dashboard");
       }
-
-      if (data.password !== "admin") {
-        form.setError("password", {
-          type: "manual",
-          message: "*Password yang Anda masukkan salah",
-        });
-      } else {
-        form.clearErrors("password");
-      }
+    } catch (error) {
+      form.setError("email", {
+        type: "manual",
+        message: "*Email yang Anda masukkan tidak terdaftar",
+      });
+      form.setError("password", {
+        type: "manual",
+        message: "*Password yang Anda masukkan salah",
+      });
+      // console.error("An error occurred during login:", error);
     }
   };
 

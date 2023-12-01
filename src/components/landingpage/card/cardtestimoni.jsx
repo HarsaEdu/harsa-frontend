@@ -1,4 +1,4 @@
-    export const CardTestimoni = ({ image, title, desc }) => {
+export const CardTestimoni = ({ image, title, desc }) => {
     return (
         <section
         className="mx-auto h-full w-fit cursor-pointer space-y-3 rounded-xl border bg-[#092C4C] p-2 text-white"
@@ -14,4 +14,4 @@
         </p>
         </section>
     );
-    };
+};
