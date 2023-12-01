@@ -74,9 +74,6 @@ export default function ManageTugas() {
   return (
     <Layout>
       <div className="container mb-10 font-poppins">
-        <div className="mt-1 flex justify-end">
-          <img src={Bell} alt="" className="w-[58px] cursor-pointer" />
-        </div>
         <Breadcrumb />
         <div className="my-5 rounded-lg border border-[#F2994A] p-5">
           {/* Nama dan Deskripsi */}
