@@ -69,7 +69,7 @@ export default function EditProfile() {
   return (
     <div>
       <EditProfileLayout>
-        <div className="rounded-xl border border-[#f2994a]  p-5 ">
+        <div className="rounded-xl border border-[#f2994a] p-5 font-poppins ">
           <div className="flex items-center gap-5">
             <div className="h-20 w-20">
               <img
@@ -234,7 +234,7 @@ export default function EditProfile() {
                     Kelas Yang Diajar
                   </FormLabel>
                   <FormControl>
-                    <div className="grid grid-cols-3 justify-items-center">
+                    <div className="grid grid-cols-3 gap-y-3 justify-items-center">
                       <CardEditProfile title="Becoming Professional UI/UX" />
                       <CardEditProfile title="Pengenalan Dasar Sistem Informasi" />
                       <CardEditProfile title="Design Grafis Untuk Pemula" />
