@@ -1,26 +1,32 @@
-
-import { useState } from "react";
-import reactLogo from "../assets/react.svg";
-import viteLogo from "../assets/vite.svg";
-import AdminSidebar from "@/components/Sidebar/AdminSidebar";
-import { Button } from "@/components/ui/button";
-// import LandingPages from "./landingPage/Faq";
-import { buttonVariants } from "@/components/ui/button";
-// import { Link } from "lucide-react";
-import Navbar from "@/components/ui/navbar";
-// import Hero from "@/components/landing-page/hero";
-// import GetApps from "@/components/landing-page/get-apps";
-import { Input } from "@/components/ui/input";
-import Login from "./login";
-
-import React from "react";
-
+import { React, useState } from "react";
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
 import EditTugas from "./manage-tugas/editTugas";
+import InputFile from "@/components/inputFile";
 
 function App() {
-  return <div></div>;
+  const [preview, setPreview] = useState("");
+  const handleImageChange = (file) => {
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview(""); // Reset the preview when image is deleted
+    }
+  };
+  return (
+    <div>
+      <InputFile
+        textUpload="Upload Cover"
+        preview={preview}
+        onChange={(e) => {
+          // field.onChange(e.target.files[0]);
+          // console.log(field);
+          handleImageChange(e.target.files[0]);
+        }}
+        setPreview={setPreview}
+      />
+    </div>
+  );
 }
 
 export default App;

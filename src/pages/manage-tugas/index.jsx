@@ -94,9 +94,6 @@ export default function ManageTugas() {
           <div className="mt-8">
             <div className="flex justify-between">
               <h2 className="text-lg font-bold">Deskripsi</h2>
-              <div className="bg-[#092C4C] p-2" onClick={handleDescription}>
-                <Pencil size={15} color="white" />
-              </div>
             </div>
 
             <div className="text-md me-12">
