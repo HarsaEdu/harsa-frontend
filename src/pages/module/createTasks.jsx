@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import Layout from "@/components/layout/Index";
-import Breadcrumb from "@/components/breadcrumb";
-import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import Swal from "sweetalert2";
-
+import { Textarea } from "@/components/ui/textarea";
+import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
+import Layout from "@/components/layout/Index";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import * as z from "zod";
+
 import {
   Form,
   FormControl,
@@ -18,10 +19,10 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  judulMateri: z.string({
+  judulTugas: z.string({
     required_error: "*Judul Tugas wajib di isi",
   }),
-  deskripsiMateri: z.string({
+  deskripsiTugas: z.string({
     required_error: "*Deskripsi Tugas wajib di isi",
   }),
 });
@@ -50,19 +51,20 @@ const createTasks = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8 rounded-md border-2 border-slate-300 px-3 py-5"
+              className="px-3 py-5 space-y-8 border-2 rounded-md border-slate-300"
             >
               <FormField
                 control={form.control}
-                name="judulMateri"
+                name="judulTugas"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <Input
+                        id="judulTugas"
                         placeholder="Judul Tugas"
                         {...field}
                         variant="bottom"
-                        className="mb-5 border-slate-300 bg-transparent"
+                        className="mb-5 border-0 border-b rounded-none border-slate-300 active:border-0"
                       />
                     </FormControl>
                     <FormMessage className="text-red-500" />
@@ -71,15 +73,16 @@ const createTasks = () => {
               />
               <FormField
                 control={form.control}
-                name="deskripsiMateri"
+                name="deskripsiTugas"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormControl>
-                      <Input
+                      <Textarea
+                        id="deskripsiTugas"
                         placeholder="Deskripsi Tugas"
                         {...field}
                         variant="bottom"
-                        className="mb-5 border-slate-300 bg-transparent"
+                        className="border-0 border-b rounded-none border-slate-300 active:border-0"
                       />
                     </FormControl>
                     <FormMessage className="text-red-500" />
@@ -88,13 +91,18 @@ const createTasks = () => {
               />
               <div className="flex justify-between">
                 <Button
+                  id="cancelButtonTugas"
                   className="border-black"
                   variant={"outline"}
                   type="reset"
                 >
                   <Link to="/kelas">Batal</Link>
                 </Button>
-                <Button variant={"default"} type="submit">
+                <Button
+                  id="acceptButtonTugas"
+                  variant={"default"}
+                  type="submit"
+                >
                   Simpan
                 </Button>
               </div>
