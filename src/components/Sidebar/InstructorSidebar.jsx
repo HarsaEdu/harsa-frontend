@@ -1,4 +1,4 @@
-import HarsaIcon from "../../assets/icons/harsaicon.svg"
+import HarsaIcon from "../../assets/icons/harsaicon.svg";
 import { Link } from "react-router-dom";
 
 function InstructorSidebar() {
@@ -67,8 +67,10 @@ function InstructorSidebar() {
                 />
               </div>
               <div className="flex flex-col pl-3">
-                <div className="text-sm text-black font-semibold">Instructor</div>
-                <span className="text-xs text-gray-600 font-semibold tracking-tight">
+                <div className="text-sm font-semibold text-black">
+                  Instructor
+                </div>
+                <span className="text-xs font-semibold tracking-tight text-gray-600">
                   Online
                 </span>
               </div>

@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "../pages/App";
 import LandingPage from "../pages/landing-page/index";
-
+import MateriOverview from "@/pages/module/updateKelas";
 import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
 import Dashboard from "@/pages/dashboard/index";
