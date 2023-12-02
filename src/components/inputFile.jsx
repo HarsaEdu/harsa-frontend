@@ -41,14 +41,12 @@ export default function InputFile(props) {
 }
 
 {
-  /* CONTOH PENGGUNAAN 
+  /* CONTOH PENGGUNAAN ADA JUGA DI APP.JSX
 
  <InputFile
   textUpload="Upload Cover"
   preview={preview}
   onChange={(e) => {
-    field.onChange(e.target.files[0]);
-    console.log(field);
     handleImageChange(e.target.files[0]);
   }}
   setPreview={setPreview}
@@ -58,6 +56,15 @@ Dan pakai state
 
   const [preview, setPreview] = useState("");
 
+Dan Tambah Fungsi
+
+const handleImageChange = (file) => {
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview(""); // Reset the preview when image is deleted
+    }
+  };
 */
 }
 
