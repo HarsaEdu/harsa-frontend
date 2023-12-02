@@ -1,4 +1,4 @@
-import { CardUlasanUser } from "../../components/landing-page/card/cardulasanuser";
+import { CardUlasanUser } from "./card/cardUlasanUser";
 
 export default function ListUlasan() {
   const dataUlasanUser = [

@@ -17,15 +17,10 @@ import React from "react";
 
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
-
+import EditTugas from "./manage-tugas/editTugas";
 
 function App() {
-
-  return (
-    <Layout userRole={userRole}>
-      <Breadcrumb />
-    </Layout>
-  );
+  return <div></div>;
 }
 
 export default App;
