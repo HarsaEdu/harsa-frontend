@@ -4,48 +4,52 @@ import App from "../pages/App";
 import LandingPage from "../pages/landing-page/index";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
-import CreateMaterial from "@/pages/module/createMaterial_v2";
-import CreateTasks from "@/pages/module/createTasks";
+import CreateMaterial from "@/pages/module/createMaterial";
+import Login from "@/pages/login";
+import AddQuiz from "@/pages/tambah-kuis";
+import HeaderQuiz from "@/pages/tambah-kuis/header";
+import ManageTugas from "@/pages/manage-tugas";
+
 
 export default function Router() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <LandingPage />,
-    },
-    {
-      path: "/kelas",
-      element: <CreateMaterial />,
-    },
-    {
-      path: "/kelas/manage-module",
-      element: <CreateTasks />,
-    },
-    // {
-    //   path: "/kelas",
-    //   children: [
-    //     {
-    //       path: "buat-tugas",
-    //       element: <CreateTasks />,
-    //     },
-    //   ],
-    // },
-    {
-      path: "/landing-page",
-      element: <LandingPage />,
-      // children: [
-      //     {
-      //         path: 'kelas', // Menggunakan path yang terpisah untuk Kelas
-      //         element: <AboutUs />
-      //     },
-      // ],
-    },
-    {
-      path: "/module",
-      children: [
+    const router = createBrowserRouter([
         {
-          path: "create",
-          element: <CreateMaterial />,
+            path: '/',
+            element: <LandingPage />,
+        },
+        {
+            path: '/login',
+            element: <Login />,
+        },
+        {
+            path: '/dashboard',
+            element: <Dashboard />,
+            // children: [
+            //     {
+            //         path: 'kelas', // Menggunakan path yang terpisah untuk Kelas
+            //         element: <AboutUs />
+            //     },
+            // ],
+        },
+        {
+            path: '/kelas',
+            element: <ListClass />
+        },
+        {
+            path: '/kelas/tambah-modul',
+            element: <CreateMaterial />,
+        },
+        {
+            path: '/kelas/tambah-kuis',
+            element: <AddQuiz />,
+        },
+        {
+            path: '/kelas/tambah-pertanyaan',
+            element: <HeaderQuiz />,
+        },
+        {
+            path: '/kelas/manage-tugas',
+            element: <ManageTugas />,
         },
       ],
     },

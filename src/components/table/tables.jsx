@@ -5,6 +5,9 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 import TablePagination from "./tablePagination";
+import RowShow from "./rowShow";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 export default function Table(props) {
   const {
@@ -13,6 +16,9 @@ export default function Table(props) {
     classNameHeader,
     classNameCell,
     isVisible,
+    rowVisible,
+    searchComponent,
+    onClick,
   } = props;
 
   const table = useReactTable({
@@ -24,6 +30,12 @@ export default function Table(props) {
 
   return (
     <div className="w-full">
+      <div className="mt-4 flex justify-between">
+        <div className="my-4 flex w-full items-center justify-between">
+          {rowVisible && <RowShow table={table} />}
+          {searchComponent}
+        </div>
+      </div>
       <table className="w-full border-2 border-black">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
