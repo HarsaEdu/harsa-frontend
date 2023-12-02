@@ -8,6 +8,7 @@ import EditProfile from "@/pages/edit-profile";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
 import CreateMaterial from "@/pages/module/createMaterial";
+import CreateTask from "@/pages/module/createTasks";
 import Login from "@/pages/login";
 import AddQuiz from "@/pages/tambah-kuis";
 import HeaderQuiz from "@/pages/tambah-kuis/header";
@@ -43,6 +44,10 @@ export default function Router() {
       element: <CreateMaterial />,
     },
     {
+      path: "/kelas/tambah-modul/tambah-tugas",
+      element: <CreateTask />,
+    },
+    {
       path: "/kelas/tambah-kuis",
       element: <AddQuiz />,
     },
@@ -60,8 +65,8 @@ export default function Router() {
     },
     {
       path: "/edit-profile",
-      element: <EditProfile />
-    }
+      element: <EditProfile />,
+    },
   ]);
 
   return <RouterProvider router={router} />;
