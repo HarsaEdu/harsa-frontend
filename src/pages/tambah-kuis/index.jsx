@@ -13,9 +13,6 @@ const AddQuiz = () => {
     return(
         <Layout>
             <div className="container mb-10 font-poppins">
-                <div className="flex justify-end">
-                    <img src={BellIcon} alt="Icon" className="w-[50px]" />
-                </div>
                 <div className="flex">
                     <Breadcrumb />
                 </div>

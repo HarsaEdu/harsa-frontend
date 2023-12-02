@@ -9,7 +9,7 @@ const CardListClass = (props) => {
     const { judul, category, instructor, description, img } = props
 
     return(
-            <div className="w-[1120px] mx-auto mb-4">
+            <div className="w-[900px] mx-auto mb-4">
                 <div>
                     <img src={img} alt="" />
                 </div>

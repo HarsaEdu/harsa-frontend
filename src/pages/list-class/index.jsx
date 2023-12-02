@@ -2,7 +2,6 @@ import Layout from "@/components/layout/Index"
 import CardListClass from "@/pages/list-class/CardListClass"
 import { Button } from "@/components/ui/button"
 
-import Bell from "../../assets/bell.svg"
 import Filter from "../../assets/filter.svg"
 
 import PemrogramanFrontend from "../../assets/pemrograman-frontend.svg"
@@ -15,9 +14,6 @@ const ListClass = () => {
     return(
         <Layout>
             <div className="container mb-10">
-                <div className="flex justify-end mt-1">
-                    <img src={Bell} alt="" className="w-[58px] cursor-pointer" />
-                </div>
                 <Breadcrumb />
                 <div className="flex justify-between mt-2 cursor-pointer">
                     <div className="flex">
