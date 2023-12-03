@@ -24,7 +24,7 @@ const CardModule = ({
   kuisMateri,
 }) => {
   return (
-    <div className="h-full border border-slate-300 px-2 font-poppins">
+    <div className="mx-2 my-3 h-full border border-slate-300 px-2 font-poppins">
       <div className="flex items-center justify-between rounded-md">
         <h1 className="text-2xl font-bold">{tipeMateri}</h1>
         <div className="justify flex items-center">
@@ -44,7 +44,7 @@ const CardModule = ({
         <AccordionItem value="item-1">
           <AccordionTrigger>{judulMateri}</AccordionTrigger>
           <AccordionContent>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible className="my-1 w-full">
               <AccordionItem value="item-1">
                 <AccordionTrigger>
                   <img src={VideoIcon} alt="video-module" />

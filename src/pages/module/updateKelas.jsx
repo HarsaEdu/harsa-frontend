@@ -1,18 +1,36 @@
 import ManageClass from "@/components/module/materiComponenet";
 import { Modules, Header } from "../../utils/moduleStatic";
 import { Button } from "../../components/ui/button";
-import EditIcon from "@/assets/icons/edit.svg";
 import Breadcrumb from "@/components/breadcrumb";
+import InputFile from "@/components/inputFile";
+import EditIcon from "@/assets/icons/edit.svg";
 import Layout from "@/components/layout";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const materiOverview = () => {
+const MateriOverview = () => {
+  const [preview, setPreview] = useState("");
+  const handleImageChange = (file) => {
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview("");
+    }
+  };
+
   return (
     <Layout>
-      <div className="container-md font-poppins">
+      <div className="container-md mt-20 font-poppins">
         <Breadcrumb />
-        <div className="flex w-full justify-center border border-slate-300 p-16">
-          <span>Dropzone Area</span>
+        <div className="my-5">
+          <InputFile
+            textUpload="Upload Cover"
+            preview={preview}
+            onChange={(e) => {
+              handleImageChange(e.target.files[0]);
+            }}
+            setPreview={setPreview}
+          />
         </div>
         <div className="my-2 flex items-center gap-2 text-3xl font-bold">
           <h1>{Header.title}</h1>
@@ -65,4 +83,4 @@ const materiOverview = () => {
   );
 };
 
-export default materiOverview;
+export default MateriOverview;

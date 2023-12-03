@@ -3,6 +3,7 @@ import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
 import EditTugas from "./manage-tugas/editTugas";
 import InputFile from "@/components/inputFile";
+import MateriOverview from "./module/updateKelas";
 
 function App() {
   const [preview, setPreview] = useState("");
@@ -25,6 +26,7 @@ function App() {
         }}
         setPreview={setPreview}
       />
+      <MateriOverview />
     </div>
   );
 }
