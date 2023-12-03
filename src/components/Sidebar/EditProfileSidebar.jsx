@@ -1,17 +1,15 @@
 import React from "react";
 import HarsaIcon from "../../assets/icons/harsaicon.svg";
+import { Link } from "react-router-dom";
 
 export default function EditProfileSidebar() {
   return (
     <>
-      <div className="fixed flex min-h-screen w-64 justify-start">
-        <div className="w-64 bg-[#092C4C]">
+      <div className="fixed flex min-h-screen w-80 justify-start">
+        <div className="w-80 bg-[#092C4C]">
           <div className="px-6 pt-8">
             <div className="flex items-center justify-between">
-              <a
-                href="#"
-                className="flex items-center justify-center gap-3 rounded p-1.5"
-              >
+              <Link to="/dashboard" className="flex items-center justify-center gap-3 rounded p-1.5">
                 <svg
                   width="20"
                   height="20"
@@ -24,16 +22,16 @@ export default function EditProfileSidebar() {
                     fill="white"
                   />
                 </svg>
-                <span className="text-lg font-bold">Profile</span>
-              </a>
+                <span className="text-3xl font-semibold">Profile</span>
+              </Link>
             </div>
           </div>
           <div className="px-6 pt-4">
-            <p className="font-bold">MENU</p>
+            <p className="text-xl font-semibold">MENU</p>
           </div>
           <div className="px-6 pt-4">
             <ul className="flex flex-col space-y-4">
-              <li className="group rounded-sm text-xs">
+              <li className="group rounded-sm text-lg">
                 <a
                   href={"/dashboard"}
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
@@ -51,7 +49,7 @@ export default function EditProfileSidebar() {
                   <span>Edit Profile</span>
                 </a>
               </li>
-              <li className="group rounded-sm text-xs">
+              <li className="group rounded-sm text-lg">
                 <a
                   href={"/User Management"}
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
@@ -69,7 +67,7 @@ export default function EditProfileSidebar() {
                   <span>FAQ</span>
                 </a>
               </li>
-              <li className="group rounded-sm text-xs">
+              <li className="group rounded-sm text-lg">
                 <a
                   href={"/User Management"}
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"

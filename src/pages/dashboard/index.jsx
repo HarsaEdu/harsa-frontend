@@ -14,7 +14,6 @@ const modules = [
 ];
 
 const Dashboard = () => {
-  const userRole = 'admin'
   const [activeModule, setActiveModule] = useState(modules[0].id);
 
   const handleModuleClick = (moduleId) => {
@@ -30,7 +29,7 @@ const Dashboard = () => {
           <h1 className='text-[40px] font-bold'>Hello Joko,</h1>
           <h3 className='text-[24px]'>udah siap ngajar lagi?</h3>  
         </div>      
-        <div className="overflow-x-auto  mt-4">
+        <div className="overflow-x-auto mt-4">
           <div className="flex gap-8">
             {modules.map((module) => (
               <CardModule
