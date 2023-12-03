@@ -42,20 +42,20 @@ export default function EditAkun() {
 
   const editAkunSchema = z
     .object({
-      email: z.string().email({ message: "Gunakan Email Yang Valid" }),
+      email: z.string().email({ message: "*Gunakan Email Yang Valid" }),
       role: z.string().refine((value) => VALID_ROLE.includes(value), {
-        message: "Pilih Role Terlebih Dahulu",
+        message: "*Pilih Role Terlebih Dahulu",
       }),
       password: z
         .string()
-        .min(1, { message: "Isi Password Terlebih Dahulu" })
-        .min(8, { message: "Password Minimal 8 Karakter" }),
+        .min(1, { message: "*Isi Password Terlebih Dahulu" })
+        .min(8, { message: "*Password Minimal 8 Karakter" }),
       confirmPassword: z
         .string()
-        .min(1, { message: "Isi Konfirmasi Password Terlebih Dahulu" }),
+        .min(1, { message: "*Isi Konfirmasi Password Terlebih Dahulu" }),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: "Password Tidak Sama",
+      message: "*Password Tidak Sama",
       path: ["confirmPassword"],
     });
 

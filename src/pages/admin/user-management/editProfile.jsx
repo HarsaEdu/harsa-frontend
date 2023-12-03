@@ -44,25 +44,29 @@ export default function EditProfile() {
   const navigate = useNavigate();
   const VALID_GENDER = ["male", "female"];
   const editProfileSchema = z.object({
-    firstName: z.string().min(1, { message: "Isi Nama Depan Terlebih Dahulu" }),
+    firstName: z
+      .string()
+      .min(1, { message: "*Isi Nama Depan Terlebih Dahulu" }),
     lastName: z
       .string()
-      .min(1, { message: "Isi Nama Belakang Terlebih Dahulu" }),
-    bio: z.string().min(1, { message: "Isi Bio Terlebih Dahulu" }),
+      .min(1, { message: "*Isi Nama Belakang Terlebih Dahulu" }),
+    bio: z.string().min(1, { message: "*Isi Bio Terlebih Dahulu" }),
     dateBirth: z.date({
-      required_error: "Isi Tanggal Lahir Terlebih Dahulu",
+      required_error: "*Isi Tanggal Lahir Terlebih Dahulu",
     }),
     phoneNumber: z
       .string()
-      .min(1, { message: "Isi Nomer Telepon Terlebih Dahulu" }),
+      .min(1, { message: "*Isi Nomer Telepon Terlebih Dahulu" }),
     gender: z
-      .string({ invalid_type_error: "Pilih Gender Terlebih Dahulu" })
+      .string({ invalid_type_error: "*Pilih Gender Terlebih Dahulu" })
       .refine((value) => VALID_GENDER.map((valid) => valid).includes(value), {
-        message: "Pilih Gender Terlebih Dahulu",
+        message: "*Pilih Gender Terlebih Dahulu",
       }),
-    hometown: z.string().min(1, { message: "Isi Asal Kota Terlebih Dahulu" }),
-    profession: z.string().min(1, { message: "Isi Pekerjaan Terlebih Dahulu" }),
-    addres: z.string().min(1, { message: "Isi Alamat Terlebih Dahulu" }),
+    hometown: z.string().min(1, { message: "*Isi Asal Kota Terlebih Dahulu" }),
+    profession: z
+      .string()
+      .min(1, { message: "*Isi Pekerjaan Terlebih Dahulu" }),
+    addres: z.string().min(1, { message: "*Isi Alamat Terlebih Dahulu" }),
   });
 
   const form = useForm({
