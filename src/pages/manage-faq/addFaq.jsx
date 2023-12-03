@@ -5,7 +5,7 @@ import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import * as z from "zod";
 
@@ -29,20 +29,47 @@ const formSchema = z.object({
 });
 
 const AddFAQ = () => {
+  const navigate = useNavigate();
   const userRole = 'admin'
-    const form = useForm({
+
+  const form = useForm({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = (data) => {
-    console.log("data", data);
     Swal.fire({
-      icon: "success",
-      title: "Sukses Tambah FAQ",
-      showConfirmButton: false,
-      showCloseButton: true,
-      timer: 3000,
+      title: "Yakin kamu mau simpan  data ini?",
+      icon: "question",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: "#092C4C",
+      confirmButtonText: "Ya, Simpan",
+      cancelButtonText: "Batal",
+      cancelButtonColor: "#F2994A",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onSave(data);
+        Swal.fire({
+          title: "Sukses Update Data",
+          icon: "success",
+          showConfirmButton: false,
+          showCloseButton: true,
+          timer: 2000,
+        }).then((result) => {
+          if (result.isDismissed) {
+            navigate("/content-management/FAQ");
+          }
+        });
+      }
     });
+  };
+
+  const onSave = (data) => {
+    // Do something with the form values.
+    // The values are already type-safe and validated based on your formSchema.
+    console.log(data);
+    form.resetField("titleTugas");
+    form.resetField("descriptionTugas");
   };
 
   return (
@@ -54,7 +81,7 @@ const AddFAQ = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="px-8 py-5 space-y-8 border-2 rounded-md border-[#092C4C]"
+              className="px-8 py-5 space-y-8 border-2 border-[#092C4C]"
             >
               <FormField
                 control={form.control}
