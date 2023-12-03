@@ -42,6 +42,10 @@ export default function Router() {
       element: <ListClass />,
     },
     {
+      path: "/materi",
+      element: <MateriOverview />,
+    },
+    {
       path: "/kelas/tambah-modul",
       element: <CreateMaterial />,
     },
