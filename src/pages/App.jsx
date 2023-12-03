@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { React, useState } from "react";
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
@@ -28,6 +29,18 @@ function App() {
       />
       <MateriOverview />
     </div>
+=======
+import Layout from '../components/layout/Index.jsx';
+import Formkelas from '../pages/kelas/Formkelas.jsx';
+
+function App() {
+  return (
+    <>
+    <Layout>
+      <Formkelas />
+    </Layout>
+    </>
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
   );
 }
 

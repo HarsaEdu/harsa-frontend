@@ -5,7 +5,11 @@
   "tsx": false,
   "tailwind": {
     "config": "tailwind.config.js",
+<<<<<<< HEAD
     "css": "src/styles/index.css",
+=======
+    "css": "src.index.css",
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
     "baseColor": "slate",
     "cssVariables": true
   },

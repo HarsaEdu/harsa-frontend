@@ -3,6 +3,7 @@
 module.exports = {
   darkMode: ["class"],
   content: [
+<<<<<<< HEAD
     "./pages/**/*.{js,jsx}",
     "./components/**/*.{js,jsx}",
     "./app/**/*.{js,jsx}",
@@ -14,6 +15,14 @@ module.exports = {
         "inter" : ['inter'],
         "poppins" : ['poppins'],
       },
+=======
+    './pages/**/*.{js,jsx}',
+    './components/**/*.{js,jsx}',
+    './app/**/*.{js,jsx}',
+    './src/**/*.{js,jsx}',
+	],
+  theme: {
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
     container: {
       center: true,
       padding: "2rem",
@@ -79,5 +88,9 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+<<<<<<< HEAD
   }
 }
+=======
+}
+>>>>>>> 3e4d37d (feat: add from tambah kelas)

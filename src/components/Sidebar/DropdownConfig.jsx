@@ -4,11 +4,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
 
 const InstructorIndex = () => {
   return (
     <>
+<<<<<<< HEAD
       <Accordion type="single" collapsible className="w-full space-y-3 ">
         <AccordionItem value="item-1">
           <AccordionTrigger className="group justify-between pr-2 rounded-md text-base text-white hover:bg-[#A2D2FF] hover:text-zinc-950">
@@ -16,6 +20,15 @@ const InstructorIndex = () => {
               <svg
                 width="27"
                 height="27"
+=======
+      <Accordion type="single" collapsible className="w-full space-y-3">
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="text-xs rounded-sm group">
+            <span className="flex items-center space-x-3 rounded-md px-2 hover:bg-[#A2D2FF] hover:text-black">
+              <svg
+                width="20"
+                height="20"
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
                 viewBox="0 0 25 29"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -26,6 +39,7 @@ const InstructorIndex = () => {
                   id="icon-project"
                 />
               </svg>
+<<<<<<< HEAD
               <span className="text-base text-left">Content Management</span>
             </span>
           </AccordionTrigger>
@@ -34,17 +48,35 @@ const InstructorIndex = () => {
               <svg
                 width="27"
                 height="27"
+=======
+              <span>Content Management</span>
+            </span>
+          </AccordionTrigger>
+          <AccordionContent className="text-xs group">
+            <a
+              href={"/"}
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+            >
+              <svg
+                width="20"
+                height="20"
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
                 viewBox="0 0 25 29"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="fill-[#A2D2FF] group-hover:fill-[#092C4C]"
               >
                 <path
+<<<<<<< HEAD
                   d="M5.25398 1.98879H21.7591C21.6678 1.03873 20.9899 0.520508 19.7383 0.520508H7.26171C6.02318 0.520508 5.33221 1.03873 5.25398 1.98879ZM2.5944 5.1089H24.4186C24.2361 4.08326 23.6103 3.50026 22.2284 3.50026H4.78465C3.4027 3.50026 2.77692 4.08326 2.5944 5.1089ZM4.13279 24.5205H22.8672C25.5789 24.5205 27 23.3545 27 21.1305V10.2587C27 8.03468 25.5789 6.86869 22.8672 6.86869H4.13279C1.40802 6.86869 0 8.02388 0 10.2587V21.1305C0 23.3545 1.40802 24.5205 4.13279 24.5205ZM13.5196 17.287C11.3423 17.2654 9.63448 15.7648 9.62144 13.7567C9.62144 11.8565 11.3423 10.2911 13.5196 10.2911C15.7098 10.2911 17.4307 11.8565 17.4307 13.7567C17.4307 15.7648 15.7228 17.3086 13.5196 17.287ZM6.11444 22.48C7.14437 20.31 10.0517 18.7877 13.5196 18.7877C17.0005 18.7877 19.9078 20.31 20.9377 22.48H6.11444Z"
+=======
+                  d="M4.71204 28.6494H23.6329C24.4037 28.6494 25 28.1194 25 27.4343C25 26.8526 24.5492 26.426 23.9965 26.1933C22.2077 25.4823 21.8586 23.2847 23.6766 21.7464C24.4183 21.1646 24.9855 20.5183 24.9855 19.2127V4.90241C24.9855 2.11017 23.3711 0.649414 20.2443 0.649414H4.74113C1.62885 0.649414 0 2.09724 0 4.90241V24.4352C0 27.2016 1.62885 28.6494 4.71204 28.6494ZM4.52298 20.1305C4.04305 20.1305 3.63583 19.7815 3.63583 19.3419V3.60971C3.63583 3.17019 4.04305 2.82116 4.52298 2.82116C5.00291 2.82116 5.41012 3.17019 5.41012 3.60971V19.3419C5.41012 19.7815 5.00291 20.1305 4.52298 20.1305ZM9.46771 9.11663C8.88598 9.11663 8.37696 8.67711 8.37696 8.16003C8.37696 7.6171 8.88598 7.1905 9.46771 7.1905H19.9971C20.5934 7.1905 21.0878 7.6171 21.0878 8.16003C21.0878 8.67711 20.5934 9.11663 19.9971 9.11663H9.46771ZM9.46771 12.8655C8.88598 12.8655 8.37696 12.4389 8.37696 11.896C8.37696 11.3789 8.88598 10.9393 9.46771 10.9393H17.4666C18.0628 10.9393 18.5573 11.3789 18.5573 11.896C18.5573 12.4389 18.0628 12.8655 17.4666 12.8655H9.46771ZM5.10471 26.2191C3.54857 26.2191 2.73415 25.4306 2.73415 24.2154C2.73415 23.0391 3.66492 22.2247 5.20652 22.2247H19.7208C19.8807 22.2247 20.0407 22.2117 20.1862 22.1859C19.459 23.5562 19.5462 25.0428 20.3316 26.2191H5.10471Z"
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
                   id="icon-project"
                 />
               </svg>
               <span>Kelas</span>
+<<<<<<< HEAD
             </Link>
           </AccordionContent>
           <AccordionContent className="group text-base pl-8">
@@ -55,6 +87,18 @@ const InstructorIndex = () => {
               <svg
                 width="27"
                 height="27"
+=======
+            </a>
+          </AccordionContent>
+          <AccordionContent className="text-xs group">
+            <a
+              href={"/"}
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+            >
+              <svg
+                width="20"
+                height="20"
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
                 viewBox="0 0 27 28"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -66,17 +110,29 @@ const InstructorIndex = () => {
                 />
               </svg>
 
+<<<<<<< HEAD
               <span>Kategori</span>
             </a>
           </AccordionContent>
           <AccordionContent className="group text-base pl-8">
+=======
+              <span>kategori</span>
+            </a>
+          </AccordionContent>
+          <AccordionContent className="text-xs group">
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
             <a
               href={"/"}
               className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
+<<<<<<< HEAD
                 width="27"
                 height="27"
+=======
+                width="20"
+                height="20"
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
                 viewBox="0 0 27 28"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -93,11 +149,19 @@ const InstructorIndex = () => {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
+<<<<<<< HEAD
           <AccordionTrigger className="group justify-between pr-2 rounded-md text-base text-white hover:bg-[#A2D2FF] hover:text-zinc-950">
             <span className="flex items-center space-x-3 rounded-md px-2 hover:bg-[#A2D2FF] hover:text-black">
               <svg
                 width="27"
                 height="27"
+=======
+          <AccordionTrigger className="text-xs rounded-sm group">
+            <span className="flex items-center space-x-3 rounded-md px-2 hover:bg-[#A2D2FF] hover:text-black">
+              <svg
+                width="20"
+                height="20"
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
                 viewBox="0 0 25 29"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -111,6 +175,7 @@ const InstructorIndex = () => {
               <span>Pembayaran</span>
             </span>
           </AccordionTrigger>
+<<<<<<< HEAD
           <AccordionContent className="group text-base pl-8">
             <a
               href={"/"}
@@ -119,6 +184,16 @@ const InstructorIndex = () => {
               <svg
                 width="27"
                 height="27"
+=======
+          <AccordionContent className="text-xs group">
+            <a
+              href={"/"}
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+            >
+              <svg
+                width="20"
+                height="20"
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
                 viewBox="0 0 25 29"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -132,6 +207,7 @@ const InstructorIndex = () => {
               <span>Langganan</span>
             </a>
           </AccordionContent>
+<<<<<<< HEAD
           <AccordionContent className="group text-base pl-8">
             <Link
               to="/riwayat-transaksi"
@@ -140,6 +216,16 @@ const InstructorIndex = () => {
               <svg
                 width="27"
                 height="27"
+=======
+          <AccordionContent className="text-xs group">
+            <a
+              href={"/"}
+              className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+            >
+              <svg
+                width="20"
+                height="20"
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
                 viewBox="0 0 27 28"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -150,8 +236,14 @@ const InstructorIndex = () => {
                   id="icon-project"
                 />
               </svg>
+<<<<<<< HEAD
               <span>Riwayat Transaksi</span>
             </Link>
+=======
+
+              <span>Riwayat Transaksi</span>
+            </a>
+>>>>>>> 3e4d37d (feat: add from tambah kelas)
           </AccordionContent>
         </AccordionItem>
       </Accordion>
