@@ -3,6 +3,7 @@ import EditProfileSidebar from '../Sidebar/EditProfileSidebar'
 
 export default function EditProfileLayout(props) {
     const {children, className} = props
+    
   return (
     <div>
         <div className="flex">
@@ -12,7 +13,7 @@ export default function EditProfileLayout(props) {
       </div>
 
       {/* Content */}
-      <div className={`${className} w-full px-8 py-4 mx-auto bg-white grow`}>
+      <div className={`${className} w-3/4 px-8 py-4 mx-auto bg-white grow`}>
         {children}
       </div>
     </div>

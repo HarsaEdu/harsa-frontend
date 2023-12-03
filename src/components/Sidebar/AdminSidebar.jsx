@@ -1,35 +1,30 @@
 import HarsaIcon from "../../assets/icons/harsaicon.svg"
 import DropdownConfig from "./DropdownConfig"
+import { Link } from "react-router-dom";
 
 function AdminSidebar() {
   return (
     <>
-      <div className="fixed flex justify-start w-64 min-h-screen">
-        <div className="w-64 bg-[#092C4C]">
+      <div className="fixed flex justify-start w-80 font-poppins min-h-screen">
+        <div className="w-80 bg-[#092C4C]">
           <div className="px-6 pt-8">
             <div className="flex items-center justify-between">
-              <a
-                href="#"
-                className="p-1.5 rounded flex items-center justify-center"
-              >
-                <img src={HarsaIcon} alt="HarsaIcon" width={40} height={40}/>
-                <span className="text-lg font-bold">Harsa</span>
-              </a>
+              <Link to="/" className="p-1.5 rounded flex items-center justify-center">
+                <img src={HarsaIcon} alt="HarsaIcon" width={40} height={40} />
+                <span className="text-3xl font-semibold ml-4">Harsa</span>
+              </Link>
             </div>
           </div>
           <div className="px-6 pt-4">
-            <p>Menu</p>
+            <p className="text-xl font-semibold">Menu</p>
           </div>
           <div className="px-6 pt-4">
             <ul className="flex flex-col space-y-4">
-            <li className="text-xs rounded-sm group">
-                  <a
-                    href={"/dashboard"}
-                    className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
+                <li className="text-lg rounded-sm group">
+                  <Link to="/dashboard" className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black">
+                <svg
+                      width="27"
+                      height="27"
                       viewBox="0 0 27 28"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -40,8 +35,8 @@ function AdminSidebar() {
                         id="icon-project"
                       />
                     </svg>
-                    <span>Dashboard</span>
-                  </a>
+                  <span>Dashboard</span>
+                  </Link>
                 </li>
                 <li className="text-xs rounded-sm group">
                   <a
