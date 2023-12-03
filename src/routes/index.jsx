@@ -14,6 +14,7 @@ import AddQuiz from "@/pages/tambah-kuis";
 import HeaderQuiz from "@/pages/tambah-kuis/header";
 import ManageTugas from "@/pages/manage-tugas";
 import EditTugas from "@/pages/manage-tugas/editTugas";
+import AddFAQ from "@/pages/manage-faq/addFaq";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -66,6 +67,10 @@ export default function Router() {
     {
       path: "/edit-profile",
       element: <EditProfile />,
+    },
+    {
+      path: "/content-management/FAQ/tambah-FAQ",
+      element: <AddFAQ />,
     },
   ]);
 

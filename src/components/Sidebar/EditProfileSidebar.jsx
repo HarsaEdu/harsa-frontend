@@ -1,5 +1,6 @@
 import React from "react";
 import HarsaIcon from "../../assets/icons/harsaicon.svg";
+import { Link } from "react-router-dom";
 
 export default function EditProfileSidebar() {
   return (
@@ -8,10 +9,7 @@ export default function EditProfileSidebar() {
         <div className="w-80 bg-[#092C4C]">
           <div className="px-6 pt-8">
             <div className="flex items-center justify-between">
-              <a
-                href="#"
-                className="flex items-center justify-center gap-3 rounded p-1.5"
-              >
+              <Link to="/dashboard" className="flex items-center justify-center gap-3 rounded p-1.5">
                 <svg
                   width="20"
                   height="20"
@@ -25,7 +23,7 @@ export default function EditProfileSidebar() {
                   />
                 </svg>
                 <span className="text-3xl font-semibold">Profile</span>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="px-6 pt-4">

@@ -20,7 +20,7 @@ function AdminSidebar() {
           </div>
           <div className="px-6 pt-4">
             <ul className="flex flex-col space-y-4">
-                <li className="text-lg rounded-sm group">
+                <li className="text-base rounded-sm group">
                   <Link to="/dashboard" className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black">
                 <svg
                       width="27"
@@ -38,14 +38,14 @@ function AdminSidebar() {
                   <span>Dashboard</span>
                   </Link>
                 </li>
-                <li className="text-xs rounded-sm group">
+                <li className="text-base rounded-sm group">
                   <a
                     href={"/User Management"}
                     className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
                   >
                     <svg
-                      width="20"
-                      height="20"
+                      width="27"
+                      height="27"
                       viewBox="0 0 25 29"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -64,8 +64,8 @@ function AdminSidebar() {
               </li>
             </ul>
           </div>
-          <div className="w-64 py-4 bg-[#A2D2FF] flex items-center justify-between fixed left-0 bottom-0">
-            <div className="flex items-center mx-4">
+          <div className="w-80 py-4 bg-[#A2D2FF] flex items-center justify-between fixed left-0 bottom-0">
+            <Link to="/edit-profile" className="flex items-center mx-4">
               <div className="relative w-8 h-8 rounded-full before:absolute before:w-2 before:h-2 before:bg-green-500 before:rounded-full before:right-0 before:bottom-0 before:ring-1 before:ring-white">
                 <img
                   className="rounded-full"
@@ -74,12 +74,14 @@ function AdminSidebar() {
                 />
               </div>
               <div className="flex flex-col pl-3">
-                <div className="text-sm text-black font-semibold">Admin</div>
-                <span className="text-xs text-gray-600 font-semibold  tracking-tight">
+                <div className="text-lg font-semibold text-black">
+                  Admin
+                </div>
+                <span className="text-xs font-semibold tracking-tight text-gray-600">
                   Online
                 </span>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

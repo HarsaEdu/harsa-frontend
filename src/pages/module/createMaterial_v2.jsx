@@ -224,7 +224,7 @@ const CreateMaterial = () => {
                 </FormLabel>
                 <div style={{ marginTop: "0.5rem" }}>
                   <a
-                    className="flex items-center font-poppins text-sm font-medium font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
+                    className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
                     href=""
                   >
                     Tambah Kuis <Plus className="inline-block h-4" />
