@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../pages/App";
 import LandingPage from "../pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
+import UserManagement from "../pages/admin/userManagement";
 import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
 import Dashboard from "@/pages/dashboard/index";
@@ -68,6 +69,10 @@ export default function Router() {
     {
       path: "/kelas/manage-tugas/edit", //Nanti ganti jadi ID
       element: <EditTugas />,
+    },
+    {
+      path: "/user-management", //Nanti ganti jadi ID
+      element: <UserManagement />,
     },
     {
       path: "/edit-profile",
