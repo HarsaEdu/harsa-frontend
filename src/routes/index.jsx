@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "../pages/App";
+import Faq from "@/pages/edit-profile/faq";
 import LandingPage from "../pages/landing-page/index";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
@@ -51,6 +52,10 @@ export default function Router() {
             path: '/kelas/manage-tugas',
             element: <ManageTugas />,
         },
+        {
+            path: "/edit-profile/faq",
+            element: <Faq />
+        }
     ])
 
     return(
