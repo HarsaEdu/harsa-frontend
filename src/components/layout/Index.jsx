@@ -1,11 +1,11 @@
-import React from 'react';
-import Sidebar from '../Sidebar/InstructorSidebar';
-import AdminSidebar from '../Sidebar/AdminSidebar';
+import React from "react";
+import Sidebar from "../Sidebar/InstructorSidebar";
+import AdminSidebar from "../Sidebar/AdminSidebar";
 
 import BellIcon from '../../assets/bell.svg'
 
 const Layout = (props) => {
-    const {children, className, userRole} = props
+  const { children, className, userRole } = props;
 
   return (
     <div className="flex">

@@ -27,6 +27,7 @@ export default function TablePagination(props) {
           className={`rounded-md border border-[b3b3b3] p-1 px-3 font-semibold text-black ${
             currentPageIndex === pageIndex ? "bg-[#092C4C] text-white" : ""
           }`}
+          onClick={() => table.setPageIndex(pageIndex - 1)}
         >
           {pageIndex}
         </button>
