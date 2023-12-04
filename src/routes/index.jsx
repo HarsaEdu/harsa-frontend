@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../pages/App";
 import LandingPage from "../pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
-import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
@@ -16,6 +15,7 @@ import ManageTugas from "@/pages/manage-tugas";
 import EditTugas from "@/pages/manage-tugas/editTugas";
 import AddFAQ from "@/pages/manage-faq/addFaq";
 import EditFAQ from "@/pages/manage-faq/editFaq";
+import DashboardAdmin from "@/pages/admin/dashboard";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -80,6 +80,10 @@ export default function Router() {
     {
       path: "/content-management/FAQ/:id/edit-FAQ",
       element: <EditFAQ />,
+    },
+    {
+      path: "/dashboard-admin",
+      element: <DashboardAdmin />,
     },
   ]);
 
