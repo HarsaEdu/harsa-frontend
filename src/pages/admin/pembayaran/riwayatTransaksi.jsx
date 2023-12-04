@@ -1,14 +1,81 @@
 import Breadcrumb from "@/components/breadcrumb";
 import Layout from "@/components/layout/Index";
 import axios from "axios";
-import { React, useMemo } from "react";
+import { React, useMemo, useState, useEffect, useCallback } from "react";
 import { dataRiwayatTransaksi, realData } from "@/utils/dummyData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Table from "@/components/table/tables";
+import { useSearchParams } from "react-router-dom";
+import { debounce } from "lodash";
 
 export default function RiwayatTransaksi() {
   const response = dataRiwayatTransaksi.data;
+
+  //*
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState("");
+  const [data, setData] = useState(dataRiwayatTransaksi.data);
+
+  useEffect(() => {
+    fetchData();
+  }, [searchParams]);
+
+  const getSuggestions = useCallback(
+    async function (query) {
+      if (!query) {
+        searchParams.delete("query");
+      } else {
+        searchParams.set("query", query);
+        searchParams.delete("page");
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams],
+  );
+
+  const getSuggestionsDebounce = useMemo(
+    () => debounce(getSuggestions, 1000),
+    [getSuggestions],
+  );
+
+  async function fetchData() {
+    try {
+      const simulatedApiCall = () =>
+        new Promise((resolve) => {
+          setTimeout(() => {
+            // Check if there is a search query
+            if (searchParams.has("query")) {
+              // Filter the data based on the search query
+              resolve(
+                dataRiwayatTransaksi.data.filter((item) =>
+                  item.customer.name
+                    .toLowerCase()
+                    .includes(searchParams.get("query").toLowerCase()),
+                ),
+              );
+            } else {
+              // If no search query, fetch all data
+              resolve(dataRiwayatTransaksi.data);
+            }
+          }, 500);
+        });
+
+      const response = await simulatedApiCall();
+
+      setData(response);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      // Handle errors as needed
+    }
+  }
+
+  function onInputChange(newValue) {
+    setSearchValue(newValue);
+    getSuggestionsDebounce(newValue);
+  }
+
+  //*
 
   const columns = useMemo(() => [
     { header: "No", cell: (info) => info.row.index + 1 },
@@ -34,7 +101,7 @@ export default function RiwayatTransaksi() {
     },
     {
       header: "status",
-      accessorKey: "customer.name",
+      accessorKey: "customer.status",
       cell: (info) => (
         <div className="flex justify-center">
           {info.row.original.status === "success" && (
@@ -78,7 +145,7 @@ export default function RiwayatTransaksi() {
           </Button>
         </div>
         <Table
-          datas={response}
+          datas={data}
           columns={columns}
           classNameHeader="bg-[#A2D2FF]"
           rowVisible={true}
@@ -89,6 +156,8 @@ export default function RiwayatTransaksi() {
               <Input
                 id="search"
                 className=" w-4/12 rounded-xl border-[#092C4C]"
+                value={searchValue}
+                onChange={(e) => onInputChange(e.currentTarget.value)}
               />
             </div>
           }
