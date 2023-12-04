@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "../pages/App";
+import Faq from "@/pages/edit-profile/faq";
 import LandingPage from "../pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
 import AboutUs from "@/pages/landing-page/aboutUs";
