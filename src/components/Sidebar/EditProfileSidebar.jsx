@@ -1,6 +1,6 @@
 import React from "react";
 import HarsaIcon from "../../assets/icons/harsaicon.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 
 export default function EditProfileSidebar() {
   const navigate = useNavigate();
@@ -43,10 +43,10 @@ export default function EditProfileSidebar() {
           </div>
           <div className="px-6 pt-4">
             <ul className="flex flex-col space-y-4">
-              <li className="group rounded-sm text-lg">
+              <NavLink to={"/edit-profile"} className="group rounded-sm text-lg">
                 <a
                   href={"/dashboard"}
-                  className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
+                  className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black "
                 >
                   <svg
                     width="20"
@@ -60,8 +60,8 @@ export default function EditProfileSidebar() {
                   </svg>
                   <span>Edit Profile</span>
                 </a>
-              </li>
-              <li className="group rounded-sm text-lg">
+              </NavLink>
+              <Link to={"/edit-profile/faq"} className="group rounded-sm text-lg">
                 <a
                   href={"/User Management"}
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
@@ -78,7 +78,7 @@ export default function EditProfileSidebar() {
                   </svg>
                   <span>FAQ</span>
                 </a>
-              </li>
+              </Link>
               <li onClick={handleLogout} className="group rounded-sm text-lg">
                 <a
                   href={"/User Management"}
