@@ -4,7 +4,6 @@ import App from "../pages/App";
 import Faq from "@/pages/edit-profile/faq";
 import LandingPage from "../pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
-import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
@@ -18,6 +17,7 @@ import EditTugas from "@/pages/manage-tugas/editTugas";
 import AddFAQ from "@/pages/manage-faq/addFaq";
 import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
+import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
 
 
@@ -92,6 +92,10 @@ export default function Router() {
     {
       path: "/content-management/FAQ/:id/edit-FAQ",
       element: <EditFAQ />,
+    },
+    {
+      path: "/dashboard-admin",
+      element: <DashboardAdmin />,
     },
   ]);
 

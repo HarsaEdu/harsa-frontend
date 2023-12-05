@@ -21,7 +21,7 @@ function AdminSidebar() {
           <div className="px-6 pt-4">
             <ul className="flex flex-col space-y-4">
                 <li className="text-base rounded-sm group">
-                  <Link to="/dashboard" className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black">
+                  <Link to="/dashboard-admin" className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black">
                 <svg
                       width="27"
                       height="27"
