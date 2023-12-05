@@ -59,8 +59,8 @@ const MateriOverview = () => {
           </ul>
           <div className="flex flex-col border border-slate-300 px-2">
             <div className="mb-5 flex justify-end">
-              <Button className="m-2 rounded-[4px] bg-[#092C4C] text-white">
-                <Link href="/">Tambah Modul</Link>
+              <Button id="module" className="m-2 rounded-[4px] bg-[#092C4C] text-white">
+                <Link to='/kelas/tambah-modul'>Tambah Modul</Link>
               </Button>
             </div>
             {Modules.map((Module) => (
