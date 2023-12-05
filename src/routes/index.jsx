@@ -19,6 +19,7 @@ import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
+import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
 
 
 export default function Router() {
@@ -76,6 +77,10 @@ export default function Router() {
     {
       path: "/kelas/manage-tugas/edit", //Nanti ganti jadi ID
       element: <EditTugas />,
+    },
+    {
+      path: "/kelas/manage-tugas/review", //Nanti ganti jadi ID
+      element: <ReviewTugas />,
     },
     {
       path: "/edit-profile",
