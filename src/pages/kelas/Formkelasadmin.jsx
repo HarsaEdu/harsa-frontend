@@ -208,7 +208,7 @@ export default function FormKelas() {
               <FormControl>
                 <select
                   className="flex h-[40px] w-[710px] rounded-lg border border-[#092C4C] bg-transparent px-2 py-2 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
-                  {...form.register("category")}
+                  {...form.register("instructor")}
                 >
                   <option value="" disabled>
                     Pilih Instruktor
