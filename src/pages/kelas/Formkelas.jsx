@@ -33,12 +33,12 @@ const DropzoneComponent = ({ setPreview, setValue }) => {
       const maxSize = 5 * 1024 * 1024;
 
       if (!allowedTypes.includes(newFile.type)) {
-        setError("*Hanya file PNG, JPEG, dan JPG yang diizinkan.");
+        setError("*Format file salah, upload dengan format JPG, JPEG atau PNG.");
         return;
       }
 
       if (newFile.size > maxSize) {
-        setError("*Ukuran file tidak boleh lebih dari 5 MB.");
+        setError("*Ukuran gambar harus di bawah 5 MB.");
         return;
       }
       const fileURL = URL.createObjectURL(newFile);
