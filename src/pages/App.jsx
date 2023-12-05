@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { React, useState } from "react";
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
@@ -32,13 +33,18 @@ function App() {
 =======
 import Layout from '../components/layout/Index.jsx';
 import Formkelas from '../pages/kelas/Formkelas.jsx';
+=======
+import Layout from "../components/layout/Index.jsx";
+import Formkelasinstructor from "../pages/kelas/Formkelasinstructor.jsx";
+import Formkelasadmin from "../pages/kelas/Formkelasadmin.jsx";
+>>>>>>> 19a4c00 (feat: add form tambah kelas admin)
 
 function App() {
   return (
     <>
-    <Layout>
-      <Formkelas />
-    </Layout>
+      <Layout>
+        <Formkelasadmin />
+      </Layout>
     </>
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
   );
