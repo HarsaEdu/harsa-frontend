@@ -24,7 +24,7 @@ const ReviewTugas = () => {
         },
     });
 
-    const onSubmit = (data, e) => {
+    const handleRejected = (data, e) => {
         e.preventDefault();
         setDialogOpen(false);
         Swal.fire({
@@ -40,6 +40,8 @@ const ReviewTugas = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 console.log(data);
+                setStatus("rejected");
+                setReason(data.reason);
                 Swal.fire({
                     title: "Tugas ditolak!",
                     text: "Informasi terbaru telah tersimpan",
@@ -53,6 +55,33 @@ const ReviewTugas = () => {
             }
         });
     };
+
+    const handleAccepted = () => {
+        Swal.fire({
+            title: "Yakin ingin menerima tugas ini?",
+            text: "Proses ini akan secara permanen",
+            icon: "question",
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonColor: "#092C4C",
+            confirmButtonText: "Ya, Tolak",
+            cancelButtonText: "Batal",
+            cancelButtonColor: "#F2994A",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Tugas diterima!",
+                    text: "Informasi terbaru telah tersimpan",
+                    icon: "success",
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    timer: 2000,
+                }).then(() => {
+                    setStatus("accepted");
+                })
+            }
+        });
+    }
 
     return (
         <Layout>
@@ -97,7 +126,7 @@ const ReviewTugas = () => {
                     <iframe className="mb-8" src="https://drive.google.com/file/d/1rU5hGtj5W6G5So3NdDYi7qvoKQB1OoXT/preview" width="100%" height="640" allow="autoplay"></iframe>
 
                     <div className="flex gap-2">
-                        <Button variant="outline" className="text-[#092C4C] border-[#092C4C] font-semibold font-poppins"><img className="me-2" src={check} alt="" />Terima</Button>
+                        <Button variant="outline" className="text-[#092C4C] border-[#092C4C] font-semibold font-poppins" onClick={() => { handleAccepted() }}><img className="me-2" src={check} alt="" />Terima</Button>
                         <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
                             <DialogTrigger asChild>
                                 <Button variant="outline" className="text-[#092C4C] border-[#092C4C] font-semibold font-poppins"><img className="me-2" src={close} alt="" />Tolak</Button>
@@ -108,7 +137,7 @@ const ReviewTugas = () => {
                                 </div>
                                 <div className="h-full w-3/4">
                                     <Form {...form}>
-                                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                                        <form onSubmit={form.handleSubmit(handleRejected)}>
                                             <FormField
                                                 control={form.control}
                                                 name="reason"
