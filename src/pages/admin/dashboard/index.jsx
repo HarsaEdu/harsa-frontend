@@ -148,7 +148,7 @@ const DashboardAdmin = () => {
                                     <p className="text-xl">Search</p>{" "}
                                     <Input
                                         id="search"
-                                        className=" w-4/12 rounded border-[#092C4C]"
+                                        className="w-2/4 rounded border-[#092C4C]"
                                     />
                                     </div>
                                 }
@@ -167,7 +167,7 @@ const DashboardAdmin = () => {
                                     <p className="text-xl">Search</p>{" "}
                                     <Input
                                         id="search"
-                                        className=" w-4/12 rounded border-[#092C4C]"
+                                        className="w-2/4 rounded border-[#092C4C]"
                                     />
                                     </div>
                                 }
