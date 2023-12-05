@@ -1,15 +1,27 @@
 import React from "react";
 import HarsaIcon from "../../assets/icons/harsaicon.svg";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 
 export default function EditProfileSidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("role_name");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    navigate("/");
+  };
   return (
     <>
       <div className="fixed flex min-h-screen w-80 justify-start">
         <div className="w-80 bg-[#092C4C]">
           <div className="px-6 pt-8">
             <div className="flex items-center justify-between">
-              <Link to="/dashboard" className="flex items-center justify-center gap-3 rounded p-1.5">
+              <Link
+                to="/dashboard"
+                className="flex items-center justify-center gap-3 rounded p-1.5"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -67,7 +79,7 @@ export default function EditProfileSidebar() {
                   <span>FAQ</span>
                 </a>
               </Link>
-              <li className="group rounded-sm text-lg">
+              <li onClick={handleLogout} className="group rounded-sm text-lg">
                 <a
                   href={"/User Management"}
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
