@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -23,23 +23,39 @@ const formSchema = z.object({
 
 const DropzoneComponent = ({ setPreview, setValue }) => {
   const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleImageChange = (newFile) => {
+    setError(null);
+
     if (newFile) {
-      setPreview(URL.createObjectURL(newFile));
+      const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+      const maxSize = 5 * 1024 * 1024;
+
+      if (!allowedTypes.includes(newFile.type)) {
+        setError("*Hanya file PNG, JPEG, dan JPG yang diizinkan.");
+        return;
+      }
+
+      if (newFile.size > maxSize) {
+        setError("*Ukuran file tidak boleh lebih dari 5 MB.");
+        return;
+      }
+      const fileURL = URL.createObjectURL(newFile);
+      setPreview(fileURL);
       setFile(newFile);
-      setValue("uploads", newFile);
+      setValue("uploads", fileURL);
     } else {
       setPreview("");
       setFile(null);
       setValue("uploads", "");
     }
   };
-
   const removeImage = () => {
     setPreview("");
     setFile(null);
     setValue("uploads", "");
+    setError(null);
   };
 
   return (
@@ -49,7 +65,7 @@ const DropzoneComponent = ({ setPreview, setValue }) => {
           <img
             src={URL.createObjectURL(file)}
             alt="Cover Preview"
-            className="rounded-lg border border-[#092C4C] max-h-40 object-cover mx-auto"
+            className="rounded-lg border border-[#092C4C] max-w-[300px] max-h-[200px] object-fit: contain mx-auto"
           />
           <button
             className="absolute top-0 right-0 m-2 bg-white rounded-full p-1 cursor-pointer"
@@ -67,6 +83,13 @@ const DropzoneComponent = ({ setPreview, setValue }) => {
           <div className="mt-1">Upload Cover Course</div>
         </label>
       )}
+
+      {error && (
+        <span className="text-[#ED7878] text-s font-semibold flex left-0">
+          {error}
+        </span>
+      )}
+
       <input
         type="file"
         id="upload"
@@ -86,6 +109,7 @@ export default function FormKelas() {
       judul: "",
       deskripsi: "",
       option: "",
+      uploads: "",
     },
   });
 
@@ -93,21 +117,26 @@ export default function FormKelas() {
   const [showAlert, setShowAlert] = useState(false);
 
   const onSubmit = async (data) => {
-    setShowAlert(true);
-  };
-
-  const handleAlertClose = () => {
+    console.log("Form submitted with data:", data);
+    alert("Form berhasil tersubmit!");
+    form.reset();
+    setPreview("");
     setShowAlert(false);
   };
 
   const handleCancel = () => {
     form.reset();
     setPreview("");
+    setShowAlert(false);
   };
 
   return (
     <main className="bg-[#FFFFFF]">
-      <section className={`mx-auto max-w-[800px] rounded-lg border border-[#092C4C] p-8 relative overflow-hidden ${showAlert ? "alert-open" : ""}`}>
+      <section
+        className={`mx-auto max-w-[800px] rounded-lg border border-[#092C4C] p-8 relative overflow-hidden ${
+          showAlert ? "alert-open" : ""
+        }`}
+      >
         <h1 className="mb-5 text-2xl font-bold text-[#092C4C]">Tambah Kelas</h1>
         <Form {...form}>
           <form
@@ -178,6 +207,8 @@ export default function FormKelas() {
                 <DropzoneComponent
                   setPreview={setPreview}
                   setValue={form.setValue}
+                  showAlert={showAlert}
+                  errorMessage={form.formState.errors.uploads?.message}
                 />
               </FormControl>
               <FormMessage className="text-[#ED7878]">
@@ -204,9 +235,7 @@ export default function FormKelas() {
         </Form>
         {showAlert && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-4 rounded border border-[#092C4C]">
-              <button onClick={handleAlertClose}>Close</button>
-            </div>
+            <div className="bg-white p-4 rounded border border-[#092C4C]"></div>
           </div>
         )}
       </section>
