@@ -39,13 +39,13 @@ const DashboardAdmin = () => {
 
     // Contoh data dan opsi untuk chart
     const chartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
         datasets: [
             {
                 fill: true,
-                data: [500000, 1000000, 4500000, 800000, 400000, 800000, 200000], // Ganti ini dengan data sesuai kebutuhan
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                data: [500000, 1000000, 4500000, 800000, 400000, 800000, 200000, 900000, 3000000], // Ganti ini dengan data sesuai kebutuhan
+                borderColor: '#092C4C',
+                backgroundColor: 'rgba(53, 162, 235, 0.2)',
                 pointRadius: 4,
                 pointHoverRadius: 10,
                 pointHoverBorderWidth: 2,
@@ -78,33 +78,46 @@ const DashboardAdmin = () => {
     };
 
     const data = {
-        labels: ['Label 1', 'Label 2', 'Label 3'],
+        labels: ['Label 1', 'Label 2', 'Label 3', 'label 4'],
         datasets: [
           {
-            data: [30, 40, 30],
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'], // Warna untuk setiap label
-            hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            data: [30, 40, 30, 50],
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF'], // Warna untuk setiap label
+            hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF'],
+            borderWidth: 0
           },
         ],
       };
 
-    const options = {
-        legend: {
-            display: true,
-            position: 'bottom', // Letakkan legenda di bawah chart
-        },
-        tooltips: {
-            callbacks: {
-                label: (tooltipItem, data) => {
-                    const dataset = data.datasets[tooltipItem.datasetIndex];
-                    const total = dataset.data.reduce((acc, value) => acc + value, 0);
-                    const currentValue = dataset.data[tooltipItem.index];
-                    const percentage = ((currentValue / total) * 100).toFixed(2);
-                    return `${data.labels[tooltipItem.index]}: ${percentage}%`;
+      const pieOptions = {
+        plugins: {
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    fontColor: '#333',
                 },
             },
         },
-    };
+        tooltips: {
+            callbacks: {
+            label: (tooltipItem, data) => {
+                const dataset = data.datasets[tooltipItem.datasetIndex];
+                const total = dataset.data.reduce((acc, value) => acc + value, 0);
+                const currentValue = dataset.data[tooltipItem.index];
+                const percentage = ((currentValue / total) * 100).toFixed(2);
+                return `${data.labels[tooltipItem.index]}: ${percentage}%`;
+            },
+            body: (tooltipItem, data) => {
+                const dataset = data.datasets[tooltipItem.datasetIndex];
+                const total = dataset.data.reduce((acc, value) => acc + value, 0);
+                const currentValue = dataset.data[tooltipItem.index];
+                const percentage = ((currentValue / total) * 100).toFixed(2);
+                return [`Jumlah: ${currentValue}`, `Persentase: ${percentage}%`];
+            },
+            },
+        },
+      };
 
     return (
         <Layout userRole={userRole}>
@@ -166,10 +179,10 @@ const DashboardAdmin = () => {
                         <CardTotal judul="Course" nominal="63" />
                         <CardTotal judul="Instructor" nominal="30" />
                         <CardTotal judul="Student" nominal="765" />
-                        <div className="container h-80 border-2 border-[#092C4C] rounded-lg w-full font-bold text-2xl p-4 mb-10">
+                        <div className="container h-84 border-2 border-[#092C4C] rounded-lg w-full font-bold text-2xl p-4 mb-10">
                             <h1 className="text-xl">Persentase Siswa</h1>
-                            <h1 className="text-xs font-normal">Berdasarkan topic peminatan</h1>
-                            <PieChart data={data} options={options}/>
+                            <h1 className="text-xs font-normal mb-8">Berdasarkan topic peminatan</h1>
+                            <PieChart data={data} options={pieOptions}/>
                         </div>
                     </div>
                 </div>
