@@ -1,5 +1,6 @@
 import React from "react"
 import { Button } from "../../components/ui/button"
+import { Link } from "react-router-dom"
 
 import Star from "../../assets/Star.svg"
 import Delete from "../../assets/Delete.svg"
@@ -20,13 +21,14 @@ const CardListClass = (props) => {
                             <a href="#">
                                 <img src={Delete} alt="" className="w-[32px]"/>
                             </a>
-                            
-                            <Button
-                            className="bg-[#092C4C] w-[170px] h-[32px] justify-center items-center px-[7px] py-[10px] rounded-lg"
-                            >
-                                <p className="text-white font-poppins font-semibold text-[16px]">Manage Kelas</p>
-                                <img src={Edit} alt="" className="ml-2" />
-                            </Button>
+                            <Link to='/kelas/manage-kelas'>
+                                <Button
+                                className="bg-[#092C4C] w-[170px] h-[32px] justify-center items-center px-[7px] py-[10px] rounded-lg"
+                                >
+                                    <p className="text-white font-poppins font-semibold text-[16px]">Manage Kelas</p>
+                                    <img src={Edit} alt="" className="ml-2" />
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                     <div>

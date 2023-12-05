@@ -46,7 +46,7 @@ export default function Router() {
       element: <ListClass />,
     },
     {
-      path: "/materi",
+      path: "/kelas/manage-kelas",
       element: <MateriOverview />,
     },
     {
@@ -82,7 +82,7 @@ export default function Router() {
       element: <EditProfile />,
     },
     {
-      path: "/edit-profile/faq",
+      path: "/faq",
       element: <EditProfileFaq />
     },
     {
