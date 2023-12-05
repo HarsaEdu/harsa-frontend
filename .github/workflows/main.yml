@@ -41,5 +41,5 @@ jobs:
             docker stop ${{ secrets.CONTAINER_NAME }} || true
             docker rm ${{ secrets.CONTAINER_NAME }} || true
             docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/harsa-frontend || true
-            docker run --name ${{ secrets.CONTAINER_NAME }} -p 8000:4173 -d \
+            docker run --name ${{ secrets.CONTAINER_NAME }} -p 4173:4173 -d \
               ${{ secrets.DOCKERHUB_USERNAME }}/harsa-frontend
