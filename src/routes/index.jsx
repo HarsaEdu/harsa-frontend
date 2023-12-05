@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "../pages/App";
+import Faq from "@/pages/edit-profile/faq";
 import LandingPage from "../pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
 import AboutUs from "@/pages/landing-page/aboutUs";
@@ -17,6 +18,8 @@ import EditTugas from "@/pages/manage-tugas/editTugas";
 import AddFAQ from "@/pages/manage-faq/addFaq";
 import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
+import EditProfileFaq from "@/pages/edit-profile/faq";
+
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -77,6 +80,10 @@ export default function Router() {
     {
       path: "/edit-profile",
       element: <EditProfile />,
+    },
+    {
+      path: "/edit-profile/faq",
+      element: <EditProfileFaq />
     },
     {
       path: "/content-management/FAQ/tambah-FAQ",
