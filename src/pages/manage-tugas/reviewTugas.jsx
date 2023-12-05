@@ -12,10 +12,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
+import brokenImg from "@/assets/broken-image.svg";
+import checkGrey from "@/assets/icons/check-grey.svg";
+import closeGrey from "@/assets/icons/close-grey.svg";
 
 const ReviewTugas = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [status, setStatus] = useState("submitted");
+    const [status, setStatus] = useState("not submit");
     const [reason, setReason] = useState("");
 
     const form = useForm({
@@ -64,11 +67,12 @@ const ReviewTugas = () => {
             showCancelButton: true,
             showConfirmButton: true,
             confirmButtonColor: "#092C4C",
-            confirmButtonText: "Ya, Tolak",
+            confirmButtonText: "Ya, Terima",
             cancelButtonText: "Batal",
             cancelButtonColor: "#F2994A",
         }).then((result) => {
             if (result.isConfirmed) {
+                setStatus("accepted");
                 Swal.fire({
                     title: "Tugas diterima!",
                     text: "Informasi terbaru telah tersimpan",
@@ -76,9 +80,7 @@ const ReviewTugas = () => {
                     showConfirmButton: false,
                     showCloseButton: true,
                     timer: 2000,
-                }).then(() => {
-                    setStatus("accepted");
-                })
+                });
             }
         });
     }
@@ -123,51 +125,79 @@ const ReviewTugas = () => {
                 <div className="">
                     <p className="text-lg font-semibold font-poppins mb-8">Jawaban</p>
 
-                    <iframe className="mb-8" src="https://drive.google.com/file/d/1rU5hGtj5W6G5So3NdDYi7qvoKQB1OoXT/preview" width="100%" height="640" allow="autoplay"></iframe>
+                    {status === "not submit" && (
+                        <div className="flex flex-col items-center border border-[#092C4C] py-6 w-full mb-8">
+                            <img className="mb-6 w-fit" src={brokenImg} alt="" />
+                            <p className="text-[#6F6C6C]">Tugas ini belum di submit</p>
+                        </div>
+                    )}
+                    {status !== "not submit" && (
+                        <iframe className="mb-8" src="https://drive.google.com/file/d/1rU5hGtj5W6G5So3NdDYi7qvoKQB1OoXT/preview" width="100%" height="640" allow="autoplay"></iframe>
+                    )}
 
-                    <div className="flex gap-2">
-                        <Button variant="outline" className="text-[#092C4C] border-[#092C4C] font-semibold font-poppins" onClick={() => { handleAccepted() }}><img className="me-2" src={check} alt="" />Terima</Button>
-                        <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
-                            <DialogTrigger asChild>
-                                <Button variant="outline" className="text-[#092C4C] border-[#092C4C] font-semibold font-poppins"><img className="me-2" src={close} alt="" />Tolak</Button>
-                            </DialogTrigger>
-                            <DialogContent className="flex bg-white">
-                                <div className="h-full w-1/4">
-                                    <img className="h-20" src={alertIcon} alt="" />
-                                </div>
-                                <div className="h-full w-3/4">
-                                    <Form {...form}>
-                                        <form onSubmit={form.handleSubmit(handleRejected)}>
-                                            <FormField
-                                                control={form.control}
-                                                name="reason"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel className="font-poppins font-semibold text-[#092C4C]">Tolak Tugas</FormLabel>
-                                                        <FormControl>
-                                                            <Textarea className="border-[#F2994A] h-32" placeholder="Alasan" {...field} />
-                                                        </FormControl>
-                                                        <FormMessage className="text-red-500" />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                            <div className="flex justify-center mt-3">
-                                                {/* <DialogClose> */}
-                                                <Button
-                                                    type="submit"
-                                                    className="bg-[#092C4C] text-white font-semibold font-poppins"
-                                                >
-                                                    Tolak
-                                                </Button>
-                                                {/* </DialogClose> */}
+                    {status === "rejected" && (
+                        <div className="mb-8">
+                            <p className="text-sm font-semibold mb-2">catatan</p>
+                            <div className="bg-[#A2D2FF] rounded py-3 px-2">
+                                {reason}
+                            </div>
+                        </div>
+                    )}
 
+                    {status !== "accepted" && (
+                        <div className="flex gap-2">
+
+                            {status === "not submit" && (
+                                <>
+                                    <Button variant="outline" className="text-[#999999] border-[#999999] font-semibold font-poppins" ><img className="me-2" src={checkGrey} alt="" />Terima</Button>
+                                    <Button variant="outline" className="text-[#999999] border-[#999999] font-semibold font-poppins"><img className="me-2" src={closeGrey} alt="" />Tolak</Button>
+                                </>
+                            )}
+
+                            {status !== "not submit" && (
+                                <>
+                                    <Button variant="outline" className="text-[#092C4C] border-[#092C4C] font-semibold font-poppins" onClick={() => { handleAccepted() }}><img className="me-2" src={check} alt="" />Terima</Button>
+                                    <Dialog open={dialogOpen} onOpenChange={(open) => setDialogOpen(open)}>
+                                        <DialogTrigger asChild>
+                                            <Button variant="outline" className="text-[#092C4C] border-[#092C4C] font-semibold font-poppins"><img className="me-2" src={close} alt="" />Tolak</Button>
+                                        </DialogTrigger>
+                                        <DialogContent className="flex bg-white">
+                                            <div className="h-full w-1/4">
+                                                <img className="h-20" src={alertIcon} alt="" />
                                             </div>
-                                        </form>
-                                    </Form>
-                                </div>
-                            </DialogContent>
-                        </Dialog>
-                    </div>
+                                            <div className="h-full w-3/4">
+                                                <Form {...form}>
+                                                    <form onSubmit={form.handleSubmit(handleRejected)}>
+                                                        <FormField
+                                                            control={form.control}
+                                                            name="reason"
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormLabel className="font-poppins font-semibold text-[#092C4C]">Tolak Tugas</FormLabel>
+                                                                    <FormControl>
+                                                                        <Textarea className="border-[#F2994A] h-32" placeholder="Alasan" {...field} />
+                                                                    </FormControl>
+                                                                    <FormMessage className="text-red-500" />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <div className="flex justify-center mt-3">
+                                                            <Button
+                                                                type="submit"
+                                                                className="bg-[#092C4C] text-white font-semibold font-poppins"
+                                                            >
+                                                                Tolak
+                                                            </Button>
+                                                        </div>
+                                                    </form>
+                                                </Form>
+                                            </div>
+                                        </DialogContent>
+                                    </Dialog>
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
 
             </div>
