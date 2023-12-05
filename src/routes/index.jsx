@@ -16,6 +16,7 @@ import ManageTugas from "@/pages/manage-tugas";
 import EditTugas from "@/pages/manage-tugas/editTugas";
 import AddFAQ from "@/pages/manage-faq/addFaq";
 import EditFAQ from "@/pages/manage-faq/editFaq";
+import UpdateMaterial from "@/pages/module/updateMaterial";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -48,6 +49,10 @@ export default function Router() {
     {
       path: "/kelas/tambah-modul",
       element: <CreateMaterial />,
+    },
+    {
+      path: "/kelas/manage-modul",
+      element: <UpdateMaterial />,
     },
     {
       path: "/kelas/tambah-modul/tambah-tugas",
