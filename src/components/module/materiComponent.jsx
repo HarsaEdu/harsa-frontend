@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button } from "../../components/ui/button";
+import { Button } from "../ui/button";
 import ReactPlayer from "react-player";
 import DeleteIcon from "@/assets/icons/delete.svg";
 import VideoIcon from "@/assets/icons/videoModule.svg";
@@ -42,13 +42,15 @@ const CardModule = ({
         className="my-5 w-full rounded-md border border-[#A2D2FF] px-2"
       >
         <AccordionItem value="item-1">
-          <AccordionTrigger>{judulMateri}</AccordionTrigger>
+          <AccordionTrigger className='justify-between'>{judulMateri}</AccordionTrigger>
           <AccordionContent>
             <Accordion type="single" collapsible className="my-1 w-full">
               <AccordionItem value="item-1">
                 <AccordionTrigger>
-                  <img src={VideoIcon} alt="video-module" />
-                  Video - {subtitleMateri}
+                  <div className="flex gap-2 items-center">
+                    <img src={VideoIcon} alt="video-module" />
+                    Video - {subtitleMateri}
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <ReactPlayer url={videoMateri} />
@@ -56,8 +58,10 @@ const CardModule = ({
               </AccordionItem>
               <AccordionItem value="item-2">
                 <AccordionTrigger>
-                  <img src={MateriIcon} alt="video-module" />
-                  Materi - {subtitleMateri}
+                  <div className="flex gap-2 items-center">
+                    <img src={MateriIcon} alt="video-module" />
+                    Materi - {subtitleMateri}
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <h1>{teksMateri}</h1>
@@ -65,8 +69,10 @@ const CardModule = ({
               </AccordionItem>
               <AccordionItem value="item-3">
                 <AccordionTrigger>
-                  <img src={TugasIcon} alt="video-module" />
-                  Tugas - {subtitleMateri}
+                  <div className="flex gap-2 items-center">
+                    <img src={TugasIcon} alt="video-module" />
+                    Tugas - {subtitleMateri}
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <h1>{tugasMateri}</h1>
@@ -74,8 +80,10 @@ const CardModule = ({
               </AccordionItem>
               <AccordionItem value="item-4">
                 <AccordionTrigger>
-                  <img src={KuisIcon} alt="video-module" />
-                  Kuis - {subtitleMateri}
+                  <div className="flex gap-2 items-center">
+                    <img src={KuisIcon} alt="video-module" />
+                    Kuis - {subtitleMateri}
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <h1>{kuisMateri}</h1>
