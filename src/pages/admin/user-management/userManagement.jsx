@@ -1,82 +1,24 @@
 import DropdownAction from "@/components/table/DropdownAction";
-import { useMemo, useEffect, useState, useCallback } from "react";
+import { useMemo, useEffect, useState } from "react";
 import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import Table from "@/components/table/tables";
 import { Input } from "@/components/ui/input";
-import Loading from "@/components/ui/loading";
-import { useSearchParams } from "react-router-dom";
-import { debounce } from "lodash";
-import axios from "axios";
+import ApiUsers from "@/utils/ApiConfig";
+import { CSVLink } from "react-csv";
 
 export default function EditTugas() {
-  const [loading, setLoading] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchValue, setSearchValue] = useState("");
+  const userRole = "admin";
   const [data, setData] = useState([]);
-
-  const getSuggestions = useCallback(
-    async function (query) {
-      if (!query) {
-        searchParams.delete("query");
-      } else {
-        searchParams.set("query", query);
-        searchParams.delete("page");
-      }
-      setSearchParams(searchParams);
-    },
-    [searchParams],
-  );
-
-  const getSuggestionsDebounce = useMemo(
-    () => debounce(getSuggestions, 1000),
-    [getSuggestions],
-  );
+  const { isLoading, error } = ApiUsers({
+    endpoint: "/users", // Sesuaikan dengan endpoint kita
+    onSuccess: setData,
+  });
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          "https://651a7d75340309952f0d6272.mockapi.io/api/v1/users",
-        );
-        setData(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, [searchParams]);
-
-  //   useEffect(() => {
-  //     async function fetchData() {
-  //       try {
-  //         const apiUrl =
-  //           "https://651a7d75340309952f0d6272.mockapi.io/api/v1/users";
-
-  //         const response = await axios.get(apiUrl);
-  //         if (!response.ok) {
-  //           throw new Error(`Failed to fetch data. Status: ${response.status}`);
-  //         }
-
-  //         const data = await response.json();
-
-  //         setData(data);
-  //         setLoading(false);
-  //       } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //         setLoading(false);
-  //       }
-  //     }
-  //     fetchData();
-  //   }, [searchParams]);
-
-  function onInputChange(newValue) {
-    setSearchValue(newValue);
-    getSuggestionsDebounce(newValue);
-  }
+    console.log("Data updated:", data);
+  }, [data]);
 
   const columns = useMemo(() => [
     {
@@ -145,7 +87,20 @@ export default function EditTugas() {
     },
   ]);
 
-  const userRole = "admin";
+  // function untuk export tabel ke csv file
+  const csvData = [
+    ["No", "Name", "Username", "Email", "No Telepone", "Role"],
+    ...data.map(
+      ({ id, first_name, username, email, phone_number, role_name }) => [
+        id,
+        first_name,
+        username,
+        email,
+        phone_number,
+        role_name,
+      ],
+    ),
+  ];
 
   return (
     <Layout userRole={userRole}>
@@ -158,14 +113,18 @@ export default function EditTugas() {
                 User Management
               </h2>
               <div className="space-x-2">
-                <Button
-                  id="addUserManagamanet"
-                  href="/user-management/tambah-user"
-                  className="bg-[#159C1B] hover:bg-[#34a73a]"
-                >
-                  Export Data
+                {/* button untuk export csv */}
+                <Button className="bg-[#159C1B] text-[16px] hover:bg-[#34a73a]">
+                  <CSVLink filename="my-file.csv" data={csvData}>
+                    Export to CSV
+                  </CSVLink>
                 </Button>
-                <Button id="exportDataUser" href="/user-management/tambah-user">
+                {/* button add user */}
+                <Button
+                  id="exportDataUser"
+                  href="/user-management/tambah-user"
+                  className="text-[16px]"
+                >
                   Tambah Data User
                 </Button>
               </div>
@@ -173,29 +132,27 @@ export default function EditTugas() {
           </div>
           {/* Table */}
           <div className="mt-2">
-            {loading ? (
-              <Loading />
-            ) : (
-              <Table
-                datas={data}
-                columns={columns}
-                classNameHeader="bg-[#A2D2FF] text-black"
-                isVisible={true}
-                rowVisible={true}
-                searchComponent={
-                  <div className="flex w-1/2 items-center justify-end space-x-8">
-                    <p className="text-xl">Search</p>
-                    <Input
-                      id="search"
-                      className=" w-4/12 rounded-xl border-[#092C4C]"
-                      placeholder="Cari sesuatu..."
-                      value={searchValue}
-                      onChange={(e) => onInputChange(e.currentTarget.value)}
-                    />
-                  </div>
-                }
-              />
-            )}
+            {isLoading && <p>. . .</p>}
+            {error && <p>Error: {error.message}</p>}
+            <Table
+              datas={data}
+              columns={columns}
+              classNameHeader="bg-[#A2D2FF] text-black"
+              isVisible={true}
+              rowVisible={true}
+              searchComponent={
+                <div className="flex w-1/2 items-center justify-end space-x-8">
+                  <p className="text-xl">Search</p>
+                  <Input
+                    id="search"
+                    className=" w-4/12 rounded-xl border-[#092C4C]"
+                    placeholder="Cari sesuatu..."
+                    value={""}
+                    onChange={(e) => console.log(e.currentTarget.value)}
+                  />
+                </div>
+              }
+            />
           </div>
         </div>
       </div>
