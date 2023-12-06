@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import HarsaIcon from "../../assets/icons/harsaicon.svg";
 import DropdownConfig from "./DropdownConfig";
 import { Link } from "react-router-dom";
@@ -75,6 +76,8 @@ function AdminSidebar() {
             <Link to="/edit-profile" className="mx-4 flex items-center">
               <div className="relative h-8 w-8 rounded-full before:absolute before:bottom-0 before:right-0 before:h-2 before:w-2 before:rounded-full before:bg-green-500 before:ring-1 before:ring-white">
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
 import HarsaIcon from "../../assets/icons/harsaicon.svg"
 import DropdownConfig from "./DropdownConfig"
 
@@ -149,7 +152,10 @@ function AdminSidebar() {
           <div className="w-64 py-4 bg-[#A2D2FF] flex items-center justify-between fixed left-0 bottom-0">
             <div className="flex items-center mx-4">
               <div className="relative w-8 h-8 rounded-full before:absolute before:w-2 before:h-2 before:bg-green-500 before:rounded-full before:right-0 before:bottom-0 before:ring-1 before:ring-white">
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
                 <img
                   className="rounded-full"
                   src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
@@ -157,6 +163,7 @@ function AdminSidebar() {
                 />
               </div>
               <div className="flex flex-col pl-3">
+<<<<<<< HEAD
 <<<<<<< HEAD
                 <div className="text-lg font-semibold text-black">
                   {username}
@@ -167,13 +174,18 @@ function AdminSidebar() {
               </div>
             </Link>
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
                 <div className="text-sm text-black font-semibold">Admin</div>
                 <span className="text-xs text-gray-600 font-semibold  tracking-tight">
                   Online
                 </span>
               </div>
             </div>
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
           </div>
         </div>
       </div>

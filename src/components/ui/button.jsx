@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
@@ -16,6 +17,8 @@ const buttonVariants = cva(
         outline:
           "border border-input bg-background hover:bg-black/5 hover:text-black/50",
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";
@@ -32,7 +35,10 @@ const buttonVariants = cva(
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
@@ -49,6 +55,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
   },
 );
@@ -73,6 +80,8 @@ Button.displayName = "Button";
 
 export { Button, buttonVariants };
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
   }
 )
 
@@ -88,4 +97,7 @@ const Button = React.forwardRef(({ className, variant, size, asChild = false, ..
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e

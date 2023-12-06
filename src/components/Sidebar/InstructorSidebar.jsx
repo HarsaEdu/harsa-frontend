@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import HarsaIcon from "../../assets/icons/harsaicon.svg";
 import { Link } from "react-router-dom";
 
@@ -27,6 +28,8 @@ function InstructorSidebar() {
                       width="27"
                       height="27"
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
 import HarsaIcon from "../../assets/icons/harsaicon.svg"
 
 function InstructorSidebar() {
@@ -58,7 +61,10 @@ function InstructorSidebar() {
                     <svg
                       width="20"
                       height="20"
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
                       viewBox="0 0 27 28"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -69,6 +75,7 @@ function InstructorSidebar() {
                         id="icon-project"
                       />
                     </svg>
+<<<<<<< HEAD
 <<<<<<< HEAD
                   <span>Dashboard</span>
                 </Link>
@@ -96,6 +103,8 @@ function InstructorSidebar() {
           <div className="w-80 py-4 bg-[#A2D2FF] flex items-center justify-between fixed bottom-0">
             <Link to="/edit-profile" className="flex items-center mx-4">
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
                     <span>Dashboard</span>
                   </a>
                 </li>
@@ -124,7 +133,10 @@ function InstructorSidebar() {
           </div>
           <div className="w-64 py-4 bg-[#A2D2FF] flex items-center justify-between fixed bottom-0">
             <div className="flex items-center mx-4">
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
               <div className="relative w-8 h-8 rounded-full before:absolute before:w-2 before:h-2 before:bg-green-500 before:rounded-full before:right-0 before:bottom-0 before:ring-1 before:ring-white">
                 <img
                   className="rounded-full"
@@ -133,6 +145,7 @@ function InstructorSidebar() {
                 />
               </div>
               <div className="flex flex-col pl-3">
+<<<<<<< HEAD
 <<<<<<< HEAD
                 <div className="text-lg font-semibold text-black">
                   {username}
@@ -143,13 +156,18 @@ function InstructorSidebar() {
               </div>
             </Link>
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
                 <div className="text-sm text-black font-semibold">Instructor</div>
                 <span className="text-xs text-gray-600 font-semibold tracking-tight">
                   Online
                 </span>
               </div>
             </div>
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
           </div>
         </div>
       </div>

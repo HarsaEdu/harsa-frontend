@@ -4,6 +4,7 @@ module.exports = {
   darkMode: ["class"],
   content: [
 <<<<<<< HEAD
+<<<<<<< HEAD
     "./pages/**/*.{js,jsx}",
     "./components/**/*.{js,jsx}",
     "./app/**/*.{js,jsx}",
@@ -23,6 +24,14 @@ module.exports = {
 	],
   theme: {
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+    './pages/**/*.{js,jsx}',
+    './components/**/*.{js,jsx}',
+    './app/**/*.{js,jsx}',
+    './src/**/*.{js,jsx}',
+	],
+  theme: {
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
     container: {
       center: true,
       padding: "2rem",
@@ -89,8 +98,12 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 <<<<<<< HEAD
+<<<<<<< HEAD
   }
 }
 =======
 }
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+}
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e

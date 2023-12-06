@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
@@ -47,6 +48,8 @@ AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
 import * as React from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { ChevronDown } from "lucide-react"
@@ -88,4 +91,7 @@ const AccordionContent = React.forwardRef(({ className, children, ...props }, re
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e

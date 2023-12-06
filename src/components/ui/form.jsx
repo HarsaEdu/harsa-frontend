@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { Controller, FormProvider, useFormContext } from "react-hook-form";
@@ -31,6 +32,8 @@ const useFormField = () => {
 
   const { id } = itemContext;
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { Controller, FormProvider, useFormContext } from "react-hook-form";
@@ -66,7 +69,10 @@ const useFormField = () => {
   }
 
   const { id } = itemContext
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
 
   return {
     id,
@@ -75,6 +81,7 @@ const useFormField = () => {
     formDescriptionId: `${id}-form-item-description`,
     formMessageId: `${id}-form-item-message`,
     ...fieldState,
+<<<<<<< HEAD
 <<<<<<< HEAD
   };
 };
@@ -113,6 +120,8 @@ const FormControl = React.forwardRef(({ ...props }, ref) => {
   return (
     <Slot
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
   }
 }
 
@@ -147,7 +156,10 @@ const FormControl = React.forwardRef(({ ...props }, ref) => {
 
   return (
     (<Slot
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
       ref={ref}
       id={formItemId}
       aria-describedby={
@@ -156,6 +168,7 @@ const FormControl = React.forwardRef(({ ...props }, ref) => {
           : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={!!error}
+<<<<<<< HEAD
 <<<<<<< HEAD
       {...props}
     />
@@ -200,6 +213,8 @@ const FormMessage = React.forwardRef(
 );
 FormMessage.displayName = "FormMessage";
 =======
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
       {...props} />)
   );
 })
@@ -237,7 +252,10 @@ const FormMessage = React.forwardRef(({ className, children, ...props }, ref) =>
   );
 })
 FormMessage.displayName = "FormMessage"
+<<<<<<< HEAD
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
 
 export {
   useFormField,
@@ -249,7 +267,11 @@ export {
   FormMessage,
   FormField,
 <<<<<<< HEAD
+<<<<<<< HEAD
 };
 =======
 }
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+}
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e

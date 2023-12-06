@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { React, useState } from "react";
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
@@ -60,6 +61,18 @@ function App() {
       <Form />
     </Layout>
 >>>>>>> 75cd273 (feat: add dropzone validation)
+=======
+import Layout from "@/components/layout/Index.jsx";
+import Form from "../pages/kelas/Formkelasadmin";
+
+function App() {
+  const userRole = "admin";
+
+  return (
+    <Layout>
+      <Form />
+    </Layout>
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
   );
 }
 

@@ -6,10 +6,14 @@
   "tailwind": {
     "config": "tailwind.config.js",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "css": "src/styles/index.css",
 =======
     "css": "src.index.css",
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+    "css": "src.index.css",
+>>>>>>> 1989afc128079573fbb69e4670e0036a4d0e3d3e
     "baseColor": "slate",
     "cssVariables": true
   },
