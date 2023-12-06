@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
   const adminAccessible = ["/dashboard-admin", "/content-management/FAQ/tambah-FAQ", "/content-management/FAQ/:id/edit-FAQ", "/user-management/edit-user/:id", "/riwayat-transaksi", "/kelas", "/kelas/manage-kelas",  "/kelas/manage-kelas/manage-modul", "/kelas/tambah-modul/tambah-tugas","/kelas/tambah-kuis", "/kelas/tambah-pertanyaan", "/kelas/manage-tugas","/kelas/manage-tugas/edit", "/edit-profile", "/faq"];
 
   // Halaman yang hanya bisa diakses oleh instructor
-  const instructorAccessible = ["/dashboard", "/kelas", "/kelas/manage-kelas",  "/kelas/manage-modul", "/kelas/tambah-modul", "/kelas/tambah-modul/tambah-tugas","/kelas/tambah-kuis", "/kelas/tambah-pertanyaan", "/kelas/manage-tugas","/kelas/manage-tugas/edit", "/edit-profile", "/faq"];
+  const instructorAccessible = ["/dashboard", "/kelas", "/kelas/manage-kelas",  "/kelas/manage-kelas/manage-modul", "/kelas/tambah-modul", "/kelas/tambah-modul/tambah-tugas","/kelas/tambah-kuis", "/kelas/tambah-pertanyaan", "/kelas/manage-tugas","/kelas/manage-tugas/edit", "/edit-profile", "/faq"];
 
   // Landing page yang tidak bisa diakses oleh pengguna yang sudah login
   const landingPage = ["/", "/login"];
