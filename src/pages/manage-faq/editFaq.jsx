@@ -98,13 +98,25 @@ const EditFAQ = () => {
 
   const onSave = async (data) => {
     try {
-      await axios.put(`https://api.harsaedu.my.id/web/faqs/${id}`, data);
+      const token = localStorage.getItem("access_token"); // Ganti dengan cara Anda mendapatkan token
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+  
+      // Simpan data ke backend menggunakan metode PUT
+      // Ganti endpoint dengan endpoint yang sesuai
+      await axios.put(`https://api.harsaedu.my.id/web/faqs/${id}`, data, {
+        headers,
+      });
+  
       // Reset form setelah penyimpanan
       form.reset();
     } catch (error) {
       console.error("Error updating FAQ data:", error);
     }
   };
+  
 
   return (
     <Layout userRole={userRole}>
