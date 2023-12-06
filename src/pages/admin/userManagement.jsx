@@ -1,5 +1,6 @@
 import DropdownAction from "@/components/table/DropdownAction";
 import { useMemo, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
@@ -74,12 +75,14 @@ export default function EditTugas() {
               >
                 Delete
               </Button>
-              <Button
-                className="bg-white px-8 text-black hover:text-white"
-                onClick={() => console.log(info.row.original.id)}
-              >
-                Detail
-              </Button>
+              <Link to="/user-management/detail">
+                <Button
+                  className="bg-white px-8 text-black hover:text-white"
+                  onClick={() => console.log(info.row.original.id)}
+                >
+                  Detail
+                </Button>
+              </Link>
             </div>
           </DropdownAction>
         </div>
