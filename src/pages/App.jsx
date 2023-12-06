@@ -1,14 +1,13 @@
-import Layout from "../components/layout/Index.jsx";
-import Formkelasinstructor from "../pages/kelas/Formkelasinstructor.jsx";
-import Formkelasadmin from "../pages/kelas/Formkelasadmin.jsx";
+import Layout from "@/components/layout/Index.jsx";
+import Form from "../pages/kelas/Formkelasadmin";
 
 function App() {
+  const userRole = "admin";
+
   return (
-    <>
-      <Layout>
-        <Formkelasadmin />
-      </Layout>
-    </>
+    <Layout>
+      <Form />
+    </Layout>
   );
 }
 
