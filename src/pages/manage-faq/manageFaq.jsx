@@ -79,7 +79,7 @@ export default function ManageFaq() {
                       id="search"
                       className="w-40 rounded border-[#092C4C]"
                   />
-                  <Link>
+                  <Link to="/content-management/FAQ/tambah-FAQ">
                     <Button>Tambah FAQ</Button>
                   </Link>
                   </div>
