@@ -18,6 +18,9 @@ import AddFAQ from "@/pages/manage-faq/addFaq";
 import EditFAQ from "@/pages/manage-faq/editFaq";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
+import AddSubscription from "@/pages/admin/pembayaran/tambahLangganan";
+import AddSubscriptionPackage from "@/pages/admin/pembayaran/tambahPaketLangganan";
+import EditSubscriptionPackage from "@/pages/admin/pembayaran/editPaketLangganan";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -90,6 +93,18 @@ export default function Router() {
     {
       path: "/dashboard-admin",
       element: <DashboardAdmin />,
+    },
+    {
+      path: "/langganan",
+      element: <AddSubscription />,
+    },
+    {
+      path: "/langganan/tambah-paket",
+      element: <AddSubscriptionPackage />,
+    },
+    {
+      path: `/langganan/edit-paket/:id`,
+      element: <EditSubscriptionPackage />,
     },
   ]);
 
