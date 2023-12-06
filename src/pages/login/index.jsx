@@ -9,7 +9,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { Cookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as z from "zod";
@@ -20,7 +19,7 @@ const formSchema = z.object({
 });
 
 export default function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,10 +38,28 @@ export default function Login() {
         },
       );
       if (response.status === 200) {
-        const { access_token } = response.data.data;
-        const cookies = new Cookies();
-        cookies.set("authToken", access_token, { path: "/" });
-        navigate("/dashboard");
+        const { username, role_name, access_token, refresh_token } =
+          response.data.data;
+
+        // Hanya izinkan login untuk role_name admin atau instructor
+        if (role_name === "admin" || role_name === "instructor") {
+          localStorage.setItem("username", username);
+          localStorage.setItem("role_name", role_name);
+          localStorage.setItem("access_token", access_token);
+          localStorage.setItem("refresh_token", refresh_token);
+
+          if (role_name === "admin") {
+            navigate("/dashboard-admin");
+          } else {
+            navigate("/dashboard");
+          }
+        } else {
+          // Role selain admin dan instructor tidak diizinkan login
+          form.setError("email", {
+            type: "manual",
+            message: "*Gunakan akun admin atau instructor untuk log in",
+          });
+        }
       }
     } catch (error) {
       form.setError("email", {

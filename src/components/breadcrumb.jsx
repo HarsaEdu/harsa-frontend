@@ -10,20 +10,20 @@ const Breadcrumb = () => {
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x !== " / ");
 
+  const limitedPathnames = pathnames.slice(0, 4);
 
   return (
-    <div className='font-poppins'>
-      <Link to="/dashboard">Dashboard</Link>
-      {pathnames.map((name, index) => {
+    <div className='font-poppins bg-[#A2D2FF] rounded-full px-4 py-1 text-sm inline-block'>
+      <Link to="/dashboard" className="text-[#667085]">Dashboard</Link>
+      {limitedPathnames.map((name, index) => {
         const formattedName = formatBreadcrumbName(name);
-        const routeTo = `${pathnames.slice(0, index + 1).join('/')}`;
-        console.log(routeTo)
-        const isLast = index === pathnames.length - 1;
+        const routeTo = `${limitedPathnames.slice(0, index + 1).join('/')}`;
+        const isLast = index === limitedPathnames.length - 1;
         return isLast ? (
-          <span key={index}> {formattedName} </span>
+          <span key={index} className="text-[#092C4C]"> {formattedName} </span>
         ) : (
           <span key={index}>
-            <Link to={routeTo}> {formattedName}</Link> &gt;{''}
+            <Link to={routeTo} className="text-[#667085]"> {formattedName}</Link> &gt;{''}
           </span>
         );
       })}

@@ -71,7 +71,7 @@ const CreateMaterial = () => {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8 rounded border-2 px-3 py-5 mt-5 font-semibold"
+                        className="space-y-8 rounded border-2 px-3 py-5 my-5 font-semibold"
                     >
                         <FormField
                             control={form.control}

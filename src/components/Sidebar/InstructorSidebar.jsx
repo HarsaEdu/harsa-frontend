@@ -1,17 +1,18 @@
-import HarsaIcon from "../../assets/icons/harsaicon.svg"
+import HarsaIcon from "../../assets/icons/harsaicon.svg";
 import { Link } from "react-router-dom";
 
 function InstructorSidebar() {
+  const username = localStorage.getItem('username');
   return (
     <>
       <div className="fixed flex justify-start w-80 font-poppins min-h-screen">
         <div className="w-80 bg-[#092C4C]">
           <div className="px-6 pt-8">
             <div className="flex items-center justify-between">
-            <Link to="/" className="p-1.5 rounded flex items-center justify-center">
-              <img src={HarsaIcon} alt="HarsaIcon" width={40} height={40} />
-              <span className="text-3xl font-semibold ml-4">Harsa</span>
-            </Link>
+              <Link to="/" className="p-1.5 rounded flex items-center justify-center">
+                <img src={HarsaIcon} alt="HarsaIcon" width={40} height={40} />
+                <span className="text-3xl font-semibold ml-4">Harsa</span>
+              </Link>
             </div>
           </div>
           <div className="px-6 pt-4">
@@ -58,7 +59,7 @@ function InstructorSidebar() {
             </ul>
           </div>
           <div className="w-80 py-4 bg-[#A2D2FF] flex items-center justify-between fixed bottom-0">
-            <div className="flex items-center mx-4">
+            <Link to="/edit-profile" className="flex items-center mx-4">
               <div className="relative w-8 h-8 rounded-full before:absolute before:w-2 before:h-2 before:bg-green-500 before:rounded-full before:right-0 before:bottom-0 before:ring-1 before:ring-white">
                 <img
                   className="rounded-full"
@@ -67,12 +68,14 @@ function InstructorSidebar() {
                 />
               </div>
               <div className="flex flex-col pl-3">
-                <div className="text-sm text-black font-semibold">Instructor</div>
-                <span className="text-xs text-gray-600 font-semibold tracking-tight">
+                <div className="text-lg font-semibold text-black">
+                  {username}
+                </div>
+                <span className="text-xs font-semibold tracking-tight text-gray-600">
                   Online
                 </span>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
