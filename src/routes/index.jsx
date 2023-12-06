@@ -17,14 +17,13 @@ import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
+import UserManagement from "@/pages/admin/user-management/userManagement";
 import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
 
 import ProtectedRoute from "./protectedRoute";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
-
-
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -89,7 +88,7 @@ export default function Router() {
         },
         {
           path: "/faq",
-          element: <EditProfileFaq />
+          element: <EditProfileFaq />,
         },
         {
           path: "/content-management/FAQ/tambah-FAQ",
@@ -98,6 +97,10 @@ export default function Router() {
         {
           path: "/content-management/FAQ/:id/edit-FAQ",
           element: <EditFAQ />,
+        },
+        {
+          path: "/user-management",
+          element: <UserManagement />,
         },
         {
           path: "/user-management/edit-user/:id",
@@ -115,8 +118,8 @@ export default function Router() {
           path: "*",
           element: <NotFoundPage />,
         },
-      ]
-    }
+      ],
+    },
   ]);
 
   return <RouterProvider router={router} />;
