@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import LandingPage from "../pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
+import UserManagement from "../pages/admin/userManagement";
+import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
@@ -24,8 +26,6 @@ import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
 
 import ProtectedRoute from "./protectedRoute";
-
-
 
 
 export default function Router() {
@@ -91,7 +91,7 @@ export default function Router() {
         },
         {
           path: "/faq",
-          element: <EditProfileFaq />
+          element: <EditProfileFaq />,
         },
         {
           path: "/content-management/FAQ/tambah-FAQ",
@@ -100,6 +100,11 @@ export default function Router() {
         {
           path: "/content-management/FAQ/:id/edit-FAQ",
           element: <EditFAQ />,
+        },
+        {
+
+          path: "/user-management", //Nanti ganti jadi ID
+          element: <UserManagement />,
         },
         {
           path: "/user-management/detail",
@@ -121,8 +126,8 @@ export default function Router() {
           path: "*",
           element: <NotFoundPage />,
         },
-      ]
-    }
+      ],
+    },
   ]);
 
   return <RouterProvider router={router} />;
