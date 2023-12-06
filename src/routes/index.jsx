@@ -19,7 +19,6 @@ import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
-import UserManagement from "@/pages/admin/user-management/userManagement";
 import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
