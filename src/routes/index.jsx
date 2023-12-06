@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App from "../pages/App";
-import Faq from "@/pages/edit-profile/faq";
 import LandingPage from "../pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
 import EditProfile from "@/pages/edit-profile";
@@ -19,89 +17,106 @@ import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
+import HeaderEdit from "@/pages/admin/user-management";
+import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
+import NotFoundPage from "@/pages/notFoundPage";
+
+import ProtectedRoute from "./protectedRoute";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
+
 
 
 export default function Router() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <LandingPage />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/dashboard",
-      element: <Dashboard />,
-      // children: [
-      //     {
-      //         path: 'kelas', // Menggunakan path yang terpisah untuk Kelas
-      //         element: <AboutUs />
-      //     },
-      // ],
-    },
-    {
-      path: "/kelas",
-      element: <ListClass />,
-    },
-    {
-      path: "/materi",
-      element: <MateriOverview />,
-    },
-    {
-      path: "/kelas/tambah-modul",
-      element: <CreateMaterial />,
-    },
-    {
-      path: "/kelas/manage-modul",
-      element: <UpdateMaterial />,
-    },
-    {
-      path: "/kelas/tambah-modul/tambah-tugas",
-      element: <CreateTask />,
-    },
-    {
-      path: "/kelas/tambah-kuis",
-      element: <AddQuiz />,
-    },
-    {
-      path: "/kelas/tambah-pertanyaan",
-      element: <HeaderQuiz />,
-    },
-    {
-      path: "/kelas/manage-tugas",
-      element: <ManageTugas />,
-    },
-    {
-      path: "/kelas/manage-tugas/edit", //Nanti ganti jadi ID
-      element: <EditTugas />,
-    },
-    {
-      path: "/kelas/manage-tugas/review", //Nanti ganti jadi ID
-      element: <ReviewTugas />,
-    },
-    {
-      path: "/edit-profile",
-      element: <EditProfile />,
-    },
-    {
-      path: "/edit-profile/faq",
-      element: <EditProfileFaq />
-    },
-    {
-      path: "/content-management/FAQ/tambah-FAQ",
-      element: <AddFAQ />,
-    },
-    {
-      path: "/content-management/FAQ/:id/edit-FAQ",
-      element: <EditFAQ />,
-    },
-    {
-      path: "/dashboard-admin",
-      element: <DashboardAdmin />,
-    },
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: "/",
+          element: <LandingPage />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "/kelas",
+          element: <ListClass />,
+        },
+        {
+          path: "/kelas/manage-kelas",
+          element: <MateriOverview />,
+        },
+        {
+          path: "/kelas/tambah-modul",
+          element: <CreateMaterial />,
+        },
+        {
+          path: "/kelas/manage-kelas/manage-modul",
+          element: <UpdateMaterial />,
+        },
+        {
+          path: "/kelas/tambah-modul/tambah-tugas",
+          element: <CreateTask />,
+        },
+        {
+          path: "/kelas/tambah-kuis",
+          element: <AddQuiz />,
+        },
+        {
+          path: "/kelas/tambah-pertanyaan",
+          element: <HeaderQuiz />,
+        },
+        {
+          path: "/kelas/manage-tugas",
+          element: <ManageTugas />,
+        },
+        {
+          path: "/kelas/manage-tugas/edit", //Nanti ganti jadi ID
+          element: <EditTugas />,
+        },
+        {
+          path: "/kelas/manage-tugas/review", //Nanti ganti jadi ID
+          element: <ReviewTugas />,
+        },
+        {
+          path: "/edit-profile",
+          element: <EditProfile />,
+        },
+        {
+          path: "/faq",
+          element: <EditProfileFaq />
+        },
+        {
+          path: "/content-management/FAQ/tambah-FAQ",
+          element: <AddFAQ />,
+        },
+        {
+          path: "/content-management/FAQ/:id/edit-FAQ",
+          element: <EditFAQ />,
+        },
+        {
+          path: "/user-management/edit-user/:id",
+          element: <HeaderEdit />,
+        },
+        {
+          path: "/riwayat-transaksi",
+          element: <RiwayatTransaksi />,
+        },
+        {
+          path: "/dashboard-admin",
+          element: <DashboardAdmin />,
+        },
+        {
+          path: "*",
+          element: <NotFoundPage />,
+        },
+      ]
+    }
   ]);
 
   return <RouterProvider router={router} />;

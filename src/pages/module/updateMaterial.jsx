@@ -79,7 +79,7 @@ const UpdateMaterial = () => {
     <Layout>
       <div className="container">
         <Breadcrumb />
-        <div className="my-5 space-y-4 rounded border bg-[#D9D9D9] px-3 py-14">
+        <div className="my-5 space-y-4 rounded border bg-[#F6F6F6] px-3 py-14">
           {isEditSection && (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="relative">

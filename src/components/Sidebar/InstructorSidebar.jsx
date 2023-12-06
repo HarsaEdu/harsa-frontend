@@ -2,6 +2,7 @@ import HarsaIcon from "../../assets/icons/harsaicon.svg";
 import { Link } from "react-router-dom";
 
 function InstructorSidebar() {
+  const username = localStorage.getItem('username');
   return (
     <>
       <div className="fixed flex justify-start w-80 font-poppins min-h-screen">
@@ -68,7 +69,7 @@ function InstructorSidebar() {
               </div>
               <div className="flex flex-col pl-3">
                 <div className="text-lg font-semibold text-black">
-                  Instructor
+                  {username}
                 </div>
                 <span className="text-xs font-semibold tracking-tight text-gray-600">
                   Online
