@@ -32,7 +32,7 @@ const CardModule = ({
             <img src={DeleteIcon} alt="delete-icon" width={38} height={38} />
           </a>
           <Button className="m-2 rounded-[4px] bg-[#A2D2FF] font-semibold text-[#092C4C] hover:bg-[#81b1df]">
-            <Link to="/kelas/manage-modul">Manage Modul</Link>
+            <Link to="/kelas/manage-kelas/manage-modul">Manage Modul</Link>
           </Button>
         </div>
       </div>
