@@ -19,6 +19,7 @@ import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
 import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
+import NotFoundPage from "@/pages/notFoundPage";
 
 import ProtectedRoute from "./protectedRoute";
 
@@ -53,7 +54,7 @@ export default function Router() {
           element: <CreateMaterial />,
         },
         {
-          path: "/kelas/manage-modul",
+          path: "/kelas/manage-kelas/manage-modul",
           element: <UpdateMaterial />,
         },
         {
@@ -103,6 +104,10 @@ export default function Router() {
         {
           path: "/dashboard-admin",
           element: <DashboardAdmin />,
+        },
+        {
+          path: "/*",
+          element: <NotFoundPage />,
         },
       ]
     }
