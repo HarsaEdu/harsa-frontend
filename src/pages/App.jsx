@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { React, useState } from "react";
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
@@ -38,15 +39,27 @@ import Layout from "../components/layout/Index.jsx";
 import Formkelasinstructor from "../pages/kelas/Formkelasinstructor.jsx";
 import Formkelasadmin from "../pages/kelas/Formkelasadmin.jsx";
 >>>>>>> 19a4c00 (feat: add form tambah kelas admin)
+=======
+import Layout from "@/components/layout/Index.jsx";
+import Form from "../pages/kelas/Formkelasadmin";
+>>>>>>> 75cd273 (feat: add dropzone validation)
 
 function App() {
+  const userRole = "admin";
+
   return (
+<<<<<<< HEAD
     <>
       <Layout>
         <Formkelasadmin />
       </Layout>
     </>
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
+=======
+    <Layout>
+      <Form />
+    </Layout>
+>>>>>>> 75cd273 (feat: add dropzone validation)
   );
 }
 
