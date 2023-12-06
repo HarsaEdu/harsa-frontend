@@ -1,10 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 const ProtectedRoute = () => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
-  
   const role_name = localStorage.getItem('role_name');
   const token = localStorage.getItem('access_token');
 
@@ -12,7 +9,7 @@ const ProtectedRoute = () => {
   const loggedInAccessible = ["/dashboard", "/dashboard-admin", "/content-management/FAQ/tambah-FAQ", "/content-management/FAQ/:id/edit-FAQ", "/user-management/edit-user/:id", "/riwayat-transaksi", "/kelas", "/kelas/manage-kelas",  "/kelas/manage-kelas/manage-modul", "/kelas/tambah-modul", "/kelas/tambah-modul/tambah-tugas","/kelas/tambah-kuis", "/kelas/tambah-pertanyaan", "/kelas/manage-tugas","/kelas/manage-tugas/edit", "/edit-profile", "/faq"];
 
   // Halaman yang hanya bisa diakses oleh admin
-  const adminAccessible = ["/dashboard-admin", "/content-management/FAQ/tambah-FAQ", "/content-management/FAQ/:id/edit-FAQ", "/user-management/edit-user/:id", "/riwayat-transaksi", "/kelas", "/kelas/manage-kelas",  "/kelas/manage-kelas/manage-modul", "/kelas/tambah-modul/tambah-tugas","/kelas/tambah-kuis", "/kelas/tambah-pertanyaan", "/kelas/manage-tugas","/kelas/manage-tugas/edit", "/edit-profile", "/faq"];
+  const adminAccessible = ["/dashboard-admin", "/content-management/FAQ/tambah-FAQ", "/content-management/FAQ/:id/edit-FAQ", "/user-management/edit-user/:id", "/riwayat-transaksi", "/kelas", "/kelas/manage-kelas", "/kelas/tambah-modul", "/kelas/manage-kelas/manage-modul", "/kelas/tambah-modul/tambah-tugas","/kelas/tambah-kuis", "/kelas/tambah-pertanyaan", "/kelas/manage-tugas","/kelas/manage-tugas/edit", "/edit-profile", "/faq"];
 
   // Halaman yang hanya bisa diakses oleh instructor
   const instructorAccessible = ["/dashboard", "/kelas", "/kelas/manage-kelas",  "/kelas/manage-kelas/manage-modul", "/kelas/tambah-modul", "/kelas/tambah-modul/tambah-tugas","/kelas/tambah-kuis", "/kelas/tambah-pertanyaan", "/kelas/manage-tugas","/kelas/manage-tugas/edit", "/edit-profile", "/faq"];
@@ -33,9 +30,6 @@ const ProtectedRoute = () => {
 
   // Jika sudah login, cek hak akses berdasarkan role_name
   if (role_name) {
-    if (role_name && loggedInAccessible.includes(pathname)) {
-      
-    }
     // Admin hanya bisa akses halaman admin
     if (role_name === "admin" && !adminAccessible.includes(pathname)) {
        // Redirect ke halaman admin jika mencoba mengakses halaman lain

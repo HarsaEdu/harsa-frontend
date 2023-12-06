@@ -106,7 +106,7 @@ export default function Router() {
           element: <DashboardAdmin />,
         },
         {
-          path: "/*",
+          path: "*",
           element: <NotFoundPage />,
         },
       ]
