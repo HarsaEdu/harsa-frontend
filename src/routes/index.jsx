@@ -95,6 +95,10 @@ export default function Router() {
           element: <EditProfileFaq />,
         },
         {
+          path: "/content-management/FAQ/",
+          element: <ManageFaq />
+        },
+        {
           path: "/content-management/FAQ/tambah-FAQ",
           element: <AddFAQ />,
         },
