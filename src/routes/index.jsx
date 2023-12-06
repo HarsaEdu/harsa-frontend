@@ -17,12 +17,14 @@ import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
+import DetailUser from "@/pages/admin/user-management/detailUser";
 import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
+import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
 
 import ProtectedRoute from "./protectedRoute";
-import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
+
 
 
 
@@ -98,6 +100,10 @@ export default function Router() {
         {
           path: "/content-management/FAQ/:id/edit-FAQ",
           element: <EditFAQ />,
+        },
+        {
+          path: "/user-management/detail",
+          element: <DetailUser />,
         },
         {
           path: "/user-management/edit-user/:id",
