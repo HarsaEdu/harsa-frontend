@@ -30,7 +30,6 @@ const formSchema = z.object({
 
 const AddFAQ = () => {
   const navigate = useNavigate();
-  const userRole = 'admin'
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -73,7 +72,7 @@ const AddFAQ = () => {
   };
 
   return (
-    <Layout userRole={userRole}>
+    <Layout>
       <div className="container mb-10">
         <Breadcrumb />
         <div className="font-poppins">
