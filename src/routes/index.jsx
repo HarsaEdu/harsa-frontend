@@ -102,7 +102,6 @@ export default function Router() {
           element: <EditFAQ />,
         },
         {
-
           path: "/user-management", //Nanti ganti jadi ID
           element: <UserManagement />,
         },

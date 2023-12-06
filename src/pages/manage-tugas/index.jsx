@@ -53,12 +53,14 @@ export default function ManageTugas() {
       header: "Action",
       cell: (info) => (
         <div className="text-center">
-          <Button
-            className="bg-[#092C4C] px-8 text-white"
-            onClick={() => console.log(info.row.original.user_id)}
-          >
-            Review
-          </Button>
+          <Link to="/kelas/manage-tugas/review">
+            <Button
+              className="bg-[#092C4C] px-8 text-white"
+              onClick={() => console.log(info.row.original.user_id)}
+            >
+              Review
+            </Button>
+          </Link>
         </div>
       ),
     },
