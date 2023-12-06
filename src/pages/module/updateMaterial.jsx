@@ -284,7 +284,7 @@ const UpdateMaterial = () => {
                         <span className="text-lg font-bold">Kuis</span>
                         <p>Pengenalan UI/UX</p>
                       </div>
-                      <Link to="/kuis" className="flex items-center bg-[#092C4C] py-7 px-11 rounded-r-2xl text-[#fff] font-semibold">
+                      <Link to="/kelas/tambah-kuis" className="flex items-center bg-[#092C4C] py-7 px-11 rounded-r-2xl text-[#fff] font-semibold">
                             Manage Kuis
                       </Link>
                     </div>
