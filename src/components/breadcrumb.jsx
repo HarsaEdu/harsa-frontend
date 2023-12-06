@@ -10,7 +10,7 @@ const Breadcrumb = () => {
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x !== " / ");
 
-  const limitedPathnames = pathnames.slice(0, 3);
+  const limitedPathnames = pathnames.slice(0, 4);
 
   return (
     <div className='font-poppins bg-[#A2D2FF] rounded-full px-4 py-1 text-sm inline-block'>

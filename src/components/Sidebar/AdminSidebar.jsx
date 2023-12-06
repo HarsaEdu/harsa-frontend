@@ -3,6 +3,7 @@ import DropdownConfig from "./DropdownConfig";
 import { Link } from "react-router-dom";
 
 function AdminSidebar() {
+  const username = localStorage.getItem('username');
   return (
     <>
       <div className="fixed flex min-h-screen w-80 justify-start font-poppins">
@@ -80,7 +81,9 @@ function AdminSidebar() {
                 />
               </div>
               <div className="flex flex-col pl-3">
-                <div className="text-lg font-semibold text-black">Admin</div>
+                <div className="text-lg font-semibold text-black">
+                  {username}
+                </div>
                 <span className="text-xs font-semibold tracking-tight text-gray-600">
                   Online
                 </span>
