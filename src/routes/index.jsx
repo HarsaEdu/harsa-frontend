@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import LandingPage from "../pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
+import UserManagement from "../pages/admin/userManagement";
+import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
@@ -99,7 +101,7 @@ export default function Router() {
           element: <EditFAQ />,
         },
         {
-          path: "/user-management",
+          path: "/user-management", //Nanti ganti jadi ID
           element: <UserManagement />,
         },
         {

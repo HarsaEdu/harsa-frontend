@@ -26,7 +26,7 @@ function AdminSidebar() {
             <ul className="flex flex-col space-y-4">
               <li className="group rounded-sm text-base">
                 <Link
-                  to="/dashboard-admin"
+                  to="/dashboard"
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
                 >
                   <svg
@@ -47,7 +47,7 @@ function AdminSidebar() {
               </li>
               <li className="group rounded-sm text-base">
                 <a
-                  href={"/User Management"}
+                  href="/user-management"
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
                 >
                   <svg
