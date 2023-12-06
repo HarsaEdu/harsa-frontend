@@ -1,4 +1,4 @@
-import { React} from "react";
+import { React, useState} from "react";
 import Layout from "@/components/layout/Index"
 import {
     useFormField,
@@ -13,6 +13,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
+import InputFile from "@/components/inputFile";
 import { Textarea } from "@/components/ui/textarea";
 import UploadIcon from "../../../assets/upload2.svg"
 import Swal from "sweetalert2";
@@ -21,39 +22,32 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 
-const MAX_FILE_SIZE_MB = 5;
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const formSchema = z.object({
-    packagename: z.string().nonempty("*Nama Paket Wajib di isi"),
-    duration: z.string().nonempty("*Durasi Wajib di isi"),
-    description: z.string().nonempty("*Deskripsi Wajib di isi"),
-    image: z.unknown().refine((value) => {
-        return value instanceof File;
-    }, {
-        message: "*Image Wajib di isi",
-    }).refine((value) => {
-        if (value instanceof File) {
-            const supportedFormats = ['png', 'jpg', 'jpeg', 'svg'];
-            const extension = value.name.split('.').pop().toLowerCase();
-            return supportedFormats.includes(extension);
-        }
-        return false;
-    }, {
-        message: "*Format file yang diunggah salah. Harap unggah file dengan format PNG, JPG, JPEG, atau SVG."
-    }).refine((value) => {
-        if (value instanceof File) {
-            const fileSizeMB = value.size / (1024 * 1024);
-            return fileSizeMB <= MAX_FILE_SIZE_MB;
-        }
-        return false;
-    }, {
-        message: `Ukuran file terlalu besar. Maksimal ${MAX_FILE_SIZE_MB} MB.`
+packagename: z.string().min(1, "*Nama Paket Wajib di isi"),
+duration: z.string().min(1, "*Durasi Wajib di isi"),
+price: z.string().min(1, "*Harga Wajib di isi"),
+description: z.string().nonempty("*Deskripsi Wajib di isi"),
+image: z
+    .any()
+    .refine((data) => data !== undefined && data !== null && data !== "", {
+      message: "*Image  wajib di isi",
+    })
+    .refine((data) => data?.size <= MAX_FILE_SIZE, {
+      message: "*ukuran file terlalu besar, maksimal 5 mb",
+    })
+    .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
+      message: "*Format file yang di upload salah, format file harus PNG, JPG, Jpeg, svg",
     }),
 });
 
 
 
 const AddSubscriptionPackage = () => {
+    const [preview, setPreview] = useState("");
+
     const navigate = useNavigate();
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -61,12 +55,33 @@ const AddSubscriptionPackage = () => {
         packagename: "",
         duration: "",
         description: "",
-        image: null,
+        image: "",
     },
 });
 
     
 const onSubmit = async (data) => {
+    if (form.formState.errors.upload?.image) {
+        form.setError("image", { message: "*Image harus di isi" });
+      } else {
+        setImage(URL.createObjectURL(data.image));
+        console.log(data);
+        setPreview("");
+        form.resetField("image");
+      }
+    };
+  
+    const handleCancel = () => {
+        form.reset();
+        setPreview("");
+    };
+  
+    const handleImageChange = (file) => {
+    if (file) {
+        setPreview(URL.createObjectURL(file));
+    } else {
+        setPreview("");
+    }
 
     if (Object.keys(form.formState.errors).length === 0) {
         console.log(data);
@@ -138,6 +153,28 @@ const onSubmit = async (data) => {
                             </FormMessage>
                         </FormItem>
 
+                        {/* Harga */}
+                        <FormItem
+                        className="mt-5"
+                        >
+                            <FormLabel 
+                            name="price"
+                            >
+                                <p className="font-semibold text-lg">Harga</p>
+                            </FormLabel>
+                            <FormControl name="description">
+                                <Input
+                                id="price"
+                                className="border border-black"
+                                placeholder="EX : 10000"
+                                {...form.register("price")}
+                                />
+                            </FormControl>
+                            <FormMessage className="text-[#ED7878]">
+                                {form.formState.errors.price?.message}
+                            </FormMessage>
+                        </FormItem>
+
                         {/* Deskripsi */}
                         <FormItem
                         className="mt-5"
@@ -161,48 +198,47 @@ const onSubmit = async (data) => {
                         </FormItem>
 
                         {/* Image */}
-                        <FormItem
-                        className="mt-5"
-                        >
-                            <p className="font-semibold text-lg mb-3">Image</p>
+                        <FormField
+                        control={form.control}
+                        name="image"
+                        render={({ field }) => (
+                            <FormItem
+                            className="mt-5">
+                                <p className="font-semibold text-lg mb-3">Image</p>
 
-                            <FormLabel 
-                            name="image"
-                            htmlFor="image"
-                            className="cursor-pointer"
-                            >
-                                <div className="w-full h-56 border border-black rounded-lg flex justify-center items-center p-4">
-                                    <div className="border border-black border-dashed w-full flex flex-col justify-center items-center p-5 font-poppins font-semibold text-[#A2D2FF] text-lg">
-                                        <img 
-                                        src={UploadIcon}
-                                        alt=""
-                                        style={{ maxWidth: "100%", maxHeight: "100%" }} 
-                                        />
-                                        <p>Drop File here of browse</p>
-                                    </div>
-                                </div>
-                                <Input
-                                    id="image"
-                                    type="file"
-                                    accept="image/jpeg, image/jpg, image/png"
-                                    className="hidden"
-                                    {...form.register("image")} 
-                                />
-                            </FormLabel>
-                            <FormMessage className="text-[#ED7878]">
-                                {form.formState.errors.image?.message && (
-                                    <div>
-                                        {Array.isArray(form.formState.errors.image.message) ? (
-                                            form.formState.errors.image.message.map((error, index) => (
-                                                <div key={index}>{error}</div>
-                                            ))
-                                        ) : (
-                                            <div>{form.formState.errors.image.message}</div>
-                                        )}
-                                    </div>
-                                )}
-                            </FormMessage>
-                        </FormItem>
+                                <FormLabel 
+                                name="image"
+                                htmlFor="image"
+                                className="cursor-pointer"
+                                >
+                                {preview ? (
+                                        <div className="w-full h-56 border border-black rounded-lg flex justify-center items-center p-4">
+                                            <img src={preview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                        </div>
+                                    ) : (
+                                        <div className="w-full h-56 border border-black rounded-lg flex justify-center items-center p-4">
+                                            <div className="border border-black border-dashed w-full flex flex-col justify-center items-center font-poppins font-semibold text-[#A2D2FF] text-lg">
+                                            <InputFile
+                                            id="image"
+                                            type="file"
+                                            className="hidden"
+                                            onChange={(e) => {
+                                                field.onChange(e.target.files[0]);
+                                                handleImageChange(e.target.files[0]);
+                                            }}
+                                            />
+                                            </div>
+                                        </div>
+                                    )}
+                                </FormLabel>
+                                <FormMessage className="text-[#ED7878]">
+                                    {form.formState.errors.image?.message}
+                                </FormMessage>
+                            </FormItem>
+                        )}
+                        />
+                            
+                        
 
                         <div className="flex justify-between mt-10">
                             <Button
