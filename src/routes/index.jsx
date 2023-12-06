@@ -26,6 +26,7 @@ import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
 
 import ProtectedRoute from "./protectedRoute";
+import ManageFaq from "@/pages/manage-faq/manageFaq";
 
 
 export default function Router() {
