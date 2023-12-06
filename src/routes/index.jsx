@@ -24,9 +24,9 @@ import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
+import AddUser from "@/pages/admin/user-management/tambahUser";
 
 import ProtectedRoute from "./protectedRoute";
-
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -108,6 +108,10 @@ export default function Router() {
         {
           path: "/user-management/detail",
           element: <DetailUser />,
+        },
+        {
+          path: "/user-management/tambah-user",
+          element: <AddUser />,
         },
         {
           path: "/user-management/edit-user/:id",
