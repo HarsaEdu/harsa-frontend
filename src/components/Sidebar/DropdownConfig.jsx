@@ -112,7 +112,7 @@ const InstructorIndex = () => {
             </span>
           </AccordionTrigger>
           <AccordionContent className="group text-base pl-8">
-            <a
+            <Link to="/pembayaran/langganan"
               href={"/"}
               className="text-base flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
@@ -130,7 +130,7 @@ const InstructorIndex = () => {
                 />
               </svg>
               <span>Langganan</span>
-            </a>
+            </Link>
           </AccordionContent>
           <AccordionContent className="group text-base pl-8">
             <Link
