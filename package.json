@@ -54,6 +54,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
     "react-icons": "^4.12.0",
+    "sweetalert2-react-content": "^5.0.7",
     "tailwind-merge": "^2.1.0",
 >>>>>>> 3e4d37d (feat: add from tambah kelas)
     "tailwindcss-animate": "^1.0.7",

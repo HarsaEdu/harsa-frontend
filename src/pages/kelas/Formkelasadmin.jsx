@@ -2,6 +2,8 @@ import { React, useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import InputFile from "@/components/inputFile";
 
 import { Button } from "@/components/ui/button";
@@ -29,16 +31,19 @@ const formSchema = z.object({
       message: "*Gambar harus di isi",
     })
     .refine((data) => data?.size <= MAX_FILE_SIZE, {
-      message: "*Ukuran gambar harus di bawah 5mb.",
+      message: "*Ukuran gambar harus di bawah 5 MB.",
     })
     .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
-      message: "*Format file salah, upload format JPG, JPEG, atau PNG",
+      message: "*Format file salah, upload dengan format JPG, JPEG, atau PNG",
     }),
 });
 
 function FormKelas() {
   const [preview, setPreview] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+  const MySwal = withReactContent(Swal);
+  const setImage = (imageUrl) => {
+    console.log("Setting image:", imageUrl);
+  };
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -51,14 +56,30 @@ function FormKelas() {
     },
   });
 
-  const onSubmit = (data) => {
-    if (form.formState.errors.upload?.upload) {
+  const onSubmit = async (data) => {
+    if (form.formState.errors.upload) {
       form.setError("upload", { message: "*Gambar harus di isi" });
     } else {
       setImage(URL.createObjectURL(data.upload));
       console.log(data);
       setPreview("");
-      form.resetField("upload");
+      form.reset();
+
+      const result = await MySwal.fire({
+        icon: "success",
+        title: "Sukses Tambah Kelas",
+        text: form.formState.errors.upload?.message || "",
+        showConfirmButton: false,
+        showCloseButton: true,
+        customClass: {
+          closeButton: "swal2-cancel-button",
+        },
+        buttonsStyling: false,
+      });
+
+      if (result.isDismissed || result.isConfirmed) {
+        MySwal.close();
+      }
     }
   };
 
@@ -77,11 +98,7 @@ function FormKelas() {
 
   return (
     <main className="bg-[#FFFFFF]">
-      <section
-        className={`mx-auto max-w-[800px] rounded-lg border border-[#092C4C] p-8 relative overflow-hidden ${
-          showAlert ? "alert-open" : ""
-        }`}
-      >
+      <section className="mx-auto max-w-[800px] rounded-lg border border-[#092C4C] p-8 relative overflow-hidden">
         <h1 className="mb-5 text-2xl font-bold text-[#092C4C]">Tambah Kelas</h1>
         <Form {...form}>
           <form
@@ -146,7 +163,7 @@ function FormKelas() {
 
             <FormItem>
               <FormLabel className="ml-1 text-lg font-bold text-[#092C4C]">
-                Instruktur
+                Instruktor
               </FormLabel>
               <FormControl>
                 <select
@@ -154,7 +171,7 @@ function FormKelas() {
                   {...form.register("instructor")}
                 >
                   <option value="" disabled>
-                    Pilih Instruktur
+                    Pilih Instruktor
                   </option>
                   <option value="joko">Joko Joestar</option>
                   <option value="suwahyono">Suwahyono</option>
