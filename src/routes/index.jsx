@@ -152,18 +152,6 @@ export default function Router() {
           element: <HeaderEdit />,
         },
         {
-          path: "/pembayaran/langganan",
-          element: <Langganan />
-        },
-        {
-          path: "/pembayaran/langganan/tambah-paket",
-          element: <AddLanggan />
-        },
-        {
-          path: "/pembayaran/langganan/:id/edit-paket",
-          element: <EditLanggan />
-        },
-        {
           path: "/riwayat-transaksi",
           element: <RiwayatTransaksi />,
         },
