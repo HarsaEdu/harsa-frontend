@@ -27,6 +27,7 @@ import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
 import AddUser from "@/pages/admin/user-management/tambahUser";
 
 import ProtectedRoute from "./protectedRoute";
+import ManageFaq from "@/pages/manage-faq/manageFaq";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -92,6 +93,10 @@ export default function Router() {
         {
           path: "/faq",
           element: <EditProfileFaq />,
+        },
+        {
+          path: "/content-management/FAQ/",
+          element: <ManageFaq />
         },
         {
           path: "/content-management/FAQ/tambah-FAQ",
