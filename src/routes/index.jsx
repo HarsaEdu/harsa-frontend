@@ -19,6 +19,9 @@ import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
+import AddSubscription from "@/pages/admin/pembayaran/tambahLangganan";
+import AddSubscriptionPackage from "@/pages/admin/pembayaran/tambahPaketLangganan";
+import EditSubscriptionPackage from "@/pages/admin/pembayaran/editPaketLangganan";
 import DetailUser from "@/pages/admin/user-management/detailUser";
 import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
@@ -133,6 +136,18 @@ export default function Router() {
         {
           path: "*",
           element: <NotFoundPage />,
+        },
+        {
+          path: "/langganan",
+          element: <AddSubscription />,
+        },
+        {
+          path: "/langganan/tambah-paket",
+          element: <AddSubscriptionPackage />,
+        },
+        {
+          path: `/langganan/edit-paket/:id`,
+          element: <EditSubscriptionPackage />,
         },
       ],
     },
