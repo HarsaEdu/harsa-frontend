@@ -26,6 +26,7 @@ import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
 
 import ProtectedRoute from "./protectedRoute";
+import ManageFaq from "@/pages/manage-faq/manageFaq";
 
 
 export default function Router() {
@@ -92,6 +93,10 @@ export default function Router() {
         {
           path: "/faq",
           element: <EditProfileFaq />,
+        },
+        {
+          path: "/content-management/FAQ/",
+          element: <ManageFaq />
         },
         {
           path: "/content-management/FAQ/tambah-FAQ",
