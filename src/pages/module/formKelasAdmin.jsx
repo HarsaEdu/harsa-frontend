@@ -97,8 +97,8 @@ function formKelasAdmin() {
   };
 
   return (
-    <main className="bg-[#FFFFFF] mt-8">
-      <section className="mx-auto max-w-[800px] rounded-lg border border-[#092C4C] p-8 relative overflow-hidden">
+    <main className="mt-8 bg-[#FFFFFF]">
+      <section className="relative mx-auto max-w-[900px] overflow-hidden rounded-lg border border-[#092C4C] p-8">
         <h1 className="mb-5 text-2xl font-bold text-[#092C4C]">Tambah Kelas</h1>
         <Form {...form}>
           <form
@@ -113,7 +113,7 @@ function formKelasAdmin() {
                 <Input
                   type="text"
                   placeholder="Judul Kelas"
-                  className="h-[40px] w-[710px] rounded-s border border-[#092C4C] bg-transparent px-3 py-4 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
+                  className="h-[40px] w-[795px] rounded-s border border-[#092C4C] bg-transparent px-3 py-4 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
                   {...form.register("judul")}
                 />
               </FormControl>
@@ -129,7 +129,7 @@ function formKelasAdmin() {
               <FormControl>
                 <textarea
                   placeholder="Deskripsi"
-                  className="h-[175px] w-[710px] resize-none rounded-lg border border-[#092C4C] bg-transparent px-3 py-4 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
+                  className="h-[175px] w-[795px] resize-none rounded-lg border border-[#092C4C] bg-transparent px-3 py-4 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
                   {...form.register("deskripsi")}
                 />
               </FormControl>
@@ -144,7 +144,7 @@ function formKelasAdmin() {
               </FormLabel>
               <FormControl>
                 <select
-                  className="flex h-[40px] w-[710px] rounded-lg border border-[#092C4C] bg-transparent px-2 py-2 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
+                  className="flex h-[40px] w-[795px] rounded-lg border border-[#092C4C] bg-transparent px-2 py-2 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
                   {...form.register("category")}
                 >
                   <option value="" disabled>
@@ -167,7 +167,7 @@ function formKelasAdmin() {
               </FormLabel>
               <FormControl>
                 <select
-                  className="flex h-[40px] w-[710px] rounded-lg border border-[#092C4C] bg-transparent px-2 py-2 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
+                  className="flex h-[40px] w-[795px] rounded-lg border border-[#092C4C] bg-transparent px-2 py-2 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
                   {...form.register("instructor")}
                 >
                   <option value="" disabled>
@@ -193,7 +193,7 @@ function formKelasAdmin() {
                     Upload Cover
                   </FormLabel>
                   <FormControl>
-                    <div className="border border-[#092C4C] rounded-lg overflow-hidden">
+                    <div className="h-[170px] w-[795px] overflow-hidden rounded-lg border border-[#092C4C]">
                       <InputFile
                         textUpload="Upload Cover"
                         preview={preview}
