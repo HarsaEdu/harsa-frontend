@@ -872,4 +872,57 @@ const dataRiwayatTransaksi = {
   ],
 };
 
-export { realData, realData2, dataRiwayatTransaksi };
+const dataFaq = [
+  {
+    id: 1,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 2,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 3,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 4,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 5,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 6,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 7,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 8,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 9,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 10,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+]
+
+export { realData, realData2, dataRiwayatTransaksi, dataFaq };

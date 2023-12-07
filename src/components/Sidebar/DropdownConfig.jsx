@@ -71,7 +71,7 @@ const InstructorIndex = () => {
           </AccordionContent>
           <AccordionContent className="group text-base pl-8">
             <a
-              href={"/"}
+              href={"/content-management/FAQ/"}
               className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
