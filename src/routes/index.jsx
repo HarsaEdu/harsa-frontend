@@ -51,7 +51,7 @@ export default function Router() {
           element: <ListClass />,
         },
         {
-          path: "/kelas/manage-kelas",
+          path: "/kelas/manage-kelas/:id",
           element: <MateriOverview />,
         },
         {
@@ -96,7 +96,7 @@ export default function Router() {
         },
         {
           path: "/content-management/FAQ/",
-          element: <ManageFaq />
+          element: <ManageFaq />,
         },
         {
           path: "/content-management/FAQ/tambah-FAQ",

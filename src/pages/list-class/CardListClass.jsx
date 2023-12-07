@@ -1,51 +1,61 @@
-import React from "react"
-import { Button } from "../../components/ui/button"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Button } from "../../components/ui/button";
+import { Link } from "react-router-dom";
 
-import Star from "../../assets/Star.svg"
-import Delete from "../../assets/Delete.svg"
-import Edit from "../../assets/Edit.svg"
+import Star from "../../assets/Star.svg";
+import Delete from "../../assets/Delete.svg";
+import Edit from "../../assets/Edit.svg";
 
 const CardListClass = (props) => {
-    const { judul, category, instructor, description, img } = props
+  const { judul, category, instructor, description, img, idCourse } = props;
 
-    return(
-            <div className="w-11/12 mx-auto mb-4">
-                <div>
-                    <img className="w-full" src={img} alt="" />
-                </div>
-                <div className="border border-[#092C4C] p-[19px] rounded-b-[30px]">
-                    <div className="flex justify-between cursor-pointer">
-                        <h2 className="font-poppins font-semibold text-[32px]">{judul}</h2>
-                        <div className="flex gap-1 justify-center items-center">
-                            <a href="#">
-                                <img src={Delete} alt="" className="w-[32px]"/>
-                            </a>
-                            <Link to='/kelas/manage-kelas'>
-                                <Button
-                                className="bg-[#092C4C] w-[170px] h-[32px] justify-center items-center px-[7px] py-[10px] rounded-lg"
-                                >
-                                    <p className="text-white font-poppins font-semibold text-[16px]">Manage Kelas</p>
-                                    <img src={Edit} alt="" className="ml-2" />
-                                </Button>
-                            </Link>
-                        </div>
-                    </div>
-                    <div>
-                        <p className="font-poppins font-normal  text-[14px] mt-2"><span className="font-semibold">Kategori</span> : {category}</p>
-                        <p className="font-poppins font-normal text-[14px]"><span className="font-semibold">Instructor</span> : {instructor}</p>
-                        <p className="font-poppins font-normal text-justify text-[14px] mt-2">{description}</p>
-                        <div className="flex mt-2">
-                            <img src={Star} alt="" className="w-[34px]" />
-                            <img src={Star} alt="" className="w-[34px]"/>
-                            <img src={Star} alt="" className="w-[34px]"/>
-                            <img src={Star} alt="" className="w-[34px]"/>
-                            <img src={Star} alt="" className="w-[34px]"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    )
-}
+  return (
+    <div className="mx-auto mb-4 w-11/12">
+      <div className="">
+        <img
+          className=" h-48 w-full rounded-t-xl object-cover object-top"
+          src={img}
+          alt=""
+        />
+      </div>
+      <div className="rounded-b-[30px] border border-[#092C4C] p-[19px]">
+        <div className="flex cursor-pointer justify-between">
+          <h2 className="font-poppins text-[32px] font-semibold">{judul}</h2>
+          <div className="flex items-center justify-center gap-1">
+            <a href="#">
+              <img src={Delete} alt="" className="w-[32px]" />
+            </a>
+            <Link to={`/kelas/manage-kelas/${idCourse}`}>
+              <Button className="h-[32px] w-[170px] items-center justify-center rounded-lg bg-[#092C4C] px-[7px] py-[10px]">
+                <p className="font-poppins text-[16px] font-semibold text-white">
+                  Manage Kelas
+                </p>
+                <img src={Edit} alt="" className="ml-2" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <div>
+          <p className="mt-2 font-poppins  text-[14px] font-normal">
+            <span className="font-semibold">Kategori</span> : {category}
+          </p>
+          <p className="font-poppins text-[14px] font-normal">
+            <span className="font-semibold">Instructor</span> : {instructor}
+          </p>
+          <p className="mt-2 text-justify font-poppins text-[14px] font-normal">
+            {description}
+          </p>
+          <div className="mt-2 flex">
+            <img src={Star} alt="" className="w-[34px]" />
+            <img src={Star} alt="" className="w-[34px]" />
+            <img src={Star} alt="" className="w-[34px]" />
+            <img src={Star} alt="" className="w-[34px]" />
+            <img src={Star} alt="" className="w-[34px]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default CardListClass
+export default CardListClass;
