@@ -5,13 +5,14 @@ import AdminSidebar from "../Sidebar/AdminSidebar";
 import BellIcon from '../../assets/bell.svg'
 
 const Layout = (props) => {
-  const { children, className, userRole } = props;
+  const { children, className} = props;
+  const roleName = localStorage.getItem('role_name');
 
   return (
     <div className="flex">
       {/* Sidebar */}
       <div className="w-80 h-screen overflow-auto text-white">
-      {userRole === 'admin' ? (
+      {roleName === 'admin' ? (
           <AdminSidebar />
         ) : (
           <Sidebar />

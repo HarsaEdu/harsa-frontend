@@ -32,7 +32,7 @@ const ListClass = () => {
                     <Button
                     className="bg-[#092C4C] w-[168px] justify-center items-center px-[10px] py-[15px] rounded-lg"
                     >
-                        <p className="text-white font-poppins font-semibold text-[16px]">Manage Kelas</p>
+                        <p className="text-white font-poppins font-semibold text-[16px]">Tambah Kelas</p>
                     </Button>
                 </div>
                 <div className="flex justify-end gap-2 mt-5 items-center">
