@@ -1,10 +1,51 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios"
+import { format } from 'date-fns';
 import Breadcrumb from "@/components/breadcrumb"
 import Layout from "@/components/layout/Index"
 import { Button } from "@/components/ui/button"
 
 const DetailUser = () => {
+    const { id } = useParams(); // Menggunakan useParams untuk mendapatkan id dari URL
+    const [userData, setUserData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+        try {
+            const response = await axios.get(
+            `https://api.harsaedu.my.id/web/users/${id}`,
+            {
+                headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                'Content-Type': 'application/json',
+                },
+            }
+            );
+            setUserData(response.data.data);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setIsLoading(false);
+        }
+        };
+
+        fetchUserData();
+    }, [id]);
+
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+  const formattedDate = format(new Date(userData.date_birth), 'dd/MM/yyyy');
+
     return (
-        <Layout userRole="admin">
+        <Layout>
             <Breadcrumb />
             <div className="my-10 me-12 ms-14 p-8 rounded-lg border border-[#808080]">
                 <div className="flex flex-row gap-8">
@@ -12,15 +53,18 @@ const DetailUser = () => {
                     <div className="space-y-8 w-full">
                         <div className="bg-[#092C4C] rounded-xl p-5 space-y-3">
                             <p className="font-poppins font-semibold text-[#fff] mb-2">Data Diri</p>
-                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Nama Depan <span>:</span></span>John</p>
-                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Nama Belakang <span>:</span></span> Doe</p>
-                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Tanggal Lahir <span>:</span></span> 12/02/2002</p>
+                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2">
+                                <span className="font-normal flex justify-between w-40">Nama Depan <span>:</span></span>
+                                {userData.first_name}
+                            </p>
+                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Nama Belakang <span>:</span></span> {userData.last_name}</p>
+                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Tanggal Lahir <span>:</span></span> {formattedDate}</p>
                         </div>
                         <div className="bg-[#092C4C] rounded-xl p-5 space-y-3">
                             <p className="font-poppins font-semibold text-[#fff] mb-2">Data Lainnya</p>
-                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Nomor Telepon <span>:</span></span>0812-3456-7565</p>
-                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Email <span>:</span></span> johndoe@mail.com</p>
-                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Role <span>:</span></span> Customer</p>
+                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Nomor Telepon <span>:</span></span>{userData.phone_number}</p>
+                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Email <span>:</span></span> {userData.email}</p>
+                            <p className="font-poppins text-[#fff] font-semibold flex flex-row gap-2"><span className="font-normal flex justify-between w-40">Role <span>:</span></span> {userData.role_name}</p>
                         </div>
                         <div className="bg-[#092C4C] rounded-xl p-5 space-y-3">
                             <p className="font-poppins font-semibold text-[#fff] mb-2">Kelas Yang Diikuti</p>

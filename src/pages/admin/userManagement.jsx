@@ -1,25 +1,54 @@
 import DropdownAction from "@/components/table/DropdownAction";
 import { useMemo, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import Table from "@/components/table/tables";
 import { Input } from "@/components/ui/input";
-import ApiUsers from "@/utils/ApiConfig";
+import ApiCaller from "@/utils/ApiConfig";
 import { CSVLink } from "react-csv";
+import axios from "axios";
 
 export default function EditTugas() {
-  const userRole = "admin";
   const [data, setData] = useState([]);
-  const { isLoading, error } = ApiUsers({
-    endpoint: "/users", // Sesuaikan dengan endpoint kita
-    onSuccess: setData,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Data updated:", data);
-  }, [data]);
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          'https://api.harsaedu.my.id/web/users?offset=0&limit=10',
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Gantilah dengan cara Anda mendapatkan token
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        setData(response.data.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleEdit = (id) => {
+    // Navigasi ke halaman edit user dengan ID yang sesuai
+    navigate(`/user-management/edit-user/${id}`);
+  };
+
+  const handleDetail = (id) => {
+    // Navigasi ke halaman edit user dengan ID yang sesuai
+    navigate(`/user-management/detail/${id}`);
+  };
 
   const columns = useMemo(() => [
     {
@@ -31,30 +60,30 @@ export default function EditTugas() {
       cell: (info) => {
         return (
           <div className="text-center">
-            {info.row.original.data.first_name}{" "}
-            {info.row.original.data.last_name}
+            {info.row.original.first_name}{" "}
+            {info.row.original.last_name}
           </div>
         );
       },
     },
     {
       header: "Username",
-      accessorKey: "data.username",
+      accessorKey: "username",
       cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
       header: "Email",
-      accessorKey: "data.email",
+      accessorKey: "email",
       cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
       header: "No Telepone",
-      accessorKey: "data.phone_number",
+      accessorKey: "phone_number",
       cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
       header: "Role",
-      accessorKey: "data.role_name",
+      accessorKey: "role_name",
       cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
@@ -65,7 +94,7 @@ export default function EditTugas() {
             <div className="flex flex-col">
               <Button
                 className="bg-white px-8 text-black hover:text-white"
-                onClick={() => console.log(info.row.original.id)}
+                onClick={() => handleEdit(info.row.original.id)} // Panggil fungsi handleEdit dengan ID sebagai argumen
               >
                 Edit
               </Button>
@@ -75,14 +104,12 @@ export default function EditTugas() {
               >
                 Delete
               </Button>
-              <Link to="/user-management/detail">
-                <Button
-                  className="bg-white px-8 text-black hover:text-white"
-                  onClick={() => console.log(info.row.original.id)}
-                >
-                  Detail
-                </Button>
-              </Link>
+              <Button
+                className="bg-white px-8 text-black hover:text-white"
+                onClick={() => handleDetail(info.row.original.id)}
+              >
+                Detail
+              </Button>
             </div>
           </DropdownAction>
         </div>
@@ -106,8 +133,8 @@ export default function EditTugas() {
   ];
 
   return (
-    <Layout userRole={userRole}>
-      <div className="mt-20">
+    <Layout>
+      <div className="container mb-10">
         <Breadcrumb />
         <div className="my-10 rounded-lg border border-[#F2994A] p-5">
           <div className="mt-8">
@@ -123,13 +150,15 @@ export default function EditTugas() {
                   </CSVLink>
                 </Button>
                 {/* button add user */}
-                <Button
-                  id="exportDataUser"
-                  href="/user-management/tambah-user"
-                  className="text-[16px]"
-                >
-                  Tambah Data User
-                </Button>
+                <Link to="/user-management/tambah-user">
+                  <Button
+                    id="exportDataUser"
+                    href="/user-management/tambah-user"
+                    className="text-[16px]"
+                  >
+                    Tambah Data User
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
