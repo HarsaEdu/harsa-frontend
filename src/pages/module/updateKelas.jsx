@@ -1,4 +1,4 @@
-import ManageClass from "@/components/module/materiComponenet";
+import ManageClass from "@/components/module/materiComponent";
 import { Modules, Header } from "../../utils/moduleStatic";
 import { Button } from "../../components/ui/button";
 import Breadcrumb from "@/components/breadcrumb";
@@ -20,7 +20,7 @@ const MateriOverview = () => {
 
   return (
     <Layout>
-      <div className="container-md mt-20 font-poppins">
+      <div className="container font-poppins">
         <Breadcrumb />
         <div className="my-5">
           <InputFile
@@ -46,21 +46,21 @@ const MateriOverview = () => {
           </a>
         </div>
         <div className="my-4">
-          <ul className="flex items-center space-x-2">
-            <li className="px-5 pt-1 text-center duration-150 ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
+          <ul className="flex items-center">
+            <li className="px-5 pt-1 text-center duration-150 ease-in hover:rounded-t-[4px]  bg-[#F6F6F6] hover:bg-[#092C4C] hover:text-white">
               <Link href="/">Materi</Link>
             </li>
-            <li className="px-5 pt-1 text-center duration-150 ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
+            <li className="px-5 pt-1 text-center duration-150 ease-in  bg-[#F6F6F6] hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
               <Link href="/">Ulasan</Link>
             </li>
-            <li className="px-5 pt-1 text-center duration-150 ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
+            <li className="px-5 pt-1 text-center duration-150 ease-in bg-[#F6F6F6] hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
               <Link href="/">User</Link>
             </li>
           </ul>
           <div className="flex flex-col border border-slate-300 px-2">
             <div className="mb-5 flex justify-end">
-              <Button className="m-2 rounded-[4px] bg-[#092C4C] text-white">
-                <Link href="/">Tambah Modul</Link>
+              <Button id="module" className="m-2 rounded-[4px] bg-[#092C4C] text-white">
+                <Link to='/kelas/tambah-modul'>Tambah Modul</Link>
               </Button>
             </div>
             {Modules.map((Module) => (

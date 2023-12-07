@@ -21,13 +21,13 @@ export default function HeaderEdit() {
         <Breadcrumb />
       </div>
 
-      <div className="rounded-lg border border-black p-5">
+      <div className="rounded-lg border font-poppins border-black p-5">
         <h3 className="mb-12 text-3xl font-bold">Edit User</h3>
 
         <div className="rounded-lg border border-[#808080]">
           <div className="mb-3 flex w-full">
             <Button
-              className={`w-full rounded-none rounded-tl-lg py-8 text-xl ${
+              className={`w-full rounded-none rounded-tl-lg py-8 text-xl font-semibold ${
                 isActiveAkun ? "bg-[#A2D2FF] text-black" : "text-white"
               }`}
               onClick={handleProfileClick}
@@ -37,7 +37,7 @@ export default function HeaderEdit() {
             <Button
               className={`${
                 !isActiveAkun ? "bg-[#A2D2FF] text-black" : "text-white"
-              } w-full rounded-none rounded-tr-lg py-8 text-xl`}
+              } w-full rounded-none rounded-tr-lg py-8 text-xl font-semibold`}
               onClick={handleAkunClick}
             >
               Edit Akun

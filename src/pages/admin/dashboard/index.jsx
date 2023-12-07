@@ -10,7 +10,7 @@ import LineChart from './chart/lineChart';
 import PieChart from "./chart/pieChart";
 
 const DashboardAdmin = () => {
-    const userRole = 'admin';
+    const username = localStorage.getItem('username');
 
     const columns = useMemo(() => [
         {
@@ -120,10 +120,10 @@ const DashboardAdmin = () => {
       };
 
     return (
-        <Layout userRole={userRole}>
+        <Layout>
             <div className='container mb-10 font-poppins'>
                 <div className='pb-10'>
-                    <h1 className='text-6xl font-bold'>Hello Joko,</h1>
+                    <h1 className='text-6xl font-bold'>Hello {username},</h1>
                     <h3 className='text-3xl'>udah siap ngajar lagi?</h3>
                 </div>
                 <div className="flex space-x-8">
