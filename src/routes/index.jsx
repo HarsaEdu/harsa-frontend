@@ -24,6 +24,7 @@ import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
+import AddClass from "@/pages/class/index"
 
 import ProtectedRoute from "./protectedRoute";
 
@@ -48,6 +49,10 @@ export default function Router() {
         {
           path: "/kelas",
           element: <ListClass />,
+        },
+        {
+          path: "/kelas/tambah-kelas",
+          element:<AddClass />,
         },
         {
           path: "/kelas/manage-kelas",

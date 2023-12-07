@@ -95,8 +95,8 @@ function formKelasInstructor() {
   };
 
   return (
-    <main className="bg-[#FFFFFF]">
-      <section className="mx-auto max-w-[800px] rounded-lg border border-[#092C4C] p-8 relative overflow-hidden">
+    <main className="mt-8 bg-[#FFFFFF]">
+      <section className="relative mx-auto max-w-[800px] overflow-hidden rounded-lg border border-[#092C4C] p-8">
         <h1 className="mb-5 text-2xl font-bold text-[#092C4C]">Tambah Kelas</h1>
         <Form {...form}>
           <form
@@ -168,7 +168,7 @@ function formKelasInstructor() {
                     Upload Cover
                   </FormLabel>
                   <FormControl>
-                    <div className="border border-[#092C4C] rounded-lg overflow-hidden">
+                    <div className="overflow-hidden rounded-lg border border-[#092C4C]">
                       <InputFile
                         textUpload="Upload Cover"
                         preview={preview}

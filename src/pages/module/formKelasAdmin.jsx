@@ -97,7 +97,7 @@ function formKelasAdmin() {
   };
 
   return (
-    <main className="bg-[#FFFFFF]">
+    <main className="bg-[#FFFFFF] mt-8">
       <section className="mx-auto max-w-[800px] rounded-lg border border-[#092C4C] p-8 relative overflow-hidden">
         <h1 className="mb-5 text-2xl font-bold text-[#092C4C]">Tambah Kelas</h1>
         <Form {...form}>
