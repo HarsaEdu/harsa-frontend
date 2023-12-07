@@ -88,18 +88,15 @@ const ProtectedRoute = () => {
   // Jika sudah login, cek hak akses berdasarkan role_name
   if (role_name) {
     // Admin hanya bisa akses halaman admin
-    if (role_name === "admin" && !adminAccessible.includes(pathname)) {
-      // Redirect ke halaman admin jika mencoba mengakses halaman lain
-      return <Navigate to="/dashboard-admin" />;
+    if (role_name === "admin" && !adminAccessible.some((route) => pathname.startsWith(route))) {
+       // Redirect ke halaman admin jika mencoba mengakses halaman lain
+      return <Navigate to="/dashboard-admin"/>;
     }
 
     // Instructor hanya bisa akses halaman instructor
-    if (
-      role_name === "instructor" &&
-      !instructorAccessible.includes(pathname)
-    ) {
-      // Redirect ke halaman instructor jika mencoba mengakses halaman lain
-      return <Navigate to="/dashboard" />;
+    if (role_name === "instructor" && !instructorAccessible.some((route) => pathname.startsWith(route))) {
+       // Redirect ke halaman instructor jika mencoba mengakses halaman lain
+      return <Navigate to="/dashboard"/>;
     }
   }
 

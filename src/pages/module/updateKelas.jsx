@@ -4,7 +4,7 @@ import { Button } from "../../components/ui/button";
 import Breadcrumb from "@/components/breadcrumb";
 import InputFile from "@/components/inputFile";
 import EditIcon from "@/assets/icons/edit.svg";
-import Layout from "@/components/layout";
+import Layout from "@/components/layout/Index";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
