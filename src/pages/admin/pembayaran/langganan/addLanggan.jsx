@@ -187,7 +187,12 @@ export default function AddLanggan() {
                         Image
                       </FormLabel>
                       <FormControl>
-                        <InputFile id="gambar" {...field} />
+                        <InputFile
+                          id="gambar"
+                          type="file"
+                          className="hidden"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage className="text-red-500" />
                     </FormItem>
