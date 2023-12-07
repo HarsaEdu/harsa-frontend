@@ -27,8 +27,10 @@ import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
+import AddUser from "@/pages/admin/user-management/tambahUser";
 
 import ProtectedRoute from "./protectedRoute";
+import ManageFaq from "@/pages/manage-faq/manageFaq";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -96,6 +98,10 @@ export default function Router() {
           element: <EditProfileFaq />,
         },
         {
+          path: "/content-management/FAQ/",
+          element: <ManageFaq />
+        },
+        {
           path: "/content-management/FAQ/tambah-FAQ",
           element: <AddFAQ />,
         },
@@ -110,6 +116,10 @@ export default function Router() {
         {
           path: "/user-management/detail",
           element: <DetailUser />,
+        },
+        {
+          path: "/user-management/tambah-user",
+          element: <AddUser />,
         },
         {
           path: "/user-management/edit-user/:id",
@@ -127,19 +137,19 @@ export default function Router() {
           path: "*",
           element: <NotFoundPage />,
         },
+        {
+          path: "/langganan",
+          element: <AddSubscription />,
+        },
+        {
+          path: "/langganan/tambah-paket",
+          element: <AddSubscriptionPackage />,
+        },
+        {
+          path: `/langganan/edit-paket/:id`,
+          element: <EditSubscriptionPackage />,
+        },
       ],
-    },
-    {
-      path: "/langganan",
-      element: <AddSubscription />,
-    },
-    {
-      path: "/langganan/tambah-paket",
-      element: <AddSubscriptionPackage />,
-    },
-    {
-      path: `/langganan/edit-paket/:id`,
-      element: <EditSubscriptionPackage />,
     },
   ]);
 

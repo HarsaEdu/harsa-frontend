@@ -12,7 +12,7 @@ const CardListClass = (props) => {
     return(
             <div className="w-11/12 mx-auto mb-4">
                 <div>
-                    <img src={img} alt="" />
+                    <img className="w-full" src={img} alt="" />
                 </div>
                 <div className="border border-[#092C4C] p-[19px] rounded-b-[30px]">
                     <div className="flex justify-between cursor-pointer">
