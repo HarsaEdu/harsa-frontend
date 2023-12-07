@@ -225,25 +225,21 @@ const onSubmit = async (data) => {
                                 htmlFor="image"
                                 className="cursor-pointer"
                                 >
-                                {preview ? (
-                                        <div className="w-full h-56 border border-black rounded-lg flex justify-center items-center p-4">
-                                            <img src={preview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                        </div>
-                                    ) : (
-                                        <div className="w-full h-56 border border-black rounded-lg flex justify-center items-center p-4">
-                                            <div className="border border-black border-dashed w-full flex flex-col justify-center items-center font-poppins font-semibold text-[#A2D2FF] text-lg">
-                                            <InputFile
-                                            id="image"
-                                            type="file"
-                                            className="hidden"
-                                            onChange={(e) => {
-                                                field.onChange(e.target.files[0]);
+                                    <div className="w-full h-56 border border-black rounded-lg flex justify-center items-center p-4 cursor-pointer">
+                                        <div className="border border-black border-dashed w-full flex flex-col justify-center items-center font-poppins font-semibold text-[#A2D2FF] text-lg">
+                                        <InputFile
+                                        id="image"
+                                        preview={preview}
+                                        type="file"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            field.onChange(e.target.files[0]);
                                                 handleImageChange(e.target.files[0]);
-                                            }}
-                                            />
-                                            </div>
+                                        }}
+                                        setPreview={setPreview}
+                                        />
                                         </div>
-                                    )}
+                                    </div>
                                 </FormLabel>
                                 <FormMessage className="text-[#ED7878]">
                                     {form.formState.errors.image?.message}
