@@ -132,8 +132,8 @@ export default function Router() {
           element: <EditFAQ />,
         },
         {
-          path: "/content-management/kategori",
-          element: <ManageCategory />,
+          path: "/category-management/category",
+          element: <ManageKategori />
         },
         {
           path: "/user-management", //Nanti ganti jadi ID
@@ -150,18 +150,6 @@ export default function Router() {
         {
           path: "/user-management/edit-user/:id",
           element: <HeaderEdit />,
-        },
-        {
-          path: "/pembayaran/langganan",
-          element: <Langganan />
-        },
-        {
-          path: "/pembayaran/langganan/tambah-paket",
-          element: <AddLanggan />
-        },
-        {
-          path: "/pembayaran/langganan/:id/edit-paket",
-          element: <EditLanggan />
         },
         {
           path: "/riwayat-transaksi",
