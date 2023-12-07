@@ -95,7 +95,7 @@ export default function Router() {
           element: <EditProfileFaq />,
         },
         {
-          path: "/content-management/FAQ/",
+          path: "/content-management/FAQ",
           element: <ManageFaq />
         },
         {
@@ -111,7 +111,7 @@ export default function Router() {
           element: <UserManagement />,
         },
         {
-          path: "/user-management/detail",
+          path: "/user-management/detail/:id",
           element: <DetailUser />,
         },
         {
