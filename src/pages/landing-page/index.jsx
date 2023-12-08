@@ -30,10 +30,12 @@ export default function LandingPage() {
     <>
       <Navbar />
       <Hero />
-      <AboutUs />
-      <section className="mb-16 mt-16 space-y-5 px-32">
+      <div id="aboutUs">
+        <AboutUs />
+      </div>
+      <section className="mb-16 mt-16 space-y-5 px-32" id="ourFeature">
         <h2 className="text-center text-2xl font-bold">Our Feature</h2>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 h-[550px]">
+        <div className="grid h-[550px] grid-cols-2 gap-8 sm:grid-cols-4">
           {dataFeature.map((value, index) => (
             <Card
               key={value.title}
@@ -49,16 +51,18 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
-      <div className="mb-24">
+      <div className="mb-24" id="testimoniCard">
         <TestimoniCard />
       </div>
-      <div>
+      <div id="faq">
         <Faq />
       </div>
-      <div className="mb-16 mt-16">
+      <div className="mb-16 mt-16" id="getApps">
         <GetApps />
       </div>
-      <Footer />
+      <div id="footer">
+        <Footer />
+      </div>
     </>
   );
 }

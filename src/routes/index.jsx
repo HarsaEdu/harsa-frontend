@@ -1,10 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import LandingPage from "../pages/landing-page/index";
+import LandingPage from "@/pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
-import UserManagement from "../pages/admin/userManagement";
+import MateriKelas from "@/pages/admin/content-management/kelas/materiKelas";
+import UserManagement from "@/pages/admin/userManagement";
+import AssignUserAdmin from "@/pages/admin/content-management/kelas/assignUser";
 import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
+import AssignUserInstruktor from "@/pages/assign-users/assignUserInstruktor";
+import ModuleKelas from "@/pages/assign-users/moduleKelas";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
 import CreateMaterial from "@/pages/module/createMaterial";
@@ -27,7 +31,6 @@ import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
 
 import ProtectedRoute from "./protectedRoute";
 
-
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -49,10 +52,46 @@ export default function Router() {
           path: "/kelas",
           element: <ListClass />,
         },
+        // {
+        //   path: "/kelas/manage-kelas",
+        //   element: <MateriOverview />,
+        // },
         {
           path: "/kelas/manage-kelas",
           element: <MateriOverview />,
+          children: [
+            {
+              path: "/kelas/manage-kelas", // Menggunakan path yang terpisah untuk Kelas
+              element: <MateriKelas />,
+            },
+            {
+              path: "/kelas/manage-kelas/list-users", // Menggunakan path yang terpisah untuk Kelas
+              element: <AssignUserAdmin />,
+            },
+            {
+              path: "/kelas/manage-kelas/list-user", // Menggunakan path yang terpisah untuk Kelas
+              element: <AssignUserInstruktor />,
+            },
+          ],
         },
+        {
+          path: "/kelas/manage-kelas",
+          element: <ModuleKelas />,
+          children: [
+            {
+              path: "/kelas/manage-kelas", // Menggunakan path yang terpisah untuk Kelas
+              element: <MateriKelas />,
+            },
+            {
+              path: "/kelas/manage-kelas/list-user", // Menggunakan path yang terpisah untuk Kelas
+              element: <AssignUserInstruktor />,
+            },
+          ],
+        },
+        // {
+        //   path: "/kelas/manage-kelas/list-users",
+        //   element: <AssignUserAdmin />,
+        // },
         {
           path: "/kelas/tambah-modul",
           element: <CreateMaterial />,
