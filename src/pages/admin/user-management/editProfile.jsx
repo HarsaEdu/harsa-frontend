@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -27,21 +27,12 @@ import moment from "moment/moment";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import parseISO from "date-fns/parseISO";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function EditProfile() {
-  const DUMMY_DATA_PROFILE = {
-    firstName: "Charlie Christian",
-    lastName: "Hamdani",
-    bio: "Mahasiswa Yang Senang Santuy Main Cities Skylines",
-    dateBirth: "2001-08-10", //(TAHUN / BULAN / TANGGAL)
-    phoneNumber: "085162880031",
-    gender: "male",
-    hometown: "Kota Palu",
-    profession: "Mahasiswa",
-    addres: "Jl. Agatis No.4 Kota Palu",
-  };
   const navigate = useNavigate();
+  const { id } = useParams();
   const VALID_GENDER = ["male", "female"];
   const editProfileSchema = z.object({
     firstName: z
@@ -57,32 +48,50 @@ export default function EditProfile() {
     phoneNumber: z
       .string()
       .min(1, { message: "*Isi Nomer Telepon Terlebih Dahulu" }),
-    gender: z
-      .string({ invalid_type_error: "*Pilih Gender Terlebih Dahulu" })
-      .refine((value) => VALID_GENDER.map((valid) => valid).includes(value), {
-        message: "*Pilih Gender Terlebih Dahulu",
-      }),
+    gender: z.string().min(1, { message: "*Pilih Gender" }),
     hometown: z.string().min(1, { message: "*Isi Asal Kota Terlebih Dahulu" }),
     profession: z
       .string()
       .min(1, { message: "*Isi Pekerjaan Terlebih Dahulu" }),
     addres: z.string().min(1, { message: "*Isi Alamat Terlebih Dahulu" }),
   });
-
+  
   const form = useForm({
     resolver: zodResolver(editProfileSchema),
-    defaultValues: {
-      firstName: DUMMY_DATA_PROFILE.firstName,
-      lastName: DUMMY_DATA_PROFILE.lastName,
-      bio: DUMMY_DATA_PROFILE.bio,
-      dateBirth: parseISO(DUMMY_DATA_PROFILE.dateBirth),
-      phoneNumber: DUMMY_DATA_PROFILE.phoneNumber,
-      gender: DUMMY_DATA_PROFILE.gender,
-      hometown: DUMMY_DATA_PROFILE.hometown,
-      profession: DUMMY_DATA_PROFILE.profession,
-      addres: DUMMY_DATA_PROFILE.addres,
-    },
   });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+
+        const response = await axios.get(
+          `https://api.harsaedu.my.id/web/users/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("refresh_token")}`, // Gantilah dengan cara Anda mendapatkan token
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        const userData = response.data.data;
+        form.reset({
+          firstName: userData.first_name,
+          lastName: userData.last_name,
+          bio: userData.bio,
+          dateBirth: parseISO(userData.date_birth),
+          phoneNumber: userData.phone_number,
+          gender: userData.gender,
+          hometown: userData.city,
+          profession: userData.job,
+          addres: userData.address,
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [form.reset]);
 
   const onSubmit = (data) => {
     Swal.fire({
@@ -113,10 +122,52 @@ export default function EditProfile() {
     });
   };
 
-  const onSave = (data) => {
-    // Do something with the form values.
-    // The values are already type-safe and validated based on your formSchema.
-    console.log(data);
+  const onSave = async (data) => {
+    try {
+      const token = localStorage.getItem("refresh_token"); // Ganti dengan cara Anda mendapatkan token
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+      const response = await axios.put(
+        `https://api.harsaedu.my.id/web/users/profile/${id}`,
+        {
+          first_name: data.firstName,
+          last_name: data.lastName,
+          date_birth: format(data.dateBirth, "yyyy-MM-dd'T'HH:mm:ssXXX"),
+          bio: data.bio,
+          gender: data.gender,
+          phone_number: data.phoneNumber,
+          city: data.hometown,
+          address: data.addres,
+          job: data.profession,
+        }, {
+          headers,
+        }
+      );
+
+      if (response.data.code === 200) {
+        Swal.fire({
+          title: "Sukses Update Data",
+          icon: "success",
+          showConfirmButton: false,
+          showCloseButton: true,
+          timer: 2000,
+        }).then(() => {
+          navigate("/user-management"); //TODO: GANTI HALAMAN TUJUAN
+        });
+      } else {
+        // Handle error response
+        Swal.fire({
+          title: "Gagal Update Data",
+          icon: "error",
+          showConfirmButton: true,
+          confirmButtonColor: "#ED7878",
+        });
+      }
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
   };
 
   return (
@@ -307,7 +358,7 @@ export default function EditProfile() {
                             <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl>
                                 <RadioGroupItem
-                                  value="male"
+                                  value="m"
                                   className="h-8 w-8"
                                 />
                               </FormControl>
@@ -318,7 +369,7 @@ export default function EditProfile() {
                             <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl>
                                 <RadioGroupItem
-                                  value="female"
+                                  value="f"
                                   className="h-8 w-8"
                                 />
                               </FormControl>
@@ -383,12 +434,14 @@ export default function EditProfile() {
             <Button
               className="h-16 w-52 border bg-[#ED7878] text-2xl font-bold text-white hover:bg-[#ED7878]"
               type="button"
-              onClick={() => navigate("/")} //TODO: GANTI HALAMAN TUJUAN
+              onClick={() => navigate("/user-management")}
             >
               Batal
             </Button>
-            <Button className="h-16 w-64 text-2xl" type="submit">
-              {" "}
+            <Button 
+            id="saveButtonUser" 
+            className="h-16 w-64 text-2xl" 
+            type="submit">
               Simpan
             </Button>
           </div>
