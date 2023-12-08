@@ -6,6 +6,7 @@ import Layout from "@/components/layout/Index";
 import { Link, useParams, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getDetailCourse } from "@/utils/apis/class";
+import { Button } from "@/components/ui/button";
 
 const MateriOverview = () => {
   const roleName = localStorage.getItem("role_name");
@@ -13,6 +14,7 @@ const MateriOverview = () => {
   const [course, setCourse] = useState([]);
   const [section, setSection] = useState([]);
   const [preview, setPreview] = useState("");
+
   const handleImageChange = (file) => {
     if (file) {
       setPreview(URL.createObjectURL(file));
@@ -44,6 +46,7 @@ const MateriOverview = () => {
       <div className="container my-28 font-poppins">
         <Breadcrumb />
         <div className="my-5">
+          {/* InputFile component is assumed to be defined elsewhere */}
           <InputFile
             textUpload="Upload Cover"
             preview={preview}
@@ -69,44 +72,7 @@ const MateriOverview = () => {
         <div className="mt-8">
           <ul className="flex items-center">
             <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150 ease-in  hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
-              <Link href="/">Materi</Link>
-            </li>
-            <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150  ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
-              <Link href="/">Ulasan</Link>
-            </li>
-            <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150 ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
-              <Link href="/">User</Link>
-            </li>
-          </ul>
-          <div className="flex flex-col border border-slate-300 px-2">
-            <div className="mb-5 flex justify-end">
-              <Button
-                id="module"
-                className="m-2 rounded-[4px] bg-[#092C4C] text-white"
-              >
-                <Link to="/kelas/tambah-modul">Tambah Modul</Link>
-              </Button>
-            </div>
-            {console.log(section)}
-            {section.length > 0 ? (
-              section.map((Module, index) => (
-                <div key={Module.id}>
-                  <ManageClass
-                    tipeMateri={Module.title}
-                    judulMateri={Module.module[index].title}
-                    teksMateri={Module.teksMateri}
-                    videoMateri={Module.videoMateri}
-                    tugasMateri={Module.tugasMateri}
-                    kuisMateri={Module.kuis}
-                    subtitleMateri={Module.judulMateri}
-                  />
-                </div>
-              ))
-            ) : (
-              <div className="mb-8 text-center">Belum Ada Modul</div>
-            )}
-          </div>
-              <Link to="/kelas/manage-kelas">Materi</Link>
+              <Link to={`/kelas/manage-kelas/${params.id}`}>Materi</Link>
             </li>
             <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150  ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
               <Link to="/dashboard">Ulasan</Link>
@@ -115,7 +81,9 @@ const MateriOverview = () => {
               {roleName === "admin" ? (
                 <Link to="/kelas/manage-kelas/list-users">User</Link>
               ) : (
-                <Link to="/kelas/manage-kelas/list-user">User</Link>
+                <Link to={`/kelas/manage-kelas/${params.id}/list-user/`}>
+                  User
+                </Link>
               )}
             </li>
           </ul>

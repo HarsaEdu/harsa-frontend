@@ -1,9 +1,32 @@
 import ManageClass from "@/components/module/materiComponent";
 import { Modules } from "@/utils/moduleStatic";
 import { Button } from "@/components/ui/button";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { getDetailCourse } from "@/utils/apis/class";
 
 const MateriOverview = () => {
+  const params = useParams();
+  const [course, setCourse] = useState([]);
+  const [section, setSection] = useState([]);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const result = await getDetailCourse(+params.id);
+      setCourse(result.data);
+      if (result.data.section !== null && result.data.section !== undefined) {
+        setSection(result.data.section);
+      } else {
+        setSection([]);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <div>
       <div className="rounded-sm border border-slate-300">
@@ -16,19 +39,23 @@ const MateriOverview = () => {
               <Link to="/kelas/tambah-modul">Tambah Modul</Link>
             </Button>
           </div>
-          {Modules.map((Module) => (
-            <div key={Module.id}>
-              <ManageClass
-                tipeMateri={Module.tipeMateri}
-                judulMateri={Module.judulMateri}
-                teksMateri={Module.teksMateri}
-                videoMateri={Module.videoMateri}
-                tugasMateri={Module.tugasMateri}
-                kuisMateri={Module.kuis}
-                subtitleMateri={Module.judulMateri}
-              />
-            </div>
-          ))}
+          {section.length > 0 ? (
+            section.map((Module, index) => (
+              <div key={Module.id}>
+                <ManageClass
+                  tipeMateri={Module.title}
+                  judulMateri={Module.module[index].title}
+                  teksMateri={Module.teksMateri}
+                  videoMateri={Module.videoMateri}
+                  tugasMateri={Module.tugasMateri}
+                  kuisMateri={Module.kuis}
+                  subtitleMateri={Module.judulMateri}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="mb-8 text-center">Belum Ada Modul</div>
+          )}
         </div>
       </div>
       <Outlet />
