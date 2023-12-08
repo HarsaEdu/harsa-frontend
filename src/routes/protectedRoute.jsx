@@ -46,6 +46,7 @@ const ProtectedRoute = () => {
     "/kelas/manage-kelas/manage-modul",
     "/kelas/tambah-modul/tambah-tugas",
     "/kelas/tambah-kuis",
+    "/kelas/edit-kuis",
     "/kelas/tambah-pertanyaan",
     "/kelas/manage-tugas",
     "/kelas/manage-tugas/review",
