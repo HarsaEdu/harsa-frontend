@@ -22,13 +22,18 @@ import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
+import AddSubscription from "@/pages/admin/pembayaran/tambahLangganan";
+import AddSubscriptionPackage from "@/pages/admin/pembayaran/tambahPaketLangganan";
+import EditSubscriptionPackage from "@/pages/admin/pembayaran/editPaketLangganan";
 import DetailUser from "@/pages/admin/user-management/detailUser";
 import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
-
+import AddClass from "@/pages/class/index"
+import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
+import ManageFaq from "@/pages/manage-faq/manageFaq";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -50,6 +55,10 @@ export default function Router() {
         {
           path: "/kelas",
           element: <ListClass />,
+        },
+        {
+          path: "/kelas/tambah-kelas",
+          element:<AddClass />,
         },
         {
           path: "/kelas/manage-kelas",
@@ -110,6 +119,10 @@ export default function Router() {
           element: <EditProfileFaq />,
         },
         {
+          path: "/content-management/FAQ/",
+          element: <ManageFaq />
+        },
+        {
           path: "/content-management/FAQ/tambah-FAQ",
           element: <AddFAQ />,
         },
@@ -126,6 +139,10 @@ export default function Router() {
           element: <DetailUser />,
         },
         {
+          path: "/user-management/tambah-user",
+          element: <AddUser />,
+        },
+        {
           path: "/user-management/edit-user/:id",
           element: <HeaderEdit />,
         },
@@ -140,6 +157,18 @@ export default function Router() {
         {
           path: "*",
           element: <NotFoundPage />,
+        },
+        {
+          path: "/langganan",
+          element: <AddSubscription />,
+        },
+        {
+          path: "/langganan/tambah-paket",
+          element: <AddSubscriptionPackage />,
+        },
+        {
+          path: `/langganan/edit-paket/:id`,
+          element: <EditSubscriptionPackage />,
         },
       ],
     },
