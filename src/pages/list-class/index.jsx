@@ -10,7 +10,7 @@ import PemrogramanMobile from "../../assets/pemrograman-mobile.svg";
 import PemrogramanJava from "../../assets/pemrograman-java.svg";
 import Breadcrumb from "@/components/breadcrumb";
 
-import { getCourse } from "@/utils/apis/class";
+import { getCourse, getMyCourse } from "@/utils/apis/class";
 import { useEffect, useState } from "react";
 
 const ListClass = () => {
@@ -22,7 +22,9 @@ const ListClass = () => {
 
   async function fetchData() {
     try {
-      const result = await getCourse();
+      const result = await (localStorage.getItem("role_name") == "instructor"
+        ? getMyCourse()
+        : getCourse());
       setCourse(result.data);
     } catch (error) {
       console.log(error.message);
@@ -60,17 +62,21 @@ const ListClass = () => {
       </div>
 
       <div>
-        {course.map((item, index) => (
-          <CardListClass
-            key={index}
-            img={item.image_url}
-            judul={item.title}
-            category={item.category.name}
-            instructor={item.user.name}
-            description={item.description}
-            idCourse={item.id}
-          />
-        ))}
+        {course.length > 0 ? (
+          course.map((item, index) => (
+            <CardListClass
+              key={index}
+              img={item.image_url}
+              judul={item.title}
+              category={item.category.name}
+              instructor={item.user.name}
+              description={item.description}
+              idCourse={item.id}
+            />
+          ))
+        ) : (
+          <div className="text-center">Belum Ada Kelas Yang Dibuat</div>
+        )}
       </div>
     </Layout>
   );

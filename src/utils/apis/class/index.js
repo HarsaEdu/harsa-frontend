@@ -1,3 +1,3 @@
-import { getCourse, getDetailCourse } from "./api";
+import { getCourse, getDetailCourse, getMyCourse } from "./api";
 
-export { getCourse, getDetailCourse };
+export { getCourse, getDetailCourse, getMyCourse };
