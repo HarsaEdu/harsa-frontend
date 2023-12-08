@@ -2,6 +2,7 @@ import Layout from "@/components/layout/Index";
 import CardListClass from "@/pages/list-class/CardListClass";
 import { Button } from "@/components/ui/button";
 
+
 import Filter from "../../assets/filter.svg";
 
 import PemrogramanFrontend from "../../assets/pemrograman-frontend.svg";
@@ -30,7 +31,6 @@ const ListClass = () => {
       console.log(error.message);
     }
   }
-
   return (
     <Layout>
       <div className="container mb-10">
