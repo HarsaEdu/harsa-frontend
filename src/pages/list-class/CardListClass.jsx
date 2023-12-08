@@ -1,13 +1,13 @@
-import React from "react"
-import { Button } from "../../components/ui/button"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Button } from "../../components/ui/button";
+import { Link } from "react-router-dom";
 
-import Star from "../../assets/Star.svg"
-import Delete from "../../assets/Delete.svg"
-import Edit from "../../assets/Edit.svg"
+import Star from "../../assets/Star.svg";
+import Delete from "../../assets/Delete.svg";
+import Edit from "../../assets/Edit.svg";
 
 const CardListClass = (props) => {
-    const { judul, category, instructor, description, img } = props
+  const { judul, category, instructor, description, img } = props;
 
     return(
             <div className="w-11/12 mx-auto mb-4">
@@ -48,4 +48,4 @@ const CardListClass = (props) => {
     )
 }
 
-export default CardListClass
+export default CardListClass;
