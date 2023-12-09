@@ -7,6 +7,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -38,16 +39,18 @@ export default function Login() {
         },
       );
       if (response.status === 200) {
-        const { username, role_name, access_token, refresh_token } =
+        const { username, role_name, access_token, refresh_token, id } =
           response.data.data;
 
         // Hanya izinkan login untuk role_name admin atau instructor
         if (role_name === "admin" || role_name === "instructor") {
           localStorage.setItem("username", username);
           localStorage.setItem("role_name", role_name);
+          localStorage.setItem("id", id);
           localStorage.setItem("access_token", access_token);
           localStorage.setItem("refresh_token", refresh_token);
-
+          setAxiosConfig(access_token);
+          
           if (role_name === "admin") {
             navigate("/dashboard-admin");
           } else {

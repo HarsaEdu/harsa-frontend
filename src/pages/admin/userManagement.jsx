@@ -6,39 +6,32 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import Table from "@/components/table/tables";
 import { Input } from "@/components/ui/input";
-import ApiCaller from "@/utils/ApiConfig";
+import { getUser, deleteUser } from "@/utils/apis/user";
 import { CSVLink } from "react-csv";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-export default function EditTugas() {
-  const [data, setData] = useState([]);
+export default function UserManagement() {
+  const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          'https://api.harsaedu.my.id/web/users?offset=0&limit=10',
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Gantilah dengan cara Anda mendapatkan token
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        setData(response.data.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
+
+  async function fetchData() {
+    try {
+      setIsLoading(true);
+      const response = await getUser(); // Menggunakan getUser dari utils
+      setUserData(response.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const handleEdit = (id) => {
     // Navigasi ke halaman edit user dengan ID yang sesuai
@@ -50,6 +43,46 @@ export default function EditTugas() {
     navigate(`/user-management/detail/${id}`);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      // Menampilkan konfirmasi SweetAlert
+      const result = await Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data user akan dihapus permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!",
+      });
+
+      if (result.isConfirmed) {
+        // Panggil fungsi deleteUser untuk menghapus user
+        await deleteUser(id);
+        // Perbarui data setelah penghapusan berhasil
+        fetchData();
+
+        // Menampilkan pesan SweetAlert setelah penghapusan berhasil
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Data user telah dihapus.",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to delete user", error);
+
+      // Menampilkan pesan SweetAlert jika penghapusan gagal
+      Swal.fire({
+        title: "Error!",
+        text: "Gagal menghapus data user.",
+        icon: "error",
+      });
+    }
+  };
+
   const columns = useMemo(() => [
     {
       header: "No",
@@ -58,10 +91,16 @@ export default function EditTugas() {
     {
       header: "Nama",
       cell: (info) => {
+        const firstName = info.row.original.first_name;
+        const lastName = info.row.original.last_name;
+    
         return (
           <div className="text-center">
-            {info.row.original.first_name}{" "}
-            {info.row.original.last_name}
+            {firstName || lastName ? (
+              `${firstName || ""} ${lastName || ""}`
+            ) : (
+              "-"
+            )}
           </div>
         );
       },
@@ -79,8 +118,13 @@ export default function EditTugas() {
     {
       header: "No Telepone",
       accessorKey: "phone_number",
-      cell: (info) => <div className="text-center">{info.getValue()}</div>,
+      cell: (info) => (
+        <div className="text-center">
+          {info.getValue() || "-"}
+        </div>
+      ),
     },
+    
     {
       header: "Role",
       accessorKey: "role_name",
@@ -100,7 +144,7 @@ export default function EditTugas() {
               </Button>
               <Button
                 className="bg-white px-8 text-black hover:text-white"
-                onClick={() => console.log(info.row.original.id)}
+                onClick={() => handleDelete(info.row.original.id)} // Panggil fungsi handleDelete dengan ID sebagai argumen
               >
                 Delete
               </Button>
@@ -120,7 +164,7 @@ export default function EditTugas() {
   // function untuk export tabel ke csv file
   const csvData = [
     ["No", "Name", "Username", "Email", "No Telepone", "Role"],
-    ...data.map(
+    ...userData.map(
       ({ id, first_name, username, email, phone_number, role_name }) => [
         id,
         first_name,
@@ -167,7 +211,7 @@ export default function EditTugas() {
             {isLoading && <p>. . .</p>}
             {error && <p>Error: {error.message}</p>}
             <Table
-              datas={data}
+              datas={userData}
               columns={columns}
               classNameHeader="bg-[#A2D2FF] text-black"
               isVisible={true}
