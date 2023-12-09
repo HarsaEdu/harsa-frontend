@@ -9,11 +9,12 @@ const ProtectedRoute = () => {
   const loggedInAccessible = [
     "/dashboard",
     "/dashboard-admin",
+    "/content-management/FAQ",
     "/kelas/manage-kelas/list-user",
-    "/content-management/FAQ/",
     "/content-management/FAQ/tambah-FAQ",
     "/content-management/FAQ/:id/edit-FAQ",
     "/user-management",
+    "/user-management/tambah-user",
     "/user-management/detail",
     "/user-management/edit-user/:id",
     "/riwayat-transaksi",
@@ -35,11 +36,12 @@ const ProtectedRoute = () => {
   // Halaman yang hanya bisa diakses oleh admin
   const adminAccessible = [
     "/dashboard-admin",
-    "/content-management/FAQ/",
+    "/content-management/FAQ",
     "/content-management/FAQ/tambah-FAQ",
     "/content-management/FAQ/:id/edit-FAQ",
     "/content-management/kategori",
     "/user-management",
+    "/user-management/tambah-user",
     "/user-management/detail",
     "/user-management/edit-user/:id",
     "/riwayat-transaksi",

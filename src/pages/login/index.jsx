@@ -50,7 +50,7 @@ export default function Login() {
           localStorage.setItem("access_token", access_token);
           localStorage.setItem("refresh_token", refresh_token);
           setAxiosConfig(access_token);
-
+          
           if (role_name === "admin") {
             navigate("/dashboard-admin");
           } else {

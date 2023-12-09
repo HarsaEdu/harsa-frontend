@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -26,16 +26,14 @@ import {
   ConfirmPasswordInputWithToggle,
   PasswordInputWithToggle,
 } from "@/components/inputPassword";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserAccount } from "@/utils/apis/user";
 
 export default function EditAkun() {
-  const DUMMY_DATA_AKUN = {
-    email: "charliech1056@gmail.com",
-    role: "Customer",
-  };
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
-
-  const VALID_ROLE = ["Customer", "Instructor"];
+  const { id } = useParams();
+  const VALID_ROLE = ["Admin", "Instructor", "Student"];
 
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -62,12 +60,37 @@ export default function EditAkun() {
   const form = useForm({
     resolver: zodResolver(editAkunSchema),
     defaultValues: {
-      email: DUMMY_DATA_AKUN.email,
-      role: DUMMY_DATA_AKUN.role,
+      email: "",
+      role: "",
       password: "",
       confirmPassword: "",
     },
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getUserAccount(id);
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch user account:", error);
+        // Handle error, such as redirecting to an error page
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  useEffect(() => {
+    if (userData) {
+      // Set form values when userData is available
+      form.reset({
+        email: userData.email,
+        role: userData.role,
+      });
+    }
+  }, [userData, form]);
+
 
   const onSubmit = (data) => {
     Swal.fire({

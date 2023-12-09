@@ -32,7 +32,6 @@ const formSchema = z.object({
 const EditFAQ = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // Ambil id FAQ dari URL params
-  const userRole = "admin";
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -90,7 +89,7 @@ const EditFAQ = () => {
           showCloseButton: true,
           timer: 2000,
         }).then(() => {
-          navigate("/content-management/FAQ");
+          navigate(`/content-management/FAQ`);
         });
       }
     });
@@ -119,7 +118,7 @@ const EditFAQ = () => {
   
 
   return (
-    <Layout userRole={userRole}>
+    <Layout>
       <div className="container mb-10">
         <Breadcrumb />
         <div className="font-poppins">

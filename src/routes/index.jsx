@@ -120,8 +120,8 @@ export default function Router() {
           element: <EditProfileFaq />,
         },
         {
-          path: "/content-management/FAQ/",
-          element: <ManageFaq />,
+          path: "/content-management/FAQ",
+          element: <ManageFaq />
         },
         {
           path: "/content-management/FAQ/tambah-FAQ",
@@ -140,7 +140,7 @@ export default function Router() {
           element: <UserManagement />,
         },
         {
-          path: "/user-management/detail",
+          path: "/user-management/detail/:id",
           element: <DetailUser />,
         },
         {
