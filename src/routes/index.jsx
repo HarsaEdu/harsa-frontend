@@ -30,7 +30,7 @@ import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
-import AddClass from "@/pages/class/index"
+import AddClass from "@/pages/class/index";
 import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
 import ManageFaq from "@/pages/manage-faq/manageFaq";
@@ -58,26 +58,26 @@ export default function Router() {
           element: <ListClass />,
         },
         {
-          path: "/kelas/tambah-kelas",
-          element:<AddClass />,
-        },
-        {
-          path: "/kelas/manage-kelas",
+          path: "/kelas/manage-kelas/:id",
           element: <MateriOverview />,
           children: [
             {
-              path: "/kelas/manage-kelas", // Menggunakan path yang terpisah untuk Kelas
+              path: "/kelas/manage-kelas/:id", // Menggunakan path yang terpisah untuk Kelas
               element: <MateriKelas />,
             },
             {
-              path: "/kelas/manage-kelas/list-users", // Menggunakan path yang terpisah untuk Kelas
+              path: "/kelas/manage-kelas/:id/list-users", // Menggunakan path yang terpisah untuk Kelas
               element: <AssignUserAdmin />,
             },
             {
-              path: "/kelas/manage-kelas/list-user", // Menggunakan path yang terpisah untuk Kelas
+              path: "/kelas/manage-kelas/:id/list-user", // Menggunakan path yang terpisah untuk Kelas
               element: <AssignUserInstruktor />,
             },
           ],
+        },
+        {
+          path: "/kelas/tambah-kelas",
+          element: <AddClass />,
         },
         {
           path: "/kelas/tambah-modul",
@@ -121,7 +121,7 @@ export default function Router() {
         },
         {
           path: "/content-management/FAQ/",
-          element: <ManageFaq />
+          element: <ManageFaq />,
         },
         {
           path: "/content-management/FAQ/tambah-FAQ",
