@@ -31,6 +31,8 @@ const ProtectedRoute = () => {
     "/kelas/manage-tugas/edit",
     "/edit-profile",
     "/faq",
+    "/notification",
+
   ];
 
   // Halaman yang hanya bisa diakses oleh admin
@@ -59,6 +61,8 @@ const ProtectedRoute = () => {
     "/kelas/manage-tugas/edit",
     "/edit-profile",
     "/faq",
+    "/notification",
+
   ];
 
   // Halaman yang hanya bisa diakses oleh instructor
@@ -77,6 +81,8 @@ const ProtectedRoute = () => {
     "/kelas/manage-tugas/edit",
     "/edit-profile",
     "/faq",
+    "/notification",
+
   ];
 
   // Landing page yang tidak bisa diakses oleh pengguna yang sudah login
