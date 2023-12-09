@@ -38,6 +38,7 @@ const ProtectedRoute = () => {
     "/content-management/FAQ/",
     "/content-management/FAQ/tambah-FAQ",
     "/content-management/FAQ/:id/edit-FAQ",
+    "/content-management/kategori",
     "/user-management",
     "/user-management/detail",
     "/user-management/edit-user/:id",

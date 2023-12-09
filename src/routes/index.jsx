@@ -34,6 +34,7 @@ import AddClass from "@/pages/class/index"
 import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
 import ManageFaq from "@/pages/manage-faq/manageFaq";
+import ManageCategory from "@/pages/admin/content-management/kategori/manageCategory";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -129,6 +130,10 @@ export default function Router() {
         {
           path: "/content-management/FAQ/:id/edit-FAQ",
           element: <EditFAQ />,
+        },
+        {
+          path: "/content-management/kategori",
+          element: <ManageCategory />,
         },
         {
           path: "/user-management", //Nanti ganti jadi ID
