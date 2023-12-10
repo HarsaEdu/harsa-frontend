@@ -67,7 +67,7 @@ function formKelasInstructor() {
       deskripsi: "",
       category: null,
       instructor: "",
-      upload: "",
+      upload: null,
     },
   });
 
@@ -90,14 +90,24 @@ function formKelasInstructor() {
 
   const onSubmit = async (data) => {
     try {
-      // Memanggil fungsi createCourse untuk membuat kelas baru
-      const response = await createCourse(data);
+      const fileData = form.watch("upload");
+      console.log(fileData)
 
+      // Membuat objek data yang akan dikirim ke backend
+      const formData = new FormData();
+      formData.append("title", data.judul);
+      formData.append("description", data.deskripsi);
+      formData.append("category_id", data.category);
+      formData.append("file", fileData);
+  
+      // Memanggil fungsi createCourse untuk membuat kelas baru dengan data yang sesuai
+      const response = await createCourse(formData);
+  
       console.log(response);
-
+  
       setPreview("");
       form.reset();
-
+  
       const result = await MySwal.fire({
         icon: "success",
         title: "Sukses Tambah Kelas",
@@ -109,7 +119,7 @@ function formKelasInstructor() {
         },
         buttonsStyling: false,
       });
-
+  
       if (result.isDismissed || result.isConfirmed) {
         MySwal.close();
       }
@@ -126,6 +136,8 @@ function formKelasInstructor() {
       setPreview(URL.createObjectURL(file));
     } else {
       setPreview("");
+      // Reset nilai pada field "upload" jika file dihapus
+      form.resetField("upload", null);
     }
   };
 
@@ -216,10 +228,12 @@ function formKelasInstructor() {
                   <FormControl>
                     {/* InputFile component is assumed to be defined elsewhere */}
                     <InputFile
-                      textUpload="Upload Cover"
+                      textUpload="Upload Cover Course"
                       preview={preview}
-                      onChange={(e) => {
-                        handleImageChange(e.target.files[0]);
+                      onChange={(file) => {
+                        field.onChange(file.target.files[0]);
+                        console.log(file.target.files[0]);
+                        handleImageChange(file.target.files[0]);
                       }}
                       setPreview={setPreview}
                     />

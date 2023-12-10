@@ -39,3 +39,12 @@ export const createCourse = async (courseData) => {
     throw Error("Failed to create course");
   }
 };
+
+export const deleteCourse = async (courseId) => {
+  try {
+    const response = await axiosWithConfig.delete(`/courses/${courseId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to delete course");
+  }
+};

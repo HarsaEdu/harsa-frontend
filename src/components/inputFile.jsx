@@ -9,7 +9,8 @@ export default function InputFile(props) {
   const handleDelete = () => {
     setPreview("");
     const fileInput = document.getElementById(id);
-    fileInput.value = null // Setel nilai field "upload" menjadi null
+    fileInput.value = ""
+    fileInput.click(); // Setel nilai field "upload" menjadi null
   };
 
   return (

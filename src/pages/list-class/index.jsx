@@ -1,6 +1,8 @@
 import Layout from "@/components/layout/Index";
 import CardListClass from "@/pages/list-class/CardListClass";
 import { Button } from "@/components/ui/button";
+import Swal from "sweetalert2";
+import { deleteCourse } from "@/utils/apis/courses/api";
 
 
 import Filter from "../../assets/filter.svg";
@@ -26,7 +28,47 @@ const ListClass = () => {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
+
+  const handleDeleteCourse = async (idCourse) => {
+    try {
+      // Menampilkan konfirmasi SweetAlert
+      const result = await Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data course akan dihapus permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!",
+      });
+
+      if (result.isConfirmed) {
+        // Panggil fungsi deletecourse untuk menghapus course
+        await deleteCourse(idCourse);
+        fetchData()
+
+        // Menampilkan pesan SweetAlert setelah penghapusan berhasil
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Data course telah dihapus.",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to delete course", error);
+
+      // Menampilkan pesan SweetAlert jika penghapusan gagal
+      Swal.fire({
+        title: "Error!",
+        text: "Gagal menghapus data course.",
+        icon: "error",
+      });
+    }
+  };
+
   return (
     <Layout>
       <div className="container mb-10">
@@ -70,6 +112,7 @@ const ListClass = () => {
               instructor={item.user.name}
               description={item.description}
               idCourse={item.id}
+              onDelete={() => handleDeleteCourse(item.id)}
             />
           ))
         ) : (
