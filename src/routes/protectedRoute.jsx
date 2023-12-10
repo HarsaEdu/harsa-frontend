@@ -22,9 +22,9 @@ const ProtectedRoute = () => {
     "/kelas",
     "/kelas/tambah-kelas",
     "/kelas/manage-kelas",
-    "/kelas/manage-kelas/manage-modul",
+    "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
     "/kelas/manage-kelas/list-users",
-    "/kelas/tambah-modul",
+    "/kelas/tambah-modul/:id",
     "/kelas/tambah-modul/tambah-tugas",
     "/kelas/tambah-kuis",
     "/kelas/tambah-pertanyaan",
@@ -33,6 +33,8 @@ const ProtectedRoute = () => {
     "/kelas/manage-tugas/edit",
     "/edit-profile",
     "/faq",
+    "/notification",
+
   ];
 
   // Halaman yang hanya bisa diakses oleh admin
@@ -63,6 +65,8 @@ const ProtectedRoute = () => {
     "/kelas/manage-tugas/edit",
     "/edit-profile",
     "/faq",
+    "/notification",
+
   ];
 
   // Halaman yang hanya bisa diakses oleh instructor
@@ -72,8 +76,8 @@ const ProtectedRoute = () => {
     "/kelas/tambah-kelas",
     "/kelas/manage-kelas",
     "/kelas/manage-kelas/list-user",
-    "/kelas/manage-kelas/manage-modul",
-    "/kelas/tambah-modul",
+    "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
+    "/kelas/tambah-modul/:id",
     "/kelas/tambah-modul/tambah-tugas",
     "/kelas/tambah-kuis",
     "/kelas/tambah-pertanyaan",
@@ -82,6 +86,8 @@ const ProtectedRoute = () => {
     "/kelas/manage-tugas/edit",
     "/edit-profile",
     "/faq",
+    "/notification",
+
   ];
 
   // Landing page yang tidak bisa diakses oleh pengguna yang sudah login
@@ -102,14 +108,14 @@ const ProtectedRoute = () => {
   if (role_name) {
     // Admin hanya bisa akses halaman admin
     if (role_name === "admin" && !adminAccessible.some((route) => pathname.startsWith(route))) {
-       // Redirect ke halaman admin jika mencoba mengakses halaman lain
-      return <Navigate to="/dashboard-admin"/>;
+      // Redirect ke halaman admin jika mencoba mengakses halaman lain
+      return <Navigate to="/dashboard-admin" />;
     }
 
     // Instructor hanya bisa akses halaman instructor
     if (role_name === "instructor" && !instructorAccessible.some((route) => pathname.startsWith(route))) {
-       // Redirect ke halaman instructor jika mencoba mengakses halaman lain
-      return <Navigate to="/dashboard"/>;
+      // Redirect ke halaman instructor jika mencoba mengakses halaman lain
+      return <Navigate to="/dashboard" />;
     }
   }
 

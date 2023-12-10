@@ -35,6 +35,8 @@ import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
 import ManageFaq from "@/pages/manage-faq/manageFaq";
 import ManageCategory from "@/pages/admin/content-management/kategori/manageCategory";
+import Notification from "@/pages/notification";
+
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -80,11 +82,11 @@ export default function Router() {
           element: <AddClass />,
         },
         {
-          path: "/kelas/tambah-modul",
+          path: "/kelas/tambah-modul/:id",
           element: <CreateMaterial />,
         },
         {
-          path: "/kelas/manage-kelas/manage-modul",
+          path: "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
           element: <UpdateMaterial />,
         },
         {
@@ -174,6 +176,10 @@ export default function Router() {
         {
           path: "/langganan/edit-paket/:id",
           element: <EditSubscriptionPackage />,
+        },
+        {
+          path: "/notification",
+          element: <Notification />,
         },
       ],
     },

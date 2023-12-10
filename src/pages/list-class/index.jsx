@@ -5,12 +5,11 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { deleteCourse } from "@/utils/apis/courses/api";
 
-
 import Filter from "../../assets/filter.svg";
 import Breadcrumb from "@/components/breadcrumb";
 import { Link } from "react-router-dom";
 
-import { getCourse, getMyCourse } from "@/utils/apis/class";
+import { getCourse, getMyCourse } from "@/utils/apis/courses";
 import { useEffect, useState } from "react";
 
 const ListClass = () => {
