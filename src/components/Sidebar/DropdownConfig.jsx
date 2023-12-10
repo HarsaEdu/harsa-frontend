@@ -48,7 +48,9 @@ const InstructorIndex = () => {
             </Link>
           </AccordionContent>
           <AccordionContent className="group text-base pl-8">
-            <Link to="/content-management/kategori"
+
+            <a
+              href={"/category-management/category"}
               className="flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
@@ -110,6 +112,7 @@ const InstructorIndex = () => {
             </span>
           </AccordionTrigger>
           <AccordionContent className="group text-base pl-8">
+
             <Link to="/langganan"
               className="text-base flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >

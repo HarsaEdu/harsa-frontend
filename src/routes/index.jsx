@@ -35,6 +35,10 @@ import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
 import ManageFaq from "@/pages/manage-faq/manageFaq";
 import ManageCategory from "@/pages/admin/content-management/kategori/manageCategory";
+
+import AddKategori from "@/pages/admin/content-management/kategori/addKategori";
+import EditKategori from "@/pages/admin/content-management/kategori/editKategori";
+
 import Notification from "@/pages/notification";
 
 
@@ -134,8 +138,16 @@ export default function Router() {
           element: <EditFAQ />,
         },
         {
-          path: "/content-management/kategori",
-          element: <ManageCategory />,
+          path: "/category-management/category",
+          element: <ManageCategory />
+        },
+        {
+          path: "/category-management/tambah-category",
+          element: <AddKategori />
+        },
+        {
+          path: "/category-management/edit-category/:id",
+          element: <EditKategori />
         },
         {
           path: "/user-management", //Nanti ganti jadi ID
