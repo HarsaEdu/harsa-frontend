@@ -95,7 +95,7 @@ export default function ManageFaq() {
       header: "Action",
       rowSpan: true,
       cell: (info) => (
-        <div className="text-center">
+        <div className={`flex justify-center items-center`} style={info.row.original.actStyle}>
           <DropdownAction>
             <div className="flex flex-col">
               <Button
