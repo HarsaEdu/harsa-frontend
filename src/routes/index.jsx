@@ -178,7 +178,7 @@ export default function Router() {
           element: <EditSubscriptionPackage />,
         },
         {
-          path: "/notification",
+          path: "/notifikasi",
           element: <Notification />,
         },
       ],
