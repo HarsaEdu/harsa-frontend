@@ -1,3 +1,3 @@
-import { deleteFAQ } from "./api";
+import { deleteFAQ, updateFAQ } from "./api";
 
-export { deleteFAQ };
+export { deleteFAQ, updateFAQ };

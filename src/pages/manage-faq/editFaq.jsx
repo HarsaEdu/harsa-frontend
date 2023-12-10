@@ -9,6 +9,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import * as z from "zod";
+import { updateFAQ } from "@/utils/apis/faq";
 
 import {
   Form,
@@ -38,40 +39,27 @@ const EditFAQ = () => {
   });
 
   useEffect(() => {
-    const fetchAllFAQs = async () => {
+    const fetchFAQData = async () => {
       try {
         const response = await axios.get(
-          "https://api.harsaedu.my.id/web/faqs?offset=0&limit=10"
+          `https://api.harsaedu.my.id/web/faqs/${id}`
         );
-        const allFAQs = response.data.data;
+        const faqData = response.data.data;
 
-        // Cari FAQ berdasarkan ID dari daftar semua FAQ
-        const selectedFAQ = allFAQs.find((faq) => faq.id.toString() === id);
-
-        // Jika FAQ ditemukan, set nilai awal formulir
-        if (selectedFAQ) {
-          form.setValue("pertanyaan", selectedFAQ.question);
-          form.setValue("jawaban", selectedFAQ.answer);
-        } else {
-          console.error(`FAQ with ID ${id} not found`);
-        }
+        // Set data FAQ ke dalam form untuk mengisi nilai awal
+        form.setValue("pertanyaan", faqData.question);
+        form.setValue("jawaban", faqData.answer);
       } catch (error) {
-        console.error("Error fetching all FAQs:", error);
+        console.error("Error fetching FAQ data:", error);
       }
     };
 
-    fetchAllFAQs();
+    fetchFAQData();
   }, [id, form]);
 
   const onSubmit = (data) => {
-    // Data untuk dikirim ke backend
-    const requestData = {
-      question: data.pertanyaan,
-      answer: data.jawaban,
-    };
-
     Swal.fire({
-      title: "Yakin kamu mau simpan data ini?",
+      title: "Yakin kamu mau Simpan data ini?",
       icon: "question",
       showCancelButton: true,
       showConfirmButton: true,
@@ -81,38 +69,34 @@ const EditFAQ = () => {
       cancelButtonColor: "#F2994A",
     }).then((result) => {
       if (result.isConfirmed) {
-        onSave(requestData);
-        Swal.fire({
-          title: "Sukses Update Data",
-          icon: "success",
-          showConfirmButton: false,
-          showCloseButton: true,
-          timer: 2000,
-        }).then(() => {
-          navigate(`/content-management/FAQ`);
-        });
+        saveFAQData(data);
       }
     });
   };
 
-  const onSave = async (data) => {
+  const saveFAQData = async (data) => {
     try {
-      const token = localStorage.getItem("access_token"); // Ganti dengan cara Anda mendapatkan token
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+      const requestData = {
+        question: data.pertanyaan,
+        answer: data.jawaban,
       };
-  
-      // Simpan data ke backend menggunakan metode PUT
-      // Ganti endpoint dengan endpoint yang sesuai
-      await axios.put(`https://api.harsaedu.my.id/web/faqs/${id}`, data, {
-        headers,
+
+      // Panggil fungsi untuk mengupdate data FAQ
+      await updateFAQ(id, requestData);
+
+      Swal.fire({
+        title: "Sukses Update Data",
+        icon: "success",
+        showConfirmButton: false,
+        showCloseButton: true,
+        timer: 2000,
       });
-  
-      // Reset form setelah penyimpanan
-      form.reset();
+
+      // Redirect atau navigasi ke halaman lain setelah berhasil update
+      navigate("/content-management/FAQ");
     } catch (error) {
-      console.error("Error updating FAQ data:", error);
+      console.error("Failed to update FAQ data:", error);
+      // Handle error, such as displaying an error message
     }
   };
   
