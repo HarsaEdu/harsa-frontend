@@ -4,10 +4,10 @@ import Breadcrumb from "@/components/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Link } from "react-router-dom"
+import CardQuiz from "./cardQuiz"
 
 import PlusIcon from "../../assets/Plus.svg"
 import FileIcon from "../../assets/File.svg"
-import BellIcon from "../../assets/bell.svg"
 
 const AddQuiz = () => {
     return(
@@ -30,12 +30,24 @@ const AddQuiz = () => {
                         </Button>
                     </Link>
                 </div>
-
                 <div className="flex flex-col justify-center items-center mt-20">
                     <h3 className="text-[#999999] ">Belum ada kuis yang dibuat</h3>
                     <img src={FileIcon} alt="Icon" className="w-[198px]"/>
                 </div> 
             </div>
+
+            <CardQuiz
+                title="Kuis 1"
+                lesson="Pemrograman  Frontend"
+                description="Kuis Pemrograman Dasar (KKM 78)"
+                amount="10"
+            />
+            <CardQuiz
+                title="Kuis 2"
+                lesson="Pemrograman  Frontend"
+                description="Kuis Pemrograman Dasar (KKM 78)"
+                jamount="10"
+            />
         </Layout>
     )
 }

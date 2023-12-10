@@ -1,10 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import LandingPage from "../pages/landing-page/index";
+import LandingPage from "@/pages/landing-page/index";
 import MateriOverview from "@/pages/module/updateKelas";
-import UserManagement from "../pages/admin/userManagement";
+import MateriKelas from "@/pages/admin/content-management/kelas/materiKelas";
+import UserManagement from "@/pages/admin/userManagement";
+import AssignUserAdmin from "@/pages/admin/content-management/kelas/assignUser";
 import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
+import AssignUserInstruktor from "@/pages/assign-users/assignUserInstruktor";
 import Dashboard from "@/pages/dashboard/index";
 import ListClass from "@/pages/list-class";
 import CreateMaterial from "@/pages/module/createMaterial";
@@ -19,13 +22,24 @@ import EditFAQ from "@/pages/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
+import AddSubscription from "@/pages/admin/pembayaran/tambahLangganan";
+import AddSubscriptionPackage from "@/pages/admin/pembayaran/tambahPaketLangganan";
+import EditSubscriptionPackage from "@/pages/admin/pembayaran/editPaketLangganan";
 import DetailUser from "@/pages/admin/user-management/detailUser";
 import HeaderEdit from "@/pages/admin/user-management";
 import RiwayatTransaksi from "@/pages/admin/pembayaran/riwayatTransaksi";
 import NotFoundPage from "@/pages/notFoundPage";
 import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
-
+import AddClass from "@/pages/class/index";
+import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
+import ManageFaq from "@/pages/manage-faq/manageFaq";
+import ManageCategory from "@/pages/admin/content-management/kategori/manageCategory";
+
+import AddKategori from "@/pages/admin/content-management/kategori/addKategori";
+import EditKategori from "@/pages/admin/content-management/kategori/editKategori";
+
+import Notification from "@/pages/notification";
 
 
 export default function Router() {
@@ -50,15 +64,33 @@ export default function Router() {
           element: <ListClass />,
         },
         {
-          path: "/kelas/manage-kelas",
+          path: "/kelas/manage-kelas/:id",
           element: <MateriOverview />,
+          children: [
+            {
+              path: "/kelas/manage-kelas/:id", // Menggunakan path yang terpisah untuk Kelas
+              element: <MateriKelas />,
+            },
+            {
+              path: "/kelas/manage-kelas/:id/list-users", // Menggunakan path yang terpisah untuk Kelas
+              element: <AssignUserAdmin />,
+            },
+            {
+              path: "/kelas/manage-kelas/:id/list-user", // Menggunakan path yang terpisah untuk Kelas
+              element: <AssignUserInstruktor />,
+            },
+          ],
         },
         {
-          path: "/kelas/tambah-modul",
+          path: "/kelas/tambah-kelas",
+          element: <AddClass />,
+        },
+        {
+          path: "/kelas/tambah-modul/:id",
           element: <CreateMaterial />,
         },
         {
-          path: "/kelas/manage-kelas/manage-modul",
+          path: "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
           element: <UpdateMaterial />,
         },
         {
@@ -94,6 +126,10 @@ export default function Router() {
           element: <EditProfileFaq />,
         },
         {
+          path: "/content-management/FAQ",
+          element: <ManageFaq />
+        },
+        {
           path: "/content-management/FAQ/tambah-FAQ",
           element: <AddFAQ />,
         },
@@ -102,12 +138,28 @@ export default function Router() {
           element: <EditFAQ />,
         },
         {
+          path: "/category-management/category",
+          element: <ManageCategory />
+        },
+        {
+          path: "/category-management/tambah-category",
+          element: <AddKategori />
+        },
+        {
+          path: "/category-management/edit-category/:id",
+          element: <EditKategori />
+        },
+        {
           path: "/user-management", //Nanti ganti jadi ID
           element: <UserManagement />,
         },
         {
-          path: "/user-management/detail",
+          path: "/user-management/detail/:id",
           element: <DetailUser />,
+        },
+        {
+          path: "/user-management/tambah-user",
+          element: <AddUser />,
         },
         {
           path: "/user-management/edit-user/:id",
@@ -124,6 +176,22 @@ export default function Router() {
         {
           path: "*",
           element: <NotFoundPage />,
+        },
+        {
+          path: "/langganan",
+          element: <AddSubscription />,
+        },
+        {
+          path: "/langganan/tambah-paket",
+          element: <AddSubscriptionPackage />,
+        },
+        {
+          path: "/langganan/edit-paket/:id",
+          element: <EditSubscriptionPackage />,
+        },
+        {
+          path: "/notifikasi",
+          element: <Notification />,
         },
       ],
     },

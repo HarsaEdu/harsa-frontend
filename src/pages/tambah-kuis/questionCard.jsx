@@ -22,7 +22,7 @@ const QuestionCard = ({ questions, groupName, onDeleteClick }) => {
               checked={selectedQuestionIndex === question.id}
               onChange={() => handleRadioChange(question.id)}
             />
-            <p>{question.description}</p>
+            <p>{question.question}</p>
           </div>
           <div className="flex items-center gap-3 ml-3 cursor-pointer">
             {selectedQuestionIndex === question.id && (

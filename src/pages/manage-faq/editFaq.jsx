@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
 import Breadcrumb from "@/components/breadcrumb";
@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import Swal from "sweetalert2";
 import * as z from "zod";
+import { updateFAQ } from "@/utils/apis/faq";
 
 import {
   Form,
@@ -31,15 +33,33 @@ const formSchema = z.object({
 const EditFAQ = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // Ambil id FAQ dari URL params
-  const userRole = "admin";
 
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
 
+  useEffect(() => {
+    const fetchFAQData = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.harsaedu.my.id/web/faqs/${id}`
+        );
+        const faqData = response.data.data;
+
+        // Set data FAQ ke dalam form untuk mengisi nilai awal
+        form.setValue("pertanyaan", faqData.question);
+        form.setValue("jawaban", faqData.answer);
+      } catch (error) {
+        console.error("Error fetching FAQ data:", error);
+      }
+    };
+
+    fetchFAQData();
+  }, [id, form]);
+
   const onSubmit = (data) => {
     Swal.fire({
-      title: "Yakin kamu mau simpan data ini?",
+      title: "Yakin kamu mau Simpan data ini?",
       icon: "question",
       showCancelButton: true,
       showConfirmButton: true,
@@ -49,30 +69,40 @@ const EditFAQ = () => {
       cancelButtonColor: "#F2994A",
     }).then((result) => {
       if (result.isConfirmed) {
-        onSave(data);
-        Swal.fire({
-          title: "Sukses Update Data",
-          icon: "success",
-          showConfirmButton: false,
-          showCloseButton: true,
-          timer: 2000,
-        }).then((result) => {
-          if (result.isDismissed) {
-            navigate("/content-management/FAQ");
-          }
-        });
+        saveFAQData(data);
       }
     });
   };
 
-  const onSave = (data) => {
-    // Simulasikan fungsi untuk menyimpan data ke backend
-    console.log(`Simpan data FAQ dengan ID ${id}:`, data);
-    form.reset(); // Reset form setelah penyimpanan
+  const saveFAQData = async (data) => {
+    try {
+      const requestData = {
+        question: data.pertanyaan,
+        answer: data.jawaban,
+      };
+
+      // Panggil fungsi untuk mengupdate data FAQ
+      await updateFAQ(id, requestData);
+
+      Swal.fire({
+        title: "Sukses Update Data",
+        icon: "success",
+        showConfirmButton: false,
+        showCloseButton: true,
+        timer: 2000,
+      });
+
+      // Redirect atau navigasi ke halaman lain setelah berhasil update
+      navigate("/content-management/FAQ");
+    } catch (error) {
+      console.error("Failed to update FAQ data:", error);
+      // Handle error, such as displaying an error message
+    }
   };
+  
 
   return (
-    <Layout userRole={userRole}>
+    <Layout>
       <div className="container mb-10">
         <Breadcrumb />
         <div className="font-poppins">
@@ -123,14 +153,16 @@ const EditFAQ = () => {
                 )}
               />
               <div className="flex px-4 justify-between">
-                <Button
-                  id="cancelButtonFAQ"
-                  className="bg-[#ED7878] w-60 text-white font-semibold rounded-none"
-                  variant={"outline"}
-                  type="reset"
-                >
-                  <Link to="/faq">Batal</Link>
-                </Button>
+                <Link to="/content-management/faq">
+                  <Button
+                    id="cancelButtonFAQ"
+                    className="bg-[#ED7878] w-60 text-white font-semibold rounded-none"
+                    variant={"outline"}
+                    type="reset"
+                  >
+                    Batal
+                  </Button>
+                </Link>
                 <Button
                   id="acceptButtonFAQ"
                   variant={"default"}

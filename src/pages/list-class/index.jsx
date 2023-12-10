@@ -1,81 +1,130 @@
-import Layout from "@/components/layout/Index"
-import CardListClass from "@/pages/list-class/CardListClass"
-import { Button } from "@/components/ui/button"
+import Layout from "@/components/layout/Index";
+import CardListClass from "@/pages/list-class/CardListClass";
+import { Button } from "@/components/ui/button";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { deleteCourse } from "@/utils/apis/courses/api";
 
-import Filter from "../../assets/filter.svg"
+import Filter from "../../assets/filter.svg";
+import Breadcrumb from "@/components/breadcrumb";
+import { Link } from "react-router-dom";
 
-import PemrogramanFrontend from "../../assets/pemrograman-frontend.svg"
-import PemrogramanBackend from "../../assets/pemrograman-backend.svg"
-import PemrogramanMobile from "../../assets/pemrograman-mobile.svg"
-import PemrogramanJava from "../../assets/pemrograman-java.svg"
-import Breadcrumb from "@/components/breadcrumb"
+import { getCourse, getMyCourse } from "@/utils/apis/courses";
+import { useEffect, useState } from "react";
 
 const ListClass = () => {
-    return(
-        <Layout>
-            <div className="container mb-10">
-                <Breadcrumb />
-                <div className="flex justify-between mt-2 cursor-pointer">
-                    <div className="flex">
-                        <Button
-                        className="border bg-white border-[#092C4C] p-[10px] text-[#092C4C] rounded-none"
-                        >
-                            <p className="font-poppins font-normal text-[16px]">Kategory</p>
-                        </Button>
-                        <Button
-                        className="border bg-white border-[#092C4C] p-[10px] text-[#092C4C] rounded-none"
-                        >
-                            <p className="font-poppins font-normal text-[16px]">Filter</p>
-                            <img src={Filter} alt="" className="ml-2" />
-                        </Button>
-                    </div>
-                    <Button
-                    className="bg-[#092C4C] w-[168px] justify-center items-center px-[10px] py-[15px] rounded-lg"
-                    >
-                        <p className="text-white font-poppins font-semibold text-[16px]">Tambah Kelas</p>
-                    </Button>
-                </div>
-                <div className="flex justify-end gap-2 mt-5 items-center">
-                    <p className="font-poppins text-[16px]">Search</p>
-                    <input type="text" 
-                    className="w-[240px] h-[44px] p-[10px] border border-black rounded"
-                    id="search"
-                    />
-                </div>
-            </div>
+  const [course, setCourse] = useState([]);
+  const MySwal = withReactContent(Swal);
 
-            <div>
-                <CardListClass
-                    img={PemrogramanFrontend}
-                    judul="Pemrograman Frontend"
-                    category="Pemrograman"
-                    instructor="Ir. Wahyu Nugroho"
-                    description="Pemrograman frontend merupakan suatu proses pengembangan dan implementasi elemen-elemen antarmuka pengguna (UI) dalam sebuah aplikasi atau situs web. Fokus utama dari pemrograman frontend adalah membuat tampilan yang menarik dan berfungsi dengan baik untuk pengguna akhir. Ini melibatkan pengkodean aspek visual dan interaktif dari suatu aplikasi, yang dapat dilihat dan diakses langsung oleh pengguna."
-                />
-                <CardListClass
-                    img={PemrogramanBackend}
-                    judul="Pemrograman Backend"
-                    category="Pemrograman"
-                    instructor="Danang G."
-                    description="Pemrograman backend adalah suatu pemrograman yang berfokus pada pengembangan dan pengelolaan komponen teknologi yang berada di 'belakang layar' atau di server suatu aplikasi. Ini mencakup pengembangan logika, database, dan fungsi server yang mendukung operasional aplikasi web atau perangkat lunak. Pemrograman backend bertanggung jawab untuk mengatur data, menjalankan logika bisnis, dan menyediakan antarmuka untuk interaksi dengan frontend atau antarmuka pengguna"
-                />
-                <CardListClass
-                    img={PemrogramanMobile}
-                    judul="Pemrograman Mobile"
-                    category="Pemrograman"
-                    instructor="Joko joestar"
-                    description="Pemrograman mobile mencakup pengembangan aplikasi yang dirancang khusus untuk perangkat seluler, seperti ponsel pintar dan tablet. Ini mencakup dua platform utama: iOS untuk perangkat Apple seperti iPhone dan iPad, dan Android untuk sebagian besar perangkat seluler lainnya."
-                />
-                <CardListClass
-                    img={PemrogramanJava}
-                    judul="Pemrograman Java"
-                    category="Pemrograman"
-                    instructor="Suwahyono"
-                    description="Pemrograman Java adalah paradigma pemrograman yang kuat dan populer yang dikembangkan oleh Sun Microsystems pada awal tahun 1990-an. Java dirancang untuk menjadi platform independen, artinya kode Java dapat dijalankan di berbagai platform tanpa modifikasi"
-                />
-            </div>
-        </Layout>
-    )
-}
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-export default ListClass
+  async function fetchData() {
+    try {
+      const result = await (localStorage.getItem("role_name") == "instructor"
+        ? getMyCourse()
+        : getCourse());
+      setCourse(result.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleDeleteCourse = async (idCourse) => {
+    try {
+      // Menampilkan konfirmasi SweetAlert
+      const result = await Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data course akan dihapus permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!",
+      });
+
+      if (result.isConfirmed) {
+        // Panggil fungsi deletecourse untuk menghapus course
+        await deleteCourse(idCourse);
+        fetchData();
+
+        // Menampilkan pesan SweetAlert setelah penghapusan berhasil
+        MySwal.fire({
+          icon: "success",
+          title: "Sukses Tambah Kelas",
+          showConfirmButton: false,
+          showCloseButton: true,
+          customClass: {
+            closeButton: "swal2-cancel-button",
+          },
+          buttonsStyling: false,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to delete course", error);
+
+      // Menampilkan pesan SweetAlert jika penghapusan gagal
+      Swal.fire({
+        title: "Error!",
+        text: "Gagal menghapus data course.",
+        icon: "error",
+      });
+    }
+  };
+
+  return (
+    <Layout>
+      <div className="container mb-10">
+        <Breadcrumb />
+        <div className="mt-2 flex cursor-pointer justify-between">
+          <div className="flex">
+            <Button className="rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C]">
+              <p className="font-poppins text-[16px] font-normal">Kategory</p>
+            </Button>
+            <Button className="rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C]">
+              <p className="font-poppins text-[16px] font-normal">Filter</p>
+              <img src={Filter} alt="" className="ml-2" />
+            </Button>
+          </div>
+          <Link to="/kelas/tambah-kelas">
+            <Button className="w-[168px] items-center justify-center rounded-lg bg-[#092C4C] px-[10px] py-[15px]">
+              <p className="font-poppins text-[16px] font-semibold text-white">
+                Tambah Kelas
+              </p>
+            </Button>
+          </Link>
+        </div>
+        <div className="mt-5 flex items-center justify-end gap-2">
+          <p className="font-poppins text-[16px]">Search</p>
+          <input
+            type="text"
+            className="h-[44px] w-[240px] rounded border border-black p-[10px]"
+            id="search"
+          />
+        </div>
+      </div>
+
+      <div>
+        {course.length > 0 ? (
+          course.map((item, index) => (
+            <CardListClass
+              key={index}
+              img={item.image_url}
+              judul={item.title}
+              category={item.category.name}
+              instructor={item.user.name}
+              description={item.description}
+              idCourse={item.id}
+              onDelete={() => handleDeleteCourse(item.id)}
+            />
+          ))
+        ) : (
+          <div className="text-center">Belum Ada Kelas Yang Dibuat</div>
+        )}
+      </div>
+    </Layout>
+  );
+};
+
+export default ListClass;

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Swal from "sweetalert2";
 import * as z from "zod";
 
@@ -35,19 +36,32 @@ const AddFAQ = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data) => {
-    Swal.fire({
-      title: "Yakin kamu mau simpan  data ini?",
-      icon: "question",
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonColor: "#092C4C",
-      confirmButtonText: "Ya, Simpan",
-      cancelButtonText: "Batal",
-      cancelButtonColor: "#F2994A",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        onSave(data);
+  const onSubmit = async (data) => {
+    try {
+      // Mendapatkan token dari localStorage atau dari mana pun yang sesuai
+      const token = localStorage.getItem("access_token");
+  
+      // Memastikan token tersedia sebelum mengirim permintaan
+      if (!token) {
+        console.error("Access token not available");
+        return;
+      }
+  
+      // Menggunakan axios untuk mengirim data ke backend
+      const response = await axios.post(
+        "https://api.harsaedu.my.id/web/faqs",
+        {
+          question: data.pertanyaan,
+          answer: data.jawaban,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Menyertakan token di header
+          },
+        }
+      );
+  
+      if (response.status === 201) {
         Swal.fire({
           title: "Sukses Update Data",
           icon: "success",
@@ -56,28 +70,25 @@ const AddFAQ = () => {
           timer: 2000,
         }).then((result) => {
           if (result.isDismissed) {
-            navigate("/content-management/FAQ");
+            navigate(`/content-management/FAQ`);
           }
         });
+      } else {
+        // Handle error response dari server jika diperlukan
+        console.error("Error during data submission:", response);
       }
-    });
-  };
-
-  const onSave = (data) => {
-    // Do something with the form values.
-    // The values are already type-safe and validated based on your formSchema.
-    console.log(data);
-    form.resetField("titleTugas");
-    form.resetField("descriptionTugas");
+    } catch (error) {
+      console.error("An error occurred during data submission:", error);
+    }
   };
 
   return (
     <Layout>
-      <div className="container mb-10">
+     <div className="container mb-10">
         <Breadcrumb />
         <div className="font-poppins">
             <h2 className="text-2xl font-semibold pb-4 pt-10">Tambah FAQ</h2>
-          <Form {...form}>
+          <Form {...form}> 
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="px-8 py-5 space-y-8 border-2 border-[#092C4C]"

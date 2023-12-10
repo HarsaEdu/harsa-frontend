@@ -872,4 +872,111 @@ const dataRiwayatTransaksi = {
   ],
 };
 
-export { realData, realData2, dataRiwayatTransaksi };
+const dataFaq = [
+  {
+    id: 1,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 2,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 3,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 4,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 5,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 6,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 7,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 8,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 9,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+  {
+    id: 10,
+    pertanyaan: "Apa itu harsa edu",
+    jawaban: "Aplikasi edukasi berbasis mobile"
+  },
+]
+
+const dataCategory = [
+  { 
+      id: 1, 
+      name: 'IOT', 
+      description: 'Aplikasi edukasi berbasis mobile', 
+  },
+  { 
+      id: 2, 
+      name: 'Pemrograman', 
+      description: 'Aplikasi edukasi berbasis mobile', 
+  },
+  { 
+      id: 3, 
+      name: 'Mechine learning', 
+      description: 'Aplikasi edukasi berbasis mobile',  
+  },
+  { 
+      id: 4, 
+      name: 'UIUX', 
+      description: 'Aplikasi edukasi berbasis mobile',  
+  },
+  { 
+      id: 5, 
+      name: 'Design ', 
+      description: 'Aplikasi edukasi berbasis mobile',  
+  },
+  { 
+      id: 6, 
+      name: 'Android Development', 
+      description: 'Aplikasi edukasi berbasis mobile',  
+  },
+  { 
+      id: 7, 
+      name: 'iOS Developement', 
+      description: 'Aplikasi edukasi berbasis mobile',  
+  },
+  { 
+      id: 8, 
+      name: 'Quality Assurance', 
+      description: 'Aplikasi edukasi berbasis mobile',  
+  },
+  { 
+      id: 9, 
+      name: 'Management Project', 
+      description: 'Aplikasi edukasi berbasis mobile',  
+  },
+  { 
+      id: 10, 
+      name: 'Product Development', 
+      description: 'Aplikasi edukasi berbasis mobile', 
+  },
+];
+
+
+export { realData, realData2, dataRiwayatTransaksi, dataFaq, dataCategory };
