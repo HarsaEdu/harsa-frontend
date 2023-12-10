@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Index";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import deleteIcon from "../../assets/delete.svg";
+import deleteIcon from "../../assets/icons/delete.svg";
 import previous from "../../assets/icons/arrow-bottom.svg";
 import next from "../../assets/icons/arrow-top.svg";
 
