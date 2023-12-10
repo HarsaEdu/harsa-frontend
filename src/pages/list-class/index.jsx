@@ -2,6 +2,7 @@ import Layout from "@/components/layout/Index";
 import CardListClass from "@/pages/list-class/CardListClass";
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { deleteCourse } from "@/utils/apis/courses/api";
 
 
@@ -14,6 +15,7 @@ import { useEffect, useState } from "react";
 
 const ListClass = () => {
   const [course, setCourse] = useState([]);
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     fetchData();
@@ -49,12 +51,15 @@ const ListClass = () => {
         fetchData()
 
         // Menampilkan pesan SweetAlert setelah penghapusan berhasil
-        Swal.fire({
-          title: "Berhasil!",
-          text: "Data course telah dihapus.",
+        MySwal.fire({
           icon: "success",
-          timer: 2000,
+          title: "Sukses Tambah Kelas",
           showConfirmButton: false,
+          showCloseButton: true,
+          customClass: {
+            closeButton: "swal2-cancel-button",
+          },
+          buttonsStyling: false,
         });
       }
     } catch (error) {

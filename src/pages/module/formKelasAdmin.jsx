@@ -8,6 +8,7 @@ import InputFile from "@/components/inputFile";
 import { createCourse } from "@/utils/apis/courses";
 import { getCategory } from "@/utils/apis/category";
 import { getUserInsructor } from "@/utils/apis/user";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -116,8 +117,8 @@ function formKelasAdmin() {
   const onSubmit = async (data) => {
     try {
       const fileData = form.watch("upload");
-      console.log(fileData)
-
+      console.log(fileData);
+  
       // Membuat objek data yang akan dikirim ke backend
       const formData = new FormData();
       formData.append("title", data.judul);
@@ -126,28 +127,40 @@ function formKelasAdmin() {
       formData.append("user_id", data.instructor);
       formData.append("file", fileData);
   
-      // Memanggil fungsi createCourse untuk membuat kelas baru dengan data yang sesuai
-      const response = await createCourse(formData);
-  
-      console.log(response);
-  
-      setPreview("");
-      form.reset();
-  
-      const result = await MySwal.fire({
-        icon: "success",
-        title: "Sukses Tambah Kelas",
-        text: response.message || "",
-        showConfirmButton: false,
-        showCloseButton: true,
-        customClass: {
-          closeButton: "swal2-cancel-button",
-        },
-        buttonsStyling: false,
+      // Menampilkan konfirmasi sebelum mengirim data ke backend
+      const confirmResult = await MySwal.fire({
+        icon: "info",
+        title: "Konfirmasi",
+        text: "Apakah Anda yakin ingin menambahkan kelas ini?",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
       });
   
-      if (result.isDismissed || result.isConfirmed) {
-        MySwal.close();
+      if (confirmResult.isConfirmed) {
+        // Memanggil fungsi createCourse untuk membuat kelas baru dengan data yang sesuai
+        const response = await createCourse(formData);
+  
+        console.log(response);
+  
+        setPreview("");
+        form.reset();
+  
+        const result = await MySwal.fire({
+          icon: "success",
+          title: "Sukses Tambah Kelas",
+          text: response.message || "",
+          showConfirmButton: false,
+          showCloseButton: true,
+          customClass: {
+            closeButton: "swal2-cancel-button",
+          },
+          buttonsStyling: false,
+        });
+  
+        if (result.isDismissed || result.isConfirmed) {
+          MySwal.close();
+        }
       }
     } catch (error) {
       console.error("Failed to add course:", error);
@@ -302,12 +315,14 @@ function formKelasAdmin() {
             />
 
             <div className="flex justify-between">
-              <Button
-                type="button"
-                className="text-s h-[40px] w-[150px] rounded-lg border border-[#092C4C] bg-[#FFFFFF] py-4 text-center font-bold text-[#092C4C] hover:bg-[#092C4C]/90 active:scale-95"
-              >
-                Batal
-              </Button>
+              <Link to="/kelas">
+                <Button
+                  type="button"
+                  className="text-s h-[40px] w-[150px] rounded-lg border border-[#092C4C] bg-[#FFFFFF] py-4 text-center font-bold text-[#092C4C] hover:bg-[#092C4C]/90 active:scale-95"
+                >
+                  Batal
+                </Button>
+              </Link>
               <Button
                 type="submit"
                 className="text-s h-[40px] w-[150px] rounded-lg bg-[#092C4C] py-4 text-center font-bold text-white hover:bg-[#092C4C]/90 active:scale-95"
