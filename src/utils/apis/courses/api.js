@@ -30,3 +30,21 @@ export const getDetailCourse = async (courseId) => {
     throw Error("Gagal mendapatkan detail kelas" + error);
   }
 };
+
+export const createCourse = async (courseData) => {
+  try {
+    const response = await axiosWithConfig.post("/courses", courseData);
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to create course");
+  }
+};
+
+export const deleteCourse = async (courseId) => {
+  try {
+    const response = await axiosWithConfig.delete(`/courses/${courseId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to delete course");
+  }
+};

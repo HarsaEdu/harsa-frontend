@@ -3,7 +3,7 @@ import { Modules } from "@/utils/moduleStatic";
 import { Button } from "@/components/ui/button";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getDetailCourse } from "@/utils/apis/class";
+import { getDetailCourse } from "@/utils/apis/courses";
 
 const MateriOverview = () => {
   const params = useParams();
@@ -36,15 +36,17 @@ const MateriOverview = () => {
               id="module"
               className="m-2 rounded-[4px] bg-[#092C4C] text-white"
             >
-              <Link to="/kelas/tambah-modul">Tambah Modul</Link>
+              <Link to={`/kelas/tambah-modul/${params.id}`}>Tambah Modul</Link>
             </Button>
           </div>
           {section.length > 0 ? (
             section.map((Module, index) => (
               <div key={Module.id}>
                 <ManageClass
+                  courseId={params.id}
+                  sectionId={Module.id}
                   tipeMateri={Module.title}
-                  judulMateri={Module.module[index].title}
+                  judulMateri={Module.module[0].title}
                   teksMateri={Module.teksMateri}
                   videoMateri={Module.videoMateri}
                   tugasMateri={Module.tugasMateri}

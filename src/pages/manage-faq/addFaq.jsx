@@ -70,7 +70,7 @@ const AddFAQ = () => {
           timer: 2000,
         }).then((result) => {
           if (result.isDismissed) {
-            navigate("/content-management/FAQ");
+            navigate(`/content-management/FAQ`);
           }
         });
       } else {
@@ -80,14 +80,6 @@ const AddFAQ = () => {
     } catch (error) {
       console.error("An error occurred during data submission:", error);
     }
-  };
-
-  const onSave = (data) => {
-    // Do something with the form values.
-    // The values are already type-safe and validated based on your formSchema.
-    console.log(data);
-    form.resetField("titleTugas");
-    form.resetField("descriptionTugas");
   };
 
   return (

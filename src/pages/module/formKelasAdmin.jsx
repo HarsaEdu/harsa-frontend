@@ -5,8 +5,19 @@ import * as z from "zod";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import InputFile from "@/components/inputFile";
+import { createCourse } from "@/utils/apis/courses";
+import { getCategory } from "@/utils/apis/category";
+import { getUserInsructor } from "@/utils/apis/user";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   Form,
   FormControl,
@@ -16,6 +27,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -23,8 +35,18 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 const formSchema = z.object({
   judul: z.string().min(1, "*Judul wajib di isi"),
   deskripsi: z.string().min(1, "*Deskripsi wajib di isi"),
-  category: z.string().min(1, "*Kategori wajib di pilih"),
-  instructor: z.string().min(1, "*Instruktur wajib di pilih"),
+  category: z
+    .number()
+    .nullable()
+    .refine((value) => value !== null, {
+      message: "*Kategori wajib di pilih",
+    }),
+  instructor: z
+    .number()
+    .nullable()
+    .refine((value) => value !== null, {
+      message: "*Instructor wajib di pilih",
+  }),
   upload: z
     .any()
     .refine((data) => data !== undefined && data !== null && data !== "", {
@@ -39,6 +61,8 @@ const formSchema = z.object({
 });
 
 function formKelasAdmin() {
+  const [categories, setCategories] = useState([]);
+  const [instructor, setInstructor] = useState([]);
   const [preview, setPreview] = useState("");
   const MySwal = withReactContent(Swal);
   const setImage = (imageUrl) => {
@@ -50,42 +74,100 @@ function formKelasAdmin() {
     defaultValues: {
       judul: "",
       deskripsi: "",
-      category: "",
-      instructor: "",
-      upload: "",
+      category: null,
+      instructor: null,
+      upload: null,
     },
   });
 
-  const onSubmit = async (data) => {
-    if (form.formState.errors.upload) {
-      form.setError("upload", { message: "*Gambar harus di isi" });
-    } else {
-      setImage(URL.createObjectURL(data.upload));
-      console.log(data);
-      setPreview("");
-      form.reset();
+  useEffect(() => {
+    // Panggil fungsi getCategory saat komponen dimuat
+    fetchCategories();
+  }, []);
 
-      const result = await MySwal.fire({
-        icon: "success",
-        title: "Sukses Tambah Kelas",
-        text: form.formState.errors.upload?.message || "",
-        showConfirmButton: false,
-        showCloseButton: true,
-        customClass: {
-          closeButton: "swal2-cancel-button",
-        },
-        buttonsStyling: false,
-      });
+  const fetchCategories = async () => {
+    try {
+      // Memanggil fungsi getCategory untuk mengambil data kategori
+      const response = await getCategory();
 
-      if (result.isDismissed || result.isConfirmed) {
-        MySwal.close();
-      }
+      // Setel data kategori ke dalam state
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Failed to get categories:", error);
     }
   };
 
-  const handleCancel = () => {
-    form.reset();
-    setPreview("");
+  useEffect(() => {
+    // Panggil fungsi getCategory saat komponen dimuat
+    fetchUserInstructor();
+  }, []);
+
+  const fetchUserInstructor = async () => {
+    try {
+      // Memanggil fungsi getCategory untuk mengambil data kategori
+      const response = await getUserInsructor();
+
+      // Setel data kategori ke dalam state
+      setInstructor(response.data);
+    } catch (error) {
+      console.error("Failed to get categories:", error);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const fileData = form.watch("upload");
+      console.log(fileData);
+  
+      // Membuat objek data yang akan dikirim ke backend
+      const formData = new FormData();
+      formData.append("title", data.judul);
+      formData.append("description", data.deskripsi);
+      formData.append("category_id", data.category);
+      formData.append("user_id", data.instructor);
+      formData.append("file", fileData);
+  
+      // Menampilkan konfirmasi sebelum mengirim data ke backend
+      const confirmResult = await MySwal.fire({
+        icon: "info",
+        title: "Konfirmasi",
+        text: "Apakah Anda yakin ingin menambahkan kelas ini?",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+      });
+  
+      if (confirmResult.isConfirmed) {
+        // Memanggil fungsi createCourse untuk membuat kelas baru dengan data yang sesuai
+        const response = await createCourse(formData);
+  
+        console.log(response);
+  
+        setPreview("");
+        form.reset();
+  
+        const result = await MySwal.fire({
+          icon: "success",
+          title: "Sukses Tambah Kelas",
+          text: response.message || "",
+          showConfirmButton: false,
+          showCloseButton: true,
+          customClass: {
+            closeButton: "swal2-cancel-button",
+          },
+          buttonsStyling: false,
+        });
+  
+        if (result.isDismissed || result.isConfirmed) {
+          MySwal.close();
+        }
+      }
+    } catch (error) {
+      console.error("Failed to add course:", error);
+      const errorMessage =
+        error.response?.data?.message || "Failed to add course.";
+      form.setError("upload", { message: errorMessage });
+    }
   };
 
   const handleImageChange = (file) => {
@@ -97,13 +179,13 @@ function formKelasAdmin() {
   };
 
   return (
-    <main className="mt-8 bg-[#FFFFFF]">
-      <section className="relative mx-auto max-w-[900px] overflow-hidden rounded-lg border border-[#092C4C] p-8">
+    <div className="font-poppins pt-10">
+      <section className="relative mx-auto rounded-lg border border-[#092C4C] p-8">
         <h1 className="mb-5 text-2xl font-bold text-[#092C4C]">Tambah Kelas</h1>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-4 px-4"
+            className="px-8 py-5 space-y-8"
           >
             <FormItem>
               <FormLabel className="ml-1 text-lg font-bold text-[#092C4C]">
@@ -113,7 +195,7 @@ function formKelasAdmin() {
                 <Input
                   type="text"
                   placeholder="Judul Kelas"
-                  className="h-[40px] w-[795px] rounded-s border border-[#092C4C] bg-transparent px-3 py-4 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
+                  className="w-full rounded-lg border border-gray-400 bg-transparent px-3 py-4 outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
                   {...form.register("judul")}
                 />
               </FormControl>
@@ -127,10 +209,10 @@ function formKelasAdmin() {
                 Deskripsi
               </FormLabel>
               <FormControl>
-                <textarea
-                  placeholder="Deskripsi"
-                  className="h-[175px] w-[795px] resize-none rounded-lg border border-[#092C4C] bg-transparent px-3 py-4 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
-                  {...form.register("deskripsi")}
+                <Textarea
+                placeholder="Deskripsi"
+                className="w-full rounded-lg border border-gray-400 bg-transparent px-3 py-4 outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
+                {...form.register("deskripsi")}
                 />
               </FormControl>
               <FormMessage className="text-[#ED7878]">
@@ -143,18 +225,28 @@ function formKelasAdmin() {
                 Kategori
               </FormLabel>
               <FormControl>
-                <select
-                  className="flex h-[40px] w-[795px] rounded-lg border border-[#092C4C] bg-transparent px-2 py-2 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
-                  {...form.register("category")}
+                {/* Gunakan data kategori yang telah diambil untuk mengisi pilihan dalam Select */}
+                <Select
+                  onValueChange={(value) => form.setValue("category", Number(value))}
+                  value={form.watch("category") || ""}  // Gunakan string kosong jika nilainya null
+                  defaultValue=""
                 >
-                  <option value="" disabled>
-                    Pilih Kategori
-                  </option>
-                  <option value="uiux">UI/UX</option>
-                  <option value="frontend">Frontend</option>
-                  <option value="backend">Backend</option>
-                  <option value="flutter">Flutter</option>
-                </select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Pilih Kategori" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {/* Mapping data kategori ke dalam opsi SelectItem */}
+                    {categories.map((category) => (
+                      <SelectItem
+                        key={category.id}
+                        value={category.id}
+                        className="text-base hover:bg-slate-100"
+                      >
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage className="text-[#ED7878]">
                 {form.formState.errors.category?.message}
@@ -163,21 +255,31 @@ function formKelasAdmin() {
 
             <FormItem>
               <FormLabel className="ml-1 text-lg font-bold text-[#092C4C]">
-                Instruktor
+                Instructor
               </FormLabel>
               <FormControl>
-                <select
-                  className="flex h-[40px] w-[795px] rounded-lg border border-[#092C4C] bg-transparent px-2 py-2 text-black outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]"
-                  {...form.register("instructor")}
+                {/* Gunakan data kategori yang telah diambil untuk mengisi pilihan dalam Select */}
+                <Select
+                  onValueChange={(value) => form.setValue("instructor", Number(value))}
+                  value={form.watch("instructor") || ""}
+                  defaultValue=""
                 >
-                  <option value="" disabled>
-                    Pilih Instruktor
-                  </option>
-                  <option value="joko">Joko Joestar</option>
-                  <option value="suwahyono">Suwahyono</option>
-                  <option value="danang">Danang G.</option>
-                  <option value="harnoko">Harnoko</option>
-                </select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Pilih Instructor" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {/* Mapping data instructor ke dalam opsi SelectItem */}
+                    {instructor.map((instructor) => (
+                      <SelectItem
+                        key={instructor.id}
+                        value={instructor.id}
+                        className="text-base hover:bg-slate-100"
+                      >
+                        {instructor.username}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage className="text-[#ED7878]">
                 {form.formState.errors.instructor?.message}
@@ -193,17 +295,17 @@ function formKelasAdmin() {
                     Upload Cover
                   </FormLabel>
                   <FormControl>
-                    <div className="h-[170px] w-[795px] overflow-hidden rounded-lg border border-[#092C4C]">
-                      <InputFile
-                        textUpload="Upload Cover"
-                        preview={preview}
-                        onChange={(e) => {
-                          field.onChange(e.target.files[0]);
-                          handleImageChange(e.target.files[0]);
-                        }}
-                        setPreview={setPreview}
-                      />
-                    </div>
+                    {/* InputFile component is assumed to be defined elsewhere */}
+                    <InputFile
+                      textUpload="Upload Cover Course"
+                      preview={preview}
+                      onChange={(file) => {
+                        field.onChange(file.target.files[0]);
+                        console.log(file.target.files[0]);
+                        handleImageChange(file.target.files[0]);
+                      }}
+                      setPreview={setPreview}
+                    />
                   </FormControl>
                   <FormMessage className="text-[#ED7878]">
                     {form.formState.errors.upload?.message}
@@ -213,13 +315,14 @@ function formKelasAdmin() {
             />
 
             <div className="flex justify-between">
-              <Button
-                type="button"
-                onClick={handleCancel}
-                className="text-s h-[40px] w-[150px] rounded-lg border border-[#092C4C] bg-[#FFFFFF] py-4 text-center font-bold text-[#092C4C] hover:bg-[#092C4C]/90 active:scale-95"
-              >
-                Batal
-              </Button>
+              <Link to="/kelas">
+                <Button
+                  type="button"
+                  className="text-s h-[40px] w-[150px] rounded-lg border border-[#092C4C] bg-[#FFFFFF] py-4 text-center font-bold text-[#092C4C] hover:bg-[#092C4C]/90 active:scale-95"
+                >
+                  Batal
+                </Button>
+              </Link>
               <Button
                 type="submit"
                 className="text-s h-[40px] w-[150px] rounded-lg bg-[#092C4C] py-4 text-center font-bold text-white hover:bg-[#092C4C]/90 active:scale-95"
@@ -230,7 +333,7 @@ function formKelasAdmin() {
           </form>
         </Form>
       </section>
-    </main>
+    </div>
   );
 }
 

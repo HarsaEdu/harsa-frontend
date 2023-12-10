@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -26,16 +26,19 @@ import {
   ConfirmPasswordInputWithToggle,
   PasswordInputWithToggle,
 } from "@/components/inputPassword";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserAccount, updateUserAccount } from "@/utils/apis/user";
 
 export default function EditAkun() {
-  const DUMMY_DATA_AKUN = {
-    email: "charliech1056@gmail.com",
-    role: "Customer",
-  };
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
-
-  const VALID_ROLE = ["Customer", "Instructor"];
+  const { id } = useParams();
+  const VALID_ROLE = [
+    { id: 1, name: "Admin" },
+    { id: 2, name: "Instructor" },
+    { id: 3, name: "Student" },
+  ];
+  
 
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -43,8 +46,10 @@ export default function EditAkun() {
   const editAkunSchema = z
     .object({
       email: z.string().email({ message: "*Gunakan Email Yang Valid" }),
-      role: z.string().refine((value) => VALID_ROLE.includes(value), {
-        message: "*Pilih Role Terlebih Dahulu",
+      role: z.number()
+      .nullable()
+      .refine((value) => value !== null, {
+        message: "*Role wajib di pilih",
       }),
       password: z
         .string()
@@ -62,16 +67,40 @@ export default function EditAkun() {
   const form = useForm({
     resolver: zodResolver(editAkunSchema),
     defaultValues: {
-      email: DUMMY_DATA_AKUN.email,
-      role: DUMMY_DATA_AKUN.role,
+      email: "",
+      role: "",
       password: "",
       confirmPassword: "",
     },
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getUserAccount(id);
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch user account:", error);
+        // Handle error, such as redirecting to an error page
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  useEffect(() => {
+    if (userData) {
+      // Set form values when userData is available
+      form.reset({
+        email: userData.email,
+        role: userData.role.id,
+      });
+    }
+  }, [userData, form]);
+
   const onSubmit = (data) => {
     Swal.fire({
-      title: "Yakin kamu mau  Simpan  data ini?",
+      title: "Yakin kamu mau Simpan data ini?",
       icon: "question",
       showCancelButton: true,
       showConfirmButton: true,
@@ -81,27 +110,38 @@ export default function EditAkun() {
       cancelButtonColor: "#F2994A",
     }).then((result) => {
       if (result.isConfirmed) {
-        onSave(data);
-        Swal.fire({
-          title: "Sukses Update Data",
-          icon: "success",
-          showConfirmButton: false,
-          showCloseButton: true,
-          timer: 2000,
-        });
-        // .then((result) => {
-        //   if (result.isDismissed) {
-        //     navigate("/kelas/manage-tugas");
-        //   }
-        // });
+        saveUserData(data);
       }
     });
   };
 
-  const onSave = (data) => {
-    // Do something with the form values.
-    // The values are already type-safe and validated based on your formSchema.
-    console.log(data);
+  const saveUserData = async (data) => {
+    try {
+      // Buat objek payload sesuai dengan struktur request yang diinginkan
+      const payload = {
+        id: id,
+        email: data.email,
+        password: data.password,
+        role_id: data.role, // Sesuaikan dengan nilai yang sesuai
+      };
+
+      // Panggil fungsi untuk mengupdate data user
+      await updateUserAccount(payload);
+
+      Swal.fire({
+        title: "Sukses Update Data",
+        icon: "success",
+        showConfirmButton: false,
+        showCloseButton: true,
+        timer: 2000,
+      });
+
+      // Redirect atau navigasi ke halaman lain setelah berhasil update
+      navigate("/user-management");
+    } catch (error) {
+      console.error("Failed to update user data:", error);
+      // Handle error, such as displaying an error message
+    }
   };
 
   return (
@@ -152,15 +192,16 @@ export default function EditAkun() {
             <div className="space-y-4">
               {/* Inputan Role */}
               <div className="flex justify-between">
-                <FormField
+              <FormField
                   control={form.control}
                   name="role"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel className="text-xl font-bold">Role</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        onValueChange={(value) => form.setValue("role", Number(value))}
+                        value={form.watch("role") || ""}  // Gunakan string kosong jika nilainya null
+                        defaultValue=""
                       >
                         <FormControl>
                           <SelectTrigger className="rounded-lg border-black text-lg font-bold">
@@ -168,13 +209,13 @@ export default function EditAkun() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {VALID_ROLE.map((item, index) => (
+                          {VALID_ROLE.map((role) => (
                             <SelectItem
-                              value={item}
-                              key={index}
+                              value={role.id}
+                              key={role.id}
                               className="text-lg font-bold hover:bg-slate-100"
                             >
-                              {item}
+                              {role.name}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -211,7 +252,7 @@ export default function EditAkun() {
             <Button
               className="h-16 w-52 border bg-[#ED7878] text-2xl font-bold text-white hover:bg-[#ED7878]"
               type="button"
-              onClick={() => navigate("/")} //TODO: GANTI HALAMAN TUJUAN
+              onClick={() => navigate("/user-management")} //TODO: GANTI HALAMAN TUJUAN
             >
               Batal
             </Button>
