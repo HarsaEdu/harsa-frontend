@@ -11,7 +11,7 @@ export default function InputFile(props) {
   };
 
   return (
-    <div className="border-input flex h-48 items-center justify-center rounded-lg border">
+    <div className="border-input flex h-48 items-center justify-center rounded-lg border border-gray-400 bg-transparent px-3 py-4 outline-none focus-within:border-[#092C4C] hover:border-[#092C4C]">
       {preview ? (
         <div className="relative h-40 border">
           <img src={preview} className="h-full w-full object-cover" />
