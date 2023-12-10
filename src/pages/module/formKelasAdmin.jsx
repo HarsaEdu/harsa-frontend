@@ -116,6 +116,7 @@ function formKelasAdmin() {
   const onSubmit = async (data) => {
     try {
       const fileData = form.watch("upload");
+      console.log(fileData)
 
       // Membuat objek data yang akan dikirim ke backend
       const formData = new FormData();
@@ -123,7 +124,7 @@ function formKelasAdmin() {
       formData.append("description", data.deskripsi);
       formData.append("category_id", data.category);
       formData.append("user_id", data.instructor);
-      formData.append("upload", fileData);
+      formData.append("file", fileData);
   
       // Memanggil fungsi createCourse untuk membuat kelas baru dengan data yang sesuai
       const response = await createCourse(formData);
