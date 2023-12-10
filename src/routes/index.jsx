@@ -82,11 +82,11 @@ export default function Router() {
           element: <AddClass />,
         },
         {
-          path: "/kelas/tambah-modul",
+          path: "/kelas/tambah-modul/:id",
           element: <CreateMaterial />,
         },
         {
-          path: "/kelas/manage-kelas/manage-modul",
+          path: "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
           element: <UpdateMaterial />,
         },
         {
