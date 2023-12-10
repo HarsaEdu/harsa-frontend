@@ -1,20 +1,20 @@
 import Layout from "@/components/layout/Index";
 import CardListClass from "@/pages/list-class/CardListClass";
 import { Button } from "@/components/ui/button";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { deleteCourse } from "@/utils/apis/courses/api";
 
 import Filter from "../../assets/filter.svg";
-
-import PemrogramanFrontend from "../../assets/pemrograman-frontend.svg";
-import PemrogramanBackend from "../../assets/pemrograman-backend.svg";
-import PemrogramanMobile from "../../assets/pemrograman-mobile.svg";
-import PemrogramanJava from "../../assets/pemrograman-java.svg";
 import Breadcrumb from "@/components/breadcrumb";
+import { Link } from "react-router-dom";
 
 import { getCourse, getMyCourse } from "@/utils/apis/courses";
 import { useEffect, useState } from "react";
 
 const ListClass = () => {
   const [course, setCourse] = useState([]);
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     fetchData();
@@ -29,7 +29,50 @@ const ListClass = () => {
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
+
+  const handleDeleteCourse = async (idCourse) => {
+    try {
+      // Menampilkan konfirmasi SweetAlert
+      const result = await Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data course akan dihapus permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!",
+      });
+
+      if (result.isConfirmed) {
+        // Panggil fungsi deletecourse untuk menghapus course
+        await deleteCourse(idCourse);
+        fetchData()
+
+        // Menampilkan pesan SweetAlert setelah penghapusan berhasil
+        MySwal.fire({
+          icon: "success",
+          title: "Sukses Tambah Kelas",
+          showConfirmButton: false,
+          showCloseButton: true,
+          customClass: {
+            closeButton: "swal2-cancel-button",
+          },
+          buttonsStyling: false,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to delete course", error);
+
+      // Menampilkan pesan SweetAlert jika penghapusan gagal
+      Swal.fire({
+        title: "Error!",
+        text: "Gagal menghapus data course.",
+        icon: "error",
+      });
+    }
+  };
+
   return (
     <Layout>
       <div className="container mb-10">
@@ -44,11 +87,13 @@ const ListClass = () => {
               <img src={Filter} alt="" className="ml-2" />
             </Button>
           </div>
-          <Button className="w-[168px] items-center justify-center rounded-lg bg-[#092C4C] px-[10px] py-[15px]">
-            <p className="font-poppins text-[16px] font-semibold text-white">
-              Tambah Kelas
-            </p>
-          </Button>
+          <Link to="/kelas/tambah-kelas">
+            <Button className="w-[168px] items-center justify-center rounded-lg bg-[#092C4C] px-[10px] py-[15px]">
+              <p className="font-poppins text-[16px] font-semibold text-white">
+                Tambah Kelas
+              </p>
+            </Button>
+          </Link>
         </div>
         <div className="mt-5 flex items-center justify-end gap-2">
           <p className="font-poppins text-[16px]">Search</p>
@@ -71,6 +116,7 @@ const ListClass = () => {
               instructor={item.user.name}
               description={item.description}
               idCourse={item.id}
+              onDelete={() => handleDeleteCourse(item.id)}
             />
           ))
         ) : (

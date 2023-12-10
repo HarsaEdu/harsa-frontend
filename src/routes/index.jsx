@@ -174,7 +174,7 @@ export default function Router() {
           element: <AddSubscriptionPackage />,
         },
         {
-          path: `/langganan/edit-paket/:id`,
+          path: "/langganan/edit-paket/:id",
           element: <EditSubscriptionPackage />,
         },
         {

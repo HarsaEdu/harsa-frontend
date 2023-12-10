@@ -9,8 +9,10 @@ function AddClass() {
 
   return (
     <Layout>
-      <Breadcrumb />
-      {roleName === "admin" ? <FormKelasAdmin /> : <FormKelasInstructor />}
+      <div className="container font-poppins">
+        <Breadcrumb />
+        {roleName === "admin" ? <FormKelasAdmin /> : <FormKelasInstructor />}
+      </div>
     </Layout>
   );
 }

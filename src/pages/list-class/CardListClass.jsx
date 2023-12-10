@@ -7,7 +7,7 @@ import Delete from "../../assets/Delete.svg";
 import Edit from "../../assets/Edit.svg";
 
 const CardListClass = (props) => {
-  const { judul, category, instructor, description, img, idCourse } = props;
+  const { judul, category, instructor, description, img, idCourse, onDelete } = props;
 
   return (
     <div className="mx-auto mb-4 w-11/12">
@@ -22,9 +22,9 @@ const CardListClass = (props) => {
         <div className="flex cursor-pointer justify-between">
           <h2 className="font-poppins text-[32px] font-semibold">{judul}</h2>
           <div className="flex items-center justify-center gap-1">
-            <a href="#">
+            <Button onClick={onDelete}>
               <img src={Delete} alt="" className="w-[32px]" />
-            </a>
+            </Button>
             <Link to={`/kelas/manage-kelas/${idCourse}`}>
               <Button className="h-[32px] w-[170px] items-center justify-center rounded-lg bg-[#092C4C] px-[7px] py-[10px]">
                 <p className="font-poppins text-[16px] font-semibold text-white">
