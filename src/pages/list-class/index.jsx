@@ -4,12 +4,8 @@ import { Button } from "@/components/ui/button";
 
 
 import Filter from "../../assets/filter.svg";
-
-import PemrogramanFrontend from "../../assets/pemrograman-frontend.svg";
-import PemrogramanBackend from "../../assets/pemrograman-backend.svg";
-import PemrogramanMobile from "../../assets/pemrograman-mobile.svg";
-import PemrogramanJava from "../../assets/pemrograman-java.svg";
 import Breadcrumb from "@/components/breadcrumb";
+import { Link } from "react-router-dom";
 
 import { getCourse, getMyCourse } from "@/utils/apis/class";
 import { useEffect, useState } from "react";
@@ -45,11 +41,13 @@ const ListClass = () => {
               <img src={Filter} alt="" className="ml-2" />
             </Button>
           </div>
-          <Button className="w-[168px] items-center justify-center rounded-lg bg-[#092C4C] px-[10px] py-[15px]">
-            <p className="font-poppins text-[16px] font-semibold text-white">
-              Tambah Kelas
-            </p>
-          </Button>
+          <Link to="/kelas/tambah-kelas">
+            <Button className="w-[168px] items-center justify-center rounded-lg bg-[#092C4C] px-[10px] py-[15px]">
+              <p className="font-poppins text-[16px] font-semibold text-white">
+                Tambah Kelas
+              </p>
+            </Button>
+          </Link>
         </div>
         <div className="mt-5 flex items-center justify-end gap-2">
           <p className="font-poppins text-[16px]">Search</p>

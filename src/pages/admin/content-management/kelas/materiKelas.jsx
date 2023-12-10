@@ -44,7 +44,7 @@ const MateriOverview = () => {
               <div key={Module.id}>
                 <ManageClass
                   tipeMateri={Module.title}
-                  judulMateri={Module.module[index].title}
+                  judulMateri={Module.module[0].title}
                   teksMateri={Module.teksMateri}
                   videoMateri={Module.videoMateri}
                   tugasMateri={Module.tugasMateri}

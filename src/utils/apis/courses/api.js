@@ -31,12 +31,11 @@ export const getDetailCourse = async (courseId) => {
   }
 };
 
-export const createCourse = async () => {
-    try {
-        const response = await axiosWithConfig.post("/courses");
-  
-        return response.data;
-    }   catch (error) {
-        throw Error("Failed to create course");
-    }
+export const createCourse = async (courseData) => {
+  try {
+    const response = await axiosWithConfig.post("/courses", courseData);
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to create course");
+  }
 };
