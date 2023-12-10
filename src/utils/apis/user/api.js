@@ -29,3 +29,12 @@ export const getUserAccount = async (userId) => {
     }
 };
   
+export const getUserInsructor = async () => {
+    try {
+        const response = await axiosWithConfig.get("/users?offset=0&limit=9999&roleID=2");
+  
+        return response.data;
+    }   catch (error) {
+        throw Error("Failed to get user");
+    }
+};
