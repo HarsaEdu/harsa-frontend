@@ -8,30 +8,56 @@ import { Input } from "@/components/ui/input";
 import Table from "@/components/table/tables";
 import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
+import { getAllPaymentHistory } from "@/utils/apis/payments/api";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Pagination from "@/components/table/pagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function RiwayatTransaksi() {
-  const response = dataRiwayatTransaksi.data;
-
   //*
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState("");
-  const [data, setData] = useState(dataRiwayatTransaksi.data);
+  const [filterValue, setFilterValue] = useState("semua");
+  const [filterParams, setFilterParams] = useSearchParams();
+  const [limitValue, setLimitValue] = useState(10);
+  const [offset, setOffset] = useState("");
+  const [data, setData] = useState([]);
+  const [meta, setMeta] = useState([]);
+  const pageSizes = ["5", "10", "25"];
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
-  }, [searchParams]);
+  }, [searchParams, filterParams]);
 
   const getSuggestions = useCallback(
-    async function (query) {
-      if (!query) {
-        searchParams.delete("query");
+    async function (search) {
+      if (!search) {
+        searchParams.delete("search");
       } else {
-        searchParams.set("query", query);
-        searchParams.delete("page");
+        searchParams.set("search", search);
       }
       setSearchParams(searchParams);
     },
     [searchParams],
+  );
+
+  const getFilters = useCallback(
+    async function (status) {
+      if (!status) {
+        searchParams.delete("status");
+      } else {
+        searchParams.set("status", status);
+      }
+      setFilterParams(filterParams);
+    },
+    [filterParams],
   );
 
   const getSuggestionsDebounce = useMemo(
@@ -39,40 +65,85 @@ export default function RiwayatTransaksi() {
     [getSuggestions],
   );
 
+  const getFilterDebounce = useMemo(
+    () => debounce(getFilters, 1000),
+    [getFilters],
+  );
+
   async function fetchData() {
-    try {
-      const simulatedApiCall = () =>
-        new Promise((resolve) => {
-          setTimeout(() => {
-            // Check if there is a search query
-            if (searchParams.has("query")) {
-              // Filter the data based on the search query
-              resolve(
-                dataRiwayatTransaksi.data.filter((item) =>
-                  item.customer.name
-                    .toLowerCase()
-                    .includes(searchParams.get("query").toLowerCase()),
-                ),
-              );
-            } else {
-              // If no search query, fetch all data
-              resolve(dataRiwayatTransaksi.data);
-            }
-          }, 500);
-        });
+    if (searchParams.get("tab") !== "borrows") {
+      if (searchParams.has("search")) {
+        setSearchValue(searchParams.get("search"));
+      }
 
-      const response = await simulatedApiCall();
+      let query = Object.fromEntries(
+        [...searchParams].filter((param) => param[0] !== "tab"),
+      );
 
-      setData(response);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      // Handle errors as needed
+      if (searchParams.has("status")) {
+        query.status = searchParams.get("status");
+      }
+
+      if (searchParams.has("limit")) {
+        setLimitValue(searchParams.get("limit"));
+      }
+
+      query = Object.fromEntries(
+        [...searchParams].filter((param) => param[0] !== "tab"),
+      );
+
+      try {
+        setLoading(true);
+        const result = await getAllPaymentHistory({ ...query });
+        const { data, pagination } = result;
+        setData(data);
+        setMeta(pagination);
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
   }
 
   function onInputChange(newValue) {
     setSearchValue(newValue);
     getSuggestionsDebounce(newValue);
+  }
+
+  function onSelectChange(newValue) {
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    if (newValue === "semua") {
+      newSearchParams.delete("status");
+    } else {
+      newSearchParams.set("offset", 0);
+      newSearchParams.set("limit", limitValue);
+      newSearchParams.set("status", newValue);
+    }
+
+    setSearchParams(newSearchParams);
+    setFilterValue(newValue);
+  }
+
+  function handlePageSizeChange(newValue) {
+    setLimitValue(newValue);
+
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("limit", newValue);
+    newSearchParams.set("offset", 0);
+    setSearchParams(newSearchParams);
+  }
+
+  function handlePagination(newOffset) {
+    // Update the offset value
+    setOffset(newOffset);
+
+    // Update the searchParams with the new offset value
+    searchParams.set("offset", String(newOffset));
+    setSearchParams(searchParams);
+
+    // Fetch data for the new page
   }
 
   //*
@@ -82,22 +153,22 @@ export default function RiwayatTransaksi() {
     {
       header: "Nama",
       accessorKey: "customer.name",
-      cell: (info) => info.getValue(),
+      cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
-      header: "username",
+      header: "Username", //Tidak Ada di Response
       accessorKey: "user_id",
-      cell: (info) => info.getValue(),
+      cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
-      header: "email",
+      header: "Email", //Tidak Ada di Response
       accessorKey: "id",
-      cell: (info) => info.getValue(),
+      cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
       header: "Nama Langganan",
       accessorKey: "item.name",
-      cell: (info) => info.getValue(),
+      cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
       header: "status",
@@ -109,7 +180,7 @@ export default function RiwayatTransaksi() {
               Terbayar
             </div>
           )}
-          {info.row.original.status === "failed" && (
+          {info.row.original.status === "failure" && (
             <div className="w-fit rounded-full  bg-[#DC1D1D] px-5 py-1 text-center text-white">
               Gagal
             </div>
@@ -144,24 +215,74 @@ export default function RiwayatTransaksi() {
             Export
           </Button>
         </div>
-        <Table
-          datas={data}
-          columns={columns}
-          classNameHeader="bg-[#A2D2FF]"
-          rowVisible={true}
-          isVisible={true}
-          searchComponent={
-            <div className="flex w-1/2 items-center justify-end space-x-3">
-              <p className="text-xl font-bold">Search</p>{" "}
-              <Input
-                id="search"
-                className=" w-4/12 rounded-xl border-[#092C4C]"
-                value={searchValue}
-                onChange={(e) => onInputChange(e.currentTarget.value)}
+
+        <div className="flex w-full justify-between">
+          <div className="flex items-center">
+            <span className="bg-[#092C4C] px-5 py-2 text-white">Row</span>
+            <select
+              className="border border-black px-3 py-2"
+              value={limitValue}
+              onChange={(e) => handlePageSizeChange(e.target.value)}
+            >
+              {pageSizes.map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  {pageSize}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex w-1/2 items-center justify-end space-x-3">
+            <p className="text-xl font-bold">Search</p>{" "}
+            <Input
+              id="search"
+              className=" w-4/12 rounded-xl border-[#092C4C]"
+              value={searchValue}
+              onChange={(e) => onInputChange(e.currentTarget.value)}
+            />
+            <p className="ps-8 text-xl font-bold">Filter</p>{" "}
+            <Select
+              value={filterValue}
+              onValueChange={(e) => onSelectChange(e)}
+            >
+              <SelectTrigger className="w-1/4 rounded-xl border-[#092C4C]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="semua">Semua</SelectItem>
+                <SelectItem value="success">Terbayar</SelectItem>
+                <SelectItem value="failure">Gagal</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {loading ? (
+          // Show a loading indicator while data is being fetched
+          <div className="mt-12 text-center">Loading...</div>
+        ) : (
+          <>
+            {/* Render your table and other components when data is not loading */}
+            <Table
+              datas={data}
+              columns={columns}
+              classNameHeader="bg-[#A2D2FF]"
+            />
+            <div className="mt-2 flex justify-end">
+              <Pagination
+                meta={meta}
+                onClickPrevious={() =>
+                  handlePagination((meta.offset -= parseInt(limitValue)))
+                }
+                onClickNext={() =>
+                  handlePagination((meta.offset += parseInt(limitValue)))
+                }
+                onClickPage={(page) => handlePagination(page)}
+                limitValue={limitValue}
               />
             </div>
-          }
-        />
+          </>
+        )}
       </div>
     </Layout>
   );

@@ -26,6 +26,7 @@ export default function Table(props) {
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    manualPagination: true,
   });
 
   return (

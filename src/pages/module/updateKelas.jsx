@@ -5,7 +5,7 @@ import EditIcon from "@/assets/icons/edit.svg";
 import Layout from "@/components/layout/Index";
 import { Link, useParams, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getDetailCourse } from "@/utils/apis/class";
+import { getDetailCourse } from "@/utils/apis/courses";
 import { Button } from "@/components/ui/button";
 
 const MateriOverview = () => {
