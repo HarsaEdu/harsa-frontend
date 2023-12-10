@@ -2,7 +2,6 @@ import Layout from "@/components/layout/Index";
 import CardListClass from "@/pages/list-class/CardListClass";
 import { Button } from "@/components/ui/button";
 
-
 import Filter from "../../assets/filter.svg";
 
 import PemrogramanFrontend from "../../assets/pemrograman-frontend.svg";
@@ -11,7 +10,7 @@ import PemrogramanMobile from "../../assets/pemrograman-mobile.svg";
 import PemrogramanJava from "../../assets/pemrograman-java.svg";
 import Breadcrumb from "@/components/breadcrumb";
 
-import { getCourse, getMyCourse } from "@/utils/apis/class";
+import { getCourse, getMyCourse } from "@/utils/apis/courses";
 import { useEffect, useState } from "react";
 
 const ListClass = () => {

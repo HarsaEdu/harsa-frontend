@@ -3,7 +3,7 @@ import { Modules } from "@/utils/moduleStatic";
 import { Button } from "@/components/ui/button";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getDetailCourse } from "@/utils/apis/class";
+import { getDetailCourse } from "@/utils/apis/courses";
 
 const MateriOverview = () => {
   const params = useParams();
