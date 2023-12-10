@@ -1,6 +1,9 @@
 import Layout from "@/components/layout/Index";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import deleteIcon from "../../assets/delete.svg";
+import previous from "../../assets/icons/arrow-bottom.svg";
+import next from "../../assets/icons/arrow-top.svg";
 
 export default function Notification() {
   const notification = [
@@ -74,19 +77,77 @@ export default function Notification() {
     }
   }, [filter, notification]);
 
+  const confirmDeletion = (callback) => {
+    Swal.fire({
+      title: "Apakah Kamu Yakin Mau Hapus Data Ini?",
+      icon: "question",
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonText: "Batal",
+      cancelButtonColor: "#F2994A",
+      confirmButtonText: "Ya, Hapus",
+      confirmButtonColor: "#092C4C",
+    }).then((result) => {
+      if (result.isDismissed) {
+        Swal.fire({
+          title: "Penghapusan Dibatalkan",
+          icon: "info",
+          showConfirmButton: false,
+          showCloseButton: true,
+          timer: 2000,
+        });
+      } else if (result.isConfirmed) {
+        callback();
+        Swal.fire({
+          title: "Data Berhasil Dihapus!",
+          icon: "success",
+          showConfirmButton: false,
+          showCloseButton: true,
+          timer: 2000,
+        }).then(() => {
+          navigate(`/notification`);
+        });
+      }
+    });
+    document.getElementById("cancel-btn").addEventListener("click", () => {
+      Swal.close();
+    });
+    document.getElementById("confirm-btn").addEventListener("click", () => {
+      Swal.close();
+    });
+  };
+
   const handleDelete = (index) => {
-    setFilteredNotifications(
-      filteredNotifications.filter((_, i) => i !== index),
-    );
+    confirmDeletion(() => {
+      const updatedNotifications = [...filteredNotifications];
+      updatedNotifications.splice(index, 1);
+      setFilteredNotifications(updatedNotifications);
+    });
   };
 
   const handleDeleteSelected = () => {
-    setFilteredNotifications(
-      filteredNotifications.filter(
+    confirmDeletion(() => {
+      const updatedNotifications = filteredNotifications.filter(
         (_, i) => !selectedNotifications.includes(i),
-      ),
-    );
-    setSelectedNotifications([]);
+      );
+      setFilteredNotifications(updatedNotifications);
+      setSelectedNotifications([]);
+      showAlert();
+    });
+  };
+
+  const showAlert = () => {
+    Swal.fire({
+      title: "Data Berhasil Dihapus!",
+      icon: "success",
+      showConfirmButton: false,
+      showCloseButton: true,
+      timer: 2000,
+    }).then((result) => {
+      if (result.isDismissed) {
+        navigate(`/notification`);
+      }
+    });
   };
 
   const handleSelect = (index) => {
@@ -119,20 +180,32 @@ export default function Notification() {
   const endIndex = startIndex + pageSize;
   const displayedItems = filteredNotifications.slice(startIndex, endIndex);
 
-  const handleFirstPage = () => {
-    setCurrentPage(1);
-  };
-
-  const handleLastPage = () => {
-    setCurrentPage(totalPages);
-  };
-
   const handlePreviousPage = () => {
     setCurrentPage(currentPage - 1);
   };
 
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
+  };
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+
+    return pageNumbers.map((number) => (
+      <button
+        key={number}
+        onClick={() => setCurrentPage(number)}
+        className={`rounded px-4 py-2 ${
+          currentPage === number
+            ? "bg-blue-600 text-white"
+            : "bg-white text-black"
+        }`}
+      >
+        {number}
+      </button>
+    ));
   };
 
   return (
@@ -228,37 +301,35 @@ export default function Notification() {
             ))}
           </section>
 
-          <section className="flex justify-center">
+          <section className="flex items-center justify-center space-x-2">
             <button
-              disabled={isFirst}
-              onClick={handleFirstPage}
-              className="mr-2 rounded bg-blue-600 px-4 py-2 text-white"
-            >
-              First
-            </button>
-            <button
-              disabled={isFirst}
               onClick={handlePreviousPage}
-              className="mr-2 rounded bg-blue-600 px-4 py-2 text-white"
+              className={`rounded border bg-white px-4 py-4 text-black`}
+              style={{ border: "1px solid #000" }}
+              disabled={isFirst}
             >
-              Previous
+              <img
+                src={previous}
+                alt="Next"
+                width={16}
+                height={11}
+                style={{ transform: "rotate(-270deg)" }}
+              />
             </button>
-            <span className="rounded bg-blue-600 px-4 py-2 text-white">
-              Page {currentPage} of {totalPages}
-            </span>
+            {renderPageNumbers()}
             <button
-              disabled={isLast}
               onClick={handleNextPage}
-              className="ml-2 rounded bg-blue-600 px-4 py-2 text-white"
-            >
-              Next
-            </button>
-            <button
+              className={`rounded border bg-white px-4 py-4 text-black`}
+              style={{ border: "1px solid #000" }}
               disabled={isLast}
-              onClick={handleLastPage}
-              className="ml-2 rounded bg-blue-600 px-4 py-2 text-white"
             >
-              Last
+              <img
+                src={next}
+                alt="Next"
+                width={16}
+                height={11}
+                style={{ transform: "rotate(-270 deg)" }}
+              />
             </button>
           </section>
         </section>
