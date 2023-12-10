@@ -169,14 +169,16 @@ const EditFAQ = () => {
                 )}
               />
               <div className="flex px-4 justify-between">
-                <Button
-                  id="cancelButtonFAQ"
-                  className="bg-[#ED7878] w-60 text-white font-semibold rounded-none"
-                  variant={"outline"}
-                  type="reset"
-                >
-                  <Link to="/faq">Batal</Link>
-                </Button>
+                <Link to="/content-management/faq">
+                  <Button
+                    id="cancelButtonFAQ"
+                    className="bg-[#ED7878] w-60 text-white font-semibold rounded-none"
+                    variant={"outline"}
+                    type="reset"
+                  >
+                    Batal
+                  </Button>
+                </Link>
                 <Button
                   id="acceptButtonFAQ"
                   variant={"default"}

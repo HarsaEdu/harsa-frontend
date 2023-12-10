@@ -47,7 +47,7 @@ const ListClass = () => {
       if (result.isConfirmed) {
         // Panggil fungsi deletecourse untuk menghapus course
         await deleteCourse(idCourse);
-        fetchData()
+        fetchData();
 
         // Menampilkan pesan SweetAlert setelah penghapusan berhasil
         MySwal.fire({
