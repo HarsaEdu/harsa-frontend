@@ -102,11 +102,6 @@ export default function Table(props) {
           )}
         </tbody>
       </table>
-      {isVisible && (
-        <div className="mt-2 flex justify-end">
-          <TablePagination table={table} />
-        </div>
-      )}
     </div>
   );
 }

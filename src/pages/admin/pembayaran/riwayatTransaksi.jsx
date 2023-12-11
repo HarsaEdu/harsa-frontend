@@ -26,11 +26,11 @@ export default function RiwayatTransaksi() {
   const [filterValue, setFilterValue] = useState("semua");
   const [filterParams, setFilterParams] = useSearchParams();
   const [limitValue, setLimitValue] = useState(10);
-  const [offset, setOffset] = useState("");
+  const [offset, setOffset] = useState(0);
   const [data, setData] = useState([]);
   const [meta, setMeta] = useState([]);
   const pageSizes = ["5", "10", "25"];
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -48,26 +48,9 @@ export default function RiwayatTransaksi() {
     [searchParams],
   );
 
-  const getFilters = useCallback(
-    async function (status) {
-      if (!status) {
-        searchParams.delete("status");
-      } else {
-        searchParams.set("status", status);
-      }
-      setFilterParams(filterParams);
-    },
-    [filterParams],
-  );
-
   const getSuggestionsDebounce = useMemo(
     () => debounce(getSuggestions, 1000),
     [getSuggestions],
-  );
-
-  const getFilterDebounce = useMemo(
-    () => debounce(getFilters, 1000),
-    [getFilters],
   );
 
   async function fetchData() {
@@ -85,6 +68,9 @@ export default function RiwayatTransaksi() {
 
     if (searchParams.has("limit")) {
       setLimitValue(searchParams.get("limit"));
+    } else {
+      searchParams.set("limit", limitValue);
+      searchParams.set("offset", offset);
     }
 
     query = Object.fromEntries(
@@ -92,15 +78,16 @@ export default function RiwayatTransaksi() {
     );
 
     try {
-      setLoading(true);
+      setIsLoading(true);
       const result = await getAllPaymentHistory({ ...query });
       const { data, pagination } = result;
       setData(data);
       setMeta(pagination);
     } catch (error) {
       console.log(error.message);
+      setData([]);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -256,7 +243,7 @@ export default function RiwayatTransaksi() {
           </div>
         </div>
 
-        {loading ? (
+        {isLoading ? (
           // Show a loading indicator while data is being fetched
           <div className="mt-12 text-center">Loading...</div>
         ) : (
