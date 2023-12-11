@@ -58,8 +58,8 @@ export default function ManageFaq() {
           title: "Berhasil!",
           text: "Data FAQ telah dihapus.",
           icon: "success",
-          timer: 2000,
           showConfirmButton: false,
+          showCloseButton: true,
         });
       }
     } catch (error) {

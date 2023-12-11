@@ -137,7 +137,6 @@ export default function AddUser() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         }).then(() => {
           navigate("/user-management");
         });
@@ -148,7 +147,6 @@ export default function AddUser() {
           icon: "error",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         });
       }
     } catch (error) {
@@ -158,7 +156,6 @@ export default function AddUser() {
         icon: "error",
         showConfirmButton: false,
         showCloseButton: true,
-        timer: 2000,
       });
     }
   };

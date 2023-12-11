@@ -70,7 +70,6 @@ export default function EditTugas() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         }).then((result) => {
           if (result.isDismissed) {
             navigate("/kelas/manage-tugas");

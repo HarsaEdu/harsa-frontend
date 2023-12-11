@@ -93,7 +93,6 @@ const UpdateMaterial = () => {
         title: "Sukses Tambah Module",
         showConfirmButton: false,
         showCloseButton: true,
-        timer: 3000,
       }).then(() => {
         setIsAddMaterial(false);
       });
