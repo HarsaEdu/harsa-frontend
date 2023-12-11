@@ -89,7 +89,6 @@ const EditFAQ = () => {
         icon: "success",
         showConfirmButton: false,
         showCloseButton: true,
-        timer: 2000,
       });
 
       // Redirect atau navigasi ke halaman lain setelah berhasil update

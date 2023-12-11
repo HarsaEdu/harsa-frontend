@@ -111,7 +111,6 @@ export default function EditProfile() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         });
         // .then((result) => {
         //   if (result.isDismissed) {
@@ -152,7 +151,6 @@ export default function EditProfile() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         }).then(() => {
           navigate("/user-management"); //TODO: GANTI HALAMAN TUJUAN
         });

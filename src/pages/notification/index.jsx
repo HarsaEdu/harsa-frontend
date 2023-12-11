@@ -94,7 +94,6 @@ export default function Notification() {
           icon: "info",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         });
       } else if (result.isConfirmed) {
         callback();
@@ -103,7 +102,6 @@ export default function Notification() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         }).then(() => {
           navigate(`/notification`);
         });
@@ -142,7 +140,6 @@ export default function Notification() {
       icon: "success",
       showConfirmButton: false,
       showCloseButton: true,
-      timer: 2000,
     }).then((result) => {
       if (result.isDismissed) {
         navigate(`/notification`);

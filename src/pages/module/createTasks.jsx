@@ -39,7 +39,6 @@ const createTasks = () => {
       title: "Sukses Tambah Tugas",
       showConfirmButton: false,
       showCloseButton: true,
-      timer: 3000,
     });
   };
 

@@ -67,8 +67,8 @@ export default function UserManagement() {
           title: "Berhasil!",
           text: "Data user telah dihapus.",
           icon: "success",
-          timer: 2000,
           showConfirmButton: false,
+          showCloseButton: true,
         });
       }
     } catch (error) {
