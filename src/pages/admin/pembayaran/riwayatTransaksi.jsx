@@ -26,11 +26,11 @@ export default function RiwayatTransaksi() {
   const [filterValue, setFilterValue] = useState("semua");
   const [filterParams, setFilterParams] = useSearchParams();
   const [limitValue, setLimitValue] = useState(10);
-  const [offset, setOffset] = useState("");
+  const [offset, setOffset] = useState(0);
   const [data, setData] = useState([]);
   const [meta, setMeta] = useState([]);
   const pageSizes = ["5", "10", "25"];
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -40,24 +40,14 @@ export default function RiwayatTransaksi() {
     async function (search) {
       if (!search) {
         searchParams.delete("search");
+        searchParams.set("offset", 0);
       } else {
         searchParams.set("search", search);
+        searchParams.set("offset", 0);
       }
       setSearchParams(searchParams);
     },
     [searchParams],
-  );
-
-  const getFilters = useCallback(
-    async function (status) {
-      if (!status) {
-        searchParams.delete("status");
-      } else {
-        searchParams.set("status", status);
-      }
-      setFilterParams(filterParams);
-    },
-    [filterParams],
   );
 
   const getSuggestionsDebounce = useMemo(
@@ -65,44 +55,41 @@ export default function RiwayatTransaksi() {
     [getSuggestions],
   );
 
-  const getFilterDebounce = useMemo(
-    () => debounce(getFilters, 1000),
-    [getFilters],
-  );
-
   async function fetchData() {
-    if (searchParams.get("tab") !== "borrows") {
-      if (searchParams.has("search")) {
-        setSearchValue(searchParams.get("search"));
-      }
+    let query = Object.fromEntries(
+      [...searchParams].filter((param) => param[0] !== "tab"),
+    );
 
-      let query = Object.fromEntries(
-        [...searchParams].filter((param) => param[0] !== "tab"),
-      );
+    if (searchParams.has("search")) {
+      searchParams.set("offset", 0);
+      setSearchValue(searchParams.get("search"));
+    } else {
+      searchParams.set("offset", 0);
+    }
 
-      if (searchParams.has("status")) {
-        query.status = searchParams.get("status");
-      }
+    if (searchParams.has("status")) {
+      searchParams.set("offset", 0);
+      query.status = searchParams.get("status");
+    }
 
-      if (searchParams.has("limit")) {
-        setLimitValue(searchParams.get("limit"));
-      }
+    if (searchParams.has("limit")) {
+      setLimitValue(searchParams.get("limit"));
+    } else {
+      searchParams.set("limit", limitValue);
+      searchParams.set("offset", 0);
+    }
 
-      query = Object.fromEntries(
-        [...searchParams].filter((param) => param[0] !== "tab"),
-      );
-
-      try {
-        setLoading(true);
-        const result = await getAllPaymentHistory({ ...query });
-        const { data, pagination } = result;
-        setData(data);
-        setMeta(pagination);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setLoading(false);
-      }
+    try {
+      setIsLoading(true);
+      const result = await getAllPaymentHistory({ ...query });
+      const { data, pagination } = result;
+      setData(data);
+      setMeta(pagination);
+    } catch (error) {
+      console.log(error.message);
+      setData([]);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -140,6 +127,7 @@ export default function RiwayatTransaksi() {
     setOffset(newOffset);
 
     // Update the searchParams with the new offset value
+    searchParams.set("limit", String(limitValue));
     searchParams.set("offset", String(newOffset));
     setSearchParams(searchParams);
 
@@ -257,32 +245,28 @@ export default function RiwayatTransaksi() {
           </div>
         </div>
 
-        {loading ? (
-          // Show a loading indicator while data is being fetched
-          <div className="mt-12 text-center">Loading...</div>
-        ) : (
-          <>
-            {/* Render your table and other components when data is not loading */}
-            <Table
-              datas={data}
-              columns={columns}
-              classNameHeader="bg-[#A2D2FF]"
+        <>
+          {/* Render your table and other components when data is not loading */}
+          <Table
+            datas={data}
+            columns={columns}
+            classNameHeader="bg-[#A2D2FF]"
+            isLoading={isLoading}
+          />
+          <div className="mt-2 flex justify-end">
+            <Pagination
+              meta={meta}
+              onClickPrevious={() =>
+                handlePagination((meta.offset -= parseInt(limitValue)))
+              }
+              onClickNext={() =>
+                handlePagination((meta.offset += parseInt(limitValue)))
+              }
+              onClickPage={(page) => handlePagination(page)}
+              limitValue={limitValue}
             />
-            <div className="mt-2 flex justify-end">
-              <Pagination
-                meta={meta}
-                onClickPrevious={() =>
-                  handlePagination((meta.offset -= parseInt(limitValue)))
-                }
-                onClickNext={() =>
-                  handlePagination((meta.offset += parseInt(limitValue)))
-                }
-                onClickPage={(page) => handlePagination(page)}
-                limitValue={limitValue}
-              />
-            </div>
-          </>
-        )}
+          </div>
+        </>
       </div>
     </Layout>
   );

@@ -41,7 +41,7 @@ import EditKategori from "@/pages/admin/content-management/kategori/editKategori
 
 import Notification from "@/pages/notification";
 
-
+import DetailNotification from "@/pages/detail-notifikasi";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -127,7 +127,7 @@ export default function Router() {
         },
         {
           path: "/content-management/FAQ",
-          element: <ManageFaq />
+          element: <ManageFaq />,
         },
         {
           path: "/content-management/FAQ/tambah-FAQ",
@@ -139,15 +139,15 @@ export default function Router() {
         },
         {
           path: "/category-management/category",
-          element: <ManageCategory />
+          element: <ManageCategory />,
         },
         {
           path: "/category-management/tambah-category",
-          element: <AddKategori />
+          element: <AddKategori />,
         },
         {
           path: "/category-management/edit-category/:id",
-          element: <EditKategori />
+          element: <EditKategori />,
         },
         {
           path: "/user-management", //Nanti ganti jadi ID
@@ -192,6 +192,10 @@ export default function Router() {
         {
           path: "/notifikasi",
           element: <Notification />,
+        },
+        {
+          path: "/detailnotifikasi",
+          element: <DetailNotification />,
         },
       ],
     },
