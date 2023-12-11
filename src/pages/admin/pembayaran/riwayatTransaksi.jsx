@@ -240,32 +240,28 @@ export default function RiwayatTransaksi() {
           </div>
         </div>
 
-        {isLoading ? (
-          // Show a loading indicator while data is being fetched
-          <div className="mt-12 text-center">Loading...</div>
-        ) : (
-          <>
-            {/* Render your table and other components when data is not loading */}
-            <Table
-              datas={data}
-              columns={columns}
-              classNameHeader="bg-[#A2D2FF]"
+        <>
+          {/* Render your table and other components when data is not loading */}
+          <Table
+            datas={data}
+            columns={columns}
+            classNameHeader="bg-[#A2D2FF]"
+            isLoading={isLoading}
+          />
+          <div className="mt-2 flex justify-end">
+            <Pagination
+              meta={meta}
+              onClickPrevious={() =>
+                handlePagination((meta.offset -= parseInt(limitValue)))
+              }
+              onClickNext={() =>
+                handlePagination((meta.offset += parseInt(limitValue)))
+              }
+              onClickPage={(page) => handlePagination(page)}
+              limitValue={limitValue}
             />
-            <div className="mt-2 flex justify-end">
-              <Pagination
-                meta={meta}
-                onClickPrevious={() =>
-                  handlePagination((meta.offset -= parseInt(limitValue)))
-                }
-                onClickNext={() =>
-                  handlePagination((meta.offset += parseInt(limitValue)))
-                }
-                onClickPage={(page) => handlePagination(page)}
-                limitValue={limitValue}
-              />
-            </div>
-          </>
-        )}
+          </div>
+        </>
       </div>
     </Layout>
   );

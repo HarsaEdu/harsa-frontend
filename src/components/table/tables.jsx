@@ -15,10 +15,9 @@ export default function Table(props) {
     datas = [],
     classNameHeader,
     classNameCell,
-    isVisible,
+    isLoading,
     rowVisible,
     searchComponent,
-    onClick,
   } = props;
 
   const table = useReactTable({
@@ -76,13 +75,15 @@ export default function Table(props) {
           ))}
         </thead>
         <tbody>
-          {datas.length === 0 ? (
+          {isLoading ? (
             <tr>
               <td
                 colSpan={columns.length}
                 className={`border-2 border-black p-2 text-center ${classNameCell}`}
               >
-                Tidak Ada Data Ditampilkan
+                {datas.length !== 0
+                  ? "Tidak Ada Ditampilkan"
+                  : "Loading Data..."}
               </td>
             </tr>
           ) : (

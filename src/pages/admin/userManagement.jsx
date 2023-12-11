@@ -27,7 +27,7 @@ export default function UserManagement() {
 
   useEffect(() => {
     fetchData();
-  }, [searchParams]);
+  }, [searchParams, limitValue, offset]);
 
   async function fetchData() {
     if (searchParams.has("limit")) {
@@ -109,15 +109,12 @@ export default function UserManagement() {
   };
 
   function handlePagination(newOffset) {
-    // Update the offset value
     setOffset(newOffset);
 
     // Update the searchParams with the new offset value
     searchParams.set("limit", String(limitValue));
     searchParams.set("offset", String(newOffset));
     setSearchParams(searchParams);
-
-    // Fetch data for the new page
   }
 
   function handlePageSizeChange(newValue) {
@@ -301,32 +298,26 @@ export default function UserManagement() {
                 />
               </div>
             </div>
-            {isLoading ? (
-              // Show a loading indicator while data is being fetched
-              <div className="mt-12 text-center">Loading...</div>
-            ) : (
-              <>
-                {/* Render your table and other components when data is not loading */}
-                <Table
-                  datas={userData}
-                  columns={columns}
-                  classNameHeader="bg-[#A2D2FF]"
-                />
-                <div className="mt-2 flex justify-end">
-                  <Pagination
-                    meta={meta}
-                    onClickPrevious={() =>
-                      handlePagination((meta.offset -= parseInt(limitValue)))
-                    }
-                    onClickNext={() =>
-                      handlePagination((meta.offset += parseInt(limitValue)))
-                    }
-                    onClickPage={(page) => handlePagination(page)}
-                    limitValue={limitValue}
-                  />
-                </div>
-              </>
-            )}
+            {/* Render your table and other components when data is not loading */}
+            <Table
+              datas={userData}
+              columns={columns}
+              classNameHeader="bg-[#A2D2FF]"
+              isLoading={isLoading}
+            />
+            <div className="mt-2 flex justify-end">
+              <Pagination
+                meta={meta}
+                onClickPrevious={() =>
+                  handlePagination((meta.offset -= parseInt(limitValue)))
+                }
+                onClickNext={() =>
+                  handlePagination((meta.offset += parseInt(limitValue)))
+                }
+                onClickPage={(page) => handlePagination(page)}
+                limitValue={limitValue}
+              />
+            </div>
           </div>
         </div>
       </div>
