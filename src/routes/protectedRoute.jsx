@@ -62,6 +62,9 @@ const ProtectedRoute = () => {
     "/edit-profile",
     "/faq",
     "/notification",
+    "/langganan",
+    "/langganan/tambah-paket",
+    "/langganan/edit-paket/:id",
 
   ];
 
