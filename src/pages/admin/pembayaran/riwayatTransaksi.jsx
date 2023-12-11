@@ -56,6 +56,8 @@ export default function RiwayatTransaksi() {
   async function fetchData() {
     if (searchParams.has("search")) {
       setSearchValue(searchParams.get("search"));
+    } else {
+      searchParams.set("offset", 0);
     }
 
     let query = Object.fromEntries(
@@ -70,7 +72,7 @@ export default function RiwayatTransaksi() {
       setLimitValue(searchParams.get("limit"));
     } else {
       searchParams.set("limit", limitValue);
-      searchParams.set("offset", offset);
+      searchParams.set("offset", 0);
     }
 
     query = Object.fromEntries(
