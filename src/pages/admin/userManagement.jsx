@@ -38,6 +38,7 @@ export default function UserManagement() {
       searchParams.set("offset", 0);
       setSearchValue(searchParams.get("search"));
     } else {
+      searchParams.set("offset", 0);
       searchParams.set("limit", limitValue);
     }
 
