@@ -71,38 +71,36 @@ export default function RiwayatTransaksi() {
   );
 
   async function fetchData() {
-    if (searchParams.get("tab") !== "borrows") {
-      if (searchParams.has("search")) {
-        setSearchValue(searchParams.get("search"));
-      }
+    if (searchParams.has("search")) {
+      setSearchValue(searchParams.get("search"));
+    }
 
-      let query = Object.fromEntries(
-        [...searchParams].filter((param) => param[0] !== "tab"),
-      );
+    let query = Object.fromEntries(
+      [...searchParams].filter((param) => param[0] !== "tab"),
+    );
 
-      if (searchParams.has("status")) {
-        query.status = searchParams.get("status");
-      }
+    if (searchParams.has("status")) {
+      query.status = searchParams.get("status");
+    }
 
-      if (searchParams.has("limit")) {
-        setLimitValue(searchParams.get("limit"));
-      }
+    if (searchParams.has("limit")) {
+      setLimitValue(searchParams.get("limit"));
+    }
 
-      query = Object.fromEntries(
-        [...searchParams].filter((param) => param[0] !== "tab"),
-      );
+    query = Object.fromEntries(
+      [...searchParams].filter((param) => param[0] !== "tab"),
+    );
 
-      try {
-        setLoading(true);
-        const result = await getAllPaymentHistory({ ...query });
-        const { data, pagination } = result;
-        setData(data);
-        setMeta(pagination);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setLoading(false);
-      }
+    try {
+      setLoading(true);
+      const result = await getAllPaymentHistory({ ...query });
+      const { data, pagination } = result;
+      setData(data);
+      setMeta(pagination);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -140,6 +138,7 @@ export default function RiwayatTransaksi() {
     setOffset(newOffset);
 
     // Update the searchParams with the new offset value
+    searchParams.set("limit", String(limitValue));
     searchParams.set("offset", String(newOffset));
     setSearchParams(searchParams);
 
