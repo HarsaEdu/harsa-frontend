@@ -94,7 +94,6 @@ export default function Notification() {
           icon: "info",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         });
       } else if (result.isConfirmed) {
         callback();
@@ -103,7 +102,6 @@ export default function Notification() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         }).then(() => {
           navigate(`/notification`);
         });
@@ -142,7 +140,6 @@ export default function Notification() {
       icon: "success",
       showConfirmButton: false,
       showCloseButton: true,
-      timer: 2000,
     }).then((result) => {
       if (result.isDismissed) {
         navigate(`/notification`);
@@ -313,7 +310,7 @@ export default function Notification() {
                 alt="Next"
                 width={16}
                 height={11}
-                style={{ transform: "rotate(-270deg)" }}
+                className="rotate-90"
               />
             </button>
             {renderPageNumbers()}
@@ -328,7 +325,7 @@ export default function Notification() {
                 alt="Next"
                 width={16}
                 height={11}
-                style={{ transform: "rotate(-270 deg)" }}
+                className="rotate-90"
               />
             </button>
           </section>
