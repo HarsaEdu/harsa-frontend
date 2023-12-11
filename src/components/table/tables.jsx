@@ -75,15 +75,13 @@ export default function Table(props) {
           ))}
         </thead>
         <tbody>
-          {isLoading ? (
+          {datas.length === 0 || isLoading ? (
             <tr>
               <td
                 colSpan={columns.length}
                 className={`border-2 border-black p-2 text-center ${classNameCell}`}
               >
-                {datas.length !== 0
-                  ? "Tidak Ada Ditampilkan"
-                  : "Loading Data..."}
+                {!isLoading ? "Tidak Ada Ditampilkan" : "Loading Data..."}
               </td>
             </tr>
           ) : (
