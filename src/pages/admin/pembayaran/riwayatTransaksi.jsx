@@ -55,14 +55,9 @@ export default function RiwayatTransaksi() {
 
   async function fetchData() {
     if (searchParams.has("search")) {
-      setSearchValue(searchParams.get("search"));
-    } else {
       searchParams.set("offset", 0);
+      setSearchValue(searchParams.get("search"));
     }
-
-    let query = Object.fromEntries(
-      [...searchParams].filter((param) => param[0] !== "tab"),
-    );
 
     if (searchParams.has("status")) {
       query.status = searchParams.get("status");
@@ -75,7 +70,7 @@ export default function RiwayatTransaksi() {
       searchParams.set("offset", 0);
     }
 
-    query = Object.fromEntries(
+    let query = Object.fromEntries(
       [...searchParams].filter((param) => param[0] !== "tab"),
     );
 

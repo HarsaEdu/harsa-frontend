@@ -30,20 +30,20 @@ export default function UserManagement() {
   }, [searchParams]);
 
   async function fetchData() {
-    let query = Object.fromEntries(
-      [...searchParams].filter((param) => param[0] !== "tab"),
-    );
-
     if (searchParams.has("limit")) {
       setLimitValue(searchParams.get("limit"));
     }
 
     if (searchParams.has("search")) {
+      searchParams.set("offset", 0);
       setSearchValue(searchParams.get("search"));
     } else {
       searchParams.set("limit", limitValue);
-      searchParams.set("offset", 0);
     }
+
+    let query = Object.fromEntries(
+      [...searchParams].filter((param) => param[0] !== "tab"),
+    );
 
     try {
       setIsLoading(true);
