@@ -3,8 +3,7 @@ import Breadcrumb from "@/components/breadcrumb";
 import Table from "@/components/table/tables";
 import { React, useMemo, useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { number } from "zod";
-import { dataFaq } from "@/utils/dummyData";
+import { deleteFAQ } from "@/utils/apis/faq";
 import DropdownAction from "@/components/table/DropdownAction";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,70 +15,63 @@ export default function ManageFaq() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchFaqData = async () => {
-      try {
-        const response = await axios.get(
-          "https://api.harsaedu.my.id/web/faqs?offset=0&limit=10"
-        );
-        setFaqData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching FAQ data:", error);
-      }
-    };
-
     fetchFaqData();
   }, []);
 
+  async function fetchFaqData () {
+    try {
+      const response = await axios.get(
+        "https://api.harsaedu.my.id/web/faqs?offset=0&limit=10"
+      );
+      setFaqData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching FAQ data:", error);
+    }
+  };
+
   const handleEdit = (id) => {
-    // Navigasi ke halaman edit user dengan ID yang sesuai
+    // Navigasi ke halaman edit FAQ dengan ID yang sesuai
     navigate(`/content-management/FAQ/${id}/edit-FAQ`);
   };
 
   const handleDelete = async (id) => {
-    // Tampilkan konfirmasi sebelum menghapus
-    Swal.fire({
-      title: "Yakin kamu mau menghapus FAQ ini?",
-      icon: "question",
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonColor: "#d33",
-      confirmButtonText: "Ya, Hapus",
-      cancelButtonText: "Batal",
-      cancelButtonColor: "#6c757d",
-    }).then(async (result) => {
+    try {
+      // Menampilkan konfirmasi SweetAlert
+      const result = await Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data FAQ akan dihapus permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!",
+      });
+
       if (result.isConfirmed) {
-        try {
-          const response = await axios.delete(
-            `https://api.harsaedu.my.id/web/faqs/${id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-              },
-            }
-          );
+        // Panggil fungsi deleteFAQ untuk menghapus FAQ
+        await deleteFAQ(id);
+        // Perbarui data setelah penghapusan berhasil
+        fetchFaqData();
 
-          if (response.data.code === 200) {
-            // Notifikasi setelah berhasil menghapus
-            Swal.fire({
-              title: "Sukses Menghapus FAQ",
-              icon: "success",
-              showConfirmButton: false,
-              showCloseButton: true,
-              timer: 2000,
-            });
-
-            // Perbarui data FAQ setelah penghapusan berhasil
-            setFaqData((prevData) =>
-              prevData.filter((faq) => faq.id !== id)
-            );
-          } else {
-            console.error("Gagal menghapus FAQ:", response.data.message);
-          }
-        } catch (error) {
-          console.error("Error deleting FAQ:", error);
-        }
+        // Menampilkan pesan SweetAlert setelah penghapusan berhasil
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Data FAQ telah dihapus.",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
       }
-    });
+    } catch (error) {
+      console.error("Failed to delete FAQ", error);
+
+      // Menampilkan pesan SweetAlert jika penghapusan gagal
+      Swal.fire({
+        title: "Error!",
+        text: "Gagal menghapus data FAQ.",
+        icon: "error",
+      });
+    }
   };
 
   const columns = useMemo(() => [
@@ -103,7 +95,7 @@ export default function ManageFaq() {
       header: "Action",
       rowSpan: true,
       cell: (info) => (
-        <div className="text-center">
+        <div className={`flex justify-center items-center`} style={info.row.original.actStyle}>
           <DropdownAction>
             <div className="flex flex-col">
               <Button

@@ -48,8 +48,9 @@ const InstructorIndex = () => {
             </Link>
           </AccordionContent>
           <AccordionContent className="group text-base pl-8">
-            <a
-              href={"/"}
+
+            <Link
+              to="/category-management/category"
               className="flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
@@ -67,11 +68,10 @@ const InstructorIndex = () => {
               </svg>
 
               <span>Kategori</span>
-            </a>
+            </Link>
           </AccordionContent>
           <AccordionContent className="group text-base pl-8">
-            <a
-              href={"/content-management/FAQ/"}
+            <Link to="/content-management/FAQ/"
               className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
@@ -89,7 +89,7 @@ const InstructorIndex = () => {
               </svg>
 
               <span>FAQ</span>
-            </a>
+            </Link>
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
@@ -112,8 +112,8 @@ const InstructorIndex = () => {
             </span>
           </AccordionTrigger>
           <AccordionContent className="group text-base pl-8">
-            <a
-              href={"/"}
+
+            <Link to="/langganan"
               className="text-base flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
@@ -130,7 +130,7 @@ const InstructorIndex = () => {
                 />
               </svg>
               <span>Langganan</span>
-            </a>
+            </Link>
           </AccordionContent>
           <AccordionContent className="group text-base pl-8">
             <Link

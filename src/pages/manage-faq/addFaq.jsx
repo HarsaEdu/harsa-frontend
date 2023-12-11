@@ -84,11 +84,11 @@ const AddFAQ = () => {
 
   return (
     <Layout>
-      <div className="container mb-10">
+     <div className="container mb-10">
         <Breadcrumb />
         <div className="font-poppins">
             <h2 className="text-2xl font-semibold pb-4 pt-10">Tambah FAQ</h2>
-          <Form {...form}>
+          <Form {...form}> 
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="px-8 py-5 space-y-8 border-2 border-[#092C4C]"

@@ -50,7 +50,7 @@ export default function Login() {
           localStorage.setItem("access_token", access_token);
           localStorage.setItem("refresh_token", refresh_token);
           setAxiosConfig(access_token);
-          
+
           if (role_name === "admin") {
             navigate("/dashboard-admin");
           } else {
@@ -65,13 +65,9 @@ export default function Login() {
         }
       }
     } catch (error) {
-      form.setError("email", {
-        type: "manual",
-        message: "*Email yang Anda masukkan tidak terdaftar",
-      });
       form.setError("password", {
         type: "manual",
-        message: "*Password yang Anda masukkan salah",
+        message: "*email atau password salah, periksa kembali",
       });
       // console.error("An error occurred during login:", error);
     }

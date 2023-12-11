@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "../Sidebar/InstructorSidebar";
 import AdminSidebar from "../Sidebar/AdminSidebar";
+import { Link } from "react-router-dom";
 
 import BellIcon from '../../assets/bell.svg'
 
@@ -22,7 +23,9 @@ const Layout = (props) => {
       {/* Content */}
       <div className={`${className} container w-3/4 mx-auto pt-5 bg-white grow`}>
         <div className='flex justify-end mx-auto'>
-          <img src={BellIcon} alt="Bell Icon" className='w-[58px]'/>
+          <Link to="/notifikasi">
+            <img src={BellIcon} alt="Bell Icon" className='w-[58px]'/>
+          </Link>
         </div>
         {children}
       </div>
