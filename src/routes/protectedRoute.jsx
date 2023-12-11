@@ -9,19 +9,9 @@ const ProtectedRoute = () => {
   const loggedInAccessible = [
     "/dashboard",
     "/dashboard-admin",
-
-    "/kelas/manage-kelas/list-user",
-    "/category-management/category",
-    "/category-management/tambah-category",
-    "/category-management/edit-category",
-    "/langganan",
-    "/content-management/FAQ/",
-    "/content-management/FAQ/tambah-FAQ",
-    "/content-management/FAQ/:id/edit-FAQ",
-
-    "/content-management",
     "/kelas",
-
+    "/category-management",
+    "/content-management",
     "/user-management",
     "/langganan",
     "/riwayat-transaksi",
@@ -34,21 +24,12 @@ const ProtectedRoute = () => {
   // Halaman yang hanya bisa diakses oleh admin
   const adminAccessible = [
     "/dashboard-admin",
-
-    "/content-management/FAQ/",
-    "/content-management/FAQ/tambah-FAQ",
-    "/content-management/FAQ/:id/edit-FAQ",
-    "/category-management/category",
-    "/category-management/tambah-category",
-    "/category-management/edit-category",
-    "/langganan",
-
+    "/kelas",
+    "/category-management",
     "/content-management",
-
     "/user-management",
     "/langganan",
     "/riwayat-transaksi",
-    "/kelas",
     "/edit-profile",
     "/faq",
     "/notifikasi",
