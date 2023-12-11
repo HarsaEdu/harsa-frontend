@@ -313,7 +313,7 @@ export default function Notification() {
                 alt="Next"
                 width={16}
                 height={11}
-                style={{ transform: "rotate(-270deg)" }}
+                className="rotate-90"
               />
             </button>
             {renderPageNumbers()}
@@ -328,7 +328,7 @@ export default function Notification() {
                 alt="Next"
                 width={16}
                 height={11}
-                style={{ transform: "rotate(-270 deg)" }}
+                className="rotate-90"
               />
             </button>
           </section>
