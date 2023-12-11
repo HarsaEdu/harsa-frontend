@@ -88,6 +88,7 @@ export default function RiwayatTransaksi() {
     } catch (error) {
       console.log(error.message);
       setData([]);
+      setMeta([]);
     } finally {
       setIsLoading(false);
     }
