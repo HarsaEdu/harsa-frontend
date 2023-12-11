@@ -56,12 +56,19 @@ export default function RiwayatTransaksi() {
   );
 
   async function fetchData() {
+    let query = Object.fromEntries(
+      [...searchParams].filter((param) => param[0] !== "tab"),
+    );
+
     if (searchParams.has("search")) {
       searchParams.set("offset", 0);
       setSearchValue(searchParams.get("search"));
+    } else {
+      searchParams.set("offset", 0);
     }
 
     if (searchParams.has("status")) {
+      searchParams.set("offset", 0);
       query.status = searchParams.get("status");
     }
 
@@ -71,10 +78,6 @@ export default function RiwayatTransaksi() {
       searchParams.set("limit", limitValue);
       searchParams.set("offset", 0);
     }
-
-    let query = Object.fromEntries(
-      [...searchParams].filter((param) => param[0] !== "tab"),
-    );
 
     try {
       setIsLoading(true);
