@@ -40,7 +40,7 @@ export default function RiwayatTransaksi() {
     async function (search) {
       if (!search) {
         searchParams.delete("search");
-        searchParams.set("offset", offset);
+        searchParams.set("offset", 0);
       } else {
         searchParams.set("search", search);
         searchParams.set("offset", 0);
