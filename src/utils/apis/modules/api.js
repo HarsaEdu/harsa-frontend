@@ -8,7 +8,9 @@ const getModuleBySection = async (courseId, sectionId) => {
 
     return response.data;
   } catch (error) {
-    throw Error("Failed to get Module by Section" + error);
+    throw Error(
+      "Failed to get Module by Section : " + error.response.data.message
+    );
   }
 };
 
@@ -20,7 +22,7 @@ const getModuleById = async (moduleId) => {
 
     return response.data;
   } catch (error) {
-    throw Error("Failed to get Module by id" + error);
+    throw Error("Failed to get Module by id : " + error.response.data.message);
   }
 };
 
@@ -33,7 +35,7 @@ const createSection = async (courseId, data) => {
 
     return response.data;
   } catch (error) {
-    throw Error("Failed to create section" + error);
+    throw Error("Failed to create section : " + error.response.data.message);
   }
 };
 
@@ -46,7 +48,7 @@ const createModuleBySection = async (sectionId, data) => {
 
     return response.data;
   } catch (error) {
-    throw Error("Failed to create section" + error);
+    throw Error("Failed to create section : " + error.response.data.message);
   }
 };
 
@@ -59,7 +61,7 @@ const editSection = async (courseId, sectionId, data) => {
 
     return response.data;
   } catch (error) {
-    throw Error("Failed to create section" + error);
+    throw Error("Failed to create section : " + error.response.data.message);
   }
 };
 
@@ -72,7 +74,8 @@ const editModule = async (moduleId, data) => {
 
     return response.data;
   } catch (error) {
-    throw Error("Failed to edit Module" + error);
+    console.log(error);
+    throw Error("Failed to edit Module : " + error.response.data.message);
   }
 };
 

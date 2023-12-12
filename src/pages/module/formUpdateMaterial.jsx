@@ -45,7 +45,6 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
     const fetchData = async () => {
         try {
             const result = await getModuleById(moduleId);
-            console.log("result module :", result.data);
             setModule(result.data);
             setCountMaterial(result.data.sub_modules.length);
             const tempMaterialType = [];
@@ -56,13 +55,19 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
                     title: result.data.title,
                     type: subModule.type,
                     content_url: subModule.content_url,
+                    id: subModule.id,
                 });
             });
             setMaterialType(tempMaterialType);
             setSubModules(tempSubModules);
             form.setValue("materialTitle", moduleTitle);
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Gagal Mendapatkan Module",
+                text: error.message,
+            });
         }
     };
     useEffect(() => {
@@ -81,6 +86,9 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
                 type: materialType[index],
                 content_url: form.getValues(`material[${index}]`),
             });
+            if (subModules[index] && subModules[index].id) {
+                newMaterial[index].id = subModules[index].id;
+            }
         });
         setSubModules([...newMaterial]);
     };
@@ -95,19 +103,26 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
                 sub_modules: subModules,
             };
 
-            console.log("new data materi :", newData);
+            try {
+                await editModule(moduleId, newData);
 
-            await editModule(moduleId, newData);
-
-            Swal.fire({
-                icon: "success",
-                title: "Sukses Tambah Module",
-                showConfirmButton: false,
-                showCloseButton: true,
-                timer: 3000,
-            }).then(() => {
-                window.location.reload();
-            });
+                Swal.fire({
+                    icon: "success",
+                    title: "Sukses Edit Module",
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    timer: 3000,
+                }).then(() => {
+                    window.location.reload();
+                });
+            } catch (error) {
+                console.log(error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal Edit Module",
+                    text: error.message,
+                });
+            }
         } else {
             form.setError("material", {
                 type: "manual",

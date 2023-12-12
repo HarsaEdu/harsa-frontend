@@ -69,9 +69,19 @@ const UpdateMaterial = () => {
   const [isEditSection, setIsEditSection] = useState(false);
 
   const fetchModules = async () => {
-    const response = await getModuleBySection(params.id, params.idSection);
-    console.log(response.data);
-    setModule(response.data);
+    try {
+      const response = await getModuleBySection(params.id, params.idSection);
+      console.log(response.data);
+      setModule(response.data);
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal Mendapatkan Module",
+        text: error.message,
+      });
+    }
+
   };
   useEffect(() => {
     fetchModules();
@@ -107,16 +117,26 @@ const UpdateMaterial = () => {
         sub_modules: subModules,
       };
 
-      await createModuleBySection(params.idSection, newData);
+      try {
+        await createModuleBySection(params.idSection, newData);
 
-      Swal.fire({
-        icon: "success",
-        title: "Sukses Tambah Module",
-        showConfirmButton: false,
-        showCloseButton: true,
-      }).then(() => {
-        setIsAddMaterial(false);
-      });
+        Swal.fire({
+          icon: "success",
+          title: "Sukses Tambah Module",
+          showConfirmButton: false,
+          showCloseButton: true,
+        }).then(() => {
+          setIsAddMaterial(false);
+        });
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Tambah Module",
+          text: error.message,
+        });
+      }
+
     } else {
       form.setError("material", {
         type: "manual",
@@ -131,18 +151,28 @@ const UpdateMaterial = () => {
       title: data.section,
     };
 
-    await editSection(params.id, params.idSection, newData);
+    try {
+      await editSection(params.id, params.idSection, newData);
 
-    Swal.fire({
-      icon: "success",
-      title: "Sukses Edit Section",
-      showConfirmButton: false,
-      showCloseButton: true,
-      timer: 3000,
-    }).then(() => {
-      setIsEditSection(false);
-      fetchModules();
-    });
+      Swal.fire({
+        icon: "success",
+        title: "Sukses Edit Section",
+        showConfirmButton: false,
+        showCloseButton: true,
+        timer: 3000,
+      }).then(() => {
+        setIsEditSection(false);
+        fetchModules();
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal Edit Section",
+        text: error.message,
+      });
+    }
+
   };
 
   const handleMaterialUpdated = () => {

@@ -75,16 +75,28 @@ const CreateMaterial = () => {
                     sub_modules: subModules,
                 },
             };
-            await createSection(params.id, newData);
 
-            Swal.fire({
-                icon: "success",
-                title: "Sukses Tambah Module",
-                showConfirmButton: false,
-                showCloseButton: true,
-            }).then(() => {
-                navigate("/kelas/manage-kelas/" + params.id);
-            });
+            try {
+                await createSection(params.id, newData);
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Sukses Tambah Module",
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                }).then(() => {
+                    navigate("/kelas/manage-kelas/" + params.id);
+                });
+            } catch (error) {
+                console.log(error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal Tambah Module",
+                    text: error.message,
+                });
+            }
+
+
         } else {
             form.setError("material", {
                 type: "manual",
