@@ -2,14 +2,12 @@ import { React, useMemo, useState, useEffect } from "react";
 import Layout from "@/components/layout/Index"
 import Breadcrumb from "@/components/breadcrumb"
 import Table from "@/components/table/tables"
-import subscriptionData from "./subscriptionData";
 import DropdownAction from "@/components/table/DropdownAction";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import ActionIcon from '../../../assets/Action.svg'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -29,6 +27,7 @@ const AddSubscription = () => {
             }
           );
           setSubsData(response.data.data);
+          console.log("Updated subsData:", response.data.data);
         } catch (error) {
           console.error("Error fetching Subs data:", error);
         }
@@ -39,7 +38,7 @@ const AddSubscription = () => {
   
     const handleEdit = (id) => {
       // Navigasi ke halaman edit user dengan ID yang sesuai
-      navigate(`/langganan/edit-paket/:id`);
+      navigate(`/langganan/edit-paket/${id}`);
     };
   
     const handleDelete = async (id) => {
@@ -57,18 +56,20 @@ const AddSubscription = () => {
         if (result.isConfirmed) {
           try {
             const response = await axios.delete(
-              `https://api.harsaedu.my.id:{{port}}/web/subs-plan/2/${id}`,
+              `https://api.harsaedu.my.id/web/subs-plan/${id}`,
               {
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem("access_token")}`,
                 },
               }
             );
+
+            console.log('Response dari server:', response);
   
             if (response.data.code === 200) {
               // Notifikasi setelah berhasil menghapus
               Swal.fire({
-                title: "Sukses Hapus  Data Paket",
+                title: "Sukses Hapus Data Paket",
                 icon: "success",
                 showConfirmButton: false,
                 showCloseButton: true,
@@ -76,18 +77,35 @@ const AddSubscription = () => {
               });
   
               // Perbarui data Subs setelah penghapusan berhasil
-              setFaqData((prevData) =>
+              setSubsData((prevData) =>
                 prevData.filter((subs) => subs.id !== id)
               );
+              console.log('subsData setelah penghapusan:', subsData);
             } else {
               console.error("Gagal menghapus Subs:", response.data.message);
             }
           } catch (error) {
-            console.error("Error deleting Subs:", error);
+              // Tampilkan detail kesalahan Axios
+              if (error.response) {
+                // Kesalahan respons dari server (status code yang tidak berhasil)
+                console.error("Error deleting Subs - Server Response:", error.response.data);
+              } else if (error.request) {
+                // Tidak ada respons dari server
+                console.error("Error deleting Subs - No Response:", error.request);
+              } else {
+                // Kesalahan lainnya
+                console.error("Error deleting Subs:", error.message);
+              }
           }
         }
       });
     };
+
+    useEffect(() => {
+      // useEffect baru untuk mencetak log setelah subsData diperbarui
+      console.log('subsData in render:', subsData);
+    }, [subsData]); 
+
       const formatRupiah = (number) => {
         const formatter = new Intl.NumberFormat('id-ID', {
           style: 'currency',
@@ -102,7 +120,6 @@ const AddSubscription = () => {
           header: "No",
           cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
         },
-        ,
         {
           header: "Nama",
           accessorKey: "title",
@@ -162,12 +179,12 @@ const AddSubscription = () => {
                         isVisible={true}
                         rowVisible={true}
                         searchComponent={
-                        <div className="flex w-1/2 items-center justify-end space-x-3">
-                        <p className="text-xl">Search</p>{" "}
-                        <Input
-                            id="search"
-                            className="w-2/4 rounded border-[#092C4C]"
-                        />
+                          <div className="flex w-1/2 items-center justify-end space-x-3">
+                            <p className="text-xl font-semibold">Search</p>{" "}
+                            <Input
+                              id="search"
+                              className="w-40 rounded border-[#092C4C]"
+                            />
                         <Link to="/langganan/tambah-paket">
                             <Button
                             className="font-semibold"
