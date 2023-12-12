@@ -231,7 +231,7 @@ const CreateMaterial = () => {
                             </div>
                         </div>
 
-                        <div>
+                        {/* <div>
                             <FormLabel className="font-poppins font-semibold text-[#092C4C]">
                                 Kuis
                             </FormLabel>
@@ -256,7 +256,7 @@ const CreateMaterial = () => {
                                     Tambah Tugas <Plus className="inline-block h-4" />
                                 </a>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="flex justify-between">
                             <Button
                                 variant={"outline"}
