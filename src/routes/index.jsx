@@ -35,12 +35,10 @@ import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
 import ManageFaq from "@/pages/manage-faq/manageFaq";
 import ManageCategory from "@/pages/admin/content-management/kategori/manageCategory";
-
+import CardUlasanKelas from "@/pages/admin/content-management/kelas/cardUlasanKelas";
 import AddKategori from "@/pages/admin/content-management/kategori/addKategori";
 import EditKategori from "@/pages/admin/content-management/kategori/editKategori";
-
 import Notification from "@/pages/notification";
-
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -78,6 +76,10 @@ export default function Router() {
             {
               path: "/kelas/manage-kelas/:id/list-user", // Menggunakan path yang terpisah untuk Kelas
               element: <AssignUserInstruktor />,
+            },
+            {
+              path: "/kelas/manage-kelas/:id/ulasan-kelas", // Menggunakan path yang terpisah untuk Kelas
+              element: <CardUlasanKelas />,
             },
           ],
         },
