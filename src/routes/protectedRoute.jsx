@@ -9,83 +9,41 @@ const ProtectedRoute = () => {
   const loggedInAccessible = [
     "/dashboard",
     "/dashboard-admin",
-    "/content-management/FAQ",
-    "/kelas/manage-kelas/list-user",
-    "/content-management/FAQ/tambah-FAQ",
-    "/content-management/FAQ/:id/edit-FAQ",
-    "/user-management",
-    "/user-management/tambah-user",
-    "/user-management/detail",
-    "/user-management/edit-user/:id",
-    "/riwayat-transaksi",
     "/kelas",
-    "/kelas/manage-kelas",
-    "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
-    "/kelas/manage-kelas/list-users",
-    "/kelas/tambah-modul/:id",
-    "/kelas/tambah-modul/tambah-tugas",
-    "/kelas/tambah-kuis",
-    "/kelas/tambah-pertanyaan",
-    "/kelas/manage-tugas",
-    "/kelas/manage-tugas/review",
-    "/kelas/manage-tugas/edit",
+    "/category-management",
+    "/content-management",
+    "/user-management",
+    "/langganan",
+    "/riwayat-transaksi",
     "/edit-profile",
     "/faq",
-    "/notification",
-
+    "/notifikasi",
+    "/detail-notifikasi",
   ];
 
   // Halaman yang hanya bisa diakses oleh admin
   const adminAccessible = [
     "/dashboard-admin",
-    "/content-management/FAQ",
-    "/content-management/FAQ/tambah-FAQ",
-    "/content-management/FAQ/:id/edit-FAQ",
-    "/content-management/kategori",
-    "/user-management",
-    "/user-management/tambah-user",
-    "/user-management/detail",
-    "/user-management/edit-user/:id",
-    "/riwayat-transaksi",
     "/kelas",
-    "/kelas/manage-kelas",
-    "/kelas/tambah-modul",
-    "/kelas/manage-kelas/manage-modul",
-    "/kelas/manage-kelas/list-users",
-    "/kelas/tambah-modul/tambah-tugas",
-    "/kelas/tambah-kuis",
-    "/kelas/edit-kuis",
-    "/kelas/tambah-pertanyaan",
-    "/kelas/manage-tugas",
-    "/kelas/manage-tugas/review",
-    "/kelas/manage-tugas/edit",
+    "/category-management",
+    "/content-management",
+    "/user-management",
+    "/langganan",
+    "/riwayat-transaksi",
     "/edit-profile",
     "/faq",
-    "/notification",
-    "/langganan",
-    "/langganan/tambah-paket",
-    "/langganan/edit-paket/:id",
-
+    "/notifikasi",
+    "/detail-notifikasi",
   ];
 
   // Halaman yang hanya bisa diakses oleh instructor
   const instructorAccessible = [
     "/dashboard",
     "/kelas",
-    "/kelas/manage-kelas",
-    "/kelas/manage-kelas/list-user",
-    "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
-    "/kelas/tambah-modul/:id",
-    "/kelas/tambah-modul/tambah-tugas",
-    "/kelas/tambah-kuis",
-    "/kelas/tambah-pertanyaan",
-    "/kelas/manage-tugas/review",
-    "/kelas/manage-tugas",
-    "/kelas/manage-tugas/edit",
     "/edit-profile",
     "/faq",
-    "/notification",
-
+    "/notifikasi",
+    "/detail-notifikasi",
   ];
 
   // Landing page yang tidak bisa diakses oleh pengguna yang sudah login
@@ -105,13 +63,19 @@ const ProtectedRoute = () => {
   // Jika sudah login, cek hak akses berdasarkan role_name
   if (role_name) {
     // Admin hanya bisa akses halaman admin
-    if (role_name === "admin" && !adminAccessible.some((route) => pathname.startsWith(route))) {
+    if (
+      role_name === "admin" &&
+      !adminAccessible.some((route) => pathname.startsWith(route))
+    ) {
       // Redirect ke halaman admin jika mencoba mengakses halaman lain
       return <Navigate to="/dashboard-admin" />;
     }
 
     // Instructor hanya bisa akses halaman instructor
-    if (role_name === "instructor" && !instructorAccessible.some((route) => pathname.startsWith(route))) {
+    if (
+      role_name === "instructor" &&
+      !instructorAccessible.some((route) => pathname.startsWith(route))
+    ) {
       // Redirect ke halaman instructor jika mencoba mengakses halaman lain
       return <Navigate to="/dashboard" />;
     }

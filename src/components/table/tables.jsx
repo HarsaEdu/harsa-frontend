@@ -15,10 +15,9 @@ export default function Table(props) {
     datas = [],
     classNameHeader,
     classNameCell,
-    isVisible,
+    isLoading,
     rowVisible,
     searchComponent,
-    onClick,
   } = props;
 
   const table = useReactTable({
@@ -26,6 +25,7 @@ export default function Table(props) {
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    manualPagination: true,
   });
 
   return (
@@ -75,13 +75,13 @@ export default function Table(props) {
           ))}
         </thead>
         <tbody>
-          {datas.length === 0 ? (
+          {datas.length === 0 || isLoading ? (
             <tr>
               <td
                 colSpan={columns.length}
                 className={`border-2 border-black p-2 text-center ${classNameCell}`}
               >
-                Tidak Ada Data Ditampilkan
+                {!isLoading ? "Tidak Ada Ditampilkan" : "Loading Data..."}
               </td>
             </tr>
           ) : (
@@ -101,11 +101,6 @@ export default function Table(props) {
           )}
         </tbody>
       </table>
-      {isVisible && (
-        <div className="mt-2 flex justify-end">
-          <TablePagination table={table} />
-        </div>
-      )}
     </div>
   );
 }

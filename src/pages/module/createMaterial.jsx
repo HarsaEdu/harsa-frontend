@@ -82,7 +82,6 @@ const CreateMaterial = () => {
                 title: "Sukses Tambah Module",
                 showConfirmButton: false,
                 showCloseButton: true,
-                timer: 3000,
             }).then(() => {
                 navigate("/kelas/manage-kelas/" + params.id);
             });
