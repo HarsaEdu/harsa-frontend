@@ -35,12 +35,12 @@ import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
 import ManageFaq from "@/pages/manage-faq/manageFaq";
 import ManageCategory from "@/pages/admin/content-management/kategori/manageCategory";
+import EditClass from "@/pages/module/formEditKelas";
 
 import AddKategori from "@/pages/admin/content-management/kategori/addKategori";
 import EditKategori from "@/pages/admin/content-management/kategori/editKategori";
 
 import Notification from "@/pages/notification";
-
 import DetailNotification from "@/pages/detail-notifikasi";
 export default function Router() {
   const router = createBrowserRouter([
@@ -92,6 +92,10 @@ export default function Router() {
         {
           path: "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
           element: <UpdateMaterial />,
+        },
+        {
+          path: "/kelas/manage-kelas/update-kelas/:id",
+          element: <EditClass />,
         },
         {
           path: "/kelas/tambah-modul/tambah-tugas",
