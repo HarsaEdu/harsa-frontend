@@ -101,7 +101,6 @@ const EditKategori = () => {
             icon: "success",
             showConfirmButton: false,
             showCloseButton: true,
-            timer: 2000,
           }).then(() => {
             navigate(`/category-management/category`);
           });

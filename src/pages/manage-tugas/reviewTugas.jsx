@@ -51,7 +51,6 @@ const ReviewTugas = () => {
                     icon: "success",
                     showConfirmButton: false,
                     showCloseButton: true,
-                    timer: 2000,
                 }).then(() => {
                     form.reset();
                 });
@@ -79,7 +78,6 @@ const ReviewTugas = () => {
                     icon: "success",
                     showConfirmButton: false,
                     showCloseButton: true,
-                    timer: 2000,
                 });
             }
         });

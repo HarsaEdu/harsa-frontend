@@ -16,7 +16,7 @@ export const getAllPaymentHistory = async (params) => {
       query = queryParams.join("&");
     }
 
-    const url = query ? `/payments?&${query}` : "/payments?offset=0&limit=100";
+    const url = query ? `/payments?&${query}` : "/payments?offset=0&limit=10";
 
     const response = await axiosWithConfig.get(url);
 
