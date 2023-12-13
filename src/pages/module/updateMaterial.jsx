@@ -33,12 +33,28 @@ import deleteIcon from "@/assets/Delete.svg";
 import editIcon from "@/assets/Edit.svg";
 import check from "@/assets/icons/check.svg";
 import close from "@/assets/icons/close.svg";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { createModuleBySection, createSection, getModuleBySection } from "@/utils/apis/modules/api";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  createModuleBySection,
+  editSection,
+  getModuleBySection,
+} from "@/utils/apis/modules/api";
+import FormUpdateMaterial from "./formUpdateMaterial";
 
 const formSchema = z.object({
   materialTitle: z.string({
     required_error: "judul materi wajib di isi.",
+  }),
+});
+
+const formSchemaSection = z.object({
+  section: z.string({
+    required_error: "Section materi wajib di isi.",
   }),
 });
 
@@ -53,15 +69,31 @@ const UpdateMaterial = () => {
   const [isEditSection, setIsEditSection] = useState(false);
 
   const fetchModules = async () => {
-    const response = await getModuleBySection(params.id, params.idSection)
-    setModule(response.data);
-  }
+    try {
+      const response = await getModuleBySection(params.id, params.idSection);
+      console.log(response.data);
+      setModule(response.data);
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal Mendapatkan Module",
+        text: error.message,
+      });
+    }
+
+  };
   useEffect(() => {
-    fetchModules()
-  }, [])
+    fetchModules();
+    console.log("module", module);
+  }, []);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
+  });
+
+  const formSection = useForm({
+    resolver: zodResolver(formSchemaSection),
   });
 
   const addMaterial = () => {
@@ -77,7 +109,6 @@ const UpdateMaterial = () => {
   };
 
   const handleCreateSubmit = async (data) => {
-
     if (materialType.length > 0) {
       form.clearErrors("material");
       const newData = {
@@ -86,16 +117,26 @@ const UpdateMaterial = () => {
         sub_modules: subModules,
       };
 
-      await createModuleBySection(params.idSection, newData);
+      try {
+        await createModuleBySection(params.idSection, newData);
 
-      Swal.fire({
-        icon: "success",
-        title: "Sukses Tambah Module",
-        showConfirmButton: false,
-        showCloseButton: true,
-      }).then(() => {
-        setIsAddMaterial(false);
-      });
+        Swal.fire({
+          icon: "success",
+          title: "Sukses Tambah Module",
+          showConfirmButton: false,
+          showCloseButton: true,
+        }).then(() => {
+          setIsAddMaterial(false);
+        });
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Tambah Module",
+          text: error.message,
+        });
+      }
+
     } else {
       form.setError("material", {
         type: "manual",
@@ -104,25 +145,63 @@ const UpdateMaterial = () => {
     }
   };
 
+  const handleEditSection = async (data) => {
+    console.log(data);
+    const newData = {
+      title: data.section,
+    };
+
+    try {
+      await editSection(params.id, params.idSection, newData);
+
+      Swal.fire({
+        icon: "success",
+        title: "Sukses Edit Section",
+        showConfirmButton: false,
+        showCloseButton: true,
+        timer: 3000,
+      }).then(() => {
+        setIsEditSection(false);
+        fetchModules();
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal Edit Section",
+        text: error.message,
+      });
+    }
+
+  };
+
+  const handleMaterialUpdated = () => {
+    console.log("material updated");
+  };
+
   return (
     <Layout>
       <div className="container">
         <Breadcrumb />
         <div className="my-5 space-y-4 rounded border bg-[#F6F6F6] px-3 py-14">
           {isEditSection && (
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit()} className="relative">
+            <Form {...formSection}>
+              <form
+                onSubmit={formSection.handleSubmit(handleEditSection)}
+                className="relative"
+              >
                 <FormField
-                  control={form.control}
+                  control={formSection.control}
                   name="section"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
                         <Input
-                          placeholder="Persiapan Kelas"
+                          placeholder=""
                           {...field}
                           variant="bottom"
                           className="border-black bg-transparent"
+                          defaultValue={module.title}
                         />
                       </FormControl>
                       <FormMessage className="text-red-500" />
@@ -147,7 +226,7 @@ const UpdateMaterial = () => {
           {!isEditSection && (
             <div className="flex items-center gap-2">
               <p className="font-poppins text-xl font-semibold">
-                Persiapan Kelas
+                {module.title}
               </p>
               <img
                 className="h-6 rounded bg-[#092C4C]"
@@ -160,172 +239,29 @@ const UpdateMaterial = () => {
             </div>
           )}
 
-          <Accordion type="single" collapsible className="my-1 w-full rounded border-2 border-black px-2">
-            <AccordionItem value="item-1">
-              <AccordionTrigger className="font-semibold">Pengenalan Tentang Front-End Developer <img className="h-5 ms-auto" src={deleteIcon} alt="" /></AccordionTrigger>
-              <AccordionContent>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit()}
-                    className="w-full space-y-8"
-                  >
-                    <FormField
-                      control={form.control}
-                      name="materialTitle"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="flex justify-between font-poppins font-semibold text-[#092C4C]	">
-                            <span>Judul Materi</span>
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Judul Materi"
-                              {...field}
-                              variant="bottom"
-                              className="border-black bg-transparent"
-                            />
-                          </FormControl>
-                          <FormMessage className="text-red-500" />
-                        </FormItem>
-                      )}
+          <Accordion type="single" collapsible className="my-1 w-full">
+            {module &&
+              module.modules &&
+              module.modules.map((singleModule) => (
+                <AccordionItem
+                  AccordionItem
+                  key={singleModule.id}
+                  value={`item-${singleModule.id}`}
+                  className="my-2 rounded border-2 border-black px-2"
+                >
+                  <AccordionTrigger className="font-semibold">
+                    {singleModule.title}
+                    <img className="ms-auto h-5" src={deleteIcon} alt="" />
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <FormUpdateMaterial
+                      moduleTitle={singleModule.title}
+                      moduleId={singleModule.id}
+                      isupdate={handleMaterialUpdated}
                     />
-                    <div>
-                      <FormLabel className="font-poppins font-semibold text-[#092C4C]">
-                        Materi
-                      </FormLabel>
-                      {materialType === "video" ||
-                        (form.formState.errors.materi && materialType === "") ? (
-                        <FormField
-                          control={form.control}
-                          name="materi"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  placeholder="Link Video"
-                                  {...field}
-                                  variant="bottom"
-                                  className="border-black bg-transparent"
-                                />
-                              </FormControl>
-                              <FormMessage className="text-red-500" />
-                            </FormItem>
-                          )}
-                        />
-                      ) : null}
-
-                      {materialType === "slide" && (
-                        <FormField
-                          control={form.control}
-                          name="materi"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  placeholder="Format PPT, Google Slide, PDF"
-                                  {...field}
-                                  variant="bottom"
-                                  className="border-black bg-transparent"
-                                />
-                              </FormControl>
-                              <FormMessage className="text-red-500" />
-                            </FormItem>
-                          )}
-                        />
-                      )}
-
-                      <div style={{ marginTop: "0.5rem" }}>
-                        <Dialog className="">
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="link"
-                              className="flex h-fit items-center p-0 font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
-                              href=""
-                            >
-                              Tambah Link Materi{" "}
-                              <Plus className="inline-block h-4" />
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-[361px]">
-                            <DialogHeader className={"items-center	"}>
-                              <DialogTitle className="font-poppins font-semibold text-[#092C4C]">
-                                Pilih Tipe Materi
-                              </DialogTitle>
-                            </DialogHeader>
-                            <RadioGroup
-                              className="flex flex-row justify-around"
-                              defaultValue={materialType}
-                              onValueChange={(value) => {
-                                setMaterialType(value);
-                              }}
-                            >
-                              <div className="flex items-center space-x-2">
-                                <DialogClose>
-                                  <RadioGroupItem value="slide" id="slide" />
-                                  <Label className="ms-2 text-lg" htmlFor="slide">
-                                    Slide
-                                  </Label>
-                                </DialogClose>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <DialogClose>
-                                  <RadioGroupItem value="video" id="video" />
-                                  <Label className="ms-2 text-lg" htmlFor="video">
-                                    Video
-                                  </Label>
-                                </DialogClose>
-                              </div>
-                            </RadioGroup>
-                          </DialogContent>
-                        </Dialog>
-                      </div>
-                    </div>
-
-                    <div>
-                      <FormLabel className="font-poppins font-semibold text-[#092C4C]">
-                        Kuis
-                      </FormLabel>
-                      <div className="flex w-full bg-[#A2D2FF] rounded-2xl pl-11 mt-4">
-                        <div className="my-7 me-auto">
-                          <span className="text-lg font-bold">Kuis</span>
-                          <p>Pengenalan UI/UX</p>
-                        </div>
-                        <Link to="/kelas/tambah-kuis" className="flex items-center bg-[#092C4C] py-7 px-11 rounded-r-2xl text-[#fff] font-semibold">
-                          Manage Kuis
-                        </Link>
-                      </div>
-                    </div>
-                    <div>
-                      <FormLabel className="font-poppins font-semibold text-[#092C4C]">
-                        Tugas
-                      </FormLabel>
-                      <div className="flex w-full bg-[#A2D2FF] rounded-2xl pl-11 mt-4">
-                        <div className="my-7 me-auto">
-                          <span className="text-lg font-bold">Tugas</span>
-                          <p>Pengenalan UI/UX</p>
-                        </div>
-                        <Link to="/kelas/manage-tugas" className="flex items-center bg-[#092C4C] py-7 px-11 rounded-r-2xl text-[#fff] font-semibold">
-                          Manage Tugas
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="flex justify-between" style={{ marginBottom: "10px" }}>
-                      <Button
-                        className="border-black"
-                        variant={"outline"}
-                        type="reset"
-                        onClick={() => setIsAddMaterial(false)}
-                      >
-                        Batal
-                      </Button>
-                      <Button variant={"default"} type="submit">
-                        Simpan
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </AccordionContent>
-            </AccordionItem>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
           </Accordion>
 
           {!isAddMaterial && (
@@ -342,7 +278,7 @@ const UpdateMaterial = () => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleCreateSubmit)}
-                className="my-5 space-y-8 rounded border-2 px-3 py-5 font-semibold"
+                className="my-5 space-y-8 rounded border-2 border-black px-3 py-5 font-semibold"
               >
                 <FormField
                   control={form.control}
@@ -420,7 +356,8 @@ const UpdateMaterial = () => {
                           className="flex h-fit items-center p-0 font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
                           href=""
                         >
-                          Tambah Link Materi <Plus className="inline-block h-4" />
+                          Tambah Link Materi{" "}
+                          <Plus className="inline-block h-4" />
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[361px]">
@@ -495,7 +432,7 @@ const UpdateMaterial = () => {
                     variant={"outline"}
                     type="reset"
                     onClick={() => {
-                      navigate("/kelas/manage-kelas/" + params.id);
+                      setIsAddMaterial(false);
                     }}
                   >
                     Batal
