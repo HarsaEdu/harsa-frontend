@@ -19,3 +19,13 @@ export const getCouseByID = async (courseId) => {
       throw Error("Failed to get user account");
     }
 };
+
+export const getAllCountData = async () => {
+    try {
+      const response = await axiosWithConfig.get("/admin/dashboard/count");
+  
+      return response.data;
+    } catch (error) {
+      throw Error("Failed to get course");
+    }
+};
