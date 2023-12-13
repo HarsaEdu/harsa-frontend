@@ -75,7 +75,9 @@ const MateriOverview = () => {
               <Link to={`/kelas/manage-kelas/${params.id}`}>Materi</Link>
             </li>
             <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150  ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
-              <Link to="/dashboard">Ulasan</Link>
+              <Link to={`/kelas/manage-kelas/${params.id}/ulasan-kelas`}>
+                Ulasan
+              </Link>
             </li>
             <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150 ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
               {roleName === "admin" ? (
