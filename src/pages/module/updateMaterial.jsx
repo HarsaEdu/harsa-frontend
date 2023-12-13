@@ -33,8 +33,17 @@ import deleteIcon from "@/assets/Delete.svg";
 import editIcon from "@/assets/Edit.svg";
 import check from "@/assets/icons/check.svg";
 import close from "@/assets/icons/close.svg";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { createModuleBySection, createSection, getModuleBySection } from "@/utils/apis/modules/api";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  createModuleBySection,
+  createSection,
+  getModuleBySection,
+} from "@/utils/apis/modules/api";
 
 const formSchema = z.object({
   materialTitle: z.string({
@@ -53,12 +62,12 @@ const UpdateMaterial = () => {
   const [isEditSection, setIsEditSection] = useState(false);
 
   const fetchModules = async () => {
-    const response = await getModuleBySection(params.id, params.idSection)
+    const response = await getModuleBySection(params.id, params.idSection);
     setModule(response.data);
-  }
+  };
   useEffect(() => {
-    fetchModules()
-  }, [])
+    fetchModules();
+  }, []);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -77,7 +86,6 @@ const UpdateMaterial = () => {
   };
 
   const handleCreateSubmit = async (data) => {
-
     if (materialType.length > 0) {
       form.clearErrors("material");
       const newData = {
@@ -160,9 +168,16 @@ const UpdateMaterial = () => {
             </div>
           )}
 
-          <Accordion type="single" collapsible className="my-1 w-full rounded border-2 border-black px-2">
+          <Accordion
+            type="single"
+            collapsible
+            className="my-1 w-full rounded border-2 border-black px-2"
+          >
             <AccordionItem value="item-1">
-              <AccordionTrigger className="font-semibold">Pengenalan Tentang Front-End Developer <img className="h-5 ms-auto" src={deleteIcon} alt="" /></AccordionTrigger>
+              <AccordionTrigger className="font-semibold">
+                Pengenalan Tentang Front-End Developer{" "}
+                <img className="ms-auto h-5" src={deleteIcon} alt="" />
+              </AccordionTrigger>
               <AccordionContent>
                 <Form {...form}>
                   <form
@@ -194,7 +209,7 @@ const UpdateMaterial = () => {
                         Materi
                       </FormLabel>
                       {materialType === "video" ||
-                        (form.formState.errors.materi && materialType === "") ? (
+                      (form.formState.errors.materi && materialType === "") ? (
                         <FormField
                           control={form.control}
                           name="materi"
@@ -262,7 +277,10 @@ const UpdateMaterial = () => {
                               <div className="flex items-center space-x-2">
                                 <DialogClose>
                                   <RadioGroupItem value="slide" id="slide" />
-                                  <Label className="ms-2 text-lg" htmlFor="slide">
+                                  <Label
+                                    className="ms-2 text-lg"
+                                    htmlFor="slide"
+                                  >
                                     Slide
                                   </Label>
                                 </DialogClose>
@@ -270,7 +288,10 @@ const UpdateMaterial = () => {
                               <div className="flex items-center space-x-2">
                                 <DialogClose>
                                   <RadioGroupItem value="video" id="video" />
-                                  <Label className="ms-2 text-lg" htmlFor="video">
+                                  <Label
+                                    className="ms-2 text-lg"
+                                    htmlFor="video"
+                                  >
                                     Video
                                   </Label>
                                 </DialogClose>
@@ -285,12 +306,15 @@ const UpdateMaterial = () => {
                       <FormLabel className="font-poppins font-semibold text-[#092C4C]">
                         Kuis
                       </FormLabel>
-                      <div className="flex w-full bg-[#A2D2FF] rounded-2xl pl-11 mt-4">
+                      <div className="mt-4 flex w-full rounded-2xl bg-[#A2D2FF] pl-11">
                         <div className="my-7 me-auto">
                           <span className="text-lg font-bold">Kuis</span>
                           <p>Pengenalan UI/UX</p>
                         </div>
-                        <Link to="/kelas/tambah-kuis" className="flex items-center bg-[#092C4C] py-7 px-11 rounded-r-2xl text-[#fff] font-semibold">
+                        <Link
+                          to="/kelas/tambah-kuis"
+                          className="flex items-center rounded-r-2xl bg-[#092C4C] px-11 py-7 font-semibold text-[#fff]"
+                        >
                           Manage Kuis
                         </Link>
                       </div>
@@ -299,17 +323,23 @@ const UpdateMaterial = () => {
                       <FormLabel className="font-poppins font-semibold text-[#092C4C]">
                         Tugas
                       </FormLabel>
-                      <div className="flex w-full bg-[#A2D2FF] rounded-2xl pl-11 mt-4">
+                      <div className="mt-4 flex w-full rounded-2xl bg-[#A2D2FF] pl-11">
                         <div className="my-7 me-auto">
                           <span className="text-lg font-bold">Tugas</span>
                           <p>Pengenalan UI/UX</p>
                         </div>
-                        <Link to="/kelas/manage-tugas" className="flex items-center bg-[#092C4C] py-7 px-11 rounded-r-2xl text-[#fff] font-semibold">
+                        <Link
+                          to={`/kelas/manage-kelas/manage-tugas/${params.idSection}`}
+                          className="flex items-center rounded-r-2xl bg-[#092C4C] px-11 py-7 font-semibold text-[#fff]"
+                        >
                           Manage Tugas
                         </Link>
                       </div>
                     </div>
-                    <div className="flex justify-between" style={{ marginBottom: "10px" }}>
+                    <div
+                      className="flex justify-between"
+                      style={{ marginBottom: "10px" }}
+                    >
                       <Button
                         className="border-black"
                         variant={"outline"}
@@ -371,8 +401,8 @@ const UpdateMaterial = () => {
                         Materi {index + 1}
                       </FormLabel>
                       {materialType[index] === "video" ||
-                        (form.formState.errors.material &&
-                          materialType[index] === "") ? (
+                      (form.formState.errors.material &&
+                        materialType[index] === "") ? (
                         <FormField
                           control={form.control}
                           name={`material[${index}]`}
@@ -420,7 +450,8 @@ const UpdateMaterial = () => {
                           className="flex h-fit items-center p-0 font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
                           href=""
                         >
-                          Tambah Link Materi <Plus className="inline-block h-4" />
+                          Tambah Link Materi{" "}
+                          <Plus className="inline-block h-4" />
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[361px]">
@@ -484,7 +515,7 @@ const UpdateMaterial = () => {
                   <div style={{ marginTop: "0.5rem" }}>
                     <a
                       className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
-                      href=""
+                      href={`/kelas/tambah-modul/tambah-tugas/${params.idSection}`}
                     >
                       Tambah Tugas <Plus className="inline-block h-4" />
                     </a>

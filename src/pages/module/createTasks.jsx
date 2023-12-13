@@ -5,7 +5,7 @@ import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import * as z from "zod";
 
@@ -17,30 +17,44 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createSubmission } from "@/utils/apis/submission";
 
 const formSchema = z.object({
-  judulTugas: z.string({
+  title: z.string({
     required_error: "*Judul Tugas wajib di isi",
   }),
-  deskripsiTugas: z.string({
+  content: z.string({
     required_error: "*Deskripsi Tugas wajib di isi",
   }),
 });
 
 const createTasks = () => {
+  const params = useParams();
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log("data", data);
-    Swal.fire({
-      icon: "success",
-      title: "Sukses Tambah Tugas",
-      showConfirmButton: false,
-      showCloseButton: true,
-    });
-  };
+  async function onSubmit(data) {
+    try {
+      await createSubmission(data, params.idSection);
+
+      Swal.fire({
+        icon: "success",
+        title: "Sukses Tambah Tugas",
+        showConfirmButton: false,
+        showCloseButton: true,
+        timer: 3000,
+        timerProgressBar: true,
+      }).then((result) => {
+        if (result.isDismissed) {
+          navigate(-1);
+        }
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   return (
     <Layout>
@@ -50,20 +64,20 @@ const createTasks = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="px-3 py-5 space-y-8 border-2 rounded-md border-slate-300"
+              className="space-y-8 rounded-md border-2 border-slate-300 px-3 py-5"
             >
               <FormField
                 control={form.control}
-                name="judulTugas"
+                name="title"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <Input
-                        id="judulTugas"
+                        id="title"
                         placeholder="Judul Tugas"
                         {...field}
                         variant="bottom"
-                        className="mb-5 border-0 border-b rounded-none border-slate-300 active:border-0"
+                        className="mb-5 rounded-none border-0 border-b border-gray-500 active:border-0"
                       />
                     </FormControl>
                     <FormMessage className="text-red-500" />
@@ -72,16 +86,16 @@ const createTasks = () => {
               />
               <FormField
                 control={form.control}
-                name="deskripsiTugas"
+                name="content"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
                       <Textarea
-                        id="deskripsiTugas"
+                        id="content"
                         placeholder="Deskripsi Tugas"
                         {...field}
                         variant="bottom"
-                        className="border-0 border-b rounded-none border-slate-300 active:border-0"
+                        className="rounded-none border-0 border-b border-gray-500 active:border-0"
                       />
                     </FormControl>
                     <FormMessage className="text-red-500" />
