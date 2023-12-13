@@ -12,6 +12,18 @@ const getModuleBySection = async (courseId, sectionId) => {
   }
 };
 
+const getModuleById = async (courseId) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `/courses/section/module/${courseId}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw Error("Gagal mendapatkan detail materi" + error);
+  }
+};
+
 const createSection = async (courseId, data) => {
   try {
     const response = await axiosWithConfig.post(
@@ -38,4 +50,9 @@ const createModuleBySection = async (sectionId, data) => {
   }
 };
 
-export { getModuleBySection, createSection, createModuleBySection };
+export {
+  getModuleBySection,
+  createSection,
+  createModuleBySection,
+  getModuleById,
+};

@@ -66,3 +66,43 @@ export const getUserInsructor = async () => {
     throw Error("Failed to get user");
   }
 };
+
+export const getAllStudents = async () => {
+  try {
+    const response = await axiosWithConfig.get(
+      "/users?offset=0&limit=9999&search=&roleID=3",
+    );
+
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get user");
+  }
+};
+
+export const getUserStudents = async (params, id) => {
+  let query = "";
+
+  if (params) {
+    const queryParams = [];
+
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+    }
+
+    query = queryParams.join("&");
+  }
+
+  const url = query
+    ? `/course/${id}/user?&${query}`
+    : `/course/${id}/user?offset=0&limit=10`;
+
+  try {
+    const response = await axiosWithConfig.get(url);
+
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get user");
+  }
+};
