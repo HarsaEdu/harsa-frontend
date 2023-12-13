@@ -1,14 +1,14 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import InputFile from "@/components/inputFile";
-import { putCourse } from "@/utils/apis/courses";
+import { getCourse, putCourse } from "@/utils/apis/courses";
 import { getCategory } from "@/utils/apis/category";
 import { getUserInsructor } from "@/utils/apis/user";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
@@ -66,9 +66,8 @@ function EditClass() {
   const [instructor, setInstructor] = useState([]);
   const [preview, setPreview] = useState("");
   const MySwal = withReactContent(Swal);
-  const setImage = (imageUrl) => {
-    console.log("Setting image:", imageUrl);
-  };
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -82,33 +81,36 @@ function EditClass() {
   });
 
   useEffect(() => {
-    // Panggil fungsi getCategory saat komponen dimuat
-    fetchCategories();
-  }, []);
+    const fetchData = async () => {
+      try {
+        const result = await getCategory();
+        const allCategory = result.data;
+        setCategories(allCategory); // Add this line to set the categories
+        const selectedCategory = allCategory.find(
+          (category) => category.id.toString() === id,
+        );
 
-  const fetchCategories = async () => {
-    try {
-      // Memanggil fungsi getCategory untuk mengambil data kategori
-      const response = await getCategory();
-
-      // Setel data kategori ke dalam state
-      setCategories(response.data);
-    } catch (error) {
-      console.error("Failed to get categories:", error);
-    }
-  };
+        if (selectedCategory) {
+          form.setValue("judul", selectedCategory.name);
+          form.setValue("deskripsi", selectedCategory.description);
+          setPreview(selectedCategory.image);
+        } else {
+          console.error("Category Data Not Found");
+        }
+      } catch (error) {
+        console.log("Category Data Not Found", error);
+      }
+    };
+    fetchData();
+  }, [id, form]);
 
   useEffect(() => {
-    // Panggil fungsi getCategory saat komponen dimuat
     fetchUserInstructor();
   }, []);
 
   const fetchUserInstructor = async () => {
     try {
-      // Memanggil fungsi getCategory untuk mengambil data kategori
       const response = await getUserInsructor();
-
-      // Setel data kategori ke dalam state
       setInstructor(response.data);
     } catch (error) {
       console.error("Failed to get categories:", error);
@@ -118,9 +120,7 @@ function EditClass() {
   const onSubmit = async (data) => {
     try {
       const fileData = form.watch("upload");
-      console.log(fileData);
 
-      // Membuat objek data yang akan dikirim ke backend
       const formData = new FormData();
       formData.append("title", data.judul);
       formData.append("description", data.deskripsi);
@@ -128,7 +128,6 @@ function EditClass() {
       formData.append("user_id", data.instructor);
       formData.append("file", fileData);
 
-      // Menampilkan konfirmasi sebelum mengirim data ke backend
       const confirmResult = await MySwal.fire({
         icon: "info",
         title: "Konfirmasi",
@@ -139,9 +138,7 @@ function EditClass() {
       });
 
       if (confirmResult.isConfirmed) {
-        // Memanggil fungsi putCourse untuk membuat kelas baru dengan data yang sesuai
-        // Assuming courseId is available in the component's props
-        const response = await putCourse(courseId, formData);
+        const response = await putCourse(id, formData);
 
         console.log(response);
 
@@ -162,12 +159,13 @@ function EditClass() {
 
         if (result.isDismissed || result.isConfirmed) {
           MySwal.close();
+          navigate("/kelas");
         }
       }
     } catch (error) {
-      console.error("Failed to add course:", error);
+      console.error("Failed to edit course:", error);
       const errorMessage =
-        error.response?.data?.message || "Failed to add course.";
+        error.response?.data?.message || "Failed to edit course.";
       form.setError("upload", { message: errorMessage });
     }
   };
