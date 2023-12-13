@@ -129,12 +129,14 @@ function EditClass() {
       formData.append("file", fileData);
 
       const confirmResult = await MySwal.fire({
-        icon: "info",
+        icon: "question",
         title: "Konfirmasi",
-        text: "Apakah Anda yakin ingin mengedit kelas ini?",
+        text: "Yakin kamu mau simpan data ini?",
         showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
+        confirmButtonColor: "#092C4C",
+        confirmButtonText: "Ya, Simpan",
+        cancelButtonText: "Batal",
+        cancelButtonColor: "#F2994A",
       });
 
       if (confirmResult.isConfirmed) {
