@@ -52,27 +52,30 @@ export default function AddUser() {
   const navigate = useNavigate();
 
   const addUserSchema = z.object({
-    email: z.string().email({ message: "*Gunakan Email Yang Valid" }),
+    email: z.string().min(1, {message: "Isi Email Terlebih Dahulu"}).email({ message: "*format email salah, tambahkan karakter @" }),
     role: z.string().refine((value) => VALID_ROLE.includes(value), {
-      message: "*Pilih Role Terlebih Dahulu",
+      message: "*Isi Role Terlebih Dahulu",
     }),
-    password: z.string().min(8, { message: "*Password Minimal 8 Karakter" }),
+    password: z
+        .string()
+        .min(1, { message: "*Isi Password Terlebih Dahulu" })
+        .min(8, { message: "*Password Minimal 8 Karakter" }),
     confirmPassword: z.string(),
-    firstName: z.string().min(1, { message: "*Masukkan Nama Depan" }),
-    lastName: z.string().min(1, { message: "*Masukkan Nama Belakang" }),
-    bio: z.string().min(1, { message: "*Masukkan Bio" }),
+    firstName: z.string().min(1, { message: "*Isi Nama Depan Terlebih Dahulu" }),
+    lastName: z.string().min(1, { message: "*Isi Nama Belakang Terlebih Dahulu" }),
+    bio: z.string().min(1, { message: "*Isi Bio Terlebih Dahulu" }),
     dateBirth: z.date().refine((value) => {
       // Pastikan value adalah objek tanggal yang valid
       return !isNaN(value.getTime());
     }, {
-      message: "*Masukkan Tanggal Lahir yang valid",
+      message: "*Isi Tanggal Lahir Terlebih Dahulu",
     }), // Use z.date() for date field
-    phoneNumber: z.string().min(1, { message: "*Masukkan Nomor Telpon" }),
-    gender: z.string().min(1, { message: "*Pilih Gender" }),
-    hometown: z.string().min(1, { message: "*Masukkan Asal Kota" }),
-    address: z.string().min(1, { message: "*Masukkan Alamat" }),
-    profession: z.string().min(1, { message: "*Masukkan Pekerjaan" }),
-    username: z.string().min(1, { message: "*Masukkan Username" }),
+    phoneNumber: z.string().min(1, { message: "*Isi Nomer Telepon Terlebih Dahulu" }),
+    gender: z.string().min(1, { message: "*Pilih Jenis Kelamin" }),
+    hometown: z.string().min(1, { message: "*Isi Asal Kota Terlebih Dahulu" }),
+    address: z.string().min(1, { message: "*Isi Alamat Terlebih Dahulu" }),
+    profession: z.string().min(1, { message: "*Isi Pekerjaan Terlebih Dahulu" }),
+    username: z.string().min(1, { message: "*Isi Username Terlebih Dahulu" }),
   });
 
   const form = useForm({
