@@ -1,4 +1,4 @@
-import axiosWithConfig from "../apis/axiosWithConfig";
+import axiosWithConfig from "../axiosWithConfig";
 export const getSubs = async () => {
   try {
     const response = await axiosWithConfig.get("/subs-plan");
@@ -41,6 +41,16 @@ export const createSubs = async (subsData) => {
     }
 };
 
+export const updateSubs = async (subsId, subsData) => {
+  try {
+    const response = await axiosWithConfig.put(`/subs-plan/${subsId}`, subsData);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to update subs");
+  }
+};
+
+ 
 export const deleteSubs = async (subsId) => {
   try {
     const response = await axiosWithConfig.delete(`/subs-plan/${subsId}`);

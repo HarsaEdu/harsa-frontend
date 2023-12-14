@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect} from "react";
 import Layout from "@/components/layout/Index"
 import {
     useFormField,
@@ -10,19 +10,23 @@ import {
     FormMessage,
     FormField,
 } from "@/components/ui/form"
+import { createSubs } from "@/utils/apis/subs-plan";
+import { getSubs } from "@/utils/apis/subs-plan";
+import withReactContent from "sweetalert2-react-content";
 
-import { FormProvider, useForm } from "react-hook-form";
+
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input"
 import InputFile from "@/components/inputFile";
 import { Textarea } from "@/components/ui/textarea";
 import UploadIcon from "../../../assets/upload2.svg"
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import axios from "axios";
+
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -30,7 +34,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 const formSchema = z.object({
 nama: z.string().min(1, "*Nama Paket Wajib di isi"),
 durasi: z.string().min(1, "*Durasi Wajib di isi"),
-harga: z.string().min(1, "*Harga Wajib di isi"),
+harga: z.number().min(1, "*Harga Wajib di isi"),
 deskripsi: z.string().nonempty("*Deskripsi Wajib di isi"),
 image: z
     .any()
@@ -38,7 +42,7 @@ image: z
       message: "*Image  wajib di isi",
     })
     .refine((data) => data?.size <= MAX_FILE_SIZE, {
-        message: "*Ukuran file terlalu besar, maksimal 5 MB",
+      message: "*ukuran file terlalu besar, maksimal 5 mb",
     })
     .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
       message: "*Format file yang di upload salah, format file harus PNG, JPG, Jpeg, svg",
@@ -46,165 +50,140 @@ image: z
 });
 
 
-const EditSubscriptionPackage = () => {
-    const [preview, setPreview] = useState("");
-    const navigate = useNavigate();
-    const { id } = useParams();
-    const [apiImageUrl, setApiImageUrl] = useState("");
-    const [isNewImageSelected, setIsNewImageSelected] = useState(false);
 
-    console.log("ID from params:", id);
+const AddSubscriptionPackage = () => {
+    const navigate = useNavigate();
+    const [preview, setPreview] = useState("");
+    const [subs, setSubs] = useState([]);
+    const MySwal = withReactContent(Swal);
+    
+    const setImage = (imageUrl) => {
+        console.log("Setting image:", imageUrl);
+    };
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-        nama: "",
-        durasi: "",
-        deskripsi: "",
-        image: "",
-    },
-    mode: 'onChange',
-});
+          nama: "",
+          durasi: "",
+          harga: null,
+          deskripsi: "",
+          image: null,
+        },
+      });
 
+      useEffect(() => {
+        // Panggil fungsi getCategory saat komponen dimuat
+        fetchSubs();
+      }, []);
 
-useEffect(() => {
-    const fetchAllSubs = async () => {
-      try {
-        const response = await axios.get(
-          "https://api.harsaedu.my.id/web/subs-plan", 
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      
+  const fetchSubs = async () => {
+    try {
+      // Memanggil fungsi getCategory untuk mengambil data kategori
+      const response = await getSubs();
+
+      setSubs(response.data);
+    } catch (error) {
+      console.error("Failed to get categories:", error);
+    }
+  };
+
+    
+const onSubmit = async (data) => {
+    try {
+        const fileData = form.watch("image");
+        console.log(fileData);
+    
+        // Membuat objek data yang akan dikirim ke backend
+        const formData = new FormData();
+        formData.append("title", data.nama);
+        formData.append("duration", data.durasi);
+        formData.append("price", data.harga);
+        formData.append("description", data.deskripsi);
+        formData.append("image", fileData);
+    
+        // Menampilkan konfirmasi sebelum mengirim data ke backend
+        const confirmResult = await MySwal.fire({
+          icon: "info",
+          title: "Konfirmasi",
+          text: "Apakah Anda yakin ingin menambahkan Data ini?",
+          showCancelButton: true,
+          confirmButtonText: "Ya",
+          cancelButtonText: "Tidak",
+        });
+    
+        if (confirmResult.isConfirmed) {
+          // Memanggil fungsi createCourse untuk membuat kelas baru dengan data yang sesuai
+          const response = await createSubs(formData);
+    
+          console.log(response);
+    
+          setPreview("");
+          form.reset();
+    
+          const result = await MySwal.fire({
+            icon: "success",
+            title: "Sukses Tambah Data paket Langganan",
+            text: response.message || "",
+            showConfirmButton: false,
+            showCloseButton: true,
+            customClass: {
+              closeButton: "swal2-cancel-button",
             },
+            buttonsStyling: false,
+          });
+    
+          if (result.isDismissed || result.isConfirmed) {
+            MySwal.close();
           }
-        );
-        const allSubs = response.data.data;
-
-        // Cari FAQ berdasarkan ID dari daftar semua FAQ
-        const selectedSubs = allSubs.find((subs) => subs.id.toString() === id);
-
-        // Jika FAQ ditemukan, set nilai awal formulir
-        if (selectedSubs) {
-          form.setValue("nama", selectedSubs.title);
-          form.setValue("durasi", selectedSubs.duration);
-          form.setValue("harga", selectedSubs.price);
-          form.setValue("deskripsi", selectedSubs.description);
-        //   form.setValue("image", selectedSubs.image);
-          setApiImageUrl(selectedSubs.image);
-        } else {
-          console.error(`Subs with ID ${id} not found`);
         }
       } catch (error) {
-        console.error("Error fetching all Subs:", error);
+        console.error("Failed to add course:", error);
+        const errorMessage =
+          error.response?.data?.message || "Failed to add course.";
+        form.setError("image", { message: errorMessage });
       }
     };
 
-    fetchAllSubs();
-  }, [id, form]);
-
-
-  const handleImageChange = (file) => {
-    if (file && file.type.startsWith("image/")) {
-      setPreview(URL.createObjectURL(file));
-      setIsNewImageSelected(true);
-    } else {
-      setPreview("");    }
-    console.log("Selected image:", file);
-  };
-   
-  const onSubmit = async (data) => {
-    // Data untuk dikirim ke backend
-    const requestData = {
-        title: data.nama,
-        duration: parseInt(data.durasi),
-        price: parseInt(data.harga),
-        description: data.deskripsi,
-        image: isNewImageSelected ? data.image : apiImageUrl,
-      };
-
-      console.log(requestData)
-
-      Swal.fire({
-        title: "Yakin kamu mau Menyimpan data ini?",
-        icon: "question",
-        showCancelButton: true,
-        showConfirmButton: true,
-        confirmButtonColor: "#092C4C",
-        confirmButtonText: "Ya, Simpan",
-        cancelButtonText: "Batal",
-        cancelButtonColor: "#F2994A",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          onSave(requestData);
-          Swal.fire({
-            title: "Sukses Edit Data Paket",
-            icon: "success",
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 2000,
-          }).then(() => {
-            navigate(`/langganan`);
-          });
+    const handleImageChange = (file) => {
+        if (file) {
+          setPreview(URL.createObjectURL(file));
+        } else {
+          setPreview("");
+          // Reset nilai pada field "upload" jika file dihapus
+          form.resetField("image", null);
         }
-      });
-    };
-
-    const handleCancel = () => {
-        form.reset();
-        setPreview("");
-        setIsNewImageSelected(false);
       };
+    
 
-  const onSave = async (data) => {
-    try {
-      const token = localStorage.getItem("access_token");
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      };
-      await axios.put(`https://api.harsaedu.my.id/web/subs-plan/${id}`, data, {
-        headers,
-      });
-  
-      form.reset();
-    } catch (error) {
-      console.error("Error updating Subs data:", error);
-    }
-  };
-  
-
-
-    return(
+    return (
         <Layout userRole="admin">
-            <div className="font-poppins mt-">
-                <h1 className="font-semibold text-2xl">Edit Paket Langganan</h1>
+            <div className="font-poppins">
+                <h1 className="font-semibold text-2xl">Tambah Paket Langganan</h1>
                 <div className="border border-[#F2994A] py-[45px] px-[38px] rounded-[12px] mt-10 mb-10 font-poppins text-[#092C4C]">
                 
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
                         {/* Nama Paket */}
-                        <FormField
-                            control={form.control}
-                            name="nama"
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="ml-1 text-lg font-semibold">
-                                Nama
-                                </FormLabel>
-                                <FormControl>
+                        <FormItem>
+                            <FormLabel 
+                            name="nama">
+                                <p className="font-semibold text-lg">Nama Paket</p>
+                            </FormLabel>
+                            <FormControl 
+                            name="nama">
                                 <Input
-                                    id="nama"
-                                    placeholder="EX :paket....."
-                                    className="border border-black"
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    onBlur={field.onBlur}
+                                id="nama"
+                                className="border border-black"
+                                placeholder="EX :paket....."
+                                {...form.register("nama")}
                                 />
-                                </FormControl>
-                                <FormMessage className="text-red-500" />
-                            </FormItem>
-                            )}
-                        />
+                            </FormControl>
+                            <FormMessage className="text-[#ED7878]">
+                                {form.formState.errors.nama?.message}
+                            </FormMessage>
+                        </FormItem>
 
                         {/* Durasi */}
                         <FormItem
@@ -237,7 +216,7 @@ useEffect(() => {
                             >
                                 <p className="font-semibold text-lg">Harga</p>
                             </FormLabel>
-                            <FormControl name="harga">
+                            <FormControl name="description">
                                 <Input
                                 id="harga"
                                 className="border border-black"
@@ -261,7 +240,7 @@ useEffect(() => {
                             </FormLabel>
                             <FormControl name="deskripsi">
                                 <Textarea
-                                id="deskripsis"
+                                id="deskripsi"
                                 className="border border-black h-32"
                                 placeholder="Masukan Deskripsi untuk Paket"
                                 {...form.register("deskripsi")}
@@ -272,7 +251,6 @@ useEffect(() => {
                             </FormMessage>
                         </FormItem>
 
-                        {/* Image */}
                         <FormField
                         control={form.control}
                         name="image"
@@ -290,19 +268,15 @@ useEffect(() => {
                                         <div className="border border-black border-dashed w-full flex flex-col justify-center items-center font-poppins font-semibold text-[#A2D2FF] text-lg">
                                         <InputFile
                                         id="image"
+                                        preview={preview}
                                         type="file"
-                                        preview={preview || apiImageUrl}
-                                        onChange={(e) => {
-                                            field.onChange(e.target.files[0]);
-                                            handleImageChange(e.target.files[0]);
-                                            form.setValue("image", e.target.files[0]);
-                                            console.log("InputFile onChange called");
-                                            console.log("Form image value after setting:", form.getValues("image"));
+                                        className="hidden"
+                                        onChange={(file) => {
+                                            field.onChange(file.target.files[0]);
+                                            console.log(file.target.files[0]);
+                                            handleImageChange(file.target.files[0]);
                                         }}
-                                        setPreview={(file) => {
-                                            setPreview(URL.createObjectURL(file));
-                                            setIsNewImageSelected(true);
-                                          }}
+                                        setPreview={setPreview}
                                         />
                                         </div>
                                     </div>
@@ -313,6 +287,8 @@ useEffect(() => {
                             </FormItem>
                         )}
                         />
+                            
+                        
 
                         <div className="flex justify-between mt-10">
                             <Button
@@ -338,4 +314,4 @@ useEffect(() => {
     )
 }
 
-export default EditSubscriptionPackage
+export default AddSubscriptionPackage

@@ -12,9 +12,6 @@ import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
-<<<<<<< HEAD
-  Form,  FormField,
-=======
   Select,
   SelectContent,
   SelectItem,
@@ -25,7 +22,6 @@ import {
   Form,
   FormControl,
   FormField,
->>>>>>> d09ccc61e376278e02a68449e25e919fb1e3d8f2
   FormItem,
   FormLabel,
   FormMessage,

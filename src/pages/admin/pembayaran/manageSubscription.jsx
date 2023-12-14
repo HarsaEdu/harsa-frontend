@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getSubs } from "@/utils/apis/subs-plan";
+import { deleteSubs } from "@/utils/apis/subs-plan";
 
 const AddSubscription = () => {
     const [subsData, setSubsData] = useState([]);
@@ -18,16 +20,10 @@ const AddSubscription = () => {
     useEffect(() => {
       const fetchSubsData = async () => {
         try {
-          const response = await axios.get(
-            "https://api.harsaedu.my.id/web/subs-plan",
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-              },
-            }
-          );
-          setSubsData(response.data.data);
-          console.log("Updated subsData:", response.data.data);
+          const response = await getSubs();
+          console.log("Response from getSubs:", response);
+          
+          setSubsData(response.data);
         } catch (error) {
           console.error("Error fetching Subs data:", error);
         }
@@ -55,14 +51,7 @@ const AddSubscription = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const response = await axios.delete(
-              `https://api.harsaedu.my.id/web/subs-plan/${id}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-                },
-              }
-            );
+            const response = await deleteSubs(id);
 
             console.log('Response dari server:', response);
   
@@ -140,29 +129,29 @@ const AddSubscription = () => {
         },
         {
           header: "Action",
-          rowSpan: true,
-          cell: (info) => (
-            <div className="text-center">
-              <DropdownAction>
-                <div className="flex flex-col">
-                  <Button
-                    className="bg-white px-8 text-black hover:text-white"
-                    onClick={() => handleEdit(info.row.original.id)} // Panggil fungsi handleEdit dengan ID sebagai argumen
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    className="bg-white px-8 text-black hover:text-white"
-                    onClick={() => handleDelete(info.row.original.id)}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </DropdownAction>
+      rowSpan: true,
+      cell: (info) => (
+        <div className={`flex justify-center items-center`} style={info.row.original.actStyle}>
+          <DropdownAction>
+            <div className="flex flex-col">
+              <Button
+                className="bg-white px-8 text-black hover:text-white"
+                onClick={() => handleEdit(info.row.original.id)} 
+              >
+                Edit
+              </Button>
+              <Button
+                className="bg-white px-8 text-black hover:text-white"
+                onClick={() => handleDelete(info.row.original.id)}
+              >
+                Delete
+              </Button>
             </div>
-          ),
-        },
-      ],  [subsData]);
+          </DropdownAction>
+        </div>
+      ),
+    },
+  ], [subsData]);
 
       console.log('subsData in render:', subsData); 
 
