@@ -151,7 +151,7 @@ export default function Router() {
           element: <AddKategori />,
         },
         {
-          path: "/category-management/edit-category/:idSubmission/:idSubmissionAns",
+          path: "/category-management/edit-category/:id",
           element: <EditKategori />,
         },
         {
