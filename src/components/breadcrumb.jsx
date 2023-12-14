@@ -14,9 +14,9 @@ const Breadcrumb = () => {
 
   useEffect(() => {
     // Cari ID dinamis pada pathnames
-    const idIndex = pathnames.findIndex((name) => /^\d+$/.test(name));
-
-    if (idIndex !== -1 && idIndex >= 2) {
+    const idIndex = pathnames.findIndex((name, index) => /^\d+$/.test(name) && index >= 2);
+  
+    if (idIndex !== -1) {
       const id = pathnames[idIndex];
       setDynamicId(id);
     } else {
@@ -40,7 +40,11 @@ const Breadcrumb = () => {
         const formattedName = formatBreadcrumbName(name);
         const routeTo = `${limitedPathnames.slice(0, index + 1).join('/')}`;
         const isLast = index === limitedPathnames.length - 1;
-        const linkTo = isLast && dynamicId ? routeTo : `${routeTo}/${dynamicId || ''}`;
+        const isSecondBreadcrumb = index === 1;
+
+        // Pengecekan apakah kita berada di breadcrumb kedua
+        const linkTo = isSecondBreadcrumb ? routeTo : `${routeTo}/${dynamicId || ''}`;
+
         return isLast ? (
           <span key={index} className="text-[#092C4C]"> {formattedName} </span>
         ) : (
