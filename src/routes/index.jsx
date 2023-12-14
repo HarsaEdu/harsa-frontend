@@ -86,7 +86,7 @@ export default function Router() {
           element: <AddClass />,
         },
         {
-          path: "/kelas/tambah-modul/:id",
+          path: "/kelas/manage-kelas/tambah-modul/:id",
           element: <CreateMaterial />,
         },
         {
