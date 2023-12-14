@@ -75,8 +75,8 @@ const Dashboard = () => {
     <Layout>
       <div className='container mb-10 font-poppins'>
         <div>
-          <h1 className='text-[40px] font-bold'>Hello {username},</h1>
-          <h3 className='text-[24px]'>udah siap ngajar lagi?</h3>  
+          <h1 className='text-5xl font-bold'>Hello {username},</h1>
+          <h3 className='text-2xl'>udah siap ngajar lagi?</h3>  
         </div>      
         <div className="overflow-x-auto mt-4">
           <div className="flex gap-8">

@@ -127,8 +127,8 @@ const DashboardAdmin = () => {
         <Layout>
             <div className='container mb-10 font-poppins'>
                 <div className='pb-10'>
-                    <h1 className='text-6xl font-bold'>Hello {username},</h1>
-                    <h3 className='text-3xl'>udah siap ngajar lagi?</h3>
+                    <h1 className='text-5xl font-bold'>Hello {username},</h1>
+                    <h3 className='text-2xl'>udah siap ngajar lagi?</h3>
                 </div>
                 <div className="flex space-x-8">
                     <div className="flex flex-col w-3/4">
