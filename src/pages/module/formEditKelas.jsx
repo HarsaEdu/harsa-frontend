@@ -5,7 +5,7 @@ import * as z from "zod";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import InputFile from "@/components/inputFile";
-import { getCourse, putCourse } from "@/utils/apis/courses";
+import { getDetailCourse, putCourse } from "@/utils/apis/courses";
 import { getCategory } from "@/utils/apis/category";
 import { getUserInsructor } from "@/utils/apis/user";
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { log } from "console";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -64,9 +65,11 @@ const formSchema = z.object({
 function EditClass() {
   const [categories, setCategories] = useState([]);
   const [instructor, setInstructor] = useState([]);
+  const [course, setCourse] = useState([]);
   const [preview, setPreview] = useState("");
   const MySwal = withReactContent(Swal);
   const { id } = useParams();
+  const params = useParams();
   const navigate = useNavigate();
 
   const form = useForm({
@@ -80,38 +83,43 @@ function EditClass() {
     },
   });
 
+  async function fetchDetail() {
+    try {
+      const result = await getDetailCourse(+params.id);
+      setCourse(result.data);
+      form.setValue("judul", result.data.title);
+      form.setValue("deskripsi", result.data.description);
+      // form.setValue("category", result.data.category_id);
+      form.setValue("instructor", result.data.user.name);
+      setPreview(result.data.image_url);
+      console.log(course);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getCategory();
         const allCategory = result.data;
         setCategories(allCategory); // Add this line to set the categories
-        const selectedCategory = allCategory.find(
-          (category) => category.id.toString() === id,
-        );
-
-        if (selectedCategory) {
-          form.setValue("judul", selectedCategory.name);
-          form.setValue("deskripsi", selectedCategory.description);
-          setPreview(selectedCategory.image);
-        } else {
-          console.error("Category Data Not Found");
-        }
       } catch (error) {
         console.log("Category Data Not Found", error);
       }
     };
     fetchData();
-  }, [id, form]);
-
-  useEffect(() => {
+    fetchDetail();
     fetchUserInstructor();
-  }, []);
+  }, [id, form]);
 
   const fetchUserInstructor = async () => {
     try {
       const response = await getUserInsructor();
+
+      // Setel data kategori ke dalam state
       setInstructor(response.data);
+      console.log(instructor);
     } catch (error) {
       console.error("Failed to get categories:", error);
     }
@@ -120,6 +128,7 @@ function EditClass() {
   const onSubmit = async (data) => {
     try {
       const fileData = form.watch("upload");
+      console.log(fileData);
 
       const formData = new FormData();
       formData.append("title", data.judul);
