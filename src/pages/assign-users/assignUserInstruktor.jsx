@@ -1,6 +1,6 @@
 import DropdownAction from "@/components/table/DropdownAction";
 import { useMemo, useEffect, useState, useCallback } from "react";
-import { Link, useSearchParams, useParams } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Table from "@/components/table/tables";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { getUserStudents, deleteUser } from "@/utils/apis/user";
 import { CSVLink } from "react-csv";
 import Swal from "sweetalert2";
 import { debounce } from "lodash";
+import AddUserButton from "@/components/module/dialogAddUser";
 import Pagination from "@/components/table/pagination";
 
 export default function AssignUserInstruktor() {
@@ -226,15 +227,7 @@ export default function AssignUserInstruktor() {
                 </CSVLink>
               </Button>
               {/* button add user */}
-              <Link to="/user-management/tambah-user">
-                <Button
-                  id="exportDataUser"
-                  href="/user-management/tambah-user"
-                  className="text-[16px]"
-                >
-                  Tambah Data User
-                </Button>
-              </Link>
+              <AddUserButton />
             </div>
           </div>
         </div>

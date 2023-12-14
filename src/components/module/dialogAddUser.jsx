@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,8 +10,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import CardModuleStudent from "@/components/card/cardModule";
+import Pagination from "./pageination";
 import { getAllStudents } from "@/utils/apis/user";
-import Pagination from "@/components/module/pageination";
 
 const DialogDemo = () => {
   const [modules, setModules] = useState([]);
@@ -76,18 +76,21 @@ const DialogDemo = () => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <div className="flex items-start justify-start">
-            <Pagination
-              currentPage={currentPage}
-              itemsPerPage={itemsPerPage}
-              totalItems={modules.length}
-              onPageChange={handlePageChange}
-              onPageSizeChange={handlePageSizeChange}
-            />
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={modules.length}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+          />
+          <div>
+            <Button
+              type="submit"
+              className="sticky bg-slate-600 hover:bg-slate-400"
+            >
+              Save changes
+            </Button>
           </div>
-          <Button type="submit" className="bg-slate-600 hover:bg-slate-400">
-            Save changes
-          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
