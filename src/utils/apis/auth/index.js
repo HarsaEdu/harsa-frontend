@@ -1,3 +1,3 @@
-import { login, handleTokenRefresh } from "./api";
+import { handleTokenRefresh } from "./api";
 
-export { login, handleTokenRefresh };
+export { handleTokenRefresh };

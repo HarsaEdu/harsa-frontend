@@ -1,6 +1,6 @@
 import axiosWithConfig from "../axiosWithConfig";
 
-const handleTokenRefresh = async (refreshToken) => {
+export const handleTokenRefresh = async (refreshToken) => {
   try {
     const response = await axios.post(
       "https://api.harsaedu.my.id/web/auth/access-token",
