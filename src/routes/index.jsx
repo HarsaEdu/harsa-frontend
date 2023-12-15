@@ -39,9 +39,11 @@ import EditClass from "@/pages/module/formEditKelas";
 import CardUlasanKelas from "@/pages/admin/content-management/kelas/cardUlasanKelas";
 import AddKategori from "@/pages/admin/content-management/kategori/addKategori";
 import EditKategori from "@/pages/admin/content-management/kategori/editKategori";
-import Notification from "@/pages/notification";
-import DetailNotification from "@/pages/detail-notifikasi";
 
+import Notification from "@/pages/notification";
+
+import DetailNotification from "@/pages/detail-notifikasi";
+import ListTugas from "@/pages/manage-tugas/listTugas";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -79,10 +81,6 @@ export default function Router() {
               path: "/kelas/manage-kelas/:id/list-user", // Menggunakan path yang terpisah untuk Kelas
               element: <AssignUserInstruktor />,
             },
-            {
-              path: "/kelas/manage-kelas/:id/ulasan-kelas", // Menggunakan path yang terpisah untuk Kelas
-              element: <CardUlasanKelas />,
-            },
           ],
         },
         {
@@ -102,7 +100,7 @@ export default function Router() {
           element: <EditClass />,
         },
         {
-          path: "/kelas/tambah-modul/tambah-tugas",
+          path: "/kelas/tambah-modul/tambah-tugas/:idSection",
           element: <CreateTask />,
         },
         {
@@ -114,15 +112,19 @@ export default function Router() {
           element: <HeaderQuiz />,
         },
         {
-          path: "/kelas/manage-tugas",
+          path: "/kelas/manage-kelas/manage-tugas/:idSection",
+          element: <ListTugas />,
+        },
+        {
+          path: "/kelas/manage-tugas/:idSection/:idSubmission",
           element: <ManageTugas />,
         },
         {
-          path: "/kelas/manage-tugas/edit", //Nanti ganti jadi ID
+          path: "/kelas/manage-tugas/edit/:idSection/:idSubmission", //Nanti ganti jadi ID
           element: <EditTugas />,
         },
         {
-          path: "/kelas/manage-tugas/review", //Nanti ganti jadi ID
+          path: "/kelas/manage-tugas/review/:idSubmission/:idSubmissionAns", //Nanti ganti jadi ID
           element: <ReviewTugas />,
         },
         {
