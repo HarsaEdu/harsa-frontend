@@ -88,7 +88,7 @@ function EditClass() {
       setCourse(result.data);
       form.setValue("judul", result.data.title);
       form.setValue("deskripsi", result.data.description);
-      // form.setValue("category", result.data.category_id);
+      form.setValue("category", result.data.category_id);
       form.setValue("instructor", result.data.user.name);
       setPreview(result.data.image_url);
       console.log(course);
@@ -111,6 +111,18 @@ function EditClass() {
     fetchDetail();
     fetchUserInstructor();
   }, [id, form]);
+
+  useEffect(() => {
+    if (course) {
+      console.log("Course Data:", course);
+
+      // Set form values when course data is available
+      form.reset({
+        category: course.category?.id || null,
+        instructor: course.user?.id || null,
+      });
+    }
+  }, [course]);
 
   const fetchUserInstructor = async () => {
     try {
