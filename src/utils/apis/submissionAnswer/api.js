@@ -26,3 +26,15 @@ export const getAllSubmissionAnswers = async (params, idSubmission) => {
     throw Error("Failed to get submission answer");
   }
 };
+
+export const getSubmissionAnswerById = async (idSubmission, idSubmissionAnswer) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `/courses/submissions/${idSubmission}/submission-answer/${idSubmissionAnswer}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get submission answer");
+  }
+ }

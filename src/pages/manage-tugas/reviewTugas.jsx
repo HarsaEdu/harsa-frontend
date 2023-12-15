@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Breadcrumb from "@/components/breadcrumb"
 import Layout from "@/components/layout/Index"
@@ -15,17 +15,40 @@ import Swal from "sweetalert2";
 import brokenImg from "@/assets/broken-image.svg";
 import checkGrey from "@/assets/icons/check-grey.svg";
 import closeGrey from "@/assets/icons/close-grey.svg";
+import { getSubmissionAnswerById } from "@/utils/apis/submissionAnswer";
+import { useParams } from "react-router-dom";
 
 const ReviewTugas = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [status, setStatus] = useState("not submit");
     const [reason, setReason] = useState("");
+    const [dataAnswer, setDataAnswer] = useState({});
 
+    const params = useParams();
     const form = useForm({
         defaultValues: {
             reason: "",
         },
     });
+
+    const fetchData = async () => {
+        try {
+            const result = await getSubmissionAnswerById(params.idSubmission, params.idSubmissionAns)
+            setDataAnswer(result.data);
+            setStatus(result.data.status);
+            setReason(result.data.feedback);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+        console.log("Data Answer : ", dataAnswer);
+        console.log("Status : ", status);
+        console.log("Reason : ", reason);
+    }, []);
+
 
     const handleRejected = (data, e) => {
         e.preventDefault();
@@ -130,7 +153,7 @@ const ReviewTugas = () => {
                         </div>
                     )}
                     {status !== "not submit" && (
-                        <iframe className="mb-8" src="https://drive.google.com/file/d/1rU5hGtj5W6G5So3NdDYi7qvoKQB1OoXT/preview" width="100%" height="640" allow="autoplay"></iframe>
+                        <iframe className="mb-8" src={dataAnswer.submission} width="100%" height="640" allow="autoplay"></iframe>
                     )}
 
                     {status === "rejected" && (
