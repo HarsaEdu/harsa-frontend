@@ -1,3 +1,3 @@
-import { getUser, deleteUser, getUserAccount, updateUserAccount, getUserInsructor, getUserProfile, editUserProfile } from "./api";
+import { getUser, deleteUser, getUserAccount, updateUserAccount, getUserInsructor, getUserInstructorTable, getUserStudentTable, getUserProfile, editUserProfile } from "./api";
 
-export { getUser, deleteUser, getUserAccount, updateUserAccount, getUserInsructor, getUserProfile, editUserProfile };
+export { getUser, deleteUser, getUserAccount, updateUserAccount, getUserInsructor, getUserInstructorTable, getUserStudentTable, getUserProfile, editUserProfile };

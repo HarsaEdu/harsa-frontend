@@ -25,7 +25,10 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const formSchema = z.object({
-  name: z.string().min(1, "*Nama Kategori Wajib di isi"),
+  name: z
+    .string()
+    .min(1, "*Nama Kategori Wajib di isi")
+    .max(10, "Maksimal 10 Karakter"),
   description: z.string().nonempty("*Deskripsi Wajib di isi"),
   image: z
     .any()

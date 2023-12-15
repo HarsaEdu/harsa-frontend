@@ -8,7 +8,7 @@ import InputFile from "@/components/inputFile";
 import { createCourse } from "@/utils/apis/courses";
 import { getCategory } from "@/utils/apis/category";
 import { getUserInsructor } from "@/utils/apis/user";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -68,6 +68,7 @@ function formKelasAdmin() {
   const setImage = (imageUrl) => {
     console.log("Setting image:", imageUrl);
   };
+  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -127,41 +128,28 @@ function formKelasAdmin() {
       formData.append("user_id", data.instructor);
       formData.append("file", fileData);
   
-      // Menampilkan konfirmasi sebelum mengirim data ke backend
-      const confirmResult = await MySwal.fire({
-        icon: "info",
-        title: "Konfirmasi",
-        text: "Apakah Anda yakin ingin menambahkan kelas ini?",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Tidak",
+      // Memanggil fungsi createCourse untuk membuat kelas baru dengan data yang sesuai
+      const response = await createCourse(formData);
+  
+      console.log(response);
+  
+      setPreview("");
+      form.reset();
+      
+      navigate("/kelas");
+  
+      // Menampilkan informasi sukses tanpa konfirmasi
+      MySwal.fire({
+        icon: "success",
+        title: "Sukses Tambah Kelas",
+        text: response.message || "",
+        showConfirmButton: false,
+        showCloseButton: true,
+        customClass: {
+          closeButton: "swal2-cancel-button",
+        },
+        buttonsStyling: false,
       });
-  
-      if (confirmResult.isConfirmed) {
-        // Memanggil fungsi createCourse untuk membuat kelas baru dengan data yang sesuai
-        const response = await createCourse(formData);
-  
-        console.log(response);
-  
-        setPreview("");
-        form.reset();
-  
-        const result = await MySwal.fire({
-          icon: "success",
-          title: "Sukses Tambah Kelas",
-          text: response.message || "",
-          showConfirmButton: false,
-          showCloseButton: true,
-          customClass: {
-            closeButton: "swal2-cancel-button",
-          },
-          buttonsStyling: false,
-        });
-  
-        if (result.isDismissed || result.isConfirmed) {
-          MySwal.close();
-        }
-      }
     } catch (error) {
       console.error("Failed to add course:", error);
       const errorMessage =

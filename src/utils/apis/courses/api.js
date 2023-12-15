@@ -48,3 +48,15 @@ export const deleteCourse = async (courseId) => {
     throw new Error("Failed to delete course");
   }
 };
+
+export const putCourse = async (courseId, courseData) => {
+  try {
+    const response = await axiosWithConfig.put(
+      `/courses/${courseId}`,
+      courseData,
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to edit course");
+  }
+};
