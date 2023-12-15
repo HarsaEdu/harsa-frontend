@@ -28,7 +28,6 @@ const DialogDemo = () => {
       const result = await getAllStudents();
       setModules(result.data);
       if (result.data !== null && result.data !== undefined) {
-        // Menerapkan pagination
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         setSection(result.data.slice(startIndex, endIndex));
@@ -46,7 +45,7 @@ const DialogDemo = () => {
 
   const handlePageSizeChange = (newPageSize) => {
     setItemsPerPage(newPageSize);
-    setCurrentPage(1); // Kembali ke halaman pertama saat mengganti ukuran halaman
+    setCurrentPage(1);
   };
 
   return (

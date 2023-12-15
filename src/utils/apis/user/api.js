@@ -70,7 +70,7 @@ export const getUserInsructor = async () => {
 export const getAllStudents = async () => {
   try {
     const response = await axiosWithConfig.get(
-      "/users?offset=0&limit=9999&search=&roleID=3",
+      "/users?offset=0&limit=10&search=&roleID=3",
     );
 
     return response.data;
