@@ -1,41 +1,57 @@
-import { React, useMemo } from "react";
+import { React, useMemo, useState, useEffect } from "react";
 import Layout from '@/components/layout/Index';
-import Table from '@/components/table/tables';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import instructorData from "@/utils/user-data/instructorData";
-import dummyStudents from "@/utils/user-data/studentData";
 import CardTotal from "./card/cardTotal";
 import LineChart from './chart/lineChart';
 import PieChart from "./chart/pieChart";
+import StudentTable from "./tabel/studentTable";
+import InstructorTable from "./tabel/instructorTable";
+import { getAllCountData } from "@/utils/apis/dashboard";
 
 const DashboardAdmin = () => {
     const username = localStorage.getItem('username');
+    const [countData, setCountData] = useState(null);
+    const [pieChartData, setPieChartData] = useState({
+        labels: [],
+        datasets: [
+            {
+                data: [],
+                backgroundColor: [],
+                hoverBackgroundColor: [],
+                borderWidth: 0,
+            },
+        ],
+    });
 
-    const columns = useMemo(() => [
-        {
-          header: "No",
-          cell: (info) => <div className="text-center">{info.row.index + 1}</div>,
-        },
-        {
-          header: "Nama",
-          accessorKey: "name", // Menggunakan properti "username" sebagai nama
-          cell: (info) => <div className="text-center">{info.getValue()}</div>,
-        },
-        {
-          header: "Email",
-          accessorKey: "email",
-          cell: (info) => <div className="text-center">{info.getValue()}</div>,
-        },
-        {
-          header: "Kelas",
-          accessorKey: "class",
-          cell: (info) => <div className="text-center">{info.getValue()}</div>,
-        },
-    ], []);
-      
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getAllCountData();
+                setCountData(response.data);
 
-    const selectItem = [10, 25, 50];
+                // Mapping count_interest data for PieChart
+                const interestData = response.data.count_interest || [];
+                const labels = interestData.map((item) => item.name);
+                const data = interestData.map((item) => item.count);
+                const backgroundColor = ['#FF6384', '#36A2EB', '#FFCE56', '#FF'].slice(0, interestData.length);
+
+                setPieChartData({
+                    labels,
+                    datasets: [
+                        {
+                            data,
+                            backgroundColor,
+                            hoverBackgroundColor: backgroundColor,
+                            borderWidth: 0,
+                        },
+                    ],
+                });
+            } catch (error) {
+                console.error("Error fetching count data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     // Contoh data dan opsi untuk chart
     const chartData = {
@@ -77,19 +93,7 @@ const DashboardAdmin = () => {
         },
     };
 
-    const data = {
-        labels: ['Label 1', 'Label 2', 'Label 3', 'label 4'],
-        datasets: [
-          {
-            data: [30, 40, 30, 50],
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF'], // Warna untuk setiap label
-            hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#FF'],
-            borderWidth: 0
-          },
-        ],
-      };
-
-      const pieOptions = {
+    const pieOptions = {
         plugins: {
             legend: {
                 display: true,
@@ -117,14 +121,14 @@ const DashboardAdmin = () => {
             },
             },
         },
-      };
+    };
 
     return (
         <Layout>
             <div className='container mb-10 font-poppins'>
                 <div className='pb-10'>
-                    <h1 className='text-6xl font-bold'>Hello {username},</h1>
-                    <h3 className='text-3xl'>udah siap ngajar lagi?</h3>
+                    <h1 className='text-5xl font-bold'>Hello {username},</h1>
+                    <h3 className='text-2xl'>udah siap ngajar lagi?</h3>
                 </div>
                 <div className="flex space-x-8">
                     <div className="flex flex-col w-3/4">
@@ -135,54 +139,18 @@ const DashboardAdmin = () => {
                         <div className='container shadow w-full font-bold text-2xl p-10 space-y-4 mb-10'>
                             <LineChart data={chartData} options={chartOptions} />
                         </div>
-                        <div className='container border-2 border-[#092C4C] rounded-lg w-full p-10 space-y-4 mb-10'>
-                            <h1 className="text-2xl text-[#092C4C]">Instructor Data</h1>
-                            <Table
-                                datas={instructorData}
-                                columns={columns}
-                                classNameHeader="bg-[#092C4C] text-white"
-                                isVisible={true}
-                                rowVisible={true}
-                                searchComponent={
-                                    <div className="flex w-1/2 items-center justify-end space-x-3">
-                                    <p className="text-xl">Search</p>{" "}
-                                    <Input
-                                        id="search"
-                                        className="w-2/4 rounded border-[#092C4C]"
-                                    />
-                                    </div>
-                                }
-                            />
-                        </div>
-                        <div className='container border-2 border-[#092C4C] rounded-lg w-full p-10 space-y-4'>
-                            <h1 className="text-2xl text-[#092C4C]">Student Data</h1>
-                            <Table
-                                datas={instructorData}
-                                columns={columns}
-                                classNameHeader="bg-[#092C4C] text-white"
-                                isVisible={true}
-                                rowVisible={true}
-                                searchComponent={
-                                    <div className="flex w-1/2 items-center justify-end space-x-3">
-                                    <p className="text-xl">Search</p>{" "}
-                                    <Input
-                                        id="search"
-                                        className="w-2/4 rounded border-[#092C4C]"
-                                    />
-                                    </div>
-                                }
-                            />
-                        </div>
+                        <InstructorTable />
+                        <StudentTable />
                     </div>
                     <div className="flex flex-col w-1/4 h-screen space-y-10">
                         <CardTotal judul="Pendapatan" nominal="Rp 5.000.000" />
-                        <CardTotal judul="Course" nominal="63" />
-                        <CardTotal judul="Instructor" nominal="30" />
-                        <CardTotal judul="Student" nominal="765" />
+                        <CardTotal judul="Course" nominal={countData?.count_course || 0} />
+                        <CardTotal judul="Instructor" nominal={countData?.count_intructure || 0} />
+                        <CardTotal judul="Student" nominal={countData?.count_student || 0} />
                         <div className="container h-84 border-2 border-[#092C4C] rounded-lg w-full font-bold text-2xl p-4 mb-10">
                             <h1 className="text-xl">Persentase Siswa</h1>
                             <h1 className="text-xs font-normal mb-8">Berdasarkan topic peminatan</h1>
-                            <PieChart data={data} options={pieOptions}/>
+                            <PieChart data={pieChartData} options={pieOptions} />
                         </div>
                     </div>
                 </div>
