@@ -1,33 +1,64 @@
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
 import Table from "@/components/table/tables";
-import { React, useMemo, useState, useEffect } from "react";
+import { React, useMemo, useState, useEffect, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { deleteFAQ } from "@/utils/apis/faq";
 import DropdownAction from "@/components/table/DropdownAction";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { debounce } from "lodash";
+import Pagination from "@/components/table/pagination";
+import { getFAQ } from "@/utils/apis/faq/api";
 
 export default function ManageFaq() {
   const [faqData, setFaqData] = useState([]);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState("");
+  const [meta, setMeta] = useState([]);
+  const [limitValue, setLimitValue] = useState(10);
+  const [offset, setOffset] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const pageSizes = ["5", "10", "25"];
 
   useEffect(() => {
-    fetchFaqData();
-  }, []);
+    fetchData();
+  }, [searchParams, limitValue, offset]);
 
-  async function fetchFaqData () {
-    try {
-      const response = await axios.get(
-        "https://api.harsaedu.my.id/web/faqs?offset=0&limit=10"
-      );
-      setFaqData(response.data.data);
-    } catch (error) {
-      console.error("Error fetching FAQ data:", error);
+  async function fetchData() {
+    if (searchParams.has("limit")) {
+      setLimitValue(searchParams.get("limit"));
     }
-  };
+
+    if (searchParams.has("search")) {
+      searchParams.set("offset", 0);
+      setSearchValue(searchParams.get("search"));
+    } else {
+      searchParams.set("offset", offset);
+      searchParams.set("limit", limitValue);
+    }
+
+    let query = Object.fromEntries(
+      [...searchParams].filter((param) => param[0] !== "tab"),
+    );
+
+    try {
+      setIsLoading(true);
+      const response = await getFAQ({ ...query }); // Menggunakan getUser dari utils
+      setFaqData(response.data);
+      setMeta(response.pagination);
+    } catch (error) {
+      setError(error);
+      setFaqData([]);
+      setMeta([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const handleEdit = (id) => {
     // Navigasi ke halaman edit FAQ dengan ID yang sesuai
@@ -73,6 +104,48 @@ export default function ManageFaq() {
       });
     }
   };
+
+  function handlePagination(newOffset) {
+    setOffset(newOffset);
+
+    // Update the searchParams with the new offset value
+    searchParams.set("limit", String(limitValue));
+    searchParams.set("offset", String(newOffset));
+    setSearchParams(searchParams);
+  }
+
+  function handlePageSizeChange(newValue) {
+    setLimitValue(newValue);
+
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("limit", newValue);
+    newSearchParams.set("offset", 0);
+    setSearchParams(newSearchParams);
+  }
+
+  const getSuggestions = useCallback(
+    async function (search) {
+      if (!search) {
+        searchParams.delete("search");
+        searchParams.set("offset", offset);
+      } else {
+        searchParams.set("search", search);
+        searchParams.set("offset", 0);
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams],
+  );
+
+  const getSuggestionsDebounce = useMemo(
+    () => debounce(getSuggestions, 1000),
+    [getSuggestions],
+  );
+
+  function onInputChange(newValue) {
+    setSearchValue(newValue);
+    getSuggestionsDebounce(newValue);
+  }
 
   const columns = useMemo(() => [
     {
@@ -125,25 +198,54 @@ export default function ManageFaq() {
             <h2 className="text-3xl font-semibold">Kelola FAQ</h2>
 
             <div>
+             <div className="mt-8 flex w-full justify-between">
+                <div className="flex items-center">
+                  <span className="bg-[#092C4C] px-5 py-2 text-white">Row</span>
+                  <select
+                    className="border border-black px-3 py-2"
+                    value={limitValue}
+                    onChange={(e) => handlePageSizeChange(e.target.value)}
+                  >
+                    {pageSizes.map((pageSize) => (
+                      <option key={pageSize} value={pageSize}>
+                        {pageSize}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex w-1/2 items-center justify-end space-x-8">
+                  <p className="text-xl">Search</p>
+                  <Input
+                    id="search"
+                    className=" w-4/12 rounded-xl border-[#092C4C]"
+                    placeholder="Cari sesuatu..."
+                    value={searchValue}
+                    onChange={(e) => onInputChange(e.currentTarget.value)}
+                  />
+                  <Link to="/content-management/FAQ/tambah-FAQ">
+                    <Button>Tambah FAQ</Button>
+                  </Link>
+                </div>
+              </div>
               <Table
                 datas={faqData}
                 columns={columns}
-                rowVisible={true}
-                isVisible={true}
-                searchComponent={
-                  <div className="flex w-1/2 items-center justify-end space-x-3">
-                    <p className="text-xl font-semibold">Search</p>{" "}
-                    <Input
-                      id="search"
-                      className="w-40 rounded border-[#092C4C]"
-                    />
-                    <Link to="/content-management/FAQ/tambah-FAQ">
-                      <Button>Tambah FAQ</Button>
-                    </Link>
-                  </div>
-                }
-                classNameHeader="bg-[#a2d2ff]"
+                classNameHeader="bg-[#A2D2FF]"
+                isLoading={isLoading}
               />
+              <div className="mt-2 flex justify-end">
+                <Pagination
+                  meta={meta}
+                  onClickPrevious={() =>
+                    handlePagination((meta.offset -= parseInt(limitValue)))
+                  }
+                  onClickNext={() =>
+                    handlePagination((meta.offset += parseInt(limitValue)))
+                  }
+                  onClickPage={(page) => handlePagination(page)}
+                  limitValue={limitValue}
+                />
+              </div>
             </div>
           </div>
         </div>
