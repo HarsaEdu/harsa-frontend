@@ -34,14 +34,12 @@ harga: z.coerce.number().min(1, "*Harga Wajib di isi"),
 deskripsi: z.string().nonempty("*Deskripsi Wajib di isi"),
 image: z
     .any()
-    .refine((data) => data !== undefined && data !== null && data !== "", {
-      message: "*Image  wajib di isi",
+    .refine((data) => !data || data.size <= MAX_FILE_SIZE, {
+      message: "*Ukuran file terlalu besar, maksimal 5 MB",
     })
-    .refine((data) => data?.size <= MAX_FILE_SIZE, {
-        message: "*Ukuran file terlalu besar, maksimal 5 MB",
-    })
-    .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
-      message: "*Format file yang di upload salah, format file harus PNG, JPG, Jpeg, svg",
+    .refine((data) => !data || ACCEPTED_IMAGE_TYPES.includes(data.type), {
+      message:
+        "*Format file yang di-upload salah, format file harus PNG, JPG, Jpeg, svg",
     }),
 });
 
@@ -105,56 +103,53 @@ useEffect(() => {
   };
    
   const onSubmit = async (data) => {
-    // Data untuk dikirim ke backend
-    const requestData = {
-        title: data.nama,
-        duration: parseInt(data.durasi),
-        price: parseInt(data.harga),
-        description: data.deskripsi,
-        image: isNewImageSelected ? data.image : apiImageUrl,
-      };
 
-      console.log(requestData)
+    const fileData = form.watch("image");
+    console.log(fileData);
 
-      Swal.fire({
-        title: "Yakin kamu mau Menyimpan data ini?",
-        icon: "question",
-        showCancelButton: true,
-        showConfirmButton: true,
-        confirmButtonColor: "#092C4C",
-        confirmButtonText: "Ya, Simpan",
-        cancelButtonText: "Batal",
-        cancelButtonColor: "#F2994A",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          onSave(requestData);
-          Swal.fire({
-            title: "Sukses Edit Data Paket",
-            icon: "success",
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 2000,
-          }).then(() => {
-            navigate(`/langganan`);
-          });
-        }
-      });
-    };
+    const formData = new FormData();
+    formData.append("title", data.nama);
+    formData.append("duration", data.durasi);
+    formData.append("price", data.harga);
+    formData.append("description", data.deskripsi);
+    if (fileData) {
+      formData.append("image", fileData);
+    }
 
-    const handleCancel = () => {
-        form.reset();
-        setPreview("");
-        setIsNewImageSelected(false);
-      };
+    console.log(formData)
+
+    Swal.fire({
+      title: "Yakin kamu mau Menyimpan data ini?",
+      icon: "question",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonColor: "#092C4C",
+      confirmButtonText: "Ya, Simpan",
+      cancelButtonText: "Batal",
+      cancelButtonColor: "#F2994A",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onSave(formData);
+        Swal.fire({
+          title: "Sukses Edit Data Paket",
+          icon: "success",
+          showConfirmButton: false,
+          showCloseButton: true,
+        }).then(() => {
+          navigate(`/langganan`);
+        });
+      }
+    });
+  };
+
+  const handleCancel = () => {
+      form.reset();
+      setPreview("");
+      setIsNewImageSelected(false);
+  };
 
   const onSave = async (data) => {
     try {
-      const token = localStorage.getItem("access_token");
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      };
-      
       const subsId = (id); 
 
       const updatedSubs = await updateSubs(subsId, data);
@@ -273,7 +268,6 @@ useEffect(() => {
                             <FormItem
                             className="mt-5">
                                 <p className="font-semibold text-lg mb-3">Image</p>
-
                                 <FormLabel 
                                 name="image"
                                 htmlFor="image"

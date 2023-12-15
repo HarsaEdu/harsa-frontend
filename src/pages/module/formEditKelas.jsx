@@ -49,16 +49,14 @@ const formSchema = z.object({
       message: "*Instructor wajib di pilih",
     }),
   upload: z
-    .any()
-    .refine((data) => data !== undefined && data !== null && data !== "", {
-      message: "*Gambar harus di isi",
-    })
-    .refine((data) => data?.size <= MAX_FILE_SIZE, {
-      message: "*Ukuran gambar harus di bawah 5 MB.",
-    })
-    .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
-      message: "*Format file salah, upload dengan format JPG, JPEG, atau PNG",
-    }),
+  .any()
+  .refine((data) => !data || data.size <= MAX_FILE_SIZE, {
+    message: "*Ukuran file terlalu besar, maksimal 5 MB",
+  })
+  .refine((data) => !data || ACCEPTED_IMAGE_TYPES.includes(data.type), {
+    message:
+      "*Format file yang di-upload salah, format file harus PNG, JPG, Jpeg, svg",
+  }),
 });
 
 function EditClass() {
@@ -146,7 +144,9 @@ function EditClass() {
       formData.append("description", data.deskripsi);
       formData.append("category_id", data.category);
       formData.append("user_id", data.instructor);
-      formData.append("file", fileData);
+      if (fileData) {
+        formData.append("file", fileData);
+      }
 
       const confirmResult = await MySwal.fire({
         icon: "question",
