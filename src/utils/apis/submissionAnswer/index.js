@@ -1,2 +1,2 @@
-import { getAllSubmissionAnswers, getSubmissionAnswerById } from "./api";
-export { getAllSubmissionAnswers, getSubmissionAnswerById };
+import { getAllSubmissionAnswers, getSubmissionAnswerById, updateStatusSubmission } from "./api";
+export { getAllSubmissionAnswers, getSubmissionAnswerById, updateStatusSubmission };
