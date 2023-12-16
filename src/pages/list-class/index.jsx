@@ -65,6 +65,7 @@ const ListClass = () => {
         setSearchValue(searchParams.get("search"));
       } else {
         searchParams.set("offset", 0);
+        searchParams.set("limit", 10);
       }
 
       if (searchParams.has("category")) {
