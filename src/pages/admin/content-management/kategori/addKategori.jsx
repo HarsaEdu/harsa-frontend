@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { addCategory } from "@/utils/apis/manage-category";
+import withReactContent from "sweetalert2-react-content";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -46,6 +47,7 @@ const formSchema = z.object({
 
 const AddKategori = () => {
   const [preview, setPreview] = useState("");
+  const MySwal = withReactContent(Swal);
 
   const navigate = useNavigate();
   const form = useForm({
@@ -64,25 +66,32 @@ const AddKategori = () => {
       formData.append("name", data.name);
       formData.append("description", data.description);
       formData.append("image", data.image);
-      const result = await addCategory(formData);
-      Swal.fire({
-        title: "Sukses Tambah Data",
+      const response = await addCategory(formData);
+      const result = await MySwal.fire({
         icon: "success",
+        title: "Sukses Tambah Data paket Langganan",
+        text: response.message || "",
         showConfirmButton: false,
         showCloseButton: true,
-      }).then((result) => {
-        if (result.isDismissed) {
-          navigate("/category-management/category");
-        }
+        customClass: {
+          closeButton: "swal2-cancel-button",
+        },
+        buttonsStyling: false,
       });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
 
-  const handleCancel = () => {
-    form.reset();
-    setPreview("");
+      if (result.isDismissed || result.isConfirmed) {
+        navigate("/category-management/category");
+      };
+    } catch (error) {
+      console.error('Error adding Category:', error);
+      Swal.fire({
+        title: "Gagal Tambah Kategori",
+        text: "category name already exist",
+        icon: "error",
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+    }
   };
 
   const handleImageChange = (file) => {
@@ -94,7 +103,7 @@ const AddKategori = () => {
   };
 
   return (
-    <Layout userRole="admin">
+    <Layout>
       <div className="font-poppins">
         <h1 className="text-2xl font-semibold">Tambah Kategori</h1>
         <div className="mb-10 mt-10 rounded-[12px] border border-[#F2994A] px-[38px] py-[45px] font-poppins text-[#092C4C]">

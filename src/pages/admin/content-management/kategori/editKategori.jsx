@@ -31,14 +31,14 @@ const formSchema = z.object({
     .min(1, "*Nama Kategori Wajib di isi")
     .max(10, "Maksimal 10 Karakter"),
   description: z.string().nonempty("*Deskripsi Wajib di isi"),
-  image: z.any().nullable(),
-  // .refine((data) => data?.size <= MAX_FILE_SIZE, {
-  //   message: "*ukuran file terlalu besar, maksimal 5 mb",
-  // })
-  // .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
-  //   message:
-  //     "*Format file yang di upload salah, format file harus PNG, JPG, Jpeg, svg",
-  // }),
+  image: z.any()
+  .refine((data) => !data || data.size <= MAX_FILE_SIZE, {
+    message: "*Ukuran file terlalu besar, maksimal 5 MB",
+  })
+  .refine((data) => !data || ACCEPTED_IMAGE_TYPES.includes(data.type), {
+    message:
+      "*Format file yang di-upload salah, format file harus PNG, JPG, Jpeg, svg",
+  }),
 });
 
 const EditKategori = () => {
@@ -81,10 +81,15 @@ const EditKategori = () => {
 
   const onSubmit = (data) => {
     try {
-      const requestData = {
-        name: data.name,
-        description: data.description,
-      };
+      const fileData = form.watch("image");
+      console.log(fileData);
+
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      if (fileData) {
+        formData.append("file", fileData);
+      }
 
       Swal.fire({
         title: "Yakin kamu mau simpan data ini?",
@@ -97,7 +102,7 @@ const EditKategori = () => {
         cancelButtonColor: "#F2994A",
       }).then((result) => {
         if (result.isConfirmed) {
-          onSave(requestData);
+          onSave(formData);
           Swal.fire({
             title: "Sukses Update Data",
             icon: "success",

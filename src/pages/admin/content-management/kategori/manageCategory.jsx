@@ -66,7 +66,7 @@ const ManageCategory = () => {
 
     async function handleDelete(id){
       Swal.fire({
-        title: "Yakin kamu mau menghapus FAQ ini?",
+        title: "Yakin kamu mau menghapus Kategori ini?",
         icon: "question",
         showCancelButton: true,
         showConfirmButton: true,
@@ -78,14 +78,13 @@ const ManageCategory = () => {
         if (result.isConfirmed) {
           try {
             const result = await deleteCategory(id)
-            if (result.data.code === 200) {
-              Swal.fire({
-                title: "Sukses Menghapus FAQ",
-                icon: "success",
-                showConfirmButton: false,
-                showCloseButton: true,
-              });
-            }
+            Swal.fire({
+              title: "Sukses Menghapus Kategori",
+              icon: "success",
+              showConfirmButton: false,
+              showCloseButton: true,
+            });
+          
           } catch (error) {
             console.log("Error", error)
           } finally {

@@ -32,7 +32,7 @@ export const addCategory = async (FormData) => {
     const response = await axiosWithConfig.post("/categories", FormData);
     return response.data;
   } catch (error) {
-    throw Error("Failed to get category");
+    console.error('Error adding category:', error);
   }
 }
 
