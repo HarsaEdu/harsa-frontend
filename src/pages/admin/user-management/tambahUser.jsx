@@ -44,6 +44,7 @@ import {
 
 export default function AddUser() {
   const VALID_ROLE = ["Admin", "Instructor", "Student"];
+  const currentYear = new Date().getFullYear()
   const roleMapping = {
     Admin: 1,
     Instructor: 2,
@@ -52,19 +53,18 @@ export default function AddUser() {
   const navigate = useNavigate();
 
   const addUserSchema = z.object({
-    email: z.string().min(1, {message: "Isi Email Terlebih Dahulu"}).email({ message: "*format email salah, tambahkan karakter @" }),
+    email: z.string().min(1, {message: "*Isi Email Terlebih Dahulu"}).email({ message: "*format email salah, tambahkan karakter @" }),
     role: z.string().refine((value) => VALID_ROLE.includes(value), {
       message: "*Isi Role Terlebih Dahulu",
     }),
-    password: z
-        .string()
-        .min(1, { message: "*Isi Password Terlebih Dahulu" })
-        .min(8, { message: "*Password Minimal 8 Karakter" }),
-    confirmPassword: z.string(),
     firstName: z.string().min(1, { message: "*Isi Nama Depan Terlebih Dahulu" }),
     lastName: z.string().min(1, { message: "*Isi Nama Belakang Terlebih Dahulu" }),
     bio: z.string().min(1, { message: "*Isi Bio Terlebih Dahulu" }),
-    dateBirth: z.date().refine((value) => {
+    dateBirth: z.date()
+    .refine((value) => value !== null, {
+      message: "*Isi Tanggal Lahir Terlebih Dahulu",
+    })
+    .refine((value) => {
       // Pastikan value adalah objek tanggal yang valid
       return !isNaN(value.getTime());
     }, {
@@ -76,6 +76,17 @@ export default function AddUser() {
     address: z.string().min(1, { message: "*Isi Alamat Terlebih Dahulu" }),
     profession: z.string().min(1, { message: "*Isi Pekerjaan Terlebih Dahulu" }),
     username: z.string().min(1, { message: "*Isi Username Terlebih Dahulu" }),
+    password: z
+        .string()
+        .min(1, { message: "*Isi Password Terlebih Dahulu" })
+        .min(8, { message: "*Password Minimal 8 Karakter" }),
+    confirmPassword: z
+        .string()
+        .min(1, { message: "*Isi Konfirmasi Password Terlebih Dahulu" }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "*Password Tidak Cocok, Harap Periksa Kembali",
+      path: ["confirmPassword"],
   });
 
   const form = useForm({
@@ -156,6 +167,7 @@ export default function AddUser() {
       console.error('Error adding user:', error);
       Swal.fire({
         title: "Gagal Tambah User",
+        text: error.response.data.message,
         icon: "error",
         showConfirmButton: false,
         showCloseButton: true,
@@ -279,11 +291,14 @@ export default function AddUser() {
                                   mode="single"
                                   selected={field.value}
                                   onSelect={field.onChange}
+                                  fromYear={1980}
+                                  toYear={currentYear}
                                   disabled={(date) =>
                                     date > new Date() || date < new Date("1900-01-01")
                                   }
                                   initialFocus
                                   className="bg-white"
+                                  captionLayout="dropdown-buttons"
                                 />
                               </PopoverContent>
                             </Popover>
