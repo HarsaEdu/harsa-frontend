@@ -71,7 +71,7 @@ useEffect(() => {
         const response = await getSubs();
         const allSubs = response.data;
 
-        // // Cari Subs berdasarkan ID dari daftar semua FAQ
+        // // Cari Subs berdasarkan ID dari daftar semua User
         const selectedSubs = allSubs.find((subs) => subs.id.toString() === id);
 
         // Jika Subs ditemukan, set nilai awal formulir

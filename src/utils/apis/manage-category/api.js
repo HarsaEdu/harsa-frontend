@@ -32,7 +32,7 @@ export const addCategory = async (FormData) => {
     const response = await axiosWithConfig.post("/categories", FormData);
     return response.data;
   } catch (error) {
-    throw Error("Failed to get category");
+    console.error('Error adding category:', error);
   }
 }
 
@@ -48,6 +48,15 @@ export const deleteCategory = async (id) => {
 export const editCategory = async (id, data) => {
   try {
     const response = await axiosWithConfig.put(`/categories/${id}`, data);
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get category");
+  }
+}
+
+export const getCategoryById = async (id) => {
+  try {
+    const response = await axiosWithConfig.get(`/categories/${id}`);
     return response.data;
   } catch (error) {
     throw Error("Failed to get category");
