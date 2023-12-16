@@ -41,7 +41,7 @@ const AddQuiz = () => {
 
     try {
       setIsLoading(true);
-      const result = await getAllQuiz({ ...query }, 1);
+      const result = await getAllQuiz({ ...query }, 1); //TODO: GANTI ID QUIZ SESUAI MODUL
       const { data } = result;
       setData(data);
     } catch (error) {
