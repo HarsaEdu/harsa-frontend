@@ -31,10 +31,7 @@ export default function ListTugas() {
     let query = Object.fromEntries([...searchParams]);
 
     if (searchParams.has("search")) {
-      searchParams.set("offset", 0);
       setSearchValue(searchParams.get("search"));
-    } else {
-      searchParams.set("offset", 0);
     }
 
     try {
@@ -54,10 +51,8 @@ export default function ListTugas() {
     async function (search) {
       if (!search) {
         searchParams.delete("search");
-        searchParams.set("offset", 0);
       } else {
         searchParams.set("search", search);
-        searchParams.set("offset", 0);
       }
       setSearchParams(searchParams);
     },
