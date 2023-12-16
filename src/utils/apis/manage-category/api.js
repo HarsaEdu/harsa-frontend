@@ -53,3 +53,12 @@ export const editCategory = async (id, data) => {
     throw Error("Failed to get category");
   }
 }
+
+export const getCategoryById = async (id) => {
+  try {
+    const response = await axiosWithConfig.get(`/categories/${id}`);
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get category");
+  }
+}

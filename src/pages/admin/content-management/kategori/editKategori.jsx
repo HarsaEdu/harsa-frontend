@@ -16,10 +16,11 @@ import { Input } from "@/components/ui/input";
 import InputFile from "@/components/inputFile";
 import { Textarea } from "@/components/ui/textarea";
 import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { getCategory } from "@/utils/apis/manage-category";
+import { getCategoryById } from "@/utils/apis/manage-category";
 import { editCategory } from "@/utils/apis/manage-category";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -45,6 +46,7 @@ const EditKategori = () => {
   const { id } = useParams();
   const [preview, setPreview] = useState("");
   const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -58,16 +60,12 @@ const EditKategori = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getCategory();
-        const allCategory = result.data;
-        const selectedCategory = allCategory.find(
-          (category) => category.id.toString() === id,
-        );
+        const result = await getCategoryById(id);
 
-        if (selectedCategory) {
-          form.setValue("name", selectedCategory.name);
-          form.setValue("description", selectedCategory.description);
-          setPreview(selectedCategory.image);
+        if (result) {
+          form.setValue("name", result.data.name);
+          form.setValue("description", result.data.description);
+          setPreview(result.data.image);
         } else {
           console.error("Category Data Not Found");
         }
@@ -79,30 +77,41 @@ const EditKategori = () => {
     fetchData();
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     try {
       const fileData = form.watch("image");
       console.log(fileData);
+
+      if (!preview) {
+        form.setError("image", {
+          message: "*Gambar wajib diisi",
+        });
+        return; // Keluar dari fungsi jika file kosong
+      }
 
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("description", data.description);
       if (fileData) {
-        formData.append("file", fileData);
+        formData.append("image", fileData);
       }
 
-      Swal.fire({
-        title: "Yakin kamu mau simpan data ini?",
+      console.log(formData)
+
+      const confirmResult = await MySwal.fire({
         icon: "question",
+        title: "Konfirmasi",
+        text: "Yakin kamu mau simpan data ini?",
         showCancelButton: true,
-        showConfirmButton: true,
         confirmButtonColor: "#092C4C",
         confirmButtonText: "Ya, Simpan",
         cancelButtonText: "Batal",
         cancelButtonColor: "#F2994A",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          onSave(formData);
+      });
+
+        if (confirmResult.isConfirmed) {
+          const response = await editCategory(id, formData)
+          console.log(response);
           Swal.fire({
             title: "Sukses Update Data",
             icon: "success",
@@ -112,19 +121,11 @@ const EditKategori = () => {
             navigate(`/category-management/category`);
           });
         }
-      });
     } catch (error) {
       console.log("Error", error);
     }
   };
 
-  const onSave = async (data) => {
-    try {
-      const result = await editCategory(id, data);
-    } catch (error) {
-      console.log("Error", error);
-    }
-  };
 
   const handleImageChange = (file) => {
     if (file) {
@@ -196,29 +197,26 @@ const EditKategori = () => {
                 name="image"
                 render={({ field }) => (
                   <FormItem className="mt-5">
-                    <p className="mb-3 text-lg font-semibold">Image</p>
-
-                    <FormLabel
-                      name="image"
-                      htmlFor="image"
-                      className="cursor-pointer"
-                    >
-                      <div className="flex h-56 w-full cursor-pointer items-center justify-center rounded-lg border border-black p-4">
-                        <div className="flex w-full flex-col items-center justify-center border border-dashed border-black font-poppins text-lg font-semibold text-[#A2D2FF]">
-                          <InputFile
-                            id="image"
-                            preview={preview}
-                            type="file"
-                            className="hidden"
-                            onChange={(e) => {
-                              field.onChange(e.target.files[0]);
-                              handleImageChange(e.target.files[0]);
-                            }}
-                            setPreview={setPreview}
-                          />
-                        </div>
-                      </div>
+                    <FormLabel  className="text-lg font-semibold">
+                      Image
                     </FormLabel>
+                    <FormControl>
+                        <div className="flex h-56 w-full cursor-pointer items-center justify-center rounded-lg border border-black p-4">
+                          <div className="flex w-full flex-col items-center justify-center border border-dashed border-black font-poppins text-lg font-semibold text-[#A2D2FF]">
+                            <InputFile
+                              id="image"
+                              preview={preview}
+                              type="file"
+                              className="hidden"
+                              onChange={(e) => {
+                                field.onChange(e.target.files[0]);
+                                handleImageChange(e.target.files[0]);
+                              }}
+                              setPreview={setPreview}
+                            />
+                          </div>
+                        </div>
+                    </FormControl>
                     <FormMessage className="text-[#ED7878]">
                       {form.formState.errors.image?.message}
                     </FormMessage>
