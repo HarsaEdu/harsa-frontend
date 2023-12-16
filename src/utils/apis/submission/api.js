@@ -1,10 +1,26 @@
 import axiosWithConfig from "../axiosWithConfig";
 
-export const getAllSubmission = async (idSection) => {
+export const getAllSubmission = async (idSection, params) => {
+  let query = "";
+
+  if (params) {
+    const queryParams = [];
+
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+    }
+
+    query = queryParams.join("&");
+  }
+
+  const url = query
+    ? `/courses/modules/${idSection}/submissions?&${query}`
+    : `/courses/modules/${idSection}/submissions`;
+
   try {
-    const response = await axiosWithConfig.get(
-      `/courses/modules/${idSection}/submissions`,
-    );
+    const response = await axiosWithConfig.get(url);
 
     return response.data;
   } catch (error) {
