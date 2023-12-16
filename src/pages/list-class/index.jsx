@@ -169,7 +169,7 @@ const ListClass = () => {
                   <img src={Filter} alt="" className="ml-2" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="flex flex-col">
+              <PopoverContent className="flex flex-col space-y-1">
                 <Button
                   className={`rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C] ${
                     !searchParams.get("category") && "bg-[#092C4C] text-white"
@@ -182,7 +182,7 @@ const ListClass = () => {
                   <Button
                     key={category.id}
                     value={category.id}
-                    className={`rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C] ${
+                    className={`rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C] transition-all duration-100 ease-in hover:bg-[#092C4C] hover:text-white ${
                       searchParams.get("category") === category.name &&
                       "bg-[#092C4C] text-white"
                     }`}
