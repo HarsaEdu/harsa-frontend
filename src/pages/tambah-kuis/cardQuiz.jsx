@@ -1,25 +1,33 @@
-import React from "react"
-import DeleteIcon from "../../assets/Delete.svg"
-import EditIcon from "../../assets/edits.svg"
+import React from "react";
+import DeleteIcon from "../../assets/Delete.svg";
+import EditIcon from "../../assets/edits.svg";
 
-const CardQuiz = ({ title, lesson, description, amount, className }) => {
-        return (
-        <div className={`border border-[#F2994A] rounded-[27px] mb-6 ${className}`}>
-            <div className="bg-[#092C4C] h-[52px] rounded-t-[27px]"></div>
-            <div className="px-[20px] py-[25px] mb-5 font-poppins text-[#092C4C] text-sm">
-            <div className="flex justify-between">
-                <h1 className="font-bold text-black text-3xl">{title}</h1>
-                <div className="flex gap-2 cursor-pointer">
-                <img src={EditIcon} alt="EditIcon" />
-                <img src={DeleteIcon} alt="DeleteIcon" />
-                </div>
-            </div>
-            <p className="mt-3 mb-2">kelas : {lesson}</p>
-            <p className="mb-2">deskripsi : {description}</p>
-            <p className="mb-2">Jumlah Soal : {amount}</p>
-            </div>
+const CardQuiz = ({
+  title,
+  lesson,
+  description,
+  amount,
+  className,
+  editOnClick,
+  deleteOnClick,
+}) => {
+  return (
+    <div className={`mb-6 rounded-[27px] border border-[#F2994A] ${className}`}>
+      <div className="h-[52px] rounded-t-[27px] bg-[#092C4C]"></div>
+      <div className="mb-5 px-[20px] py-[25px] font-poppins text-sm text-[#092C4C]">
+        <div className="flex justify-between">
+          <h1 className="text-3xl font-bold text-black">{title}</h1>
+          <div className="flex cursor-pointer gap-2">
+            <img src={EditIcon} alt="EditIcon" onClick={editOnClick} />
+            <img src={DeleteIcon} alt="DeleteIcon" onClick={deleteOnClick} />
+          </div>
         </div>
-        );
-    };
+        <p className="mb-2 mt-3">kelas : {lesson}</p>
+        <p className="mb-2">deskripsi : {description}</p>
+        <p className="mb-2">Jumlah Soal : {amount}</p>
+      </div>
+    </div>
+  );
+};
 
 export default CardQuiz;

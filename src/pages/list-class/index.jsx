@@ -7,27 +7,107 @@ import { deleteCourse } from "@/utils/apis/courses/api";
 
 import Filter from "../../assets/filter.svg";
 import Breadcrumb from "@/components/breadcrumb";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { getCourse, getMyCourse } from "@/utils/apis/courses";
-import { useEffect, useState } from "react";
+import { getCategory } from "@/utils/apis/category";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { debounce } from "lodash";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const ListClass = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState("");
   const [course, setCourse] = useState([]);
+  const [categories, setCategories] = useState([]);
   const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     fetchData();
-  }, []);
+    fetchCategories();
+  }, [searchParams]);
+
+  const getSuggestions = useCallback(
+    async function (search) {
+      if (!search) {
+        searchParams.delete("search");
+        searchParams.set("offset", 0);
+      } else {
+        searchParams.set("search", search);
+        searchParams.set("offset", 0);
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams],
+  );
+
+  const getSuggestionsDebounce = useMemo(
+    () => debounce(getSuggestions, 1000),
+    [getSuggestions],
+  );
+
+  function onInputChange(newValue) {
+    setSearchValue(newValue);
+    getSuggestionsDebounce(newValue);
+  }
 
   async function fetchData() {
     try {
+      let query = Object.fromEntries([...searchParams]);
+
+      if (searchParams.has("search")) {
+        searchParams.set("offset", 0);
+        setSearchValue(searchParams.get("search"));
+      } else {
+        searchParams.set("offset", 0);
+        searchParams.set("limit", 10);
+      }
+
+      if (searchParams.has("category")) {
+        searchParams.set("offset", 0);
+        query.category = searchParams.get("category");
+      }
+
+      console.log(query);
+
       const result = await (localStorage.getItem("role_name") == "instructor"
         ? getMyCourse()
-        : getCourse());
+        : getCourse(query));
       setCourse(result.data);
     } catch (error) {
+      setCourse([]);
       console.log(error.message);
+    }
+  }
+
+  function onSelectChange(newValue) {
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    if (newValue === "semua") {
+      newSearchParams.delete("category");
+    } else {
+      newSearchParams.set("category", newValue);
+      newSearchParams.set("offset", 0);
+      newSearchParams.set("limit", 10);
+    }
+
+    setSearchParams(newSearchParams);
+  }
+
+  const fetchCategories = async () => {
+    try {
+      // Memanggil fungsi getCategory untuk mengambil data kategori
+      const response = await getCategory();
+
+      // Setel data kategori ke dalam state
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Failed to get categories:", error);
     }
   };
 
@@ -82,10 +162,38 @@ const ListClass = () => {
             <Button className="rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C]">
               <p className="font-poppins text-[16px] font-normal">Kategory</p>
             </Button>
-            <Button className="rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C]">
-              <p className="font-poppins text-[16px] font-normal">Filter</p>
-              <img src={Filter} alt="" className="ml-2" />
-            </Button>
+            <Popover>
+              <PopoverTrigger>
+                {" "}
+                <Button className="rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C]">
+                  <p className="font-poppins text-[16px] font-normal">Filter</p>
+                  <img src={Filter} alt="" className="ml-2" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="flex flex-col space-y-1">
+                <Button
+                  className={`rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C] ${
+                    !searchParams.get("category") && "bg-[#092C4C] text-white"
+                  } `}
+                  onClick={() => onSelectChange("semua")}
+                >
+                  Semua
+                </Button>
+                {categories.map((category) => (
+                  <Button
+                    key={category.id}
+                    value={category.id}
+                    className={`rounded-none border border-[#092C4C] bg-white p-[10px] text-[#092C4C] transition-all duration-100 ease-in hover:bg-[#092C4C] hover:text-white ${
+                      searchParams.get("category") === category.name &&
+                      "bg-[#092C4C] text-white"
+                    }`}
+                    onClick={() => onSelectChange(category.name)}
+                  >
+                    {category.name}
+                  </Button>
+                ))}
+              </PopoverContent>
+            </Popover>
           </div>
           <Link to="/kelas/tambah-kelas">
             <Button className="w-[168px] items-center justify-center rounded-lg bg-[#092C4C] px-[10px] py-[15px]">
@@ -101,6 +209,8 @@ const ListClass = () => {
             type="text"
             className="h-[44px] w-[240px] rounded border border-black p-[10px]"
             id="search"
+            value={searchValue}
+            onChange={(e) => onInputChange(e.currentTarget.value)}
           />
         </div>
       </div>
