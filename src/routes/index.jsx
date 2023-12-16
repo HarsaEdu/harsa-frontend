@@ -204,7 +204,7 @@ export default function Router() {
           element: <Notification />,
         },
         {
-          path: "/detailnotifikasi",
+          path: "/detail-notifikasi/:notificationId",
           element: <DetailNotification />,
         },
       ],

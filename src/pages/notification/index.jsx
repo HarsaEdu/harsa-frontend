@@ -1,82 +1,46 @@
 import Layout from "@/components/layout/Index";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import moment from "moment";
 import deleteIcon from "../../assets/icons/delete.svg";
 import previous from "../../assets/icons/arrow-bottom.svg";
 import next from "../../assets/icons/arrow-top.svg";
+import { useNavigate } from "react-router-dom";
+import {
+  getNotification,
+  deleteNotification,
+  readNotification,
+} from "@/utils/apis/notification/api";
 
 export default function Notification() {
-  const notification = [
-    {
-      title: "Pengumuman Perubahan Tampilan UI",
-      desc: "Kami dengan senang hati memberitahu Anda bahwa kami telah melakukan pembaruan pada tampilan antarmuka (UI) sistem LMS kami! Dengan desain yang lebih modern dan intuitif, pengalaman belajar Anda akan semakin menyenangkan. Segera login dan temukan perubahan yang menarik! Terima kasih, Tim Pengembangan LMS",
-      sender: "System",
-      date: "27 Okt",
-      read: false,
-    },
-    {
-      title: "Pengumuman Perubahan Tampilan UI",
-      desc: "Kami dengan senang hati memberitahu Anda bahwa kami telah melakukan pembaruan pada tampilan antarmuka (UI) sistem LMS kami! Dengan desain yang lebih modern dan intuitif, pengalaman belajar Anda akan semakin menyenangkan. Segera login dan temukan perubahan yang menarik! Terima kasih, Tim Pengembangan LMS",
-      sender: "System",
-      date: "27 Okt",
-      read: true,
-    },
-    {
-      title: "Pengumuman Perubahan Tampilan UI",
-      desc: "Kami dengan senang hati memberitahu Anda bahwa kami telah melakukan pembaruan pada tampilan antarmuka (UI) sistem LMS kami! Dengan desain yang lebih modern dan intuitif, pengalaman belajar Anda akan semakin menyenangkan. Segera login dan temukan perubahan yang menarik! Terima kasih, Tim Pengembangan LMS",
-      sender: "System",
-      date: "27 Okt",
-      read: false,
-    },
-    {
-      title: "Pengumuman Perubahan Tampilan UI",
-      desc: "Kami dengan senang hati memberitahu Anda bahwa kami telah melakukan pembaruan pada tampilan antarmuka (UI) sistem LMS kami! Dengan desain yang lebih modern dan intuitif, pengalaman belajar Anda akan semakin menyenangkan. Segera login dan temukan perubahan yang menarik! Terima kasih, Tim Pengembangan LMS",
-      sender: "System",
-      date: "27 Okt",
-      read: true,
-    },
-    {
-      title: "Pengumuman Perubahan Tampilan UI",
-      desc: "Kami dengan senang hati memberitahu Anda bahwa kami telah melakukan pembaruan pada tampilan antarmuka (UI) sistem LMS kami! Dengan desain yang lebih modern dan intuitif, pengalaman belajar Anda akan semakin menyenangkan. Segera login dan temukan perubahan yang menarik! Terima kasih, Tim Pengembangan LMS",
-      sender: "System",
-      date: "27 Okt",
-      read: true,
-    },
-    {
-      title: "Pengumuman Perubahan Tampilan UI",
-      desc: "Kami dengan senang hati memberitahu Anda bahwa kami telah melakukan pembaruan pada tampilan antarmuka (UI) sistem LMS kami! Dengan desain yang lebih modern dan intuitif, pengalaman belajar Anda akan semakin menyenangkan. Segera login dan temukan perubahan yang menarik! Terima kasih, Tim Pengembangan LMS",
-      sender: "System",
-      date: "27 Okt",
-      read: false,
-    },
-    {
-      title: "Pengumuman Perubahan Tampilan UI",
-      desc: "Kami dengan senang hati memberitahu Anda bahwa kami telah melakukan pembaruan pada tampilan antarmuka (UI) sistem LMS kami! Dengan desain yang lebih modern dan intuitif, pengalaman belajar Anda akan semakin menyenangkan. Segera login dan temukan perubahan yang menarik! Terima kasih, Tim Pengembangan LMS",
-      sender: "System",
-      date: "27 Okt",
-      read: true,
-    },
-    {
-      title: "Pengumuman Perubahan Tampilan UI",
-      desc: "Kami dengan senang hati memberitahu Anda bahwa kami telah melakukan pembaruan pada tampilan antarmuka (UI) sistem LMS kami! Dengan desain yang lebih modern dan intuitif, pengalaman belajar Anda akan semakin menyenangkan. Segera login dan temukan perubahan yang menarik! Terima kasih, Tim Pengembangan LMS",
-      sender: "System",
-      date: "27 Okt",
-      read: false,
-    },
-  ];
-
+  const [notifications, setNotifications] = useState([]);
   const [filter, setFilter] = useState("all");
-  const [filteredNotifications, setFilteredNotifications] = useState([]);
   const [selectedNotifications, setSelectedNotifications] = useState([]);
+  const [filteredNotifications, setFilteredNotifications] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getNotification();
+        setNotifications(data.data);
+        setFilteredNotifications(data.data);
+      } catch (error) {
+        console.error("Failed to fetch notifications", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (filter === "all") {
-      setFilteredNotifications(notification);
+      setFilteredNotifications(notifications);
     } else if (filter === "unread") {
-      setFilteredNotifications(notification.filter((n) => !n.read));
+      setFilteredNotifications(notifications.filter((n) => !n.read));
     }
-  }, [filter, notification]);
+  }, [filter, notifications]);
 
+  const navigate = useNavigate();
   const confirmDeletion = (callback) => {
     Swal.fire({
       title: "Apakah Kamu Yakin Mau Hapus Data Ini?",
@@ -107,30 +71,39 @@ export default function Notification() {
         });
       }
     });
-    document.getElementById("cancel-btn").addEventListener("click", () => {
-      Swal.close();
-    });
-    document.getElementById("confirm-btn").addEventListener("click", () => {
-      Swal.close();
+  };
+
+  const handleDelete = async (id) => {
+    confirmDeletion(async () => {
+      try {
+        await deleteNotification(id);
+        const updatedNotifications = notifications.filter((n) => n.id !== id);
+        setNotifications(updatedNotifications);
+        setFilteredNotifications(updatedNotifications);
+      } catch (error) {
+        console.error("Failed to delete notification", error);
+      }
     });
   };
 
-  const handleDelete = (index) => {
-    confirmDeletion(() => {
-      const updatedNotifications = [...filteredNotifications];
-      updatedNotifications.splice(index, 1);
-      setFilteredNotifications(updatedNotifications);
-    });
-  };
+  const handleDeleteSelected = async () => {
+    confirmDeletion(async () => {
+      try {
+        const idsToDelete = selectedNotifications.map(
+          (index) => notifications[index].id,
+        );
+        await Promise.all(idsToDelete.map((id) => deleteNotification(id)));
 
-  const handleDeleteSelected = () => {
-    confirmDeletion(() => {
-      const updatedNotifications = filteredNotifications.filter(
-        (_, i) => !selectedNotifications.includes(i),
-      );
-      setFilteredNotifications(updatedNotifications);
-      setSelectedNotifications([]);
-      showAlert();
+        const updatedNotifications = notifications.filter(
+          (n, index) => !selectedNotifications.includes(index),
+        );
+        setNotifications(updatedNotifications);
+        setFilteredNotifications(updatedNotifications); // Update filteredNotifications after deletion
+        setSelectedNotifications([]);
+        showAlert();
+      } catch (error) {
+        console.error("Failed to delete selected notifications", error);
+      }
     });
   };
 
@@ -147,6 +120,25 @@ export default function Notification() {
     });
   };
 
+  const handleReadNotification = async (id) => {
+    try {
+      await readNotification(id);
+      const updatedNotifications = [...notifications];
+      const index = updatedNotifications.findIndex((n) => n.id === id);
+      if (index !== -1) {
+        updatedNotifications[index].read = true;
+        setNotifications(updatedNotifications);
+      }
+    } catch (error) {
+      console.error("Failed to mark notification as read", error);
+    }
+  };
+
+  const handleSelectAll = () => {
+    const allIndices = notifications.map((_, index) => index);
+    setSelectedNotifications(allIndices);
+  };
+
   const handleSelect = (index) => {
     if (selectedNotifications.includes(index)) {
       setSelectedNotifications(
@@ -154,14 +146,6 @@ export default function Notification() {
       );
     } else {
       setSelectedNotifications([...selectedNotifications, index]);
-    }
-  };
-
-  const handleSelectAll = () => {
-    if (selectedNotifications.length < filteredNotifications.length) {
-      setSelectedNotifications(filteredNotifications.map((_, i) => i));
-    } else {
-      setSelectedNotifications([]);
     }
   };
 
@@ -184,11 +168,12 @@ export default function Notification() {
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
   };
+
   const renderPageNumbers = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-    }
+    const pageNumbers = Array.from(
+      { length: totalPages },
+      (_, index) => index + 1,
+    );
 
     return pageNumbers.map((number) => (
       <button
@@ -203,6 +188,24 @@ export default function Notification() {
         {number}
       </button>
     ));
+  };
+
+  const UpdateTimeDisplay = ({ updatedAt }) => {
+    const [formattedTime, setFormattedTime] = useState("");
+
+    useEffect(() => {
+      const formattedUpdateTime = formatUpdateTime(updatedAt);
+      setFormattedTime(formattedUpdateTime);
+    }, [updatedAt]);
+
+    const formatUpdateTime = (updateTime) => {
+      const momentTime = moment(updateTime);
+      const formattedDate = momentTime.format("DD MMM, HH:mm [WIB]");
+
+      return formattedDate;
+    };
+
+    return <span>{formattedTime}</span>;
   };
 
   return (
@@ -259,7 +262,7 @@ export default function Notification() {
               />
             </section>
 
-            {displayedItems.map((data, index) => (
+            {notifications.map((data, index) => (
               <section
                 key={index}
                 className={`flex w-full items-center gap-10 rounded-lg border p-5 ${
@@ -282,11 +285,13 @@ export default function Notification() {
                       {data.title}
                     </label>
                   </div>
-                  <p className="truncate">{data.desc}</p>
+                  <p className="truncate">{data.content.substring(0, 50)}...</p>
                 </section>
                 <section className="flex w-full items-center justify-between gap-5 font-bold">
                   <p>{data.sender}</p>
-                  <p>{data.date}</p>
+                  <p>
+                    <UpdateTimeDisplay updatedAt={data.update_at} />
+                  </p>
                   <img
                     src={deleteIcon}
                     alt="Delete"
