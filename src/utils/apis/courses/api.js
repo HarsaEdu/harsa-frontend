@@ -2,7 +2,7 @@ import axiosWithConfig from "../axiosWithConfig";
 
 export const getCourse = async () => {
   try {
-    const response = await axiosWithConfig.get("/courses?offset=0&limit=10");
+    const response = await axiosWithConfig.get("/courses?offset=0&limit=9999");
 
     return response.data;
   } catch (error) {

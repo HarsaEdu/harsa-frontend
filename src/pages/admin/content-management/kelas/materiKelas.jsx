@@ -10,7 +10,6 @@ import withReactContent from "sweetalert2-react-content";
 
 const MateriOverview = () => {
   const params = useParams();
-  const [Modules, setModules] = useState([]);
   const [section, setSection] = useState([]);
   const MySwal = withReactContent(Swal);
 
@@ -21,13 +20,8 @@ const MateriOverview = () => {
   async function fetchData() {
     try {
       const result = await getDetailCourse(+params.id);
-      setModules(result.data);
-      console.log(result.data);
-      if (result.data.section !== null && result.data.section !== undefined) {
-        setSection(result.data.section);
-      } else {
-        setSection([]);
-      }
+      setSection(result.data.section);
+      console.log(result.data.section.module.id);
     } catch (error) {
       console.log(error.message);
     }
@@ -83,7 +77,7 @@ const MateriOverview = () => {
               <Link to={`/kelas/tambah-modul/${params.id}`}>Tambah Modul</Link>
             </Button>
           </div>
-          {section.length > 0 ? (
+          {section !== null ? (
             section.map((Modules) => (
               <div key={Modules.id}>
                 <div className="mx-2 my-3 h-full border border-slate-300 px-2 font-poppins">
@@ -107,7 +101,7 @@ const MateriOverview = () => {
                       </Button>
                     </div>
                   </div>
-                  <ManageClass />
+                  <ManageClass idSection={Modules.module[0].id} />
                 </div>
               </div>
             ))

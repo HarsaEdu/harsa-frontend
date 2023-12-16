@@ -4,7 +4,6 @@ import VideoIcon from "@/assets/icons/videoModule.svg";
 import MateriIcon from "@/assets/icons/materiModule.svg";
 import TugasIcon from "@/assets/icons/tugasModule.svg";
 import KuisIcon from "@/assets/icons/kuisModule.svg";
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getModuleById } from "@/utils/apis/modules/api";
 import {
@@ -14,8 +13,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const CardModule = () => {
-  const params = useParams();
+const CardModule = ({ idSection }) => {
   const [Modules, setModules] = useState([]);
 
   useEffect(() => {
@@ -24,13 +22,14 @@ const CardModule = () => {
 
   async function fetchData() {
     try {
-      const result = await getModuleById(+params.id);
+      const result = await getModuleById(idSection);
       setModules(result.data);
       console.log(result.data);
     } catch (error) {
       console.log(error.message);
     }
   }
+
   return (
     <div>
       {Modules && Modules ? (
