@@ -44,6 +44,8 @@ import Notification from "@/pages/notification";
 
 import DetailNotification from "@/pages/detail-notifikasi";
 import ListTugas from "@/pages/manage-tugas/listTugas";
+import CreateQuiz from "@/pages/tambah-kuis/createQuiz";
+import JawabanKuis from "@/pages/tambah-kuis/jawabanKuis";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -110,6 +112,16 @@ export default function Router() {
         {
           path: "/kelas/tambah-pertanyaan",
           element: <HeaderQuiz />,
+          children: [
+            {
+              path: "/kelas/tambah-pertanyaan",
+              element: <CreateQuiz />,
+            },
+            {
+              path: "/kelas/tambah-pertanyaan/:idQuiz",
+              element: <JawabanKuis />,
+            },
+          ],
         },
         {
           path: "/kelas/manage-kelas/manage-tugas/:idSection",

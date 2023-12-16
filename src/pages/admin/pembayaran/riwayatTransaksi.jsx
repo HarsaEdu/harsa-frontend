@@ -56,9 +56,7 @@ export default function RiwayatTransaksi() {
   );
 
   async function fetchData() {
-    let query = Object.fromEntries(
-      [...searchParams].filter((param) => param[0] !== "tab"),
-    );
+    let query = Object.fromEntries([...searchParams]);
 
     if (searchParams.has("search")) {
       searchParams.set("offset", 0);

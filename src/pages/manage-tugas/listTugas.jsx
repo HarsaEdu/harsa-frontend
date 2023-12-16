@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useCallback, useMemo } from "react";
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { Plus } from "lucide-react";
 import { getAllSubmission, deleteSubmission } from "@/utils/apis/submission";
 import CardTugas from "@/components/card/cardTugas";
 import Swal from "sweetalert2";
+import { debounce } from "lodash";
 
 export default function ListTugas() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,28 +28,44 @@ export default function ListTugas() {
   }, [searchParams]);
 
   async function fetchData() {
-    let query = Object.fromEntries(
-      [...searchParams].filter((param) => param[0] !== "tab"),
-    );
+    let query = Object.fromEntries([...searchParams]);
 
     if (searchParams.has("search")) {
-      searchParams.set("offset", 0);
       setSearchValue(searchParams.get("search"));
-    } else {
-      searchParams.set("offset", 0);
     }
 
     try {
       setIsLoading(true);
-      const result = await getAllSubmission(params.idSection);
+      const result = await getAllSubmission(params.idSection, { ...query });
       const { data } = result;
       setData(data);
     } catch (error) {
-      Swal.fire({ title: "Error", text: error.message });
       setData([]);
     } finally {
       setIsLoading(false);
     }
+  }
+
+  const getSuggestions = useCallback(
+    async function (search) {
+      if (!search) {
+        searchParams.delete("search");
+      } else {
+        searchParams.set("search", search);
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams],
+  );
+
+  const getSuggestionsDebounce = useMemo(
+    () => debounce(getSuggestions, 1000),
+    [getSuggestions],
+  );
+
+  function onInputChange(newValue) {
+    setSearchValue(newValue);
+    getSuggestionsDebounce(newValue);
   }
 
   async function onDelete(idSubmission, idSection) {

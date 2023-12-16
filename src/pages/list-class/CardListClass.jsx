@@ -7,13 +7,14 @@ import Delete from "../../assets/Delete.svg";
 import Edit from "../../assets/Edit.svg";
 
 const CardListClass = (props) => {
-  const { judul, category, instructor, description, img, idCourse, onDelete } = props;
+  const { judul, category, instructor, description, img, idCourse, onDelete } =
+    props;
 
   return (
     <div className="mx-auto mb-4 w-11/12">
       <div className="">
         <img
-          className=" h-48 w-full rounded-t-xl object-cover object-top"
+          className=" h-48 w-full rounded-t-xl border border-black object-cover object-top"
           src={img}
           alt=""
         />
