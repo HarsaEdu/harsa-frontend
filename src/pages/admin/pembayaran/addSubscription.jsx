@@ -21,7 +21,6 @@ import InputFile from "@/components/inputFile";
 import { Textarea } from "@/components/ui/textarea";
 import UploadIcon from "../../../assets/upload2.svg";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -32,7 +31,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 const formSchema = z.object({
   nama: z.string().min(1, "*Isi Nama Paket Terlebih Dahulu"),
   durasi: z.string().min(1, "*Isi Durasi Paket Terlebih Dahulu"),
-  harga: z.number().min(1, "*Masukkan Nominal Harga Terlebih Dahulu"),
+  harga: z.coerce.number().min(1, "*Masukkan Nominal Harga Terlebih Dahulu"),
   deskripsi: z.string().nonempty("*Isi Deskripsi Paket Terlebih Dahulu"),
   image: z
     .any()

@@ -24,15 +24,14 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import axios from "axios";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const formSchema = z.object({
   nama: z.string().min(1, "*Isi Nama Paket Terlebih Dahulu"),
-  durasi: z.string().min(1, "*Isi Durasi Paket Terlebih Dahulu"),
-  harga: z.string().min(1, "*Masukkan Nominal Harga Terlebih Dahulu"),
+  durasi: z.coerce.number().min(1, "*Isi Durasi Paket Terlebih Dahulu"),
+  harga: z.coerce.number().min(1, "*Masukkan Nominal Harga Terlebih Dahulu"),
   deskripsi: z.string().nonempty("*Isi Deskripsi Paket Terlebih Dahulu"),
   image: z
     .any()
@@ -44,7 +43,7 @@ const formSchema = z.object({
     })
     .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
       message:
-        "*Format file yang di upload salah, format file harus PNG, JPG, Jpeg, svg",
+        "*Format file yang diupload salah, format file harus PNG, JPG, Jpeg, svg",
     }),
 });
 
@@ -146,13 +145,7 @@ const EditSubscriptionPackage = () => {
 
   const onSave = async (data) => {
     try {
-      const token = localStorage.getItem("access_token");
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      };
-
-      const subsId = id;
+      const subsId = params.id;
 
       const updatedSubs = await updateSubs(subsId, data);
 
@@ -254,7 +247,6 @@ const EditSubscriptionPackage = () => {
                 render={({ field }) => (
                   <FormItem className="mt-5">
                     <p className="mb-3 text-lg font-semibold">Image</p>
-
                     <FormLabel
                       name="image"
                       htmlFor="image"

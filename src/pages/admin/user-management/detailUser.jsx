@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios"
 import { format } from 'date-fns';
 import Breadcrumb from "@/components/breadcrumb"
@@ -77,7 +77,11 @@ const DetailUser = () => {
                                 <p className="text-[#092C4C] font-poppins font-semibold">UI/UX Designer</p>
                             </div>
                         </div>
-                        <Button className="bg-[#ED7878] text-[#fff] font-poppins font-semibold w-40 h-10 float-right">Kembali</Button>
+                        <div>
+                            <Link to="/user-management">
+                                <Button className="bg-[#ED7878] text-[#fff] font-poppins py- font-semibold w-40 h-10 float-right">Kembali</Button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

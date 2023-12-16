@@ -45,15 +45,16 @@ export const getUserAccount = async (userId) => {
   }
 };
 
-export const updateUserAccount = async (userId) => {
+export const updateUserAccount = async (userId, updatedData) => {
   try {
-    const response = await axiosWithConfig.get(`/users/${userId}`);
+    const response = await axiosWithConfig.put(`/users/${userId}`, updatedData);
 
     return response.data;
   } catch (error) {
-    throw Error("Failed to get user account");
+    throw new Error("Failed to update user account");
   }
 };
+
 
 export const getUserInsructor = async () => {
   try {

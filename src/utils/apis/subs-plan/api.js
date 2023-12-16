@@ -15,7 +15,9 @@ export const getSubs = async (params) => {
       query = queryParams.join("&");
     }
 
-    const url = query ? `/subs-plan?&${query}` : "/subs-plan";
+    const url = query
+      ? `/subs-plan?&${query}`
+      : "/subs-plan?&limit=10&offset=0";
 
     const response = await axiosWithConfig.get(url);
 

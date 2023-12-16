@@ -45,7 +45,7 @@ export default function EditAkun() {
 
   const editAkunSchema = z
     .object({
-      email: z.string().email({ message: "*Gunakan Email Yang Valid" }),
+      email: z.string().min(1, {message: "*Isi Email Terlebih Dahulu"}).email({ message: "*format email salah, tambahkan karakter @" }),
       role: z.number()
       .nullable()
       .refine((value) => value !== null, {
@@ -119,14 +119,15 @@ export default function EditAkun() {
     try {
       // Buat objek payload sesuai dengan struktur request yang diinginkan
       const payload = {
-        id: id,
+        id: parseInt(id),
         email: data.email,
         password: data.password,
         role_id: data.role, // Sesuaikan dengan nilai yang sesuai
       };
+      console.log(payload)
 
       // Panggil fungsi untuk mengupdate data user
-      await updateUserAccount(payload);
+      await updateUserAccount(id, payload);
 
       Swal.fire({
         title: "Sukses Update Data",
