@@ -40,7 +40,6 @@ export default function ListTugas() {
       const { data } = result;
       setData(data);
     } catch (error) {
-      Swal.fire({ title: "Error", text: error.message });
       setData([]);
     } finally {
       setIsLoading(false);
