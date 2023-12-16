@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Breadcrumb from "@/components/breadcrumb"
 import Layout from "@/components/layout/Index"
@@ -15,20 +15,45 @@ import Swal from "sweetalert2";
 import brokenImg from "@/assets/broken-image.svg";
 import checkGrey from "@/assets/icons/check-grey.svg";
 import closeGrey from "@/assets/icons/close-grey.svg";
+import { getSubmissionAnswerById, updateStatusSubmission } from "@/utils/apis/submissionAnswer";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ReviewTugas = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [status, setStatus] = useState("not submit");
     const [reason, setReason] = useState("");
+    const [dataAnswer, setDataAnswer] = useState({});
 
+    const navigate = useNavigate();
+    const params = useParams();
     const form = useForm({
         defaultValues: {
             reason: "",
         },
     });
 
+    const fetchData = async () => {
+        try {
+            const result = await getSubmissionAnswerById(params.idSubmission, params.idSubmissionAns)
+            setDataAnswer(result.data);
+            setStatus(result.data.status);
+            setReason(result.data.feedback);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+
     const handleRejected = (data, e) => {
         e.preventDefault();
+        const newData = {
+            "status": "rejected",
+            "feedback": data.reason,
+        }
         setDialogOpen(false);
         Swal.fire({
             title: "Yakin ingin menolak tugas ini?",
@@ -40,25 +65,45 @@ const ReviewTugas = () => {
             confirmButtonText: "Ya, Tolak",
             cancelButtonText: "Batal",
             cancelButtonColor: "#F2994A",
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                console.log(data);
-                setStatus("rejected");
-                setReason(data.reason);
-                Swal.fire({
-                    title: "Tugas ditolak!",
-                    text: "Informasi terbaru telah tersimpan",
-                    icon: "success",
-                    showConfirmButton: false,
-                    showCloseButton: true,
-                }).then(() => {
-                    form.reset();
-                });
+                try {
+                    console.log(data);
+                    setStatus("rejected");
+                    setReason(data.reason);
+                    await updateStatusSubmission(params.idSubmission, params.idSubmissionAns, newData)
+                    Swal.fire({
+                        title: "Tugas ditolak!",
+                        text: "Informasi terbaru telah tersimpan",
+                        icon: "success",
+                        showConfirmButton: false,
+                        showCloseButton: true,
+                        timer: 2000,
+                    }).then(() => {
+                        form.reset();
+                        navigate(-1);
+                    });
+                } catch (error) {
+                    Swal.fire({
+                        title: "Gagal menolak tugas!",
+                        text: error.message,
+                        icon: "error",
+                        showConfirmButton: false,
+                        showCloseButton: true,
+                        timer: 2000,
+                    });
+                }
+
             }
         });
     };
 
     const handleAccepted = () => {
+        const newData = {
+            "status": "accepted",
+            "feedback": "feedback...",
+        }
+
         Swal.fire({
             title: "Yakin ingin menerima tugas ini?",
             text: "Proses ini akan secara permanen",
@@ -69,16 +114,31 @@ const ReviewTugas = () => {
             confirmButtonText: "Ya, Terima",
             cancelButtonText: "Batal",
             cancelButtonColor: "#F2994A",
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                setStatus("accepted");
-                Swal.fire({
-                    title: "Tugas diterima!",
-                    text: "Informasi terbaru telah tersimpan",
-                    icon: "success",
-                    showConfirmButton: false,
-                    showCloseButton: true,
-                });
+                try {
+                    setStatus("accepted");
+                    await updateStatusSubmission(params.idSubmission, params.idSubmissionAns, newData)
+                    Swal.fire({
+                        title: "Tugas diterima!",
+                        text: "Informasi terbaru telah tersimpan",
+                        icon: "success",
+                        showConfirmButton: false,
+                        showCloseButton: true,
+                        timer: 2000,
+                    }).then(() => {
+                        navigate(-1);
+                    });
+                } catch (error) {
+                    Swal.fire({
+                        title: "Gagal menerima tugas!",
+                        text: error.message,
+                        icon: "error",
+                        showConfirmButton: false,
+                        showCloseButton: true,
+                        timer: 2000,
+                    });
+                }
             }
         });
     }
@@ -89,34 +149,16 @@ const ReviewTugas = () => {
             <div className="my-5 rounded-lg border border-[#F2994A] p-5">
                 <div className="mb-8">
                     <p className="text-xl font-bold font-poppins mb-3">Tugas</p>
-                    <p>Oleh : <span className="font-bold">Donny</span></p>
+                    <p>Oleh : <span className="font-bold">{dataAnswer.student_name}</span></p>
                     <p>Status : <span className="font-bold">{status}</span></p>
                 </div>
 
                 <div className="mb-8">
                     <p className="text-lg font-semibold font-poppins mb-3">Deskripsi</p>
                     <div>
-                        <p>
-                            1. Analisis insight/informasi yang diperlukan untuk memenuhi tujuan ini.
-                        </p>
-                        <p>
-                            2. Analisis data apa saja yang dibutuhkan.
-                        </p>
-                        <p>
-                            3. Analisis proses bisnis/prosedur cara memilih mapres
-                        </p>
-                        <p>
-                            4. Rancanglah visual dashboard untuk menyajikan informasi sesuai kebutuhan untuk menyajikan poin 1.
-                        </p>
-                        <p>
-                            5. Buatlah simulasi bagaimana mengolah data sampai bisa menghasilkan visualisasi yang dimaksud.
-                        </p>
-                        <p>
-                            6. Siapa saja pengguna BI
-                        </p>
-                        <p>
-                            7. Aturan/prosedur/hukum apa saja yang terkait dan perlu dipenuhi.
-                        </p>
+                        <span>
+                            {dataAnswer.description}
+                        </span>
                     </div>
                 </div>
 
@@ -130,7 +172,7 @@ const ReviewTugas = () => {
                         </div>
                     )}
                     {status !== "not submit" && (
-                        <iframe className="mb-8" src="https://drive.google.com/file/d/1rU5hGtj5W6G5So3NdDYi7qvoKQB1OoXT/preview" width="100%" height="640" allow="autoplay"></iframe>
+                        <iframe className="mb-8" src={dataAnswer.submitted_url} width="100%" height="640" allow="autoplay"></iframe>
                     )}
 
                     {status === "rejected" && (
