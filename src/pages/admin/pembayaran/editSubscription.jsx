@@ -30,17 +30,17 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const formSchema = z.object({
-  nama: z.string().min(1, "*Nama Paket Wajib di isi"),
-  durasi: z.string().min(1, "*Durasi Wajib di isi"),
-  harga: z.string().min(1, "*Harga Wajib di isi"),
-  deskripsi: z.string().nonempty("*Deskripsi Wajib di isi"),
+  nama: z.string().min(1, "*Isi Nama Paket Terlebih Dahulu"),
+  durasi: z.string().min(1, "*Isi Durasi Paket Terlebih Dahulu"),
+  harga: z.string().min(1, "*Masukkan Nominal Harga Terlebih Dahulu"),
+  deskripsi: z.string().nonempty("*Isi Deskripsi Paket Terlebih Dahulu"),
   image: z
     .any()
     .refine((data) => data !== undefined && data !== null && data !== "", {
-      message: "*Image  wajib di isi",
+      message: "*Masukkan Gambar Terlebih Dahulu",
     })
     .refine((data) => data?.size <= MAX_FILE_SIZE, {
-      message: "*Ukuran file terlalu besar, maksimal 5 MB",
+      message: "*Ukuran file terlalu besar, maksimal 5 mb",
     })
     .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
       message:

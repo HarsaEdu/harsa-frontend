@@ -148,6 +148,7 @@ export default function JawabanKuis() {
             datas={data}
             columns={columns}
             classNameHeader="bg-[#F2994A] text-xl"
+            classNameCell="font-bold"
           />
         </div>
       </div>
