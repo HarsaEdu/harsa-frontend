@@ -31,6 +31,18 @@ export const getDetailCourse = async (courseId) => {
   }
 };
 
+export const getModuleById = async (moduleId) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `/courses/section/module/${moduleId}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw Error("Gagal mendapatkan data materi" + error);
+  }
+};
+
 export const createCourse = async (courseData) => {
   try {
     const response = await axiosWithConfig.post("/courses", courseData);

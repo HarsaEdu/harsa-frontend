@@ -50,9 +50,21 @@ const createModuleBySection = async (sectionId, data) => {
   }
 };
 
+const deleteSubModule = async (id) => {
+  try {
+    const response = await axiosWithConfig.delete(
+      `/courses/section/module/sub-module/${id}`,
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to delete user");
+  }
+};
+
 export {
   getModuleBySection,
   createSection,
+  deleteSubModule,
   createModuleBySection,
   getModuleById,
 };

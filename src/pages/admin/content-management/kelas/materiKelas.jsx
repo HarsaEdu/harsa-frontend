@@ -2,14 +2,17 @@ import ManageClass from "@/components/module/materiComponent";
 import { Button } from "@/components/ui/button";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-// import { getModuleById, getModuleBySection } from "@/utils/apis/modules/api";
 import { getDetailCourse } from "@/utils/apis/courses";
+import { deleteSubModule } from "@/utils/apis/modules/api";
+import Swal from "sweetalert2";
 import DeleteIcon from "@/assets/icons/delete.svg";
+import withReactContent from "sweetalert2-react-content";
 
 const MateriOverview = () => {
   const params = useParams();
   const [Modules, setModules] = useState([]);
   const [section, setSection] = useState([]);
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     fetchData();
@@ -30,6 +33,44 @@ const MateriOverview = () => {
     }
   }
 
+  const handleDeleteSubModule = async (idSubModule) => {
+    try {
+      // Menampilkan konfirmasi SweetAlert
+      const result = await Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data course akan dihapus permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!",
+      });
+
+      if (result.isConfirmed) {
+        // Panggil fungsi deletecourse untuk menghapus course
+        await deleteSubModule(idSubModule);
+        fetchData();
+        MySwal.fire({
+          icon: "success",
+          title: "Sukses Tambah Kelas",
+          showConfirmButton: false,
+          showCloseButton: true,
+          customClass: {
+            closeButton: "swal2-cancel-button",
+          },
+          buttonsStyling: false,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to delete course", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Gagal menghapus data course.",
+        icon: "error",
+      });
+    }
+  };
+
   return (
     <div>
       <div className="rounded-sm border border-slate-300">
@@ -49,32 +90,24 @@ const MateriOverview = () => {
                   <div className="flex items-center justify-between rounded-md">
                     <h1 className="text-2xl font-bold">{Modules.title}</h1>
                     <div className="flex items-center">
-                      <a href="/">
-                        <img
-                          src={DeleteIcon}
-                          alt="delete-icon"
-                          width={38}
-                          height={38}
-                        />
-                      </a>
-                      <Button className="m-2 rounded-[4px] bg-[#A2D2FF] font-semibold text-[#092C4C] hover:bg-[#81b1df]">
-                        <Link
-                          to={"/kelas"}
-                          // to={`/kelas/manage-kelas/manage-modul/${courseId}/section/${sectionId}`}
-                        >
+                      <Button
+                        id="deleteButton"
+                        onClick={handleDeleteSubModule}
+                        className="m-2 rounded-[4px] bg-[#092C4C] font-semibold text-[#092C4C] hover:bg-[#092C4C]"
+                      >
+                        <img src={DeleteIcon} alt="" width={38} height={38} />
+                      </Button>
+                      <Button
+                        className="m-2 rounded-[4px] bg-[#A2D2FF] font-semibold text-[#092C4C] hover:bg-[#81b1df]"
+                        id="manageModuleButton"
+                      >
+                        <Link to={`/kelas/manage-kelas/manage-modul`}>
                           Manage Modul
                         </Link>
                       </Button>
                     </div>
                   </div>
-                  {/* <ManageClass
-                    judulMateri={Module.title}
-                    teksMateri={Module.sub_modules.teksMateri}
-                    videoMateri={Module.sub_modules.content_url}
-                    tugasMateri={Module.sub_modules.tugasMateri}
-                    kuisMateri={Module.quizzes}
-                    subtitleMateri={Module.submissions}
-                  /> */}
+                  <ManageClass />
                 </div>
               </div>
             ))
