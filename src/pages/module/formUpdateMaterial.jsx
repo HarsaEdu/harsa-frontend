@@ -47,7 +47,6 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
     try {
       const result = await getModuleById(moduleId);
       setModule(result.data);
-      console.log(module);
       setCountMaterial(result.data.sub_modules.length);
       const tempMaterialType = [];
       const tempSubModules = [];
@@ -134,6 +133,7 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
 
   return (
     <Form {...form}>
+      {console.log("module : ", module)}
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
         <FormField
           control={form.control}
@@ -301,30 +301,32 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
           <FormLabel className="font-poppins font-semibold text-[#092C4C]">
             Tugas
           </FormLabel>
-          {!module.submissions && (
-            <div style={{ marginTop: "0.5rem" }}>
-              <a
-                className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
-                href=""
+          {module.submissions &&
+            module.submissions.map((submission) => (
+              <div
+                key={submission.id}
+                className="mt-4 flex w-full rounded-2xl bg-[#A2D2FF] pl-11"
               >
-                Tambah Tugas <Plus className="inline-block h-4" />
-              </a>
-            </div>
-          )}
-          {module.submissions && (
-            <div className="mt-4 flex w-full rounded-2xl bg-[#A2D2FF] pl-11">
-              <div className="my-7 me-auto">
-                <span className="text-lg font-bold">Tugas</span>
-                <p>Pengenalan UI/UX</p>
+                <div className="my-7 me-auto">
+                  <span className="text-lg font-bold">Tugas</span>
+                  <p>{submission.title}</p>
+                </div>
+                <Link
+                  to={`/kelas/manage-tugas/${module.id}/${submission.id}`}
+                  className="flex items-center rounded-r-2xl bg-[#092C4C] px-11 py-7 font-semibold text-[#fff]"
+                >
+                  Manage Tugas
+                </Link>
               </div>
-              <Link
-                to={`/kelas/manage-kelas/manage-tugas/${params.idSection}`}
-                className="flex items-center rounded-r-2xl bg-[#092C4C] px-11 py-7 font-semibold text-[#fff]"
-              >
-                Manage Tugas
-              </Link>
-            </div>
-          )}
+            ))}
+          <div style={{ marginTop: "0.5rem" }}>
+            <Link
+              className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
+              to={`/kelas/manage-kelas/manage-tugas/${module.id}`}
+            >
+              Tambah Tugas <Plus className="inline-block h-4" />
+            </Link>
+          </div>
         </div>
         <div className="flex justify-between" style={{ marginBottom: "10px" }}>
           <Button
