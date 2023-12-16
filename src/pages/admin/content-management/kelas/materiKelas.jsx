@@ -101,7 +101,13 @@ const MateriOverview = () => {
                       </Button>
                     </div>
                   </div>
-                  <ManageClass idSection={Modules.module[0].id} />
+                  {Modules.module.length > 0 ? (
+                    Modules.module.map((module) => (
+                      <ManageClass key={module.id} idSection={module.id} />
+                    ))
+                  ) : (
+                    <p>Tidak ada modul</p>
+                  )}
                 </div>
               </div>
             ))
