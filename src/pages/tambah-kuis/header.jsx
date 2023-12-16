@@ -3,17 +3,14 @@ import { React, useState } from "react";
 import JawabanKuis from "./jawabanKuis";
 import Layout from "@/components/layout/Index";
 import CreateQuiz from "./createQuiz";
+import { Outlet, useLocation, Link } from "react-router-dom";
 
 export default function HeaderQuiz() {
-  const [isActivePertanyaan, setActivePertanyaan] = useState(true);
-
-  const handlePertanyaanClick = () => {
-    setActivePertanyaan(true);
-  };
-
-  const handleJawabanClick = () => {
-    setActivePertanyaan(false);
-  };
+  const location = useLocation();
+  const isPertanyaanActive = location.pathname === "/kelas/tambah-pertanyaan";
+  const isJawabanActive = location.pathname.includes(
+    "/kelas/tambah-pertanyaan/jawaban/",
+  );
 
   return (
     <Layout>
@@ -25,32 +22,33 @@ export default function HeaderQuiz() {
 
             {/* State Render Component */}
             <div className="mt-8 flex space-x-12">
-              <h4
-                className={`cursor-pointer text-3xl font-bold ${
-                  isActivePertanyaan
-                    ? "border-b-2 border-b-black pb-2 text-[#092C4C]"
-                    : "text-[#A2D2FF]"
-                }`}
-                onClick={handlePertanyaanClick}
-              >
-                Pertanyaan
-              </h4>
-              <h4
-                className={`cursor-pointer text-3xl font-bold ${
-                  !isActivePertanyaan
-                    ? "border-b-2 border-b-black pb-2 text-[#092C4C]"
-                    : "text-[#A2D2FF]"
-                }`}
-                onClick={handleJawabanClick}
-              >
-                Jawaban
-              </h4>
+              <Link to="/kelas/tambah-pertanyaan">
+                <h4
+                  className={`cursor-pointer text-3xl font-bold ${
+                    isPertanyaanActive
+                      ? "border-b-2 border-b-black pb-2 text-[#092C4C]"
+                      : "text-[#A2D2FF]"
+                  }`}
+                >
+                  Pertanyaan
+                </h4>
+              </Link>
+              <Link to="/kelas/tambah-pertanyaan/1">
+                <h4
+                  className={`cursor-pointer text-3xl font-bold ${
+                    !isPertanyaanActive
+                      ? "border-b-2 border-b-black pb-2 text-[#092C4C]"
+                      : "text-[#A2D2FF]"
+                  }`}
+                >
+                  Jawaban
+                </h4>
+              </Link>
             </div>
           </div>
         </div>
-        <div>{isActivePertanyaan ? <CreateQuiz /> : null}</div>
-        <div>{isActivePertanyaan ? null : <JawabanKuis />}</div>
       </div>
+      <Outlet />
     </Layout>
   );
 }
