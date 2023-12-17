@@ -3,6 +3,7 @@ import EditIcon from "@/assets/icons/edit.svg";
 import Layout from "@/components/layout/Index";
 import { Link, useParams, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getDetailCourse } from "@/utils/apis/courses";
 
 const ManageKelas = () => {
@@ -10,7 +11,17 @@ const ManageKelas = () => {
   const params = useParams();
   const [name, setName] = useState("");
   const [course, setCourse] = useState([]);
-  const [setSection] = useState([]);
+  const [section, setSection] = useState([]);
+  const [preview, setPreview] = useState("");
+  const navigate = useNavigate();
+
+  const handleImageChange = (file) => {
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview("");
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -46,13 +57,16 @@ const ManageKelas = () => {
         </div>
         <div className="my-2 flex items-center justify-between gap-2 text-3xl font-bold">
           <h1>{course.title}</h1>
-          <Link
-            to={"/"}
-            className="flex rounded-[4px] bg-[#092C4C] px-4 py-1 text-base font-normal text-white"
-          >
-            <img src={EditIcon} alt="edit-module" width={22} height={22} />
-            <span>Edit Kelas</span>
-          </Link>
+          <img
+            src={EditIcon}
+            alt="edit-module"
+            width={22}
+            height={22}
+            onClick={() =>
+              navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
+            }
+            style={{ cursor: "pointer" }}
+          />
         </div>
         <span className="text-xl font-bold">Deskripsi</span>
         <div className="my-2 flex items-start justify-between">
@@ -75,7 +89,9 @@ const ManageKelas = () => {
               <Link to={`/kelas/manage-kelas/${params.id}`}>Materi</Link>
             </li>
             <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150  ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
-              <Link to="/dashboard">Ulasan</Link>
+              <Link to={`/kelas/manage-kelas/${params.id}/ulasan-kelas`}>
+                Ulasan
+              </Link>
             </li>
             <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150 ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
               {roleName === "admin" ? (

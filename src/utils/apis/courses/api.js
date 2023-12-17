@@ -1,15 +1,30 @@
 import axiosWithConfig from "../axiosWithConfig";
 
-export const getCourse = async () => {
+export const getCourse = async (params) => {
+  let query = "";
+
+  if (params) {
+    const queryParams = [];
+
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+    }
+
+    query = queryParams.join("&");
+  }
+
+  const url = query ? `/courses?&${query}` : "/courses?offset=0&limit=10";
   try {
-    const response = await axiosWithConfig.get("/courses?offset=0&limit=9999");
+    const response = await axiosWithConfig.get(url);
 
     return response.data;
   } catch (error) {
     throw Error("Failed to get class");
   }
 };
-export const getMyCourse = async () => {
+export const getMyCourse = async (params) => {
   try {
     const response = await axiosWithConfig.get(
       "/courses/my-course?offset=0&limit=10",
@@ -58,5 +73,17 @@ export const deleteCourse = async (courseId) => {
     return response.data;
   } catch (error) {
     throw new Error("Failed to delete course");
+  }
+};
+
+export const putCourse = async (courseId, courseData) => {
+  try {
+    const response = await axiosWithConfig.put(
+      `/courses/${courseId}`,
+      courseData,
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to edit course");
   }
 };

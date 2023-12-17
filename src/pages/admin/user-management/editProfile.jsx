@@ -349,7 +349,8 @@ export default function EditProfile() {
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={form.watch("gender") || ""}  // Gunakan string kosong jika nilainya null
+                          defaultValue=""
                           className="flex flex-col space-y-1"
                         >
                           <div className="flex space-x-5">

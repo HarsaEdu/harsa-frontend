@@ -4,6 +4,8 @@ import {
   getUserAccount,
   updateUserAccount,
   getUserInsructor,
+  getUserInstructorTable,
+  getUserStudentTable,
   getUserStudents,
   getAllStudents,
 } from "./api";
@@ -14,6 +16,8 @@ export {
   getUserAccount,
   updateUserAccount,
   getUserInsructor,
+  getUserInstructorTable,
+  getUserStudentTable,
   getUserStudents,
   getAllStudents,
 };

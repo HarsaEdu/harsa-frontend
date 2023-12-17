@@ -8,7 +8,6 @@ import Table from "@/components/table/tables";
 import { Input } from "@/components/ui/input";
 import { getUser, deleteUser } from "@/utils/apis/user";
 import { CSVLink } from "react-csv";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { debounce } from "lodash";
 import Pagination from "@/components/table/pagination";
@@ -54,6 +53,7 @@ export default function UserManagement() {
     } catch (error) {
       setError(error);
       setUserData([]);
+      setMeta([]);
     } finally {
       setIsLoading(false);
     }
