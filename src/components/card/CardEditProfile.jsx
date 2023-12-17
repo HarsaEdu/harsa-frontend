@@ -69,7 +69,7 @@ const CardEditProfile = (props) => {
         >
           <circle cx="12.5" cy="13" r="12.5" fill="#F2994A" />
         </svg>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="truncate">{title}</CardTitle>
       </CardHeader>
     </Card>
   );

@@ -256,7 +256,7 @@ export default function UserManagement() {
               <div className="space-x-2">
                 {/* button untuk export csv */}
                 <Button className="bg-[#159C1B] text-[16px] hover:bg-[#34a73a]">
-                  <CSVLink filename="my-file.csv" data={csvData}>
+                  <CSVLink filename="daftar-user.csv" data={csvData}>
                     Export to CSV
                   </CSVLink>
                 </Button>

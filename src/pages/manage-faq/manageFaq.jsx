@@ -91,8 +91,6 @@ export default function ManageFaq() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
-          timerProgressBar: true,
         });
       }
     } catch (error) {

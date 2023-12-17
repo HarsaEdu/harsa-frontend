@@ -32,7 +32,7 @@ import Swal from "sweetalert2";
 
 const formSchema = z.object({
   materialTitle: z.string({
-    required_error: "judul materi wajib di isi.",
+    required_error: "*judul materi wajib di isi.",
   }),
 });
 
@@ -95,45 +95,59 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
   };
 
   const onSubmit = async (data) => {
-    if (subModules.length > 0) {
-      form.clearErrors("material");
-      const newData = {
-        title: data.materialTitle,
-        description: "lorem ipsum",
-        sub_modules: subModules,
-      };
 
-      try {
-        await editModule(moduleId, newData);
+    if (data.materialTitle !== "") {
+      if (subModules.length > 0 && subModules[0].content_url !== "") {
+        form.clearErrors("material");
+        const newData = {
+          title: data.materialTitle,
+          description: "lorem ipsum",
+          sub_modules: subModules,
+        };
 
-        Swal.fire({
-          icon: "success",
-          title: "Sukses Edit Module",
-          showConfirmButton: false,
-          showCloseButton: true,
-          timer: 3000,
-        }).then(() => {
-          window.location.reload();
-        });
-      } catch (error) {
-        console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Edit Module",
-          text: error.message,
+        try {
+          await editModule(moduleId, newData);
+
+          Swal.fire({
+            icon: "success",
+            title: "Sukses Edit Module",
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 3000,
+          }).then(() => {
+            window.location.reload();
+          });
+        } catch (error) {
+          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Gagal Edit Module",
+            text: error.message,
+          });
+        }
+      } else {
+        form.setError("material", {
+          type: "manual",
+          message: "Minimal satu link materi wajib diisi.",
         });
       }
     } else {
-      form.setError("material", {
+      if (subModules[0].content_url === "") {
+        form.setError("material", {
+          type: "manual",
+          message: "Minimal satu link materi wajib diisi.",
+        });
+      }
+      form.setError("materialTitle", {
         type: "manual",
-        message: "Minimal satu link materi wajib diisi.",
+        message: "*judul materi wajib di isi.",
       });
     }
+
   };
 
   return (
     <Form {...form}>
-      {console.log("module : ", module)}
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
         <FormField
           control={form.control}
@@ -164,9 +178,8 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
                 Materi {index + 1}
               </FormLabel>
               {materialType[index] === "video" ||
-              (form.formState.errors.material && materialType[index] === "") ? (
+                (form.formState.errors.material && materialType[index] === "") ? (
                 <>
-                  {/* {form.setValue(`material[${index}]`, subModules[index] && subModules[index].content_url)} */}
                   <FormField
                     control={form.control}
                     name={`material[${index}]`}
@@ -191,7 +204,6 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
 
               {materialType[index] === "slide" && (
                 <>
-                  {/* {form.setValue(`material[${index}]`, subModules[index] && subModules[index].content_url)} */}
                   <FormField
                     control={form.control}
                     name={`material[${index}]`}
