@@ -1,3 +1,8 @@
-import { getAllCourse, getCouseByID, getAllCountData } from "./api";
+import {
+  getAllCourse,
+  getCouseByID,
+  getAllCountData,
+  getLastYearProfit,
+} from "./api";
 
-export { getAllCourse, getCouseByID, getAllCountData };
+export { getAllCourse, getCouseByID, getAllCountData, getLastYearProfit };
