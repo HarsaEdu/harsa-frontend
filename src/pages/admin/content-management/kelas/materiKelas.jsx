@@ -27,7 +27,7 @@ const MateriOverview = () => {
     }
   }
 
-  const handleDeleteSubModule = async (idSubModule) => {
+  const handleDeleteSubModule = async (idSection) => {
     try {
       const result = await Swal.fire({
         title: "Apakah Anda yakin?",
@@ -40,7 +40,7 @@ const MateriOverview = () => {
       });
 
       if (result.isConfirmed) {
-        await deleteSubModule(idSubModule);
+        await deleteSubModule(params.id, idSection);
         fetchData();
         MySwal.fire({
           icon: "success",
@@ -72,7 +72,7 @@ const MateriOverview = () => {
               id="module"
               className="m-2 rounded-[4px] bg-[#092C4C] text-white"
             >
-              <Link to={`/kelas/manage-kelas/tambah-modul/${params.id}`}>Tambah Modul</Link>
+              <Link to={`/kelas/manage-kelas/${params.id}/manage-modul/tambah-modul`}>Tambah Modul</Link>
             </Button>
           </div>
           {section !== null ? (
@@ -84,7 +84,7 @@ const MateriOverview = () => {
                     <div className="flex items-center">
                       <Button
                         id="deleteButton"
-                        onClick={handleDeleteSubModule}
+                        onClick={() => handleDeleteSubModule(Modules.id)}
                         className="m-2 rounded-[4px] bg-[#092C4C] font-semibold text-[#092C4C] hover:bg-[#092C4C]"
                       >
                         <img src={DeleteIcon} alt="" width={38} height={38} />
@@ -93,7 +93,7 @@ const MateriOverview = () => {
                         className="m-2 rounded-[4px] bg-[#A2D2FF] font-semibold text-[#092C4C] hover:bg-[#81b1df]"
                         id="manageModuleButton"
                       >
-                        <Link to={`/kelas/manage-kelas/manage-modul/${params.id}/section/${Modules.id}`}>
+                        <Link to={`/kelas/manage-kelas/${params.id}/manage-modul/${Modules.id}`}>
                           Manage Modul
                         </Link>
                       </Button>

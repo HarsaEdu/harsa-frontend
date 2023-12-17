@@ -125,7 +125,7 @@ export default function ListTugas() {
             />
           </div>
           <div className="flex w-1/2 items-center justify-end space-x-3">
-            <Link to={`/kelas/tambah-modul/tambah-tugas/${params.idSection}`}>
+            <Link to={`/kelas/manage-kelas/${params.id}/manage-module/${params.idSection}/tambah-tugas/${params.idSection}`}>
               <Button
                 id="tambah-tugas"
                 className="rounded-xl bg-[#092C4C] px-6 py-5 text-xl hover:bg-[#142331]"
@@ -152,7 +152,7 @@ export default function ListTugas() {
                   description={item.content}
                   editOnClick={() =>
                     navigate(
-                      `/kelas/manage-tugas/${params.idSection}/${item.id}`,
+                      `/kelas/manage-kelas/${params.id}/manage-module/${params.idSection}/manage-tugas/${params.idModule}/detail-tugas/${item.id}`
                     )
                   }
                   deleteOnClick={() => handleDelete(item.id, params.idSection)}

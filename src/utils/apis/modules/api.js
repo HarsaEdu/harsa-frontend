@@ -52,10 +52,10 @@ const createModuleBySection = async (sectionId, data) => {
   }
 };
 
-const deleteSubModule = async (subModuleId) => {
+const deleteSubModule = async ( courseId, subModuleId) => {
   try {
     const response = await axiosWithConfig.delete(
-      `/courses/section/module/sub-module/${subModuleId}`,
+      `/courses/${courseId}/section/${subModuleId}`,
     );
     return response.data; // Jika server mengembalikan data setelah penghapusan
   } catch (error) {
@@ -92,6 +92,19 @@ const editModule = async (moduleId, data) => {
   }
 };
 
+const deleteModule = async (subModuleId) => {
+  try {
+    const response = await axiosWithConfig.delete(
+      `/courses/section/module/${subModuleId}`,
+    );
+    return response.data; // Jika server mengembalikan data setelah penghapusan
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Gagal menghapus submodul",
+    );
+  }
+};
+
 export {
   getModuleBySection,
   createSection,
@@ -100,4 +113,5 @@ export {
   getModuleById,
   editSection,
   editModule,
+  deleteModule
 };

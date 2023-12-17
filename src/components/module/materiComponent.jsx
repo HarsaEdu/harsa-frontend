@@ -33,7 +33,7 @@ const CardModule = ({ idSection }) => {
   return (
     <div>
       {Modules && Modules ? (
-        <div className="mx-2 my-3 h-full border border-slate-300 px-2 font-poppins">
+        <div className="mx-2 my-3 h-full px-2 font-poppins">
           <Accordion
             type="single"
             collapsible
