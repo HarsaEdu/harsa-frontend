@@ -108,7 +108,7 @@ const AddSubscription = () => {
   const handleDelete = async (id) => {
     // Tampilkan konfirmasi sebelum menghapus
     Swal.fire({
-      title: "Yakin kamu mau  Hapus  data ini?",
+      title: "Yakin kamu mau Hapus data ini?",
       icon: "question",
       showCancelButton: true,
       showConfirmButton: true,
@@ -123,23 +123,27 @@ const AddSubscription = () => {
 
           console.log("Response dari server:", response);
 
-          if (response.data.code === 200) {
+          if (response && response.code === 200) {
             // Notifikasi setelah berhasil menghapus
             Swal.fire({
               title: "Sukses Hapus Data Paket",
               icon: "success",
               showConfirmButton: false,
               showCloseButton: true,
-              timer: 2000,
             });
 
             // Perbarui data Subs setelah penghapusan berhasil
             setSubsData((prevData) =>
               prevData.filter((subs) => subs.id !== id),
             );
-            console.log("subsData setelah penghapusan:", subsData);
+          } else if (response && response.message) {
+            // Handle other successful responses with messages
+            console.log("Success with message:", response.message);
           } else {
-            console.error("Gagal menghapus Subs:", response.data.message);
+            console.error(
+              "Gagal menghapus Subs. Unexpected response:",
+              response,
+            );
           }
         } catch (error) {
           // Tampilkan detail kesalahan Axios
