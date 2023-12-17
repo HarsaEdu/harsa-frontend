@@ -5,7 +5,7 @@ import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import * as z from "zod";
@@ -21,12 +21,16 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  pertanyaan: z.string({
-    required_error: "*Pertanyaan wajib di isi",
-  }),
-  jawaban: z.string({
-    required_error: "*Jawaban wajib di isi",
-  }),
+  pertanyaan: z
+    .string({
+      required_error: "*Pertanyaan wajib di isi",
+    })
+    .min(1, { message: "*Pertanyaan wajib di isi" }),
+  jawaban: z
+    .string({
+      required_error: "*Jawaban wajib di isi",
+    })
+    .min(1, { message: "*Jawaban wajib di isi" }),
 });
 
 const AddFAQ = () => {
@@ -67,6 +71,8 @@ const AddFAQ = () => {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
+          timer: 2000,
+          timerProgressBar: true,
         }).then((result) => {
           if (result.isDismissed) {
             navigate(`/content-management/FAQ`);
@@ -138,8 +144,9 @@ const AddFAQ = () => {
                   className="w-60 rounded-none bg-[#ED7878] font-semibold text-white"
                   variant={"outline"}
                   type="reset"
+                  onClick={() => navigate(-1)}
                 >
-                  <Link to="/faq">Batal</Link>
+                  Batal
                 </Button>
                 <Button
                   id="acceptButtonFAQ"

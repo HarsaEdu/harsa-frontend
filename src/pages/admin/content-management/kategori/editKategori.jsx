@@ -233,7 +233,7 @@ const EditKategori = () => {
                 </Button>
 
                 <Button className="w-[200px]" type="submit">
-                  Tambah
+                  Simpan
                 </Button>
               </div>
             </form>

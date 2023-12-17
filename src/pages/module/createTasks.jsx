@@ -102,14 +102,16 @@ const createTasks = () => {
                 )}
               />
               <div className="flex justify-between">
-                <Button
-                  id="cancelButtonTugas"
-                  className="border-black"
-                  variant={"outline"}
-                  type="reset"
-                >
-                  <Link to="/kelas">Batal</Link>
-                </Button>
+                <Link to={`/kelas/manage-kelas/${params.id}/manage-module/${params.idSection}/manage-tugas/${params.idSection}`}>
+                  <Button
+                    id="cancelButtonTugas"
+                    className="border-black"
+                    variant={"outline"}
+                    type="reset"
+                  >
+                    Batal
+                  </Button>
+                </Link>
                 <Button
                   id="acceptButtonTugas"
                   variant={"default"}
