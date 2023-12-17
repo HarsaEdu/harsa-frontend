@@ -5,7 +5,7 @@ import Breadcrumb from "@/components/breadcrumb";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Index";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import * as z from "zod";
@@ -21,12 +21,16 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  pertanyaan: z.string({
-    required_error: "*Pertanyaan wajib di isi",
-  }),
-  jawaban: z.string({
-    required_error: "*Jawaban wajib di isi",
-  }),
+  pertanyaan: z
+    .string({
+      required_error: "*Pertanyaan wajib di isi",
+    })
+    .min(1, { message: "*Pertanyaan wajib di isi" }),
+  jawaban: z
+    .string({
+      required_error: "*Jawaban wajib di isi",
+    })
+    .min(1, { message: "*Jawaban wajib di isi" }),
 });
 
 const AddFAQ = () => {
@@ -40,13 +44,13 @@ const AddFAQ = () => {
     try {
       // Mendapatkan token dari localStorage atau dari mana pun yang sesuai
       const token = localStorage.getItem("access_token");
-  
+
       // Memastikan token tersedia sebelum mengirim permintaan
       if (!token) {
         console.error("Access token not available");
         return;
       }
-  
+
       // Menggunakan axios untuk mengirim data ke backend
       const response = await axios.post(
         "https://api.harsaedu.my.id/web/faqs",
@@ -58,15 +62,17 @@ const AddFAQ = () => {
           headers: {
             Authorization: `Bearer ${token}`, // Menyertakan token di header
           },
-        }
+        },
       );
-  
+
       if (response.status === 201) {
         Swal.fire({
-          title: "Sukses Update Data",
+          title: "Sukses Tambah Data FAQ",
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
+          timer: 2000,
+          timerProgressBar: true,
         }).then((result) => {
           if (result.isDismissed) {
             navigate(`/content-management/FAQ`);
@@ -83,14 +89,14 @@ const AddFAQ = () => {
 
   return (
     <Layout>
-     <div className="container mb-10">
+      <div className="container mb-10">
         <Breadcrumb />
         <div className="font-poppins">
-            <h2 className="text-2xl font-semibold pb-4 pt-10">Tambah FAQ</h2>
-          <Form {...form}> 
+          <h2 className="pb-4 pt-10 text-2xl font-semibold">Tambah FAQ</h2>
+          <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="px-8 py-5 space-y-8 border-2 border-[#092C4C]"
+              className="space-y-8 border-2 border-[#092C4C] px-8 py-5"
             >
               <FormField
                 control={form.control}
@@ -98,7 +104,7 @@ const AddFAQ = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="ml-1 text-lg font-semibold">
-                    Pertanyaan
+                      Pertanyaan
                     </FormLabel>
                     <FormControl>
                       <Textarea
@@ -118,7 +124,7 @@ const AddFAQ = () => {
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel className="ml-1 text-lg font-semibold">
-                    Jawaban
+                      Jawaban
                     </FormLabel>
                     <FormControl>
                       <Textarea
@@ -132,20 +138,21 @@ const AddFAQ = () => {
                   </FormItem>
                 )}
               />
-              <div className="flex px-4 justify-between">
+              <div className="flex justify-between px-4">
                 <Button
                   id="cancelButtonFAQ"
-                  className="bg-[#ED7878] w-60 text-white font-semibold rounded-none"
+                  className="w-60 rounded-none bg-[#ED7878] font-semibold text-white"
                   variant={"outline"}
                   type="reset"
+                  onClick={() => navigate(-1)}
                 >
-                  <Link to="/faq">Batal</Link>
+                  Batal
                 </Button>
                 <Button
                   id="acceptButtonFAQ"
                   variant={"default"}
                   type="submit"
-                  className="font-semibold w-60 rounded-none"
+                  className="w-60 rounded-none font-semibold"
                 >
                   Tambah
                 </Button>

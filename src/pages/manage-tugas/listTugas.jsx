@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useCallback, useMemo } from "react";
 import Layout from "@/components/layout/Index";
 import Breadcrumb from "@/components/breadcrumb";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { Plus } from "lucide-react";
 import { getAllSubmission, deleteSubmission } from "@/utils/apis/submission";
 import CardTugas from "@/components/card/cardTugas";
 import Swal from "sweetalert2";
+import { debounce } from "lodash";
 
 export default function ListTugas() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,28 +28,44 @@ export default function ListTugas() {
   }, [searchParams]);
 
   async function fetchData() {
-    let query = Object.fromEntries(
-      [...searchParams].filter((param) => param[0] !== "tab"),
-    );
+    let query = Object.fromEntries([...searchParams]);
 
     if (searchParams.has("search")) {
-      searchParams.set("offset", 0);
       setSearchValue(searchParams.get("search"));
-    } else {
-      searchParams.set("offset", 0);
     }
 
     try {
       setIsLoading(true);
-      const result = await getAllSubmission(params.idSection);
+      const result = await getAllSubmission(params.idSection, { ...query });
       const { data } = result;
       setData(data);
     } catch (error) {
-      Swal.fire({ title: "Error", text: error.message });
       setData([]);
     } finally {
       setIsLoading(false);
     }
+  }
+
+  const getSuggestions = useCallback(
+    async function (search) {
+      if (!search) {
+        searchParams.delete("search");
+      } else {
+        searchParams.set("search", search);
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams],
+  );
+
+  const getSuggestionsDebounce = useMemo(
+    () => debounce(getSuggestions, 1000),
+    [getSuggestions],
+  );
+
+  function onInputChange(newValue) {
+    setSearchValue(newValue);
+    getSuggestionsDebounce(newValue);
   }
 
   async function onDelete(idSubmission, idSection) {
@@ -108,7 +125,7 @@ export default function ListTugas() {
             />
           </div>
           <div className="flex w-1/2 items-center justify-end space-x-3">
-            <Link to={`/kelas/tambah-modul/tambah-tugas/${params.idSection}`}>
+            <Link to={`/kelas/manage-kelas/${params.id}/manage-module/${params.idSection}/tambah-tugas/${params.idSection}`}>
               <Button
                 id="tambah-tugas"
                 className="rounded-xl bg-[#092C4C] px-6 py-5 text-xl hover:bg-[#142331]"
@@ -135,7 +152,7 @@ export default function ListTugas() {
                   description={item.content}
                   editOnClick={() =>
                     navigate(
-                      `/kelas/manage-tugas/${params.idSection}/${item.id}`,
+                      `/kelas/manage-kelas/${params.id}/manage-module/${params.idSection}/manage-tugas/${params.idModule}/detail-tugas/${item.id}`
                     )
                   }
                   deleteOnClick={() => handleDelete(item.id, params.idSection)}

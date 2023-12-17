@@ -1,6 +1,16 @@
-import axiosWithConfig from "../axiosWithConfig";
+import { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
+import { useNavigate } from "react-router-dom";
 
 export const handleTokenRefresh = async (refreshToken) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("role_name");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    navigate("/login");
+  };
+  
   try {
     const response = await axios.post(
       "https://api.harsaedu.my.id/web/auth/access-token",
@@ -17,6 +27,7 @@ export const handleTokenRefresh = async (refreshToken) => {
     }
   } catch (error) {
     console.error("Error refreshing token:", error);
+    handleLogout(); // Call handleLogout on token refresh failure
     throw error; // Propagate the error for handling in the calling function
   }
 };

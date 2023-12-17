@@ -43,6 +43,7 @@ import {
   createModuleBySection,
   editSection,
   getModuleBySection,
+  deleteModule
 } from "@/utils/apis/modules/api";
 import FormUpdateMaterial from "./formUpdateMaterial";
 
@@ -81,7 +82,6 @@ const UpdateMaterial = () => {
         text: error.message,
       });
     }
-
   };
   useEffect(() => {
     fetchModules();
@@ -127,6 +127,7 @@ const UpdateMaterial = () => {
           showCloseButton: true,
         }).then(() => {
           setIsAddMaterial(false);
+          fetchModules();
         });
       } catch (error) {
         console.log(error);
@@ -136,7 +137,6 @@ const UpdateMaterial = () => {
           text: error.message,
         });
       }
-
     } else {
       form.setError("material", {
         type: "manual",
@@ -172,11 +172,46 @@ const UpdateMaterial = () => {
         text: error.message,
       });
     }
-
   };
 
   const handleMaterialUpdated = () => {
     console.log("material updated");
+  };
+
+  const handleDeleteModule = async (moduleId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data modul akan dihapus permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!",
+      });
+  
+      if (result.isConfirmed) {
+        await deleteModule(moduleId);
+        fetchModules(); // Gantilah dengan fungsi yang sesuai untuk mereload data
+        Swal.fire({
+          icon: "success",
+          title: "Sukses Menghapus Modul",
+          showConfirmButton: false,
+          showCloseButton: true,
+          customClass: {
+            closeButton: "swal2-cancel-button",
+          },
+          buttonsStyling: false,
+        });
+      }
+    } catch (error) {
+      console.error("Gagal menghapus modul", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Gagal menghapus data modul.",
+        icon: "error",
+      });
+    }
   };
 
   return (
@@ -251,7 +286,7 @@ const UpdateMaterial = () => {
                 >
                   <AccordionTrigger className="font-semibold">
                     {singleModule.title}
-                    <img className="ms-auto h-5" src={deleteIcon} alt="" />
+                    <img className="ms-auto h-5" src={deleteIcon} alt="delete" onClick={() => handleDeleteModule(singleModule.id)} />
                   </AccordionTrigger>
                   <AccordionContent>
                     <FormUpdateMaterial
@@ -307,8 +342,8 @@ const UpdateMaterial = () => {
                         Materi {index + 1}
                       </FormLabel>
                       {materialType[index] === "video" ||
-                        (form.formState.errors.material &&
-                          materialType[index] === "") ? (
+                      (form.formState.errors.material &&
+                        materialType[index] === "") ? (
                         <FormField
                           control={form.control}
                           name={`material[${index}]`}
@@ -401,7 +436,7 @@ const UpdateMaterial = () => {
                   </div>
                 </div>
 
-                <div>
+                {/* <div>
                   <FormLabel className="font-poppins font-semibold text-[#092C4C]">
                     Kuis
                   </FormLabel>
@@ -413,20 +448,8 @@ const UpdateMaterial = () => {
                       Tambah Kuis <Plus className="inline-block h-4" />
                     </Link>
                   </div>
-                </div>
-                <div>
-                  <FormLabel className="font-poppins font-semibold text-[#092C4C]">
-                    Tugas
-                  </FormLabel>
-                  <div style={{ marginTop: "0.5rem" }}>
-                    <a
-                      className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
-                      href=""
-                    >
-                      Tambah Tugas <Plus className="inline-block h-4" />
-                    </a>
-                  </div>
-                </div>
+                </div> */}
+
                 <div className="flex justify-between">
                   <Button
                     variant={"outline"}

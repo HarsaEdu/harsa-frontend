@@ -1,11 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import LandingPage from "@/pages/landing-page/index";
-import MateriOverview from "@/pages/module/updateKelas";
+import MateriOverview from "@/pages/module/ManageKelas";
 import MateriKelas from "@/pages/admin/content-management/kelas/materiKelas";
 import UserManagement from "@/pages/admin/userManagement";
 import AssignUserAdmin from "@/pages/admin/content-management/kelas/assignUser";
-import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
 import AssignUserInstruktor from "@/pages/assign-users/assignUserInstruktor";
 import Dashboard from "@/pages/dashboard/index";
@@ -44,6 +43,8 @@ import Notification from "@/pages/notification";
 
 import DetailNotification from "@/pages/detail-notifikasi";
 import ListTugas from "@/pages/manage-tugas/listTugas";
+import CreateQuiz from "@/pages/tambah-kuis/createQuiz";
+import JawabanKuis from "@/pages/tambah-kuis/jawabanKuis";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -88,11 +89,11 @@ export default function Router() {
           element: <AddClass />,
         },
         {
-          path: "/kelas/manage-kelas/tambah-modul/:id",
+          path: "/kelas/manage-kelas/:id/manage-modul/tambah-modul/",
           element: <CreateMaterial />,
         },
         {
-          path: "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
+          path: "/kelas/manage-kelas/:id/manage-modul/:idSection",
           element: <UpdateMaterial />,
         },
         {
@@ -100,7 +101,7 @@ export default function Router() {
           element: <EditClass />,
         },
         {
-          path: "/kelas/tambah-modul/tambah-tugas/:idSection",
+          path: "/kelas/manage-kelas/:id/manage-module/:idSection/tambah-tugas/:idSection",
           element: <CreateTask />,
         },
         {
@@ -110,13 +111,23 @@ export default function Router() {
         {
           path: "/kelas/tambah-pertanyaan",
           element: <HeaderQuiz />,
+          children: [
+            {
+              path: "/kelas/tambah-pertanyaan",
+              element: <CreateQuiz />,
+            },
+            {
+              path: "/kelas/tambah-pertanyaan/:idQuiz",
+              element: <JawabanKuis />,
+            },
+          ],
         },
         {
-          path: "/kelas/manage-kelas/manage-tugas/:idSection",
+          path: "/kelas/manage-kelas/:id/manage-module/:idSection/manage-tugas/:idModule",
           element: <ListTugas />,
         },
         {
-          path: "/kelas/manage-tugas/:idSection/:idSubmission",
+          path: "/kelas/manage-kelas/:id/manage-module/:idSection/manage-tugas/:idModule/detail-tugas/:idSubmission",
           element: <ManageTugas />,
         },
         {
@@ -204,7 +215,7 @@ export default function Router() {
           element: <Notification />,
         },
         {
-          path: "/detailnotifikasi",
+          path: "/detail-notifikasi/:notificationId",
           element: <DetailNotification />,
         },
       ],

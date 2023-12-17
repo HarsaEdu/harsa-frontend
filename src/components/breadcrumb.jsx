@@ -31,7 +31,7 @@ const Breadcrumb = () => {
       return false;
     }
     return !/^\d+$/.test(name);
-  }).slice(0, 4);
+  }).slice(0, 5);
 
   return (
     <div className='font-poppins bg-[#A2D2FF] rounded-full px-4 py-1 text-sm inline-block'>

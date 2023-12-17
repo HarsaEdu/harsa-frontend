@@ -49,16 +49,14 @@ const formSchema = z.object({
       message: "*Instructor wajib di pilih",
     }),
   upload: z
-    .any()
-    .refine((data) => data !== undefined && data !== null && data !== "", {
-      message: "*Gambar harus di isi",
-    })
-    .refine((data) => data?.size <= MAX_FILE_SIZE, {
-      message: "*Ukuran gambar harus di bawah 5 MB.",
-    })
-    .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
-      message: "*Format file salah, upload dengan format JPG, JPEG, atau PNG",
-    }),
+  .any()
+  .refine((data) => !data || data.size <= MAX_FILE_SIZE, {
+    message: "*Ukuran file terlalu besar, maksimal 5 MB",
+  })
+  .refine((data) => !data || ACCEPTED_IMAGE_TYPES.includes(data.type), {
+    message:
+      "*Format file yang di-upload salah, format file harus PNG, JPG, Jpeg, svg",
+  }),
 });
 
 function EditClass() {
@@ -141,12 +139,21 @@ function EditClass() {
       const fileData = form.watch("upload");
       console.log(fileData);
 
+      if (!preview) {
+        form.setError("upload", {
+          message: "*Gambar wajib diisi",
+        });
+        return; // Keluar dari fungsi jika file kosong
+      }
+
       const formData = new FormData();
       formData.append("title", data.judul);
       formData.append("description", data.deskripsi);
       formData.append("category_id", data.category);
       formData.append("user_id", data.instructor);
-      formData.append("file", fileData);
+      if (fileData) {
+        formData.append("file", fileData);
+      }
 
       const confirmResult = await MySwal.fire({
         icon: "question",
@@ -186,6 +193,13 @@ function EditClass() {
       }
     } catch (error) {
       console.error("Failed to edit course:", error);
+      Swal.fire({
+        title: "Gagal Mengedit Kelas",
+        text: "pastikan mengisi seluruh kolom",
+        icon: "error",
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
       const errorMessage =
         error.response?.data?.message || "Failed to edit course.";
       form.setError("upload", { message: errorMessage });
@@ -326,16 +340,21 @@ function EditClass() {
                     </FormLabel>
                     <FormControl>
                       {/* InputFile component is assumed to be defined elsewhere */}
-                      <InputFile
-                        textUpload="Upload Cover Course"
-                        preview={preview}
-                        onChange={(file) => {
-                          field.onChange(file.target.files[0]);
-                          console.log(file.target.files[0]);
-                          handleImageChange(file.target.files[0]);
-                        }}
-                        setPreview={setPreview}
-                      />
+                      <div className="w-full h-56 border border-black rounded-lg flex justify-center items-center p-4 cursor-pointer">
+                        <div className="border border-black border-dashed w-full flex flex-col justify-center items-center font-poppins font-semibold text-[#A2D2FF] text-lg">
+                          <InputFile
+                            textUpload="Upload Cover Course"
+                            preview={preview}
+                            onChange={(file) => {
+                              field.onChange(file.target.files[0]);
+                              console.log(file.target.files[0]);
+                              handleImageChange(file.target.files[0]);
+                            }}
+                            setPreview={setPreview}
+                          />
+                        </div>
+                      </div>
+                      
                     </FormControl>
                     <FormMessage className="text-[#ED7878]">
                       {form.formState.errors.upload?.message}

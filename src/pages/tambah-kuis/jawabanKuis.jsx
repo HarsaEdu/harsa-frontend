@@ -5,25 +5,29 @@ import Table from "@/components/table/tables";
 import { realData2 } from "@/utils/dummyData";
 import { React, useMemo, useState, useEffect, useCallback } from "react";
 import { Check, X } from "lucide-react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
+import { getHistoryQuiz } from "@/utils/apis/historyQuiz/";
+import { CSVLink } from "react-csv";
+import Swal from "sweetalert2";
 
 export default function JawabanKuis() {
   //*
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState("");
-  const [data, setData] = useState(realData2);
+  const [data, setData] = useState([]);
+  const params = useParams();
 
   useEffect(() => {
     fetchData();
   }, [searchParams]);
 
   const getSuggestions = useCallback(
-    async function (query) {
-      if (!query) {
-        searchParams.delete("query");
+    async function (search) {
+      if (!search) {
+        searchParams.delete("search");
       } else {
-        searchParams.set("query", query);
+        searchParams.set("search", search);
         searchParams.delete("page");
       }
       setSearchParams(searchParams);
@@ -38,29 +42,20 @@ export default function JawabanKuis() {
 
   async function fetchData() {
     try {
-      const simulatedApiCall = () =>
-        new Promise((resolve) => {
-          setTimeout(() => {
-            // Check if there is a search query
-            if (searchParams.has("query")) {
-              // Filter the data based on the search query
-              resolve(
-                realData2.filter((item) =>
-                  item.user_id
-                    .toLowerCase()
-                    .includes(searchParams.get("query").toLowerCase()),
-                ),
-              );
-            } else {
-              // If no search query, fetch all data
-              resolve(realData2);
-            }
-          }, 500);
-        });
+      let query = Object.fromEntries([...searchParams]);
 
-      const response = await simulatedApiCall();
+      if (searchParams.has("search")) {
+        searchParams.set("offset", 0);
+        searchParams.set("limit", 10);
+        setSearchValue(searchParams.get("search"));
+      } else {
+        searchParams.set("offset", 0);
+        searchParams.set("limit", 10);
+      }
 
-      setData(response);
+      const result = await getHistoryQuiz(query, params.idQuiz); //cHange with the real id quiz
+
+      setData(result.data);
     } catch (error) {
       console.error("Error fetching data:", error);
       // Handle errors as needed
@@ -72,24 +67,26 @@ export default function JawabanKuis() {
     getSuggestionsDebounce(newValue);
   }
   //*
-  const allQuestions = realData2.flatMap((user) =>
-    user.answers.map((answer) => answer.qestion_id),
+  const allQuestions = data.flatMap((user) =>
+    user.history_answer.map((answer) => answer.question_id),
   );
-  const uniqueQuestions = [...new Set(allQuestions)]; // Get unique question IDs
 
+  const uniqueQuestions = [...new Set(allQuestions)]; // Get unique question IDs
   const jawabanColumns = uniqueQuestions.map((questionId, index) => ({
     id: `jawaban-${index + 1}`,
-    header: () => <span>{index + 1}</span>,
+    header: `${index + 1}`,
     accessor: (data) => {
-      const userAnswer = data.answers.find(
-        (answer) => answer.qestion_id === questionId,
+      const userAnswer = data.history_answer?.find(
+        (answer) => answer.question_id === questionId,
       );
       return userAnswer || {};
     },
-    cell: (info) =>
-      info.row.original.answers.find(
-        (answer) => answer.qestion_id === questionId,
-      )?.is_right ? (
+    cell: (info) => {
+      const foundAnswer = info.row.original.history_answer?.find(
+        (answer) => answer.question_id === questionId,
+      );
+
+      return foundAnswer?.is_right ? (
         <div className="flex justify-center">
           <Check />
         </div>
@@ -97,7 +94,8 @@ export default function JawabanKuis() {
         <div className="flex justify-center">
           <X />
         </div>
-      ),
+      );
+    },
   }));
 
   const columns = useMemo(() => [
@@ -105,7 +103,7 @@ export default function JawabanKuis() {
     ,
     {
       header: "Nama",
-      accessorKey: "user_id",
+      accessorKey: "name",
       cell: (info) => info.getValue(),
       rowSpan: true,
     },
@@ -120,9 +118,24 @@ export default function JawabanKuis() {
     },
   ]);
 
-  function exportQuiz() {
-    console.log("Test Export 1");
-  }
+  const csvData = [
+    ["No", "Name", ...uniqueQuestions.map((index) => `${index}`), "Skor"],
+    ...data.map(({ name, history_answer, score }, index) => {
+      const userAnswers = history_answer || [];
+
+      // Convert isRightValuesByQuestion to an array in the same order as uniqueQuestions
+      const isRightValues = uniqueQuestions.map((questionId) => {
+        const answer = userAnswers.find(
+          (ans) => ans.question_id === questionId,
+        );
+        return answer ? answer.is_right : null;
+      });
+
+      const rowData = [index + 1, name, ...isRightValues, score];
+
+      return rowData;
+    }),
+  ];
 
   return (
     <div>
@@ -136,13 +149,25 @@ export default function JawabanKuis() {
             value={searchValue}
             onChange={(e) => onInputChange(e.currentTarget.value)}
           />
-          <Button
-            id="export"
-            className="rounded-xl px-20 py-5 text-xl"
-            onClick={exportQuiz}
+          <CSVLink
+            filename="jawaban-kuis.csv"
+            data={csvData}
+            onClick={() =>
+              Swal.fire({
+                title: "Berhasil",
+                icon: "success",
+                text: "Berhasil Melakukan Export Data",
+                showCloseButton: true,
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+              })
+            }
           >
-            Export
-          </Button>
+            <Button id="export" className="rounded-xl px-20 py-5 text-xl">
+              Export
+            </Button>
+          </CSVLink>
         </div>
       </div>
       {/* Jawaban Quiz Content */}
@@ -152,6 +177,7 @@ export default function JawabanKuis() {
             datas={data}
             columns={columns}
             classNameHeader="bg-[#F2994A] text-xl"
+            classNameCell="font-bold"
           />
         </div>
       </div>
