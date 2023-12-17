@@ -89,11 +89,11 @@ export default function Router() {
           element: <AddClass />,
         },
         {
-          path: "/kelas/manage-kelas/tambah-modul/:id",
+          path: "/kelas/manage-kelas/:id/manage-modul/tambah-modul/",
           element: <CreateMaterial />,
         },
         {
-          path: "/kelas/manage-kelas/manage-modul/:id/section/:idSection",
+          path: "/kelas/manage-kelas/:id/manage-modul/:idSection",
           element: <UpdateMaterial />,
         },
         {
@@ -101,7 +101,7 @@ export default function Router() {
           element: <EditClass />,
         },
         {
-          path: "/kelas/tambah-modul/tambah-tugas/:idSection",
+          path: "/kelas/manage-kelas/:id/manage-module/:idSection/tambah-tugas/:idSection",
           element: <CreateTask />,
         },
         {
@@ -123,11 +123,11 @@ export default function Router() {
           ],
         },
         {
-          path: "/kelas/manage-kelas/:id/manage-tugas/:idSection",
+          path: "/kelas/manage-kelas/:id/manage-module/:idSection/manage-tugas/:idModule",
           element: <ListTugas />,
         },
         {
-          path: "/kelas/manage-tugas/:idSection/:idSubmission",
+          path: "/kelas/manage-kelas/:id/manage-module/:idSection/manage-tugas/:idModule/detail-tugas/:idSubmission",
           element: <ManageTugas />,
         },
         {
@@ -215,7 +215,7 @@ export default function Router() {
           element: <Notification />,
         },
         {
-          path: "/detailnotifikasi",
+          path: "/detail-notifikasi/:notificationId",
           element: <DetailNotification />,
         },
       ],

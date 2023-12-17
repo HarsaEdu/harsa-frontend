@@ -1,6 +1,18 @@
-const cardModule = ({ StudentName, RoleUser, AddressUser }) => {
+const cardModule = ({
+  StudentName,
+  RoleUser,
+  AddressUser,
+  onRadioChange,
+  idUser,
+}) => {
   return (
     <div className="flex items-center space-x-3 space-y-1 rounded-sm bg-slate-100 p-2">
+      <input
+        type="radio"
+        name="moduleRadio"
+        value={idUser} // You can change this to module.id if needed
+        onChange={onRadioChange}
+      />
       <div className="relative h-8 w-8 rounded-full before:absolute before:bottom-0 before:right-0 before:h-2 before:w-2 before:rounded-full before:bg-green-500 before:ring-1 before:ring-white">
         <img
           className="rounded-full"
