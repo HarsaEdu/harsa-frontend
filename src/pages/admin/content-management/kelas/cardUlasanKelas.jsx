@@ -1,41 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Delete from "../../../../assets/Delete.svg";
+import axios from "axios";
 
 const MySwal = withReactContent(Swal);
 
 function ulasanKelas() {
-  const [ulasanData, setUlasanData] = useState([
-    {
-      title: "maman",
-      desc: "Pak Harnoko memberikan semangat pada kelas front-end, fokus pada HTML dan CSS untuk membangun dasar yang kuat dalam pengembangan web.",
-      time: "12/02/2023",
-      showDropdown: false,
-      replyText: "",
-    },
-    {
-      title: "surti",
-      desc: "Dalam kelas JavaScript, Pak Harnoko memperkenalkan konsep pemrograman interaktif, memberikan pemahaman mendalam tentang pengembangan front-end yang dinamis.",
-      time: "12/02/2023",
-      showDropdown: false,
-      replyText: "",
-    },
-    {
-      title: "Jajang",
-      desc: "Dengan penekanan pada desain responsif, Pak Harnoko membantu siswa menguasai teknik untuk tampilan situs web yang optimal di berbagai perangkat.",
-      time: "12/02/2023",
-      showDropdown: false,
-      replyText: "",
-    },
-    {
-      title: "Popol",
-      desc: "Dalam mengajar framework front-end, Pak Harnoko membimbing siswa dalam menguasai alat-alat seperti React atau Angular untuk pengembangan web yang efisien dan dapat diperluas.",
-      time: "12/02/2023",
-      showDropdown: false,
-      replyText: "",
-    },
-  ]);
+  const [ulasanData, setUlasanData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.harsaedu.my.id/web/feedbacks/3",
+        );
+        setUlasanData(response.data);
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          setUlasanData([]);
+          console.log("Belum ada ulasan");
+        } else {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleBalasClick = (index) => {
     const updatedData = [...ulasanData];
@@ -73,11 +65,34 @@ function ulasanKelas() {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        const updatedData = [...ulasanData];
-        updatedData.splice(index, 1);
-        setUlasanData(updatedData);
+        handleDeleteApi(index);
       }
     });
+  };
+
+  const handleDeleteApi = async (index) => {
+    try {
+      await axios.delete(
+        `https://api.harsaedu.my.id/web/feedback/${ulasanData[index].id}`,
+      );
+
+      const updatedData = [...ulasanData];
+      updatedData.splice(index, 1);
+      setUlasanData(updatedData);
+
+      MySwal.fire({
+        title: "Sukses!",
+        text: "Ulasan berhasil dihapus.",
+        icon: "success",
+      });
+    } catch (error) {
+      console.error("Error deleting feedback:", error);
+      MySwal.fire({
+        title: "Error!",
+        text: "Terjadi kesalahan saat menghapus ulasan.",
+        icon: "error",
+      });
+    }
   };
 
   return (

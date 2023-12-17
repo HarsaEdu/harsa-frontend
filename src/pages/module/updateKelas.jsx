@@ -84,7 +84,7 @@ const MateriOverview = () => {
               <Link to={`/kelas/manage-kelas/${params.id}`}>Materi</Link>
             </li>
             <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150  ease-in hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">
-              <Link to={`/kelas/manage-kelas/${params.id}/ulasan-kelas`}>
+              <Link to={`/kelas/manage-kelas/ulasan-kelas/${params.id}`}>
                 Ulasan
               </Link>
             </li>

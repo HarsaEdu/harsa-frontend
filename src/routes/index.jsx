@@ -90,6 +90,10 @@ export default function Router() {
           element: <AddClass />,
         },
         {
+          path: "/kelas/manage-kelas/ulasan-kelas/:id",
+          element: <CardUlasanKelas />,
+        },
+        {
           path: "/kelas/manage-kelas/tambah-modul/:id",
           element: <CreateMaterial />,
         },
