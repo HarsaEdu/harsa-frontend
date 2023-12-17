@@ -76,8 +76,6 @@ export default function ManageFaq() {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Ya, Hapus!",
-        timer: 2000,
-        timerProgressBar: true,
       });
 
       if (result.isConfirmed) {
@@ -93,6 +91,8 @@ export default function ManageFaq() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
+          timer: 2000,
+          timerProgressBar: true,
         });
       }
     } catch (error) {
