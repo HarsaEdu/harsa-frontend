@@ -50,14 +50,27 @@ const createModuleBySection = async (sectionId, data) => {
   }
 };
 
-const deleteSubModule = async (id) => {
+// const deleteSubModule = async (id) => {
+//   try {
+//     const response = await axiosWithConfig.delete(
+//       `/courses/section/module/sub-module/${id}`,
+//     );
+//     return response.data;
+//   } catch (error) {
+//     throw new Error("Failed to delete user");
+//   }
+// };
+
+const deleteSubModule = async (subModuleId) => {
   try {
     const response = await axiosWithConfig.delete(
-      `/courses/section/module/sub-module/${id}`,
+      `/courses/section/module/sub-module/${subModuleId}`,
     );
-    return response.data;
+    return response.data; // Jika server mengembalikan data setelah penghapusan
   } catch (error) {
-    throw new Error("Failed to delete user");
+    throw new Error(
+      error.response?.data?.message || "Gagal menghapus submodul",
+    );
   }
 };
 

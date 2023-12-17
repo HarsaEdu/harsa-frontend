@@ -29,10 +29,9 @@ const MateriOverview = () => {
 
   const handleDeleteSubModule = async (idSubModule) => {
     try {
-      // Menampilkan konfirmasi SweetAlert
       const result = await Swal.fire({
         title: "Apakah Anda yakin?",
-        text: "Data course akan dihapus permanen!",
+        text: "Data submodul akan dihapus permanen!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -41,7 +40,6 @@ const MateriOverview = () => {
       });
 
       if (result.isConfirmed) {
-        // Panggil fungsi deletecourse untuk menghapus course
         await deleteSubModule(idSubModule);
         fetchData();
         MySwal.fire({
@@ -56,7 +54,7 @@ const MateriOverview = () => {
         });
       }
     } catch (error) {
-      console.error("Failed to delete course", error);
+      console.error("Gagal menghapus submodul", error);
       Swal.fire({
         title: "Error!",
         text: "Gagal menghapus data course.",

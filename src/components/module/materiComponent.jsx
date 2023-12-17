@@ -68,7 +68,15 @@ const CardModule = ({ idSection }) => {
                             </div>
                           </AccordionTrigger>
                           <AccordionContent>
-                            <ReactPlayer url={subModule.content_url} />
+                            <iframe
+                              src={subModule.content_url}
+                              frameBorder="0"
+                              width="1280"
+                              height="749"
+                              allowfullscreen="true"
+                              mozallowfullscreen="true"
+                              webkitallowfullscreen="true"
+                            ></iframe>
                           </AccordionContent>
                         </AccordionItem>
                       )}
