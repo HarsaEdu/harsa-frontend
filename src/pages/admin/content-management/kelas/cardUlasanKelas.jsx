@@ -59,17 +59,18 @@ function ulasanKelas() {
       title: "Yakin kamu mau menghapus ini?",
       showCancelButton: true,
       confirmButtonColor: "#092C4C",
-      cancelButtonColor: "#D9D9D9",
       confirmButtonText: "Ya, Hapus",
-      cancelButtonText: "Batal",
-      reverseButtons: true,
-      showCloseButton: true,
-      customClass: {
-        closeButton: "swal2-cancel-button",
-      },
+        cancelButtonText: "Batal",
+        cancelButtonColor: "#6c757d",
     }).then((result) => {
       if (result.isConfirmed) {
         handleDeleteApi(index);
+        Swal.fire({
+          title: "Sukses Menghapus Kategori",
+          icon: "success",
+          showConfirmButton: false,
+          showCloseButton: true,
+        });
       }
     });
   };

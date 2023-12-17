@@ -68,19 +68,20 @@ const DialogDemo = () => {
       Swal.fire({
         title: "Berhasil",
         text: "User Sudah Ditambahkan",
-        timer: 2000,
-        timerProgressBar: true,
+        icon: "success",
         showCloseButton: true,
+        timer: 10000,
+      }).then(() => {
+        // Menutup dialog setelah menekan tombol OK pada swal
+        DialogClose.close();
       });
-      window.location.reload();
     } catch (error) {
       Swal.fire({
         title: "Gagal",
         text: "Gagal Menambahkan User",
         icon: "error",
-        timer: 2000,
+        timer: 10000,
         showCloseButton: true,
-        timerProgressBar: true,
       });
     }
   }

@@ -129,7 +129,6 @@ const EditSubscriptionPackage = () => {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 2000,
         }).then(() => {
           navigate(`/langganan`);
         });

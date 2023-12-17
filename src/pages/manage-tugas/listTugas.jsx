@@ -95,8 +95,6 @@ export default function ListTugas() {
             icon: "success",
             showConfirmButton: false,
             showCloseButton: true,
-            timer: 2000,
-            timerProgressBar: true,
           }).then((result) => {
             if (result.isDismissed) {
               fetchData();

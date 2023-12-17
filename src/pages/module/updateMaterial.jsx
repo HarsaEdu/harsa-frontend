@@ -159,7 +159,6 @@ const UpdateMaterial = () => {
           title: "Sukses Edit Section",
           showConfirmButton: false,
           showCloseButton: true,
-          timer: 3000,
         }).then(() => {
           setIsEditSection(false);
           fetchModules();
