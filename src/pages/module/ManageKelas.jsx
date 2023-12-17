@@ -58,9 +58,12 @@ const ManageKelas = () => {
         </div>
         <div className="my-2 flex items-center justify-between gap-2 text-3xl font-bold">
           <h1>{course.title}</h1>
-          <Button onClick={() =>
-                navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
-              } className="text-xl font-semibold">
+          <Button
+            onClick={() =>
+              navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
+            }
+            className="text-xl font-semibold"
+          >
             <img
               src={EditIcon}
               alt="edit-module"
