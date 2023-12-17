@@ -122,12 +122,19 @@ export default function Notification() {
 
   const handleReadNotification = async (id) => {
     try {
-      await readNotification(id);
-      const updatedNotifications = [...notifications];
-      const index = updatedNotifications.findIndex((n) => n.id === id);
-      if (index !== -1) {
-        updatedNotifications[index].read = true;
-        setNotifications(updatedNotifications);
+      const notification = notifications.find((n) => n.id === id);
+
+      if (notification && !notification.is_read) {
+        await readNotification(id);
+
+        const updatedNotifications = [...notifications];
+        const index = updatedNotifications.findIndex((n) => n.id === id);
+
+        if (index !== -1) {
+          updatedNotifications[index].is_read = true;
+          setNotifications(updatedNotifications);
+        }
+        navigate(`/detail-notifikasi/${id}`);
       }
     } catch (error) {
       console.error("Failed to mark notification as read", error);
@@ -268,6 +275,7 @@ export default function Notification() {
                 className={`flex w-full items-center gap-10 rounded-lg border p-5 ${
                   data.read ? "" : "border-amber-500"
                 }`}
+                onClick={() => handleReadNotification(data.id)}
               >
                 <section className="w-2/4">
                   <div className="flex items-center gap-2">
