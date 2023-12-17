@@ -55,11 +55,22 @@ export const updateUserAccount = async (userId, updatedData) => {
   }
 };
 
-
 export const getUserInsructor = async () => {
   try {
     const response = await axiosWithConfig.get(
       "/users?offset=0&limit=9999&roleID=2",
+    );
+
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get user");
+  }
+};
+
+export const getAllStudents = async () => {
+  try {
+    const response = await axiosWithConfig.get(
+      "/users?offset=0&limit=10&search=&roleID=3",
     );
 
     return response.data;
@@ -109,7 +120,37 @@ export const getUserStudentTable = async (params) => {
     query = queryParams.join("&");
   }
 
-  const url = query ? `/users?&roleID=3&${query}` : "/users?offset=0&limit=10&roleID=3";
+  const url = query
+    ? `/users?&roleID=3&${query}`
+    : "/users?offset=0&limit=10&roleID=3";
+
+  try {
+    const response = await axiosWithConfig.get(url);
+
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get user");
+  }
+};
+
+export const getUserStudents = async (params, id) => {
+  let query = "";
+
+  if (params) {
+    const queryParams = [];
+
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+    }
+
+    query = queryParams.join("&");
+  }
+
+  const url = query
+    ? `/course/${id}/user?&${query}`
+    : `/course/${id}/user?offset=0&limit=10`;
 
   try {
     const response = await axiosWithConfig.get(url);
