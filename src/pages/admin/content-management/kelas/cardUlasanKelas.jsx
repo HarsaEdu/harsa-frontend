@@ -76,26 +76,19 @@ function ulasanKelas() {
 
   const handleDeleteApi = async (index) => {
     try {
+      const feedbackId = ulasanData[index].id;
       await axios.delete(
-        `https://api.harsaedu.my.id/web/courses/2/feedbacks/${ulasanData.id}`,
+        `https://api.harsaedu.my.id/web/courses/2/feedbacks/${feedbackId}`,
       );
 
       const updatedData = [...ulasanData];
       updatedData.splice(index, 1);
       setUlasanData(updatedData);
 
-      MySwal.fire({
-        title: "Sukses!",
-        text: "Ulasan berhasil dihapus.",
-        icon: "success",
-      });
+      console.log("Ulasan berhasil dihapus.");
     } catch (error) {
       console.error("Error deleting feedback:", error);
-      MySwal.fire({
-        title: "Error!",
-        text: "Terjadi kesalahan saat menghapus ulasan.",
-        icon: "error",
-      });
+      console.error("Terjadi kesalahan saat menghapus ulasan.");
     }
   };
 
