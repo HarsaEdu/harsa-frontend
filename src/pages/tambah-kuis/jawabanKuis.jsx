@@ -9,6 +9,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
 import { getHistoryQuiz } from "@/utils/apis/historyQuiz/";
 import { CSVLink } from "react-csv";
+import Swal from "sweetalert2";
 
 export default function JawabanKuis() {
   //*
