@@ -1,4 +1,4 @@
-import axiosWithConfig from "../axiosWithConfig";
+import { setAxiosConfig } from "@/utils/apis/axiosWithConfig";
 
 export const handleTokenRefresh = async (refreshToken) => {
   try {
