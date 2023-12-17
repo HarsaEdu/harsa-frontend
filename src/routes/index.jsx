@@ -1,11 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import LandingPage from "@/pages/landing-page/index";
-import MateriOverview from "@/pages/module/updateKelas";
+import MateriOverview from "@/pages/module/ManageKelas";
 import MateriKelas from "@/pages/admin/content-management/kelas/materiKelas";
 import UserManagement from "@/pages/admin/userManagement";
 import AssignUserAdmin from "@/pages/admin/content-management/kelas/assignUser";
-import AboutUs from "@/pages/landing-page/aboutUs";
 import EditProfile from "@/pages/edit-profile";
 import AssignUserInstruktor from "@/pages/assign-users/assignUserInstruktor";
 import Dashboard from "@/pages/dashboard/index";
@@ -124,7 +123,7 @@ export default function Router() {
           ],
         },
         {
-          path: "/kelas/manage-kelas/manage-tugas/:idSection",
+          path: "/kelas/manage-kelas/:id/manage-tugas/:idSection",
           element: <ListTugas />,
         },
         {

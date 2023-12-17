@@ -16,7 +16,6 @@ export const getCourse = async (params) => {
   }
 
   const url = query ? `/courses?&${query}` : "/courses?offset=0&limit=10";
-
   try {
     const response = await axiosWithConfig.get(url);
 
@@ -44,6 +43,18 @@ export const getDetailCourse = async (courseId) => {
     return response.data;
   } catch (error) {
     throw Error("Gagal mendapatkan detail kelas" + error);
+  }
+};
+
+export const getModuleById = async (moduleId) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `/courses/section/module/${moduleId}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw Error("Gagal mendapatkan data materi" + error);
   }
 };
 

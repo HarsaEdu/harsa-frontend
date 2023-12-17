@@ -4,6 +4,14 @@ import {
   getMyCourse,
   createCourse,
   putCourse,
+  getModuleById,
 } from "./api";
 
-export { getCourse, getDetailCourse, getMyCourse, createCourse, putCourse };
+export {
+  getCourse,
+  getDetailCourse,
+  getMyCourse,
+  createCourse,
+  getModuleById,
+  putCourse,
+};

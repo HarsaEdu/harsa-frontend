@@ -82,7 +82,7 @@ export default function ManageFaq() {
         // Panggil fungsi deleteFAQ untuk menghapus FAQ
         await deleteFAQ(id);
         // Perbarui data setelah penghapusan berhasil
-        fetchFaqData();
+        fetchData();
 
         // Menampilkan pesan SweetAlert setelah penghapusan berhasil
         Swal.fire({
@@ -91,6 +91,8 @@ export default function ManageFaq() {
           icon: "success",
           showConfirmButton: false,
           showCloseButton: true,
+          timer: 2000,
+          timerProgressBar: true,
         });
       }
     } catch (error) {
@@ -156,19 +158,26 @@ export default function ManageFaq() {
     {
       header: "Pertanyaan",
       accessorKey: "question",
-      cell: (info) => <div className="text-center">{info.row.original.question}</div>,
+      cell: (info) => (
+        <div className="text-center">{info.row.original.question}</div>
+      ),
       rowSpan: true,
     },
     {
       header: "Jawaban",
       accessorKey: "answer",
-      cell: (info) => <div className="text-center">{info.row.original.answer}</div>,
+      cell: (info) => (
+        <div className="text-center">{info.row.original.answer}</div>
+      ),
     },
     {
       header: "Action",
       rowSpan: true,
       cell: (info) => (
-        <div className={`flex justify-center items-center`} style={info.row.original.actStyle}>
+        <div
+          className={`flex items-center justify-center`}
+          style={info.row.original.actStyle}
+        >
           <DropdownAction>
             <div className="flex flex-col">
               <Button
@@ -198,7 +207,7 @@ export default function ManageFaq() {
             <h2 className="text-3xl font-semibold">Kelola FAQ</h2>
 
             <div>
-             <div className="mt-8 flex w-full justify-between">
+              <div className="mt-8 flex w-full justify-between">
                 <div className="flex items-center">
                   <span className="bg-[#092C4C] px-5 py-2 text-white">Row</span>
                   <select

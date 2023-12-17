@@ -9,7 +9,7 @@ const getModuleBySection = async (courseId, sectionId) => {
     return response.data;
   } catch (error) {
     throw Error(
-      "Failed to get Module by Section : " + error.response.data.message
+      "Failed to get Module by Section : " + error.response.data.message,
     );
   }
 };
@@ -52,6 +52,19 @@ const createModuleBySection = async (sectionId, data) => {
   }
 };
 
+const deleteSubModule = async (subModuleId) => {
+  try {
+    const response = await axiosWithConfig.delete(
+      `/courses/section/module/sub-module/${subModuleId}`,
+    );
+    return response.data; // Jika server mengembalikan data setelah penghapusan
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Gagal menghapus submodul",
+    );
+  }
+};
+
 const editSection = async (courseId, sectionId, data) => {
   try {
     const response = await axiosWithConfig.put(
@@ -81,9 +94,10 @@ const editModule = async (moduleId, data) => {
 
 export {
   getModuleBySection,
-  getModuleById,
   createSection,
+  deleteSubModule,
   createModuleBySection,
+  getModuleById,
   editSection,
   editModule,
 };
