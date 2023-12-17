@@ -2,6 +2,7 @@ import Breadcrumb from "@/components/breadcrumb";
 import EditIcon from "@/assets/icons/edit.svg";
 import Layout from "@/components/layout/Index";
 import { Link, useParams, Outlet } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDetailCourse } from "@/utils/apis/courses";
@@ -57,16 +58,18 @@ const ManageKelas = () => {
         </div>
         <div className="my-2 flex items-center justify-between gap-2 text-3xl font-bold">
           <h1>{course.title}</h1>
-          <img
-            src={EditIcon}
-            alt="edit-module"
-            width={22}
-            height={22}
-            onClick={() =>
-              navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
-            }
-            style={{ cursor: "pointer" }}
-          />
+          <Button onClick={() =>
+                navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
+              } className="text-xl font-semibold">
+            <img
+              src={EditIcon}
+              alt="edit-module"
+              width={25}
+              height={25}
+              className="transition-colors"
+            />
+            Edit Kelas
+          </Button>
         </div>
         <span className="text-xl font-bold">Deskripsi</span>
         <div className="my-2 flex items-start justify-between">

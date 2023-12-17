@@ -123,7 +123,7 @@ export default function Router() {
           ],
         },
         {
-          path: "/kelas/manage-kelas/manage-tugas/:idSection",
+          path: "/kelas/manage-kelas/:id/manage-tugas/:idSection",
           element: <ListTugas />,
         },
         {
