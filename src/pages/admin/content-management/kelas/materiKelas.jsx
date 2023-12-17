@@ -93,7 +93,7 @@ const MateriOverview = () => {
                         className="m-2 rounded-[4px] bg-[#A2D2FF] font-semibold text-[#092C4C] hover:bg-[#81b1df]"
                         id="manageModuleButton"
                       >
-                        <Link to={`/kelas/manage-kelas/manage-modul`}>
+                        <Link to={`/kelas/manage-kelas/manage-modul/${params.id}/section/${Modules.id}`}>
                           Manage Modul
                         </Link>
                       </Button>
