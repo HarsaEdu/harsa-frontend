@@ -8,7 +8,10 @@ import { Input } from "@/components/ui/input";
 import Table from "@/components/table/tables";
 import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
-import { getAllPaymentHistory } from "@/utils/apis/payments/api";
+import {
+  getAllPaymentHistory,
+  exportAllPaymentHistory,
+} from "@/utils/apis/payments/api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Pagination from "@/components/table/pagination";
 import {
@@ -18,6 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CSVLink } from "react-csv";
+import Swal from "sweetalert2";
 
 export default function RiwayatTransaksi() {
   //*
@@ -28,12 +33,14 @@ export default function RiwayatTransaksi() {
   const [limitValue, setLimitValue] = useState(10);
   const [offset, setOffset] = useState(0);
   const [data, setData] = useState([]);
+  const [exportData, setExportData] = useState([]);
   const [meta, setMeta] = useState([]);
   const pageSizes = ["5", "10", "25"];
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
+    fetchExportData();
   }, [searchParams, filterParams]);
 
   const getSuggestions = useCallback(
@@ -91,6 +98,17 @@ export default function RiwayatTransaksi() {
       setIsLoading(false);
     }
   }
+  async function fetchExportData() {
+    try {
+      const result = await exportAllPaymentHistory();
+      const { data } = result;
+      setExportData(data);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   function onInputChange(newValue) {
     setSearchValue(newValue);
@@ -135,6 +153,18 @@ export default function RiwayatTransaksi() {
 
   //*
 
+  const csvData = [
+    ["No", "Name", "Username", "Email", "Nama Langganan", "Status"],
+    ...exportData.map(({ customer, item, status }, index) => [
+      index + 1,
+      customer.name,
+      customer.username,
+      customer.email,
+      item.name,
+      status,
+    ]),
+  ];
+
   const columns = useMemo(() => [
     { header: "No", cell: (info) => info.row.index + 1 },
     {
@@ -144,12 +174,12 @@ export default function RiwayatTransaksi() {
     },
     {
       header: "Username", //Tidak Ada di Response
-      accessorKey: "user_id",
+      accessorKey: "customer.username",
       cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
       header: "Email", //Tidak Ada di Response
-      accessorKey: "id",
+      accessorKey: "customer.email",
       cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
@@ -158,7 +188,7 @@ export default function RiwayatTransaksi() {
       cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
-      header: "status",
+      header: "Status",
       accessorKey: "customer.status",
       cell: (info) => (
         <div className="flex justify-center">
@@ -194,13 +224,28 @@ export default function RiwayatTransaksi() {
           <h2 className="text-4xl font-bold text-[#092C4C]">
             Riwayat Transaksi
           </h2>
-          <Button
-            id="export"
-            className="rounded-xl bg-[#159C1B] px-12 py-5 text-xl hover:bg-[#15801a]"
-            onClick={() => console.log("first")}
+          <CSVLink
+            filename="riwayat-transaksi.csv"
+            data={csvData}
+            onClick={() =>
+              Swal.fire({
+                title: "Berhasil",
+                icon: "success",
+                text: "Berhasil Melakukan Export Data",
+                showCloseButton: true,
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+              })
+            }
           >
-            Export
-          </Button>
+            <Button
+              id="export"
+              className="rounded-xl bg-[#159C1B] px-12 py-5 text-xl hover:bg-[#15801a]"
+            >
+              Export
+            </Button>
+          </CSVLink>
         </div>
 
         <div className="flex w-full justify-between">
