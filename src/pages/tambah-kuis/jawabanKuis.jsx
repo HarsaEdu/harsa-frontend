@@ -53,7 +53,7 @@ export default function JawabanKuis() {
         searchParams.set("limit", 10);
       }
 
-      const result = await getHistoryQuiz(query, 1); //cHange with the real id quiz
+      const result = await getHistoryQuiz(query, params.idQuiz); //cHange with the real id quiz
 
       setData(result.data);
     } catch (error) {
