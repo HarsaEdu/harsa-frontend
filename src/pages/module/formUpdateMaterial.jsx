@@ -95,7 +95,10 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
   };
 
   const onSubmit = async (data) => {
-    if (subModules.length > 0) {
+    console.log("form material : ", form.getValues("material[0]"));
+    console.log("subModules : ", subModules);
+    // return
+    if (subModules.length > 0 && subModules[0].content_url !== "") {
       form.clearErrors("material");
       const newData = {
         title: data.materialTitle,
@@ -133,7 +136,6 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
 
   return (
     <Form {...form}>
-      {console.log("module : ", module)}
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
         <FormField
           control={form.control}
@@ -164,9 +166,8 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
                 Materi {index + 1}
               </FormLabel>
               {materialType[index] === "video" ||
-              (form.formState.errors.material && materialType[index] === "") ? (
+                (form.formState.errors.material && materialType[index] === "") ? (
                 <>
-                  {/* {form.setValue(`material[${index}]`, subModules[index] && subModules[index].content_url)} */}
                   <FormField
                     control={form.control}
                     name={`material[${index}]`}
@@ -191,7 +192,6 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
 
               {materialType[index] === "slide" && (
                 <>
-                  {/* {form.setValue(`material[${index}]`, subModules[index] && subModules[index].content_url)} */}
                   <FormField
                     control={form.control}
                     name={`material[${index}]`}
