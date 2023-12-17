@@ -10,6 +10,10 @@ import { CSVLink } from "react-csv";
 import Swal from "sweetalert2";
 import { debounce } from "lodash";
 import Pagination from "@/components/table/pagination";
+import {
+  deleteEnrollUser,
+  getUserEnroll,
+} from "@/utils/apis/courseTrackingWeb/api";
 
 export default function AssignUserAdmin() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -46,7 +50,7 @@ export default function AssignUserAdmin() {
 
     try {
       setIsLoading(true);
-      const response = await getUserStudents({ ...query }, params.id); // Menggunakan getUser dari utils
+      const response = await getUserEnroll({ ...query }, params.id); // Menggunakan getUser dari utils
       setUserData(response.data);
       setMeta(response.pagination);
     } catch (error) {
@@ -71,7 +75,7 @@ export default function AssignUserAdmin() {
 
       if (result.isConfirmed) {
         // Panggil fungsi deleteUser untuk menghapus user
-        await deleteUser(id);
+        await deleteEnrollUser(id, params.id);
         // Perbarui data setelah penghapusan berhasil
         fetchData();
 
@@ -86,8 +90,6 @@ export default function AssignUserAdmin() {
       }
     } catch (error) {
       console.error("Failed to delete user", error);
-
-      // Menampilkan pesan SweetAlert jika penghapusan gagal
       Swal.fire({
         title: "Error!",
         text: "Gagal menghapus data user.",
@@ -185,7 +187,9 @@ export default function AssignUserAdmin() {
             <div className="flex flex-col">
               <Button
                 className="bg-white px-8 text-black hover:text-white"
-                onClick={() => handleDelete(info.row.original.id)} // Panggil fungsi handleDelete dengan ID sebagai argumen
+                onClick={() =>
+                  handleDelete(info.row.original.course_tracking_id)
+                } // Panggil fungsi handleDelete dengan ID sebagai argumen
               >
                 Delete
               </Button>
