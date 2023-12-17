@@ -1,10 +1,10 @@
 import Layout from "@/components/layout/Index";
 import moment from "moment";
 import {
-  getNotification,
+  // getNotification,
   getNotificationById,
   deleteNotification,
-  readNotification,
+  // readNotification,
 } from "@/utils/apis/notification/api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -103,7 +103,7 @@ export default function DetailNotification() {
               <p>
                 <UpdateTimeDisplay updatedAt={notification.updatedAt} />
                 <br />
-                From : Sistem
+                From : {notification.sender}
               </p>
               <br />
               <p>{notification.content}</p>

@@ -17,6 +17,7 @@ export default function Notification() {
   const [filter, setFilter] = useState("all");
   const [selectedNotifications, setSelectedNotifications] = useState([]);
   const [filteredNotifications, setFilteredNotifications] = useState([]);
+  const [readNotificationsIndices, setReadNotificationsIndices] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,24 +121,22 @@ export default function Notification() {
     });
   };
 
-  const handleReadNotification = async (id) => {
+  const handleReadNotification = async (id, index) => {
     try {
-      const notification = notifications.find((n) => n.id === id);
+      const notification = notifications[index];
 
       if (notification && !notification.is_read) {
         await readNotification(id);
 
         const updatedNotifications = [...notifications];
-        const index = updatedNotifications.findIndex((n) => n.id === id);
-
-        if (index !== -1) {
-          updatedNotifications[index].is_read = true;
-          setNotifications(updatedNotifications);
-        }
-        navigate(`/detail-notifikasi/${id}`);
+        updatedNotifications[index].is_read = true;
+        setNotifications(updatedNotifications);
+        // Tambahkan indeks notifikasi yang telah dibaca ke state
+        setReadNotificationsIndices((prevIndices) => [...prevIndices, index]);
       }
+      navigate(`/detail-notifikasi/${id}`);
     } catch (error) {
-      console.error("Failed to mark notification as read", error);
+      console.error("Gagal menandai notifikasi sebagai sudah dibaca", error);
     }
   };
 
@@ -269,13 +268,15 @@ export default function Notification() {
               />
             </section>
 
-            {notifications.map((data, index) => (
+            {filteredNotifications.map((data, index) => (
               <section
                 key={index}
                 className={`flex w-full items-center gap-10 rounded-lg border p-5 ${
-                  data.read ? "" : "border-amber-500"
+                  data.read && !readNotificationsIndices.includes(index)
+                    ? "border-amber-500"
+                    : ""
                 }`}
-                onClick={() => handleReadNotification(data.id)}
+                onClick={() => handleReadNotification(data.id, index)}
               >
                 <section className="w-2/4">
                   <div className="flex items-center gap-2">
