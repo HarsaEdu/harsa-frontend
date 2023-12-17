@@ -152,7 +152,7 @@ export default function ListTugas() {
                   description={item.content}
                   editOnClick={() =>
                     navigate(
-                      `/kelas/manage-tugas/${params.idSection}/${item.id}`,
+                      `/kelas/manage-kelas/${params.id}/manage-module/${params.idSection}/manage-tugas/${item.id}`,
                     )
                   }
                   deleteOnClick={() => handleDelete(item.id, params.idSection)}

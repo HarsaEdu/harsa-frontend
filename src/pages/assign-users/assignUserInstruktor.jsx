@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { debounce } from "lodash";
 import AddUserButton from "@/components/module/dialogAddUser";
 import Pagination from "@/components/table/pagination";
+import { getUserEnroll } from "@/utils/apis/courseTrackingWeb/api";
 
 export default function AssignUserInstruktor() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,10 +23,21 @@ export default function AssignUserInstruktor() {
   const [isLoading, setIsLoading] = useState(false);
   const [setError] = useState(null);
   const pageSizes = ["5", "10", "25"];
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   useEffect(() => {
     fetchData();
   }, [searchParams, limitValue, offset]);
+
+  useEffect(() => {
+    if (!isDialogOpen) {
+      fetchData();
+    }
+  }, [isDialogOpen]);
 
   async function fetchData() {
     if (searchParams.has("limit")) {
@@ -46,7 +58,7 @@ export default function AssignUserInstruktor() {
 
     try {
       setIsLoading(true);
-      const response = await getUserStudents({ ...query }, params.id); // Menggunakan getUser dari utils
+      const response = await getUserEnroll({ ...query }, params.id); // Menggunakan getUser dari utils
       setUserData(response.data);
       setMeta(response.pagination);
     } catch (error) {
@@ -226,8 +238,6 @@ export default function AssignUserInstruktor() {
                   Export to CSV
                 </CSVLink>
               </Button>
-              {/* button add user */}
-              <AddUserButton />
             </div>
           </div>
         </div>
