@@ -67,18 +67,18 @@ export const getUserInsructor = async () => {
   }
 };
 
-export const getUserProfile = async (id) => {
+export const getMyProfile = async () => {
   try {
-    const response = await axiosWithConfig.get(`/users/${id}`);
+    const response = await axiosWithConfig.get(`/users/profile/myprofile`);
     return response.data;
   } catch (error) {
     throw Error("Failed to get user profile");
   }
 };
 
-export const editUserProfile = async (id, data) => {
+export const editUserProfile = async (data) => {
   try {
-    const response = await axiosWithConfig.put(`/users/profile/${id}`, data);
+    const response = await axiosWithConfig.put(`/users/profile/myprofile`, data);
     return response.data;
   } catch (error) {
     throw Error("Failed to get user profile");
