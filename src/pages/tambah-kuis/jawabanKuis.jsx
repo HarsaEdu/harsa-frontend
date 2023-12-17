@@ -8,6 +8,8 @@ import { Check, X } from "lucide-react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
 import { getHistoryQuiz } from "@/utils/apis/historyQuiz/";
+import { CSVLink } from "react-csv";
+import Swal from "sweetalert2";
 
 export default function JawabanKuis() {
   //*
@@ -51,7 +53,7 @@ export default function JawabanKuis() {
         searchParams.set("limit", 10);
       }
 
-      const result = await getHistoryQuiz(query, 1); //cHange with the real id quiz
+      const result = await getHistoryQuiz(query, params.idQuiz); //cHange with the real id quiz
 
       setData(result.data);
     } catch (error) {
@@ -116,9 +118,24 @@ export default function JawabanKuis() {
     },
   ]);
 
-  function exportQuiz() {
-    console.log("Test Export 1");
-  }
+  const csvData = [
+    ["No", "Name", ...uniqueQuestions.map((index) => `${index}`), "Skor"],
+    ...data.map(({ name, history_answer, score }, index) => {
+      const userAnswers = history_answer || [];
+
+      // Convert isRightValuesByQuestion to an array in the same order as uniqueQuestions
+      const isRightValues = uniqueQuestions.map((questionId) => {
+        const answer = userAnswers.find(
+          (ans) => ans.question_id === questionId,
+        );
+        return answer ? answer.is_right : null;
+      });
+
+      const rowData = [index + 1, name, ...isRightValues, score];
+
+      return rowData;
+    }),
+  ];
 
   return (
     <div>
@@ -132,13 +149,25 @@ export default function JawabanKuis() {
             value={searchValue}
             onChange={(e) => onInputChange(e.currentTarget.value)}
           />
-          <Button
-            id="export"
-            className="rounded-xl px-20 py-5 text-xl"
-            onClick={exportQuiz}
+          <CSVLink
+            filename="jawaban-kuis.csv"
+            data={csvData}
+            onClick={() =>
+              Swal.fire({
+                title: "Berhasil",
+                icon: "success",
+                text: "Berhasil Melakukan Export Data",
+                showCloseButton: true,
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+              })
+            }
           >
-            Export
-          </Button>
+            <Button id="export" className="rounded-xl px-20 py-5 text-xl">
+              Export
+            </Button>
+          </CSVLink>
         </div>
       </div>
       {/* Jawaban Quiz Content */}

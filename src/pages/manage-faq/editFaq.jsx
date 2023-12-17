@@ -22,12 +22,16 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  pertanyaan: z.string({
-    required_error: "*Pertanyaan wajib di isi",
-  }),
-  jawaban: z.string({
-    required_error: "*Jawaban wajib di isi",
-  }),
+  pertanyaan: z
+    .string({
+      required_error: "*Pertanyaan wajib di isi",
+    })
+    .min(1, { message: "*Pertanyaan wajib di isi" }),
+  jawaban: z
+    .string({
+      required_error: "*Jawaban wajib di isi",
+    })
+    .min(1, { message: "*Jawaban wajib di isi" }),
 });
 
 const EditFAQ = () => {
@@ -42,7 +46,7 @@ const EditFAQ = () => {
     const fetchFAQData = async () => {
       try {
         const response = await axios.get(
-          `https://api.harsaedu.my.id/web/faqs/${id}`
+          `https://api.harsaedu.my.id/web/faqs/${id}`,
         );
         const faqData = response.data.data;
 
@@ -98,18 +102,17 @@ const EditFAQ = () => {
       // Handle error, such as displaying an error message
     }
   };
-  
 
   return (
     <Layout>
       <div className="container mb-10">
         <Breadcrumb />
         <div className="font-poppins">
-          <h2 className="text-2xl font-semibold pb-4 pt-10">Edit FAQ</h2>
+          <h2 className="pb-4 pt-10 text-2xl font-semibold">Edit FAQ</h2>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="px-8 py-5 space-y-8 border-2 border-[#092C4C]"
+              className="space-y-8 border-2 border-[#092C4C] px-8 py-5"
             >
               <FormField
                 control={form.control}
@@ -151,11 +154,11 @@ const EditFAQ = () => {
                   </FormItem>
                 )}
               />
-              <div className="flex px-4 justify-between">
+              <div className="flex justify-between px-4">
                 <Link to="/content-management/faq">
                   <Button
                     id="cancelButtonFAQ"
-                    className="bg-[#ED7878] w-60 text-white font-semibold rounded-none"
+                    className="w-60 rounded-none bg-[#ED7878] font-semibold text-white"
                     variant={"outline"}
                     type="reset"
                   >
@@ -166,7 +169,7 @@ const EditFAQ = () => {
                   id="acceptButtonFAQ"
                   variant={"default"}
                   type="submit"
-                  className="font-semibold w-60 rounded-none"
+                  className="w-60 rounded-none font-semibold"
                 >
                   Simpan
                 </Button>
