@@ -13,7 +13,8 @@ import ListClass from "@/pages/list-class";
 import CreateMaterial from "@/pages/module/createMaterial";
 import CreateTask from "@/pages/module/createTasks";
 import Login from "@/pages/login";
-import AddQuiz from "@/pages/tambah-kuis";
+import ManageQuiz from "@/pages/tambah-kuis/manageQuiz";
+import EditQuiz from "@/pages/tambah-kuis/editQuiz";
 import HeaderQuiz from "@/pages/tambah-kuis/header";
 import ManageTugas from "@/pages/manage-tugas";
 import EditTugas from "@/pages/manage-tugas/editTugas";
@@ -99,7 +100,11 @@ export default function Router() {
         },
         {
           path: "/kelas/tambah-kuis",
-          element: <AddQuiz />,
+          element: <ManageQuiz />,
+        },
+        {
+          path: "/kelas/tambah-pertanyaan/:id",
+          element: <HeaderQuiz />,
         },
         {
           path: "/kelas/tambah-pertanyaan",
