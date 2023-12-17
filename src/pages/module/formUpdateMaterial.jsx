@@ -32,7 +32,7 @@ import Swal from "sweetalert2";
 
 const formSchema = z.object({
   materialTitle: z.string({
-    required_error: "judul materi wajib di isi.",
+    required_error: "*judul materi wajib di isi.",
   }),
 });
 
@@ -95,43 +95,55 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
   };
 
   const onSubmit = async (data) => {
-    console.log("form material : ", form.getValues("material[0]"));
-    console.log("subModules : ", subModules);
-    // return
-    if (subModules.length > 0 && subModules[0].content_url !== "") {
-      form.clearErrors("material");
-      const newData = {
-        title: data.materialTitle,
-        description: "lorem ipsum",
-        sub_modules: subModules,
-      };
 
-      try {
-        await editModule(moduleId, newData);
+    if (data.materialTitle !== "") {
+      if (subModules.length > 0 && subModules[0].content_url !== "") {
+        form.clearErrors("material");
+        const newData = {
+          title: data.materialTitle,
+          description: "lorem ipsum",
+          sub_modules: subModules,
+        };
 
-        Swal.fire({
-          icon: "success",
-          title: "Sukses Edit Module",
-          showConfirmButton: false,
-          showCloseButton: true,
-          timer: 3000,
-        }).then(() => {
-          window.location.reload();
-        });
-      } catch (error) {
-        console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Gagal Edit Module",
-          text: error.message,
+        try {
+          await editModule(moduleId, newData);
+
+          Swal.fire({
+            icon: "success",
+            title: "Sukses Edit Module",
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 3000,
+          }).then(() => {
+            window.location.reload();
+          });
+        } catch (error) {
+          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Gagal Edit Module",
+            text: error.message,
+          });
+        }
+      } else {
+        form.setError("material", {
+          type: "manual",
+          message: "Minimal satu link materi wajib diisi.",
         });
       }
     } else {
-      form.setError("material", {
+      if (subModules[0].content_url === "") {
+        form.setError("material", {
+          type: "manual",
+          message: "Minimal satu link materi wajib diisi.",
+        });
+      }
+      form.setError("materialTitle", {
         type: "manual",
-        message: "Minimal satu link materi wajib diisi.",
+        message: "*judul materi wajib di isi.",
       });
     }
+
   };
 
   return (
