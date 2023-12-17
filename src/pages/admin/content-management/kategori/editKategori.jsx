@@ -26,7 +26,10 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const formSchema = z.object({
-  name: z.string().min(1, "*Nama Kategori Wajib di isi"),
+  name: z
+    .string()
+    .min(1, "*Nama Kategori Wajib di isi")
+    .max(10, "Maksimal 10 Karakter"),
   description: z.string().nonempty("*Deskripsi Wajib di isi"),
   image: z.any().nullable(),
   // .refine((data) => data?.size <= MAX_FILE_SIZE, {
@@ -78,12 +81,11 @@ const EditKategori = () => {
 
   const onSubmit = (data) => {
     try {
-    const requestData = {
+      const requestData = {
         name: data.name,
         description: data.description,
       };
 
-  
       Swal.fire({
         title: "Yakin kamu mau simpan data ini?",
         icon: "question",
@@ -107,9 +109,8 @@ const EditKategori = () => {
         }
       });
     } catch (error) {
-        console.log("Error", error)
+      console.log("Error", error);
     }
-
   };
 
   const onSave = async (data) => {
@@ -165,9 +166,7 @@ const EditKategori = () => {
                 name="description"
                 render={({ field }) => (
                   <FormItem className="mt-5">
-                    <FormLabel
-                      className="text-lg font-semibold"
-                    >
+                    <FormLabel className="text-lg font-semibold">
                       Deskripsi
                     </FormLabel>
                     <FormControl>

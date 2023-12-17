@@ -52,7 +52,7 @@ const ListClass = () => {
         // Menampilkan pesan SweetAlert setelah penghapusan berhasil
         MySwal.fire({
           icon: "success",
-          title: "Sukses Tambah Kelas",
+          title: "Sukses Hapus Kelas",
           showConfirmButton: false,
           showCloseButton: true,
           customClass: {

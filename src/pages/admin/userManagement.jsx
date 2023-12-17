@@ -54,6 +54,7 @@ export default function UserManagement() {
     } catch (error) {
       setError(error);
       setUserData([]);
+      setMeta([]);
     } finally {
       setIsLoading(false);
     }

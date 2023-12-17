@@ -36,7 +36,7 @@ const MateriOverview = () => {
               id="module"
               className="m-2 rounded-[4px] bg-[#092C4C] text-white"
             >
-              <Link to={`/kelas/tambah-modul/${params.id}`}>Tambah Modul</Link>
+              <Link to={`/kelas/manage-kelas/tambah-modul/${params.id}`}>Tambah Modul</Link>
             </Button>
           </div>
           {section.length > 0 ? (
