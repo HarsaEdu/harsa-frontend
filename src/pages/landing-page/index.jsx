@@ -11,11 +11,11 @@ export default function LandingPage() {
   const dataFeature = [
     {
       title: "Notifikasi",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+      desc: "Notifikasi pengingat untuk tugas dan progres pembelajaran.",
     },
     {
       title: "Kelas",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+      desc: "Kelas pembelajaran pemrograman dengan banyak kategori, seperti UI/UX, Cyber Security, Frontend Development, dan masih banyak lagi.",
     },
     {
       title: "Quiz",
