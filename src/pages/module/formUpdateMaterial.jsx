@@ -312,7 +312,7 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
                   <p>{submission.title}</p>
                 </div>
                 <Link
-                  to={`/kelas/manage-tugas/${module.id}/${submission.id}`}
+                  to={`/kelas/manage-kelas/${params.id}/manage-module/${module.id}/manage-tugas/${submission.id}`}
                   className="flex items-center rounded-r-2xl bg-[#092C4C] px-11 py-7 font-semibold text-[#fff]"
                 >
                   Manage Tugas
@@ -322,7 +322,7 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
           <div style={{ marginTop: "0.5rem" }}>
             <Link
               className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
-              to={`/kelas/manage-kelas/manage-tugas/${module.id}`}
+              to={`/kelas/manage-kelas/${params.id}/manage-module/${module.id}/manage-tugas/${module.id}`}
             >
               Tambah Tugas <Plus className="inline-block h-4" />
             </Link>

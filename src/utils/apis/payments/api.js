@@ -25,3 +25,14 @@ export const getAllPaymentHistory = async (params) => {
     throw Error(error.message);
   }
 };
+export const exportAllPaymentHistory = async () => {
+  try {
+    const response = await axiosWithConfig.get(
+      "/payments?offset=0&limit=9999999999",
+    );
+
+    return response.data;
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
