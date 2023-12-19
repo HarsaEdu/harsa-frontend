@@ -44,7 +44,9 @@ import Notification from "@/pages/notification";
 import DetailNotification from "@/pages/detail-notifikasi";
 import ListTugas from "@/pages/manage-tugas/listTugas";
 import CreateQuiz from "@/pages/tambah-kuis/createQuiz";
+import EditQuiz from "@/pages/tambah-kuis/editQuiz";
 import JawabanKuis from "@/pages/tambah-kuis/jawabanKuis";
+import HeaderCreateQuiz from "@/pages/tambah-kuis/headerCreate";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -105,19 +107,29 @@ export default function Router() {
           element: <CreateTask />,
         },
         {
-          path: "/kelas/tambah-kuis",
+          path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis",
           element: <AddQuiz />,
         },
         {
-          path: "/kelas/tambah-pertanyaan",
+          path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/tambah-kuis",
+          element: <HeaderCreateQuiz />,
+          children: [
+            {
+              path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/tambah-kuis",
+              element: <CreateQuiz />,
+            },
+          ],
+        },
+        {
+          path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/:idQuiz",
           element: <HeaderQuiz />,
           children: [
             {
-              path: "/kelas/tambah-pertanyaan",
-              element: <CreateQuiz />,
+              path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/:idQuiz",
+              element: <EditQuiz />,
             },
             {
-              path: "/kelas/tambah-pertanyaan/:idQuiz",
+              path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/:idQuiz/jawaban",
               element: <JawabanKuis />,
             },
           ],

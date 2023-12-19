@@ -41,7 +41,7 @@ const AddQuiz = () => {
 
     try {
       setIsLoading(true);
-      const result = await getAllQuiz({ ...query }, 1); //TODO: GANTI ID QUIZ SESUAI MODUL
+      const result = await getAllQuiz({ ...query }, params.idModule); //TODO: GANTI ID QUIZ SESUAI MODUL
       const { data } = result;
       setData(data);
     } catch (error) {
@@ -62,7 +62,9 @@ const AddQuiz = () => {
             <h2 className="mr-2 text-[#092C4C]">Search</h2>
             <Input className="w-[200px] rounded-[12px] border-[#092C4C]" />
           </div>
-          <Link to="/kelas/tambah-pertanyaan">
+          <Link
+            to={`/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-kuis/tambah-kuis`}
+          >
             <Button>
               Tambah Kuis
               <img src={PlusIcon} alt="Icon" className="ml-2 w-[16px]" />
@@ -83,7 +85,9 @@ const AddQuiz = () => {
                   description={item.description}
                   amount={item.number_questions}
                   editOnClick={() =>
-                    navigate(`/kelas/tambah-pertanyaan/${item.id}`)
+                    navigate(
+                      `/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-kuis/${item.id}`,
+                    )
                   }
                   deleteOnClick={() => Swal.fire({ title: "Belum Integrasi" })}
                 />

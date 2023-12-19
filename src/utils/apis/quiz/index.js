@@ -1,3 +1,3 @@
-import { getAllQuiz } from "./api";
+import { getAllQuiz, getQuizById } from "./api";
 
-export { getAllQuiz };
+export { getAllQuiz, getQuizById };

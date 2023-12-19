@@ -5,16 +5,12 @@ import Layout from "@/components/layout/Index";
 import CreateQuiz from "./createQuiz";
 import { Outlet, useLocation, Link, useParams } from "react-router-dom";
 
-export default function HeaderQuiz() {
+export default function HeaderCreateQuiz() {
   const location = useLocation();
   const params = useParams();
   const isPertanyaanActive =
     location.pathname ===
-    `/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-kuis/${params.idQuiz}`;
-
-  const isJawabanActive = location.pathname.includes(
-    `/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-kuis/${params.idQuiz}/jawaban`,
-  );
+    `/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-kuis/tambah-kuis`;
 
   return (
     <Layout>
@@ -27,7 +23,7 @@ export default function HeaderQuiz() {
             {/* State Render Component */}
             <div className="mt-8 flex space-x-12">
               <Link
-                to={`/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-kuis/${params.idQuiz}`}
+                to={`/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-kuis/tambah-kuis`}
               >
                 <h4
                   className={`cursor-pointer text-3xl font-bold ${
@@ -39,19 +35,11 @@ export default function HeaderQuiz() {
                   Pertanyaan
                 </h4>
               </Link>
-              <Link
-                to={`/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-kuis/${params.idQuiz}/jawaban`}
+              <h4
+                className={`cursor-pointer text-3xl font-bold text-[#A2D2FF]`}
               >
-                <h4
-                  className={`cursor-pointer text-3xl font-bold ${
-                    !isPertanyaanActive
-                      ? "border-b-2 border-b-black pb-2 text-[#092C4C]"
-                      : "text-[#A2D2FF]"
-                  }`}
-                >
-                  Jawaban
-                </h4>
-              </Link>
+                Jawaban
+              </h4>
             </div>
           </div>
         </div>

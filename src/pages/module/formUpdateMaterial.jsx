@@ -95,7 +95,6 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
   };
 
   const onSubmit = async (data) => {
-
     if (data.materialTitle !== "") {
       if (subModules.length > 0 && subModules[0].content_url !== "") {
         form.clearErrors("material");
@@ -143,7 +142,6 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
         message: "*judul materi wajib di isi.",
       });
     }
-
   };
 
   return (
@@ -178,7 +176,7 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
                 Materi {index + 1}
               </FormLabel>
               {materialType[index] === "video" ||
-                (form.formState.errors.material && materialType[index] === "") ? (
+              (form.formState.errors.material && materialType[index] === "") ? (
                 <>
                   <FormField
                     control={form.control}
@@ -288,26 +286,30 @@ const FormUpdateMaterial = ({ moduleTitle, moduleId, isupdate }) => {
             <div style={{ marginTop: "0.5rem" }}>
               <Link
                 className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70"
-                to="/kelas/tambah-kuis"
+                to={`/kelas/manage-kelas/${params.id}/manage-module/${params.idSection}/manage-kuis`}
               >
                 Tambah Kuis <Plus className="inline-block h-4" />
               </Link>
             </div>
           )}
-          {module.quizzes && (
-            <div className="mt-4 flex w-full rounded-2xl bg-[#A2D2FF] pl-11">
-              <div className="my-7 me-auto">
-                <span className="text-lg font-bold">Kuis</span>
-                <p>Pengenalan UI/UX</p>
-              </div>
-              <Link
-                to="/kelas/tambah-kuis"
-                className="flex items-center rounded-r-2xl bg-[#092C4C] px-11 py-7 font-semibold text-[#fff]"
+          {module.quizzes &&
+            module.quizzes.map((submission) => (
+              <div
+                key={submission.id}
+                className="mt-4 flex w-full rounded-2xl bg-[#A2D2FF] pl-11"
               >
-                Manage Kuis
-              </Link>
-            </div>
-          )}
+                <div className="my-7 me-auto">
+                  <span className="text-lg font-bold">Kuis</span>
+                  <p>{submission.title}</p>
+                </div>
+                <Link
+                  to={`/kelas/manage-kelas/${params.id}/manage-module/${module.id}/manage-kuis/${submission.id}/jawaban`}
+                  className="flex items-center rounded-r-2xl bg-[#092C4C] px-11 py-7 font-semibold text-[#fff]"
+                >
+                  Manage Kuis
+                </Link>
+              </div>
+            ))}
         </div>
         <div>
           <FormLabel className="font-poppins font-semibold text-[#092C4C]">
