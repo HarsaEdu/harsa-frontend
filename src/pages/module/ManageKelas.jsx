@@ -62,9 +62,12 @@ const ManageKelas = () => {
         </div>
         <div className="my-2 flex items-center justify-between gap-2 text-3xl font-bold">
           <h1>{course.title}</h1>
-          <Button onClick={() =>
-                navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
-              } className="text-xl font-semibold">
+          <Button
+            onClick={() =>
+              navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
+            }
+            className="text-xl font-semibold"
+          >
             <img
               src={EditIcon}
               alt="edit-module"
@@ -84,7 +87,7 @@ const ManageKelas = () => {
         </div>
         <div className="my-5 flex items-center">
           <span className="border border-black bg-[#092C4C] px-5 py-2 text-white">
-            Row
+            Instructor
           </span>
           <h1 className="border border-black px-3 py-2 font-semibold">
             {isLoading ? "Loading..." : name}
