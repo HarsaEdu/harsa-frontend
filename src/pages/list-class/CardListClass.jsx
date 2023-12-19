@@ -10,6 +10,9 @@ const CardListClass = (props) => {
   const { judul, category, instructor, description, img, idCourse, onDelete } =
     props;
 
+  const truncatedJudul =
+    judul.length > 30 ? judul.substring(0, 30) + "..." : judul;
+
   return (
     <div className="mx-auto mb-4 w-11/12">
       <div className="">
@@ -21,7 +24,9 @@ const CardListClass = (props) => {
       </div>
       <div className="rounded-b-[30px] border border-[#092C4C] p-[19px]">
         <div className="flex cursor-pointer justify-between">
-          <h2 className="font-poppins text-[32px] font-semibold">{judul}</h2>
+          <h2 className="font-poppins text-[32px] font-semibold">
+            {truncatedJudul}
+          </h2>
           <div className="flex items-center justify-center gap-1">
             <Button onClick={onDelete}>
               <img src={Delete} alt="" className="w-[32px]" />
