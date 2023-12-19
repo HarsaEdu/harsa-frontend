@@ -3,12 +3,34 @@ import { Button } from "../../components/ui/button";
 import { Link } from "react-router-dom";
 
 import Star from "../../assets/Star.svg";
+import starOutline from "@/assets/starOutline.svg";
 import Delete from "../../assets/Delete.svg";
 import Edit from "../../assets/Edit.svg";
 
 const CardListClass = (props) => {
-  const { judul, category, instructor, description, img, idCourse, onDelete } =
-    props;
+  const {
+    judul,
+    category,
+    instructor,
+    description,
+    img,
+    idCourse,
+    onDelete,
+    rating,
+  } = props;
+
+  const maxRating = 5;
+
+  const starArray = Array.from({ length: maxRating }, (_, index) => (
+    <img
+      key={index}
+      src={index < rating ? Star : starOutline} // Use an empty star image or handle this condition as needed
+      alt={`Star ${index + 1}`}
+      className="w-[34px]"
+    />
+  ));
+
+  console.log(rating);
 
   return (
     <div className="mx-auto mb-4 w-11/12">
@@ -46,13 +68,7 @@ const CardListClass = (props) => {
           <p className="mt-2 text-justify font-poppins text-[14px] font-normal">
             {description}
           </p>
-          <div className="mt-2 flex">
-            <img src={Star} alt="" className="w-[34px]" />
-            <img src={Star} alt="" className="w-[34px]" />
-            <img src={Star} alt="" className="w-[34px]" />
-            <img src={Star} alt="" className="w-[34px]" />
-            <img src={Star} alt="" className="w-[34px]" />
-          </div>
+          <div className="mt-2 flex">{starArray}</div>
         </div>
       </div>
     </div>
