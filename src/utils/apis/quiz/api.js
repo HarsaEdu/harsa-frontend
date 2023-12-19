@@ -27,3 +27,15 @@ export const getAllQuiz = async (params, idModul) => {
     throw Error("Failed to get class");
   }
 };
+
+export const getQuizById = async (idQuiz) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `https://api.harsaedu.my.id/web/courses/module/quizzes/${idQuiz}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get class");
+  }
+};
