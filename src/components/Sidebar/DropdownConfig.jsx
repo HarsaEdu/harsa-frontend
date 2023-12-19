@@ -11,7 +11,7 @@ const InstructorIndex = () => {
     <>
       <Accordion type="single" collapsible className="w-full space-y-3 ">
         <AccordionItem value="item-1">
-          <AccordionTrigger className="group justify-between pr-2 rounded-md text-base text-white hover:bg-[#A2D2FF] hover:text-zinc-950">
+          <AccordionTrigger className="group justify-between rounded-md pr-2 text-base text-white hover:bg-[#A2D2FF] hover:text-zinc-950">
             <span className="flex items-center space-x-3 rounded-md px-2 hover:bg-[#A2D2FF] hover:text-black">
               <svg
                 width="27"
@@ -26,11 +26,14 @@ const InstructorIndex = () => {
                   id="icon-project"
                 />
               </svg>
-              <span className="text-base text-left">Content Management</span>
+              <span className="text-left text-base">Manajemen Konten</span>
             </span>
           </AccordionTrigger>
-          <AccordionContent className="group text-base pl-8">
-            <Link to="/kelas" className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black">
+          <AccordionContent className="group pl-8 text-base">
+            <Link
+              to="/kelas"
+              className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
+            >
               <svg
                 width="27"
                 height="27"
@@ -47,8 +50,7 @@ const InstructorIndex = () => {
               <span>Kelas</span>
             </Link>
           </AccordionContent>
-          <AccordionContent className="group text-base pl-8">
-
+          <AccordionContent className="group pl-8 text-base">
             <Link
               to="/category-management/category"
               className="flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
@@ -93,7 +95,7 @@ const InstructorIndex = () => {
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
-          <AccordionTrigger className="group justify-between pr-2 rounded-md text-base text-white hover:bg-[#A2D2FF] hover:text-zinc-950">
+          <AccordionTrigger className="group justify-between rounded-md pr-2 text-base text-white hover:bg-[#A2D2FF] hover:text-zinc-950">
             <span className="flex items-center space-x-3 rounded-md px-2 hover:bg-[#A2D2FF] hover:text-black">
               <svg
                 width="27"
@@ -111,10 +113,10 @@ const InstructorIndex = () => {
               <span>Pembayaran</span>
             </span>
           </AccordionTrigger>
-          <AccordionContent className="group text-base pl-8">
-
-            <Link to="/langganan"
-              className="text-base flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
+          <AccordionContent className="group pl-8 text-base">
+            <Link
+              to="/langganan"
+              className="flex flex-row items-center gap-3 rounded-md px-2 py-2 text-base text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
                 width="27"
@@ -132,7 +134,7 @@ const InstructorIndex = () => {
               <span>Langganan</span>
             </Link>
           </AccordionContent>
-          <AccordionContent className="group text-base pl-8">
+          <AccordionContent className="group pl-8 text-base">
             <Link
               to="/riwayat-transaksi"
               className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"

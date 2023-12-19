@@ -16,8 +16,8 @@ import AddQuiz from "@/pages/tambah-kuis";
 import HeaderQuiz from "@/pages/tambah-kuis/header";
 import ManageTugas from "@/pages/manage-tugas";
 import EditTugas from "@/pages/manage-tugas/editTugas";
-import AddFAQ from "@/pages/manage-faq/addFaq";
-import EditFAQ from "@/pages/manage-faq/editFaq";
+import AddFAQ from "@/pages/admin/content-management/manage-faq/addFaq";
+import EditFAQ from "@/pages/admin/content-management/manage-faq/editFaq";
 import UpdateMaterial from "@/pages/module/updateMaterial";
 import DashboardAdmin from "@/pages/admin/dashboard";
 import EditProfileFaq from "@/pages/edit-profile/faq";
@@ -32,7 +32,7 @@ import ReviewTugas from "@/pages/manage-tugas/reviewTugas";
 import AddClass from "@/pages/class/index";
 import AddUser from "@/pages/admin/user-management/tambahUser";
 import ProtectedRoute from "./protectedRoute";
-import ManageFaq from "@/pages/manage-faq/manageFaq";
+import ManageFaq from "@/pages/admin/content-management/manage-faq/manageFaq";
 import ManageCategory from "@/pages/admin/content-management/kategori/manageCategory";
 import EditClass from "@/pages/module/formEditKelas";
 import CardUlasanKelas from "@/pages/admin/content-management/kelas/cardUlasanKelas";
@@ -44,7 +44,9 @@ import Notification from "@/pages/notification";
 import DetailNotification from "@/pages/detail-notifikasi";
 import ListTugas from "@/pages/manage-tugas/listTugas";
 import CreateQuiz from "@/pages/tambah-kuis/createQuiz";
+import EditQuiz from "@/pages/tambah-kuis/editQuiz";
 import JawabanKuis from "@/pages/tambah-kuis/jawabanKuis";
+import HeaderCreateQuiz from "@/pages/tambah-kuis/headerCreate";
 export default function Router() {
   const router = createBrowserRouter([
     {
@@ -82,10 +84,6 @@ export default function Router() {
               path: "/kelas/manage-kelas/:id/list-user", // Menggunakan path yang terpisah untuk Kelas
               element: <AssignUserInstruktor />,
             },
-            {
-              path: "/kelas/manage-kelas/:id/ulasan-kelas", // Menggunakan path yang terpisah untuk Kelas
-              element: <CardUlasanKelas />,
-            },
           ],
         },
         {
@@ -109,19 +107,29 @@ export default function Router() {
           element: <CreateTask />,
         },
         {
-          path: "/kelas/tambah-kuis",
+          path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis",
           element: <AddQuiz />,
         },
         {
-          path: "/kelas/tambah-pertanyaan",
+          path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/tambah-kuis",
+          element: <HeaderCreateQuiz />,
+          children: [
+            {
+              path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/tambah-kuis",
+              element: <CreateQuiz />,
+            },
+          ],
+        },
+        {
+          path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/:idQuiz",
           element: <HeaderQuiz />,
           children: [
             {
-              path: "/kelas/tambah-pertanyaan",
-              element: <CreateQuiz />,
+              path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/:idQuiz",
+              element: <EditQuiz />,
             },
             {
-              path: "/kelas/tambah-pertanyaan/:idQuiz",
+              path: "/kelas/manage-kelas/:id/manage-module/:idModule/manage-kuis/:idQuiz/jawaban",
               element: <JawabanKuis />,
             },
           ],

@@ -1,3 +1,3 @@
-import { getSubs, getMySubs, getDetailSubs, createSubs, deleteSubs, updateSubs} from "./api";
+import { getSubs, getMySubs, getDetailSubs, createSubs, deleteSubs, updateSubs, } from "./api";
 
-export { getSubs, getMySubs, getDetailSubs, createSubs, deleteSubs, updateSubs};
+export { getSubs, getMySubs, getDetailSubs, createSubs, deleteSubs, updateSubs, };

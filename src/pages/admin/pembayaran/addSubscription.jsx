@@ -111,7 +111,6 @@ const AddSubscriptionPackage = () => {
         const response = await createSubs(formData);
 
         console.log(response);
-
         setPreview("");
         form.reset();
 

@@ -13,26 +13,30 @@ const QuestionCard = ({ questions, groupName, onDeleteClick }) => {
   return (
     <div>
       {questions.map((question) => (
-        <div key={question.id} className="flex justify-between items-center text-[#092C4C] text-base font-poppins">
-          <div className="flex justify-between items-center gap-2">
+        <div
+          key={question.id}
+          className="flex items-center justify-between font-poppins text-base text-[#092C4C]"
+        >
+          <div className="flex items-center justify-between gap-2">
             <Input
               type="radio"
               className="w-[20px] cursor-pointer"
-              name={groupName} 
+              name={groupName}
               checked={selectedQuestionIndex === question.id}
               onChange={() => handleRadioChange(question.id)}
             />
             <p>{question.question}</p>
           </div>
-          <div className="flex items-center gap-3 ml-3 cursor-pointer">
+          <div className="ml-3 flex cursor-pointer items-center gap-3">
             {selectedQuestionIndex === question.id && (
               <img src={CeklisIcon} alt="" className="w-4" />
             )}
-            <img 
-            src={CrossIcon} 
-            alt="" className="w-4" 
-            name={groupName}
-            onClick={() => onDeleteClick(question.id)}
+            <img
+              src={CrossIcon}
+              alt=""
+              className="w-4"
+              name={groupName}
+              onClick={() => onDeleteClick(question.id)}
             />
           </div>
         </div>

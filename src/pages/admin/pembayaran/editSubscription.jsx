@@ -10,8 +10,7 @@ import {
   FormMessage,
   FormField,
 } from "@/components/ui/form";
-import { updateSubs } from "@/utils/apis/subs-plan";
-import { getDetailSubs } from "@/utils/apis/subs-plan";
+import { updateSubs, getDetailSubs } from "@/utils/apis/subs-plan";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -24,6 +23,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import withReactContent from "sweetalert2-react-content";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -35,16 +35,34 @@ const formSchema = z.object({
   deskripsi: z.string().nonempty("*Isi Deskripsi Paket Terlebih Dahulu"),
   image: z
     .any()
-    .refine((data) => data !== undefined && data !== null && data !== "", {
-      message: "*Masukkan Gambar Terlebih Dahulu",
+    .nullable()
+    .refine((data) => !data || data.size <= MAX_FILE_SIZE, {
+      message: "*Ukuran file terlalu besar, maksimal 5 MB",
     })
-    .refine((data) => data?.size <= MAX_FILE_SIZE, {
-      message: "*Ukuran file terlalu besar, maksimal 5 mb",
-    })
-    .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
+    .refine((data) => !data || ACCEPTED_IMAGE_TYPES.includes(data.type), {
       message:
-        "*Format file yang diupload salah, format file harus PNG, JPG, Jpeg, svg",
+        "*Format file yang di-upload salah, format file harus PNG, JPG, Jpeg, svg",
     }),
+  // image: z
+  //   .any()
+  //   .refine((data) => data !== undefined && data !== null && data !== "", {
+  //     message: "*Masukkan Gambar Terlebih Dahulu",
+  //   })
+  //   .refine((data) => data?.size <= MAX_FILE_SIZE, {
+  //     message: "*Ukuran file terlalu besar, maksimal 5 mb",
+  //   })
+  //   .refine((data) => ACCEPTED_IMAGE_TYPES.includes(data?.type), {
+  //     message:
+  //       "*Format file yang diupload salah, format file harus PNG, JPG, Jpeg, svg",
+  //   }),
+  //   .refine((data) => {
+  //     if (data instanceof File) {
+  //       return data.size <= MAX_FILE_SIZE && ACCEPTED_IMAGE_TYPES.includes(data.type);
+  //     }
+  //     return true; // Non-File values are considered valid
+  //   }, {
+  //     message: "*Ukuran file terlalu besar, maksimal 5 mb. Format file harus PNG, JPG, Jpeg, svg",
+  //   }),
 });
 
 const EditSubscriptionPackage = () => {
@@ -52,7 +70,7 @@ const EditSubscriptionPackage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [apiImageUrl, setApiImageUrl] = useState("");
-  const [isNewImageSelected, setIsNewImageSelected] = useState(false);
+  const MySwal = withReactContent(Swal);
 
   console.log("ID from params:", params.id);
 
@@ -62,7 +80,7 @@ const EditSubscriptionPackage = () => {
       nama: "",
       durasi: "",
       deskripsi: "",
-      image: "",
+      image: apiImageUrl,
     },
     mode: "onChange",
   });
@@ -78,7 +96,7 @@ const EditSubscriptionPackage = () => {
           form.setValue("durasi", selectedSubs.duration);
           form.setValue("harga", selectedSubs.price);
           form.setValue("deskripsi", selectedSubs.description);
-          setApiImageUrl(selectedSubs.image);
+          setPreview(selectedSubs.image);
         } else {
           console.error(`Subs with ID ${params.id} not found`);
         }
@@ -91,25 +109,91 @@ const EditSubscriptionPackage = () => {
   }, [params.id, form]);
 
   const handleImageChange = (file) => {
-    if (file && file.type.startsWith("image/")) {
+    if (file) {
       setPreview(URL.createObjectURL(file));
-      setIsNewImageSelected(true);
     } else {
       setPreview("");
     }
-    console.log("Selected image:", file);
+  };
+
+  const handleUpdateImage = async (imageData) => {
+    try {
+      const subsId = params.id;
+      const updatedImage = await updateImage(subsId, imageData);
+      // Handle success or error if needed
+      console.log("Image updated successfully:", updatedImage);
+    } catch (error) {
+      console.error("Error updating image:", error);
+      // Handle error if needed
+    }
   };
 
   const onSubmit = async (data) => {
+    try {
+      const fileData = form.watch("image");
+      console.log(fileData);
+
+      if (!preview) {
+        form.setError("image", {
+          message: "*Gambar wajib diisi",
+        });
+        return; // Keluar dari fungsi jika file kosong
+      }
+
+      const formData = new FormData();
+      formData.append("title", data.nama);
+      formData.append("description", data.deskripsi);
+      formData.append("duration", data.durasi);
+      formData.append("price", data.harga);
+      if (fileData) {
+        formData.append("image", fileData);
+      } else {
+        formData.append("image", apiImageUrl)
+      }
+
+      console.log(formData);
+
+      const confirmResult = await MySwal.fire({
+        icon: "question",
+        title: "Konfirmasi",
+        text: "Yakin kamu mau simpan data ini?",
+        showCancelButton: true,
+        confirmButtonColor: "#092C4C",
+        confirmButtonText: "Ya, Simpan",
+        cancelButtonText: "Batal",
+        cancelButtonColor: "#F2994A",
+      });
+
+      if (confirmResult.isConfirmed) {
+        const subsId = params.id;
+        const response = await updateSubs(subsId, formData);
+        console.log(response);
+        Swal.fire({
+          title: "Sukses Update Data",
+          icon: "success",
+          showConfirmButton: false,
+          showCloseButton: true,
+        }).then(() => {
+          navigate(`/langganan`);
+        });
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  const onSubmit1 = async (data) => {
+    const isImageSelected = data.image instanceof File;
     // Data untuk dikirim ke backend
     const requestData = {
       title: data.nama,
       duration: parseInt(data.durasi),
       price: parseInt(data.harga),
       description: data.deskripsi,
-      image: isNewImageSelected ? data.image : apiImageUrl,
+      // image: isImageSelected ? data.image : apiImageUrl
     };
-
+    const imageData = new FormData();
+    imageData.append("image", data.image);
     console.log(requestData);
 
     Swal.fire({
@@ -121,9 +205,18 @@ const EditSubscriptionPackage = () => {
       confirmButtonText: "Ya, Simpan",
       cancelButtonText: "Batal",
       cancelButtonColor: "#F2994A",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        onSave(requestData);
+        try {
+          const subsId = params.id;
+          const updatedSubs = await updateSubs(subsId, requestData);
+          if (isImageSelected) {
+            await handleUpdateImage(imageData);
+          }
+          form.reset();
+        } catch (error) {
+          console.error("Error updating Subs data:", error);
+        }
         Swal.fire({
           title: "Sukses Edit Data Paket",
           icon: "success",
@@ -134,24 +227,6 @@ const EditSubscriptionPackage = () => {
         });
       }
     });
-  };
-
-  const handleCancel = () => {
-    form.reset();
-    setPreview("");
-    setIsNewImageSelected(false);
-  };
-
-  const onSave = async (data) => {
-    try {
-      const subsId = params.id;
-
-      const updatedSubs = await updateSubs(subsId, data);
-
-      form.reset();
-    } catch (error) {
-      console.error("Error updating Subs data:", error);
-    }
   };
 
   return (
@@ -256,21 +331,12 @@ const EditSubscriptionPackage = () => {
                           <InputFile
                             id="image"
                             type="file"
-                            preview={preview || apiImageUrl}
+                            preview={preview}
                             onChange={(e) => {
                               field.onChange(e.target.files[0]);
                               handleImageChange(e.target.files[0]);
-                              form.setValue("image", e.target.files[0]);
-                              console.log("InputFile onChange called");
-                              console.log(
-                                "Form image value after setting:",
-                                form.getValues("image"),
-                              );
                             }}
-                            setPreview={(file) => {
-                              setPreview(URL.createObjectURL(file));
-                              setIsNewImageSelected(true);
-                            }}
+                            setPreview={setPreview}
                           />
                         </div>
                       </div>
