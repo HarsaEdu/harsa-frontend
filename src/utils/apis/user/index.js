@@ -8,6 +8,7 @@ import {
   getUserStudentTable,
   getUserStudents,
   getAllStudents,
+  getMyProfile, editUserProfile,
 } from "./api";
 
 export {
@@ -20,4 +21,5 @@ export {
   getUserStudentTable,
   getUserStudents,
   getAllStudents,
+  getMyProfile, editUserProfile,
 };

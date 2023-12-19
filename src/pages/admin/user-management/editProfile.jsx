@@ -94,6 +94,7 @@ export default function EditProfile() {
   }, [form.reset]);
 
   const onSubmit = (data) => {
+    console.log(data)
     Swal.fire({
       title: "Yakin kamu mau  Simpan  data ini?",
       icon: "question",

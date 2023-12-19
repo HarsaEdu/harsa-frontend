@@ -15,7 +15,7 @@ export const getCourse = async (params) => {
     query = queryParams.join("&");
   }
 
-  const url = query ? `/courses?&${query}` : "/courses?offset=0&limit=10";
+  const url = query ? `/courses?&${query}` : "/courses?offset=0&limit=9999";
   try {
     const response = await axiosWithConfig.get(url);
 

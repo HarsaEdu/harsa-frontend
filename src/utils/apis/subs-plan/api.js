@@ -67,6 +67,7 @@ export const updateSubs = async (subsId, subsData) => {
   }
 };
 
+
 export const deleteSubs = async (subsId) => {
   try {
     const response = await axiosWithConfig.delete(`/subs-plan/${subsId}`);

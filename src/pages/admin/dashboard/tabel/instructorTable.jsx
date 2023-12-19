@@ -137,7 +137,7 @@ const InstructorTable = () => {
 
     return (
         <div className='container border-2 border-[#092C4C] rounded-lg w-full p-10 space-y-4 mb-10'>
-            <h1 className="text-2xl text-[#092C4C]">instructor Data</h1>
+            <h1 className="text-2xl text-[#092C4C]">Instructor Data</h1>
             <div className="mt-2">
             <div className="mt-8 flex w-full justify-between">
               <div className="flex items-center">

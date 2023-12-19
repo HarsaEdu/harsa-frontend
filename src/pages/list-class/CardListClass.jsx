@@ -47,6 +47,9 @@ const CardListClass = (props) => {
 
   console.log(rating);
 
+  const truncatedJudul =
+    judul.length > 30 ? judul.substring(0, 30) + "..." : judul;
+
   return (
     <div className="mx-auto mb-4 w-11/12">
       <div className="">
@@ -59,7 +62,7 @@ const CardListClass = (props) => {
       <div className="rounded-b-[30px] border border-[#092C4C] p-[19px]">
         <div className="flex cursor-pointer items-start justify-between">
           <h2 className="w-3/4 font-poppins text-[32px] font-semibold">
-            {judul}
+            {truncatedJudul}
           </h2>
           <div className="flex items-center justify-center gap-1">
             <Button onClick={onDelete}>

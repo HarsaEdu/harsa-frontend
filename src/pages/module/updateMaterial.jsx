@@ -49,13 +49,13 @@ import FormUpdateMaterial from "./formUpdateMaterial";
 
 const formSchema = z.object({
   materialTitle: z.string({
-    required_error: "judul materi wajib di isi.",
+    required_error: "*judul materi wajib di isi.",
   }),
 });
 
 const formSchemaSection = z.object({
   section: z.string({
-    required_error: "Section materi wajib di isi.",
+    required_error: "*Section materi wajib di isi.",
   }),
 });
 
@@ -109,7 +109,7 @@ const UpdateMaterial = () => {
   };
 
   const handleCreateSubmit = async (data) => {
-    if (materialType.length > 0) {
+    if (subModules.length > 0 && form.getValues("material[0]") !== undefined) {
       form.clearErrors("material");
       const newData = {
         title: data.materialTitle,
@@ -140,7 +140,7 @@ const UpdateMaterial = () => {
     } else {
       form.setError("material", {
         type: "manual",
-        message: "Minimal satu link materi wajib diisi.",
+        message: "*Minimal satu link materi wajib diisi.",
       });
     }
   };
@@ -150,28 +150,34 @@ const UpdateMaterial = () => {
     const newData = {
       title: data.section,
     };
+    if (data.section !== "") {
+      try {
+        await editSection(params.id, params.idSection, newData);
 
-    try {
-      await editSection(params.id, params.idSection, newData);
-
-      Swal.fire({
-        icon: "success",
-        title: "Sukses Edit Section",
-        showConfirmButton: false,
-        showCloseButton: true,
-        timer: 3000,
-      }).then(() => {
-        setIsEditSection(false);
-        fetchModules();
-      });
-    } catch (error) {
-      console.log(error);
-      Swal.fire({
-        icon: "error",
-        title: "Gagal Edit Section",
-        text: error.message,
+        Swal.fire({
+          icon: "success",
+          title: "Sukses Edit Section",
+          showConfirmButton: false,
+          showCloseButton: true,
+        }).then(() => {
+          setIsEditSection(false);
+          fetchModules();
+        });
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Edit Section",
+          text: error.message,
+        });
+      }
+    } else {
+      formSection.setError("section", {
+        type: "manual",
+        message: "*Section materi wajib di isi.",
       });
     }
+    
   };
 
   const handleMaterialUpdated = () => {
@@ -189,7 +195,7 @@ const UpdateMaterial = () => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Ya, Hapus!",
       });
-  
+
       if (result.isConfirmed) {
         await deleteModule(moduleId);
         fetchModules(); // Gantilah dengan fungsi yang sesuai untuk mereload data
@@ -342,8 +348,8 @@ const UpdateMaterial = () => {
                         Materi {index + 1}
                       </FormLabel>
                       {materialType[index] === "video" ||
-                      (form.formState.errors.material &&
-                        materialType[index] === "") ? (
+                        (form.formState.errors.material &&
+                          materialType[index] === "") ? (
                         <FormField
                           control={form.control}
                           name={`material[${index}]`}

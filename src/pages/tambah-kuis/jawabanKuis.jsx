@@ -159,8 +159,6 @@ export default function JawabanKuis() {
                 text: "Berhasil Melakukan Export Data",
                 showCloseButton: true,
                 showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
               })
             }
           >

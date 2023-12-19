@@ -23,6 +23,51 @@ const DashboardAdmin = () => {
       },
     ],
   });
+  // Modifikasi state pada DashboardAdmin
+const [lastYearPayment, setLastYearPayment] = useState({
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      backgroundColor: [],
+      hoverBackgroundColor: [],
+      borderWidth: 0,
+    }
+  ],
+});
+
+// Modifikasi useEffect untuk mendapatkan data pendapatan
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await getLastYearProfit();
+      const interestData = response.data.months || [];
+      const labels = interestData.map((item) => item.month);
+      const data = interestData.map((item) => item.total);
+
+      setLastYearPayment({
+        labels,
+        datasets: [
+          {
+            data,
+            borderColor: "#092C4C",
+            backgroundColor: "rgba(53, 162, 235, 0.2)",
+            pointRadius: 4,
+            pointHoverRadius: 10,
+            pointHoverBorderWidth: 2,
+            pointHitRadius: 10,
+            tension: 0.3,
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("Error fetching total profit data", error);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,37 +102,6 @@ const DashboardAdmin = () => {
 
     fetchData();
   }, []);
-
-  // Contoh data dan opsi untuk chart
-  const chartData = {
-    labels: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-    ],
-    datasets: [
-      {
-        fill: true,
-        data: [
-          500000, 1000000, 4500000, 800000, 400000, 800000, 200000, 900000,
-          3000000,
-        ], // Ganti ini dengan data sesuai kebutuhan
-        borderColor: "#092C4C",
-        backgroundColor: "rgba(53, 162, 235, 0.2)",
-        pointRadius: 4,
-        pointHoverRadius: 10,
-        pointHoverBorderWidth: 2,
-        pointHitRadius: 10,
-        tension: 0.3,
-      },
-    ],
-  };
 
   const chartOptions = {
     responsive: true,
@@ -172,7 +186,10 @@ const DashboardAdmin = () => {
               <h4>{monthProfit}</h4>
             </div>
             <div className="container w-full p-10 mb-10 space-y-4 text-2xl font-bold shadow">
-              <LineChart data={chartData} options={chartOptions} />
+              <LineChart data={lastYearPayment} options={{
+                ...chartOptions,
+                maintainAspectRatio: false, // Izinkan perubahan aspek rasio
+                responsive: true,}} />
             </div>
             <InstructorTable />
             <StudentTable />

@@ -43,8 +43,6 @@ const createTasks = () => {
         title: "Sukses Tambah Tugas",
         showConfirmButton: false,
         showCloseButton: true,
-        timer: 3000,
-        timerProgressBar: true,
       }).then((result) => {
         if (result.isDismissed) {
           navigate(-1);

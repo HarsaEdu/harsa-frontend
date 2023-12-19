@@ -49,14 +49,14 @@ const formSchema = z.object({
       message: "*Instructor wajib di pilih",
     }),
   upload: z
-  .any()
-  .refine((data) => !data || data.size <= MAX_FILE_SIZE, {
-    message: "*Ukuran file terlalu besar, maksimal 5 MB",
-  })
-  .refine((data) => !data || ACCEPTED_IMAGE_TYPES.includes(data.type), {
-    message:
-      "*Format file yang di-upload salah, format file harus PNG, JPG, Jpeg, svg",
-  }),
+    .any()
+    .refine((data) => !data || data.size <= MAX_FILE_SIZE, {
+      message: "*Ukuran file terlalu besar, maksimal 5 MB",
+    })
+    .refine((data) => !data || ACCEPTED_IMAGE_TYPES.includes(data.type), {
+      message:
+        "*Format file yang di-upload salah, format file harus PNG, JPG, Jpeg, svg",
+    }),
 });
 
 function EditClass() {
@@ -68,6 +68,8 @@ function EditClass() {
   const { id } = useParams();
   const params = useParams();
   const navigate = useNavigate();
+
+  const role = localStorage.getItem("role_name");
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -294,41 +296,42 @@ function EditClass() {
                   {form.formState.errors.category?.message}
                 </FormMessage>
               </FormItem>
-
-              <FormItem>
-                <FormLabel className="ml-1 text-lg font-bold text-[#092C4C]">
-                  Instructor
-                </FormLabel>
-                <FormControl>
-                  {/* Gunakan data kategori yang telah diambil untuk mengisi pilihan dalam Select */}
-                  <Select
-                    onValueChange={(value) =>
-                      form.setValue("instructor", Number(value))
-                    }
-                    value={form.watch("instructor") || ""}
-                    defaultValue=""
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Pilih Instructor" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {/* Mapping data instructor ke dalam opsi SelectItem */}
-                      {instructor.map((instructor) => (
-                        <SelectItem
-                          key={instructor.id}
-                          value={instructor.id}
-                          className="text-base hover:bg-slate-100"
-                        >
-                          {instructor.username}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage className="text-[#ED7878]">
-                  {form.formState.errors.instructor?.message}
-                </FormMessage>
-              </FormItem>
+              {role === "admin" && (
+                <>
+                  <FormItem>
+                    <FormLabel className="ml-1 text-lg font-bold text-[#092C4C]">
+                      Instructor
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={(value) =>
+                          form.setValue("instructor", Number(value))
+                        }
+                        value={form.watch("instructor") || ""}
+                        defaultValue=""
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Instructor" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {instructor.map((instructor) => (
+                            <SelectItem
+                              key={instructor.id}
+                              value={instructor.id}
+                              className="text-base hover:bg-slate-100"
+                            >
+                              {instructor.username}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage className="text-[#ED7878]">
+                      {form.formState.errors.instructor?.message}
+                    </FormMessage>
+                  </FormItem>
+                </>
+              )}
 
               <FormField
                 control={form.control}
@@ -340,8 +343,8 @@ function EditClass() {
                     </FormLabel>
                     <FormControl>
                       {/* InputFile component is assumed to be defined elsewhere */}
-                      <div className="w-full h-56 border border-black rounded-lg flex justify-center items-center p-4 cursor-pointer">
-                        <div className="border border-black border-dashed w-full flex flex-col justify-center items-center font-poppins font-semibold text-[#A2D2FF] text-lg">
+                      <div className="flex h-56 w-full cursor-pointer items-center justify-center rounded-lg border border-black p-4">
+                        <div className="flex w-full flex-col items-center justify-center border border-dashed border-black font-poppins text-lg font-semibold text-[#A2D2FF]">
                           <InputFile
                             textUpload="Upload Cover Course"
                             preview={preview}
@@ -354,7 +357,6 @@ function EditClass() {
                           />
                         </div>
                       </div>
-                      
                     </FormControl>
                     <FormMessage className="text-[#ED7878]">
                       {form.formState.errors.upload?.message}

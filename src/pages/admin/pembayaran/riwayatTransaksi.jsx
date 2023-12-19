@@ -234,8 +234,6 @@ export default function RiwayatTransaksi() {
                 text: "Berhasil Melakukan Export Data",
                 showCloseButton: true,
                 showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
               })
             }
           >

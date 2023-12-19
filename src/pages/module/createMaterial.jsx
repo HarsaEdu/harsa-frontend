@@ -34,10 +34,10 @@ import { createSection } from "@/utils/apis/modules/api";
 
 const formSchema = z.object({
     section: z.string({
-        required_error: "Section wajib di isi.",
+        required_error: "*Section wajib di isi.",
     }),
     materialTitle: z.string({
-        required_error: "judul materi wajib di isi.",
+        required_error: "*Judul materi wajib di isi.",
     }),
 });
 
@@ -65,7 +65,9 @@ const CreateMaterial = () => {
     };
 
     const onSubmit = async (data) => {
-        if (materialType.length > 0) {
+        console.log("material: ", form.getValues("material"), form.getValues("material[0]") === undefined);
+
+        if (subModules.length > 0 && form.getValues("material[0]") !== undefined) {
             form.clearErrors("material");
             const newData = {
                 title: data.section,
@@ -100,7 +102,7 @@ const CreateMaterial = () => {
         } else {
             form.setError("material", {
                 type: "manual",
-                message: "Minimal satu link materi wajib diisi.",
+                message: "*Minimal satu link materi wajib diisi.",
             });
         }
     };
@@ -242,33 +244,6 @@ const CreateMaterial = () => {
                                 )}
                             </div>
                         </div>
-
-                        {/* <div>
-                            <FormLabel className="font-poppins font-semibold text-[#092C4C]">
-                                Kuis
-                            </FormLabel>
-                            <div style={{ marginTop: "0.5rem" }}>
-                                <Link
-                                    className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70"
-                                    to="/kelas/tambah-kuis"
-                                >
-                                    Tambah Kuis <Plus className="inline-block h-4" />
-                                </Link>
-                            </div>
-                        </div>
-                        <div>
-                            <FormLabel className="font-poppins font-semibold text-[#092C4C]">
-                                Tugas
-                            </FormLabel>
-                            <div style={{ marginTop: "0.5rem" }}>
-                                <a
-                                    className="flex items-center font-poppins text-sm font-semibold text-[#092C4C] hover:text-[#092C4C]/70 "
-                                    href=""
-                                >
-                                    Tambah Tugas <Plus className="inline-block h-4" />
-                                </a>
-                            </div>
-                        </div> */}
                         <div className="flex justify-between">
                             <Button
                                 variant={"outline"}
