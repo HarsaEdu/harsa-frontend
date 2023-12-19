@@ -61,7 +61,7 @@ const ManageKelas = () => {
           />
         </div>
         <div className="my-2 flex items-center justify-between gap-2 text-3xl font-bold">
-          <h1>{course.title}</h1>
+          <h1 className="w-3/4">{course.title}</h1>
           <Button
             onClick={() =>
               navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
