@@ -6,9 +6,15 @@ Harsa.edu is a web-based application designed to assist instructors and administ
 
 ## Project Screen Shots
 
-![Landing Page](public/Screenshots/Landing%20Page.png.png)
+### Landing Page
+
+![Landing Page](public/Screenshots/Landing%20Page.png)
+
+### Dashboard Admin
 
 ![Dashboard Admin](public/Screenshots/Dashboard%20Admin.png)
+
+### Dashboard Insructor
 
 ![Dashboard Instructor](public/Screenshots/Dashboard%20Instructor.png)
 
@@ -51,7 +57,7 @@ At the end of the day, the technologies implemented in this project are React, R
 
 harsa-frontend
 ├── .github
-│   └── workflows
+│   └── workflow
 │       └── main.yml
 ├── public
 │   ├── assets
@@ -65,7 +71,6 @@ harsa-frontend
 │   ├── utils
 │   └── main.jsx
 ├── .dockerignore
-├── .gitignore
 ├── Dockerfile
 ├── index.html
 ├── package-lock.json
@@ -73,6 +78,7 @@ harsa-frontend
 ├── README.md
 ├── tailwind.config.js
 └── vite.config.js
+
 
 ## Technology
 
