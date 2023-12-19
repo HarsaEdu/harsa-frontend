@@ -72,9 +72,8 @@ const InstructorIndex = () => {
               <span>Kategori</span>
             </Link>
           </AccordionContent>
-          <AccordionContent className="group pl-8 text-base">
-            <Link
-              to="/content-management/FAQ/"
+          <AccordionContent className="group text-base pl-8">
+            <Link to="/content-management/FAQ"
               className="text-md flex flex-row items-center gap-3 rounded-md px-2 py-2 text-[#FFFFFF] hover:bg-[#A2D2FF] hover:text-zinc-950"
             >
               <svg
