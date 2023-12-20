@@ -76,7 +76,7 @@ const ListClass = () => {
       console.log(query);
 
       const result = await (localStorage.getItem("role_name") == "instructor"
-        ? getMyCourse()
+        ? getMyCourse(query)
         : getCourse(query));
       setCourse(result.data);
     } catch (error) {
@@ -93,7 +93,7 @@ const ListClass = () => {
     } else {
       newSearchParams.set("category", newValue);
       newSearchParams.set("offset", 0);
-      newSearchParams.set("limit", 10);
+      newSearchParams.set("limit", 999999999);
     }
 
     setSearchParams(newSearchParams);
