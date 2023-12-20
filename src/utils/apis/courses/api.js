@@ -25,10 +25,25 @@ export const getCourse = async (params) => {
   }
 };
 export const getMyCourse = async (params) => {
+  let query = "";
+
+  if (params) {
+    const queryParams = [];
+
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        queryParams.push(`${key}=${params[key]}`);
+      }
+    }
+
+    query = queryParams.join("&");
+  }
+
+  const url = query
+    ? `/courses/my-course?&${query}`
+    : "/courses/my-course?offset=0&limit=9999";
   try {
-    const response = await axiosWithConfig.get(
-      "/courses/my-course?offset=0&limit=10",
-    );
+    const response = await axiosWithConfig.get(url);
 
     return response.data;
   } catch (error) {

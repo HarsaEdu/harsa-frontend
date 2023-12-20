@@ -27,7 +27,21 @@ export const getAllSubmissionAnswers = async (params, idSubmission) => {
   }
 };
 
-export const getSubmissionAnswerById = async (idSubmission, idSubmissionAnswer) => {
+export const exportAllSubmissionAnswers = async (idSubmission) => {
+  try {
+    const response = await axiosWithConfig.get(
+      `/courses/submissions/${idSubmission}/submission-answer?offset=0&limit=999999999`,
+    );
+    return response.data;
+  } catch (error) {
+    throw Error("Failed to get submission answer");
+  }
+};
+
+export const getSubmissionAnswerById = async (
+  idSubmission,
+  idSubmissionAnswer,
+) => {
   try {
     const response = await axiosWithConfig.get(
       `/courses/submissions/${idSubmission}/submission-answer/${idSubmissionAnswer}`,
@@ -37,12 +51,12 @@ export const getSubmissionAnswerById = async (idSubmission, idSubmissionAnswer) 
   } catch (error) {
     throw Error("Failed to get submission answer");
   }
-}
- 
+};
+
 export const updateStatusSubmission = async (
   idSubmission,
   idSubmissionAnswer,
-  data
+  data,
 ) => {
   try {
     const response = await axiosWithConfig.patch(

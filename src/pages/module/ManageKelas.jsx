@@ -82,14 +82,18 @@ const ManageKelas = () => {
         <div className="my-2 flex items-start justify-between">
           <p className="w-11/12 text-justify">{course.description}</p>
         </div>
-        <div className="my-5 flex items-center">
-          <span className="border border-black bg-[#092C4C] px-5 py-2 text-white">
-            Instructor
-          </span>
-          <h1 className="border border-black px-3 py-2 font-semibold">
-            {isLoading ? "Loading..." : name}
-          </h1>
-        </div>
+        {localStorage.getItem("role_name") == "admin" ? (
+          <div className="my-5 flex items-center">
+            <span className="border border-black bg-[#092C4C] px-5 py-2 text-white">
+              Row
+            </span>
+            <h1 className="border border-black px-3 py-2 font-semibold">
+              {isLoading ? "Loading..." : name}
+            </h1>
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="mt-8">
           <ul className="flex items-center">
             <li className="bg-[#F6F6F6] px-5 pt-1 text-center duration-150 ease-in  hover:rounded-t-[4px] hover:bg-[#092C4C] hover:text-white">

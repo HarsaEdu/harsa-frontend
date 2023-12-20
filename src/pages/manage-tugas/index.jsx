@@ -13,6 +13,8 @@ import { getSubmissionById } from "@/utils/apis/submission";
 import { getAllSubmissionAnswers } from "@/utils/apis/submissionAnswer";
 import Pagination from "@/components/table/pagination";
 import { debounce } from "lodash";
+import { CSVLink } from "react-csv";
+import { exportAllSubmissionAnswers } from "@/utils/apis/submissionAnswer/api";
 
 export default function ManageTugas() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,11 +25,14 @@ export default function ManageTugas() {
   const [limitValue, setLimitValue] = useState(10);
   const pageSizes = ["5", "10", "25"];
   const [searchValue, setSearchValue] = useState("");
+  const [offset, setOffset] = useState(0);
   const params = useParams();
+  const [exportData, setExportData] = useState([]);
 
   useEffect(() => {
     fetchData();
     fetchStudentSubmission();
+    fetchAllExportSubmission();
   }, [searchParams]);
 
   // TODO SEARCHING, PAGINATION AND ROW SIZE
@@ -58,13 +63,31 @@ export default function ManageTugas() {
       );
       setSubmissionData(result.data);
       setMeta(result.pagination);
-      console.log(submissionData);
     } catch (error) {
       console.log(error.message);
+      setSubmissionData([]);
     } finally {
       setIsLoading(false);
     }
   }
+
+  async function fetchAllExportSubmission() {
+    try {
+      setIsLoading(true);
+      const result = await exportAllSubmissionAnswers(params.idSubmission);
+      setExportData(result.data);
+    } catch (error) {
+      console.log(error.message);
+      setExportData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const csvData = [
+    ["No", "Name", "Status"],
+    ...exportData.map(({ name, status }, index) => [index + 1, name, status]),
+  ];
 
   const getSuggestions = useCallback(
     async function (search) {
@@ -198,7 +221,7 @@ export default function ManageTugas() {
                 color="white"
                 onClick={() =>
                   navigate(
-                    `/kelas/manage-tugas/edit/${params.idSection}/${params.idSubmission}`,
+                    `/kelas/manage-kelas/${params.id}/manage-module/${params.idSection}/manage-tugas/${params.idModule}/detail-tugas/${params.idSubmission}/edit`,
                   )
                 }
               />
@@ -247,13 +270,15 @@ export default function ManageTugas() {
                     onChange={(e) => onInputChange(e.currentTarget.value)}
                   />
                 </div>
-                <div className="ms-4 flex w-1/2 items-center justify-end space-x-3">
-                  <Button
-                    id="tambah-tugas"
-                    className="w-full rounded-xl bg-[#092C4C] px-6 py-5 text-xl hover:bg-[#142331]"
-                  >
-                    Export
-                  </Button>
+                <div className="ms-4 flex w-1/4 items-center justify-end space-x-3">
+                  <CSVLink data={csvData} filename={`submission-${data.title}`}>
+                    <Button
+                      id="tambah-tugas"
+                      className="w-full rounded-xl bg-[#092C4C] px-6 py-5 text-xl hover:bg-[#142331]"
+                    >
+                      Export
+                    </Button>
+                  </CSVLink>
                 </div>
               </div>
             </div>
