@@ -147,7 +147,7 @@ export default function Router() {
           element: <ManageTugas />,
         },
         {
-          path: "/kelas/manage-tugas/edit/:idSection/:idSubmission", //Nanti ganti jadi ID
+          path: "/kelas/manage-kelas/:id/manage-module/:idSection/manage-tugas/:idModule/detail-tugas/:idSubmission/edit", //Nanti ganti jadi ID
           element: <EditTugas />,
         },
         {

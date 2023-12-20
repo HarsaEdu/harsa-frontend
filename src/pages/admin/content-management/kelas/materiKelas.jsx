@@ -19,9 +19,8 @@ const MateriOverview = () => {
 
   async function fetchData() {
     try {
-      const result = await getDetailCourse(+params.id);
+      const result = await getDetailCourse(params.id);
       setSection(result.data.section);
-      console.log(result.data.section.module.id);
     } catch (error) {
       console.log(error.message);
     }
@@ -72,7 +71,11 @@ const MateriOverview = () => {
               id="module"
               className="m-2 rounded-[4px] bg-[#092C4C] text-white"
             >
-              <Link to={`/kelas/manage-kelas/${params.id}/manage-modul/tambah-modul`}>Tambah Modul</Link>
+              <Link
+                to={`/kelas/manage-kelas/${params.id}/manage-modul/tambah-modul`}
+              >
+                Tambah Modul
+              </Link>
             </Button>
           </div>
           {section !== null ? (
@@ -93,7 +96,9 @@ const MateriOverview = () => {
                         className="m-2 rounded-[4px] bg-[#A2D2FF] font-semibold text-[#092C4C] hover:bg-[#81b1df]"
                         id="manageModuleButton"
                       >
-                        <Link to={`/kelas/manage-kelas/${params.id}/manage-modul/${Modules.id}`}>
+                        <Link
+                          to={`/kelas/manage-kelas/${params.id}/manage-modul/${Modules.id}`}
+                        >
                           Manage Modul
                         </Link>
                       </Button>
