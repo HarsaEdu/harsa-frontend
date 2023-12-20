@@ -84,6 +84,10 @@ export default function Router() {
               path: "/kelas/manage-kelas/:id/list-user", // Menggunakan path yang terpisah untuk Kelas
               element: <AssignUserInstruktor />,
             },
+            {
+              path: "/kelas/manage-kelas/:id/ulasan-kelas", // Menggunakan path yang terpisah untuk Kelas
+              element: <CardUlasanKelas />,
+            },
           ],
         },
         {
