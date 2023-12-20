@@ -1,5 +1,5 @@
 import Layout from "@/components/layout/Index";
-import { React, useMemo, useEffect, useState } from "react";
+import { React, useMemo, useEffect, useState, useCallback } from "react";
 import { Pencil } from "lucide-react";
 import Table from "@/components/table/tables";
 import { realData } from "@/utils/dummyData";
@@ -19,28 +19,115 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Breadcrumb from "@/components/breadcrumb";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useNavigate,
+  useParams,
+  useSearchParams,
+  Link,
+} from "react-router-dom";
 import Swal from "sweetalert2";
 import { getSubmissionById, updateSubmission } from "@/utils/apis/submission";
+import { getAllSubmissionAnswers } from "@/utils/apis/submissionAnswer";
 import Pagination from "@/components/table/pagination";
+import { debounce } from "lodash";
 
 export default function EditTugas() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [submissionData, setSubmissionData] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [meta, setMeta] = useState([]);
   const [limitValue, setLimitValue] = useState(10);
   const pageSizes = ["5", "10", "25"];
   const [searchValue, setSearchValue] = useState("");
+  const [offset, setOffset] = useState(0);
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
     fetchStudentSubmission();
-  }, []);
+  }, [searchParams]);
 
-  async function fetchStudentSubmission() {}
+  const getSuggestions = useCallback(
+    async function (search) {
+      if (!search) {
+        searchParams.delete("search");
+        searchParams.set("offset", 0);
+      } else {
+        searchParams.set("search", search);
+        searchParams.set("offset", 0);
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams],
+  );
+
+  const getSuggestionsDebounce = useMemo(
+    () => debounce(getSuggestions, 1000),
+    [getSuggestions],
+  );
+
+  function onInputChange(newValue) {
+    setSearchValue(newValue);
+    getSuggestionsDebounce(newValue);
+  }
+
+  function handlePageSizeChange(newValue) {
+    setLimitValue(newValue);
+
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("limit", newValue);
+    newSearchParams.set("offset", 0);
+    setSearchParams(newSearchParams);
+  }
+
+  function handlePagination(newOffset) {
+    // Update the offset value
+    setOffset(newOffset);
+
+    // Update the searchParams with the new offset value
+    searchParams.set("limit", String(limitValue));
+    searchParams.set("offset", String(newOffset));
+    setSearchParams(searchParams);
+
+    // Fetch data for the new page
+  }
+
+  async function fetchStudentSubmission() {
+    let query = Object.fromEntries(
+      [...searchParams].filter((param) => param[0] !== "tab"),
+    );
+
+    if (searchParams.has("search")) {
+      searchParams.set("offset", 0);
+      setSearchValue(searchParams.get("search"));
+    } else {
+      searchParams.set("offset", 0);
+    }
+
+    if (searchParams.has("limit")) {
+      setLimitValue(searchParams.get("limit"));
+    } else {
+      searchParams.set("limit", limitValue);
+      searchParams.set("offset", 0);
+    }
+
+    try {
+      setIsLoading(true);
+      const result = await getAllSubmissionAnswers(
+        { ...query },
+        params.idSubmission,
+      );
+      setSubmissionData(result.data);
+      setMeta(result.pagination);
+    } catch (error) {
+      console.log(error.message);
+      setSubmissionData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   async function fetchData() {
     try {
@@ -118,7 +205,7 @@ export default function EditTugas() {
     },
     {
       header: "Nama",
-      accessorKey: "user_id",
+      accessorKey: "name",
       cell: (info) => <div className="text-center">{info.getValue()}</div>,
     },
     {
@@ -142,8 +229,13 @@ export default function EditTugas() {
             </div>
           )}
           {info.row.original.status === "not submit" && (
-            <div className="w-fit rounded-full  bg-[#F6F6F6] px-5 py-1 text-center text-black">
+            <div className="w-fit rounded-full  bg-[#999999] px-5 py-1 text-center text-white">
               Not Submit
+            </div>
+          )}
+          {info.row.original.status === "submitted" && (
+            <div className="w-fit rounded-full  bg-[#A2D2FF] px-5 py-1 text-center text-[#092C4C]">
+              Submitted
             </div>
           )}
         </div>
@@ -153,16 +245,16 @@ export default function EditTugas() {
       header: "Action",
       cell: (info) => (
         <div className="text-center">
-          <Button
-            className="bg-[#092C4C] px-8 text-white"
-            onClick={() => console.log(info.row.original.user_id)}
+          <Link
+            to={`/kelas/manage-tugas/review/${params.idSubmission}/${info.row.original.id}`}
           >
-            Review
-          </Button>
+            <Button className="bg-[#092C4C] px-8 text-white">Review</Button>
+          </Link>
         </div>
       ),
     },
   ]);
+
   return (
     <Layout>
       <Breadcrumb />
@@ -216,7 +308,11 @@ export default function EditTugas() {
                 <Button
                   className="h-16 w-52 border border-[#092C4C] bg-white text-2xl font-bold text-[#092C4C] hover:bg-white"
                   type="button"
-                  onClick={() => navigate(-1)}
+                  onClick={() =>
+                    navigate(
+                      `/kelas/manage-kelas/${params.id}/manage-module/${params.idModule}/manage-tugas/${params.idSection}/detail-tugas/${params.idSubmission}`,
+                    )
+                  }
                 >
                   Batal
                 </Button>

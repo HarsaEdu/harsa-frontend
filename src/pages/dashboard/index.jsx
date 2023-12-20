@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import CardModule from './card/cardModule';
-import Layout from '@/components/layout/Index';
-import { Button } from "@/components/ui/button"
-import ListUlasan from './cardUlasanUser';
+import React, { useState, useEffect } from "react";
+import CardModule from "./card/cardModule";
+import Layout from "@/components/layout/Index";
+import { Button } from "@/components/ui/button";
+import ListUlasan from "./cardUlasanUser";
 import CardTotalMentee from "./cardTotalMentee";
 import { CardUlasanUser } from "./card/cardUlasanUser";
-import { getAllCourse, getCouseByID } from '@/utils/apis/dashboard';
-import { format, parseISO } from 'date-fns';
+import { getAllCourse, getCouseByID } from "@/utils/apis/dashboard";
+import { format, parseISO } from "date-fns";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [courses, setCourses] = useState([]);
@@ -14,7 +15,7 @@ const Dashboard = () => {
   const [totalMenteeData, setTotalMenteeData] = useState({});
   const [feedbackData, setFeedbackData] = useState([]);
 
-  const username = localStorage.getItem('username');
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +28,8 @@ const Dashboard = () => {
 
         if (defaultModuleId) {
           const totalMenteeResponse = await getCouseByID(defaultModuleId);
-          const { total_user, total_active_user, feedback } = totalMenteeResponse.data;
+          const { total_user, total_active_user, feedback } =
+            totalMenteeResponse.data;
 
           setTotalMenteeData({
             id: defaultModuleId,
@@ -68,17 +70,17 @@ const Dashboard = () => {
 
   const formatDate = (dateString) => {
     const parsedDate = parseISO(dateString);
-    return format(parsedDate, 'dd-MM-yyyy');
+    return format(parsedDate, "dd-MM-yyyy");
   };
-  
+
   return (
     <Layout>
-      <div className='container mb-10 font-poppins'>
+      <div className="container mb-10 font-poppins">
         <div>
-          <h1 className='text-5xl font-bold'>Hello {username},</h1>
-          <h3 className='text-2xl'>udah siap ngajar lagi?</h3>  
-        </div>      
-        <div className="overflow-x-auto mt-4">
+          <h1 className="text-5xl font-bold">Hello {username},</h1>
+          <h3 className="text-2xl">udah siap ngajar lagi?</h3>
+        </div>
+        <div className="mt-4 overflow-x-auto">
           <div className="flex gap-8">
             {courses.map((course) => (
               <CardModule
@@ -92,12 +94,14 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
-        <div className='grid my-6 justify-items-end'>
-          <Button
-            className="bg-[#092C4C] w-[168px] justify-center items-center px-[10px] py-[15px] rounded-lg"
-          >
-            <p className="text-white font-poppins font-semibold text-[16px]">Manage Kelas</p>
-          </Button>
+        <div className="my-6 grid justify-items-end">
+          <Link to={`/kelas/manage-kelas/${activeModule}`}>
+            <Button className="w-[168px] items-center justify-center rounded-lg bg-[#092C4C] px-[10px] py-[15px]">
+              <p className="font-poppins text-[16px] font-semibold text-white">
+                Manage Kelas
+              </p>
+            </Button>
+          </Link>
         </div>
         <div className="w-full pb-4">
           <CardTotalMentee
@@ -106,10 +110,12 @@ const Dashboard = () => {
             totalActiveUsers={totalMenteeData.total_active_user}
           />
         </div>
-        <h2 className="text-start text-xl py-4 font-bold">Ulasan User</h2>
+        <h2 className="py-4 text-start text-xl font-bold">Ulasan User</h2>
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-1">
           {feedbackData.length === 0 ? (
-            <p className="text-gray-500 text-center">Belum ada feedback untuk modul ini.</p>
+            <p className="text-center text-gray-500">
+              Belum ada feedback untuk modul ini.
+            </p>
           ) : (
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-1">
               {feedbackData.map((feedbackItem, index) => (
