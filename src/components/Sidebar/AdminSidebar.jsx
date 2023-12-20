@@ -46,7 +46,8 @@ function AdminSidebar() {
                 </Link>
               </li>
               <li className="group rounded-sm text-base">
-                <Link to="/user-management"
+                <Link
+                  to="/user-management"
                   className="flex items-center space-x-3 rounded-md p-2 hover:bg-[#A2D2FF] hover:text-black"
                 >
                   <svg
@@ -62,7 +63,7 @@ function AdminSidebar() {
                       id="icon-project"
                     />
                   </svg>
-                  <span>User Management</span>
+                  <span>Manajemen Pengguna</span>
                 </Link>
               </li>
               <li className="relative text-gray-500 focus-within:text-white hover:text-white">

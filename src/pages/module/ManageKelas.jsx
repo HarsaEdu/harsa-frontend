@@ -14,6 +14,7 @@ const ManageKelas = () => {
   const [course, setCourse] = useState([]);
   const [section, setSection] = useState([]);
   const [preview, setPreview] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleImageChange = (file) => {
@@ -30,6 +31,7 @@ const ManageKelas = () => {
 
   async function fetchData() {
     try {
+      setIsLoading(true);
       const result = await getDetailCourse(+params.id);
       setCourse(result.data);
       setName(result.data.user.name);
@@ -41,6 +43,8 @@ const ManageKelas = () => {
       }
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -57,7 +61,7 @@ const ManageKelas = () => {
           />
         </div>
         <div className="my-2 flex items-center justify-between gap-2 text-3xl font-bold">
-          <h1>{course.title}</h1>
+          <h1 className="w-3/4">{course.title}</h1>
           <Button
             onClick={() =>
               navigate(`/kelas/manage-kelas/update-kelas/${params.id}`)
@@ -84,7 +88,7 @@ const ManageKelas = () => {
               Row
             </span>
             <h1 className="border border-black px-3 py-2 font-semibold">
-              {name}
+              {isLoading ? "Loading..." : name}
             </h1>
           </div>
         ) : (

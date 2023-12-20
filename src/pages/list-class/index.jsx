@@ -227,6 +227,7 @@ const ListClass = () => {
               description={item.description}
               idCourse={item.id}
               onDelete={() => handleDeleteCourse(item.id)}
+              rating={item.rating}
             />
           ))
         ) : (
