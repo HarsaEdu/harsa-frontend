@@ -73,7 +73,7 @@ This project uses:
 - Tailwind CSS
   - Version: 3.3.5
   - Description: A utility-first CSS framework for rapidly building custom user interfaces.
-- Shadecn UI
+- Shadcn UI
   - Version: 1.2.0
   - Description: A UI component library for React applications.
 - Lodash
