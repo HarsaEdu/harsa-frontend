@@ -65,10 +65,8 @@ To Start Server:
 ## Technology
 This project uses:
 - ReactJs
-  - Version: 18.2.15
   - Description: A JavaScript library for building user interfaces.
 - Vite
-  - Version: 4.0.3
   - Description: A fast frontend development build tool.
 - Tailwind CSS
   - Version: 3.3.5
